@@ -1,0 +1,7 @@
+<div id="manager_nav">
+    <div class="nav nav-tabs">
+        <li class="active"><a href="/manager">公告管理</a></li>
+        <li><a href="#">商店管理</a></li>
+        <li><a href="#">活动管理</a></li>
+    </div>
+</div>

@@ -1,0 +1,83 @@
+<legend>发布活动</legend>
+<form class="pubForm form-horizontal">
+     <div class="form-group">
+        <label class="control-label col-lg-2">发布方</label>
+        <div class="col-lg-3">
+            <select class="form-control" id="actUsername">
+                <option value="1">管理员</option>
+                <option value="2">生活部</option>
+                <option value="3">文艺部</option>
+                <option value="4">体育部</option>
+                <option value="5">体协部</option>
+                <option value="6">学习部</option>
+                <option value="7">运营部</option>
+            </select>
+        </div>
+     </div>
+     <div class="form-group">
+        <label class="control-label col-lg-2">参与者权限</label>
+        <div class="col-lg-3">
+            <select class="form-control" id="actLimitlevel">
+                <option value="0">注册用户</option>
+                <option value="1">班委</option>
+            </select>
+        </div>
+     </div>
+     <div class="form-group">
+        <label class="control-label col-lg-2" for="actTitle">活动标题</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control" id="actTitle">
+        </div>
+     </div>
+     <div class="form-group">
+        <label class="control-label col-lg-2">报名表</label>
+        <div class="col-lg-3">
+            <input type="checkbox" id="actType"><span id="special">若没有报名表请不要勾选。</span>
+        </div>
+     </div>
+     <div class="form-group">
+        <label class="control-label col-lg-2">活动人数(不限填0)</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control" id="actTotal">
+        </div>
+     </div>
+     <div class="form-group">
+        <label class="control-label col-lg-2">活动地点</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control" id="actPlace">
+        </div>
+     </div>
+     <div class="form-group">
+        <label class="control-label col-lg-2">活动开始时间</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control dp" id="dps">
+            <input type="text" value="10:00:00" class="form-control tp" id="tps">
+        </div>
+     </div>
+     <div class="form-group">
+        <label class="control-label col-lg-2">活动结束时间</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control dp" id="dpe">
+            <input type="text" value="10:00:00" class="form-control tp" id="tpe">
+        </div>
+     </div>
+     <div class="form-group">
+        <label class="control-label col-lg-2">报名结束日期</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control dp" id="dpse">
+            <input type="text" value="10:00:00" class="form-control tp" id="tpse">
+        </div>
+     </div>
+     <div class="form-group">
+        <label class="control-label col-lg-2">活动简介</label>
+        <div class="col-lg-5">
+            <textarea rows="5" id="actDetail" class="form-control"></textarea>
+        </div>
+     </div>
+     <div class="form-group">
+        <label class="control-label col-lg-2"></label>
+        <div class="col-lg-3">
+            <span class="btn btn-default" onclick="subAct()">提交</span>
+        </div>
+     </div>
+</form>

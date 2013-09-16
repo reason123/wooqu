@@ -1,0 +1,10 @@
+$(function(){
+	$(".dp").datepicker({
+		format:"yyyy-mm-dd"
+	});
+	$(".tp").timepicker({
+		showSeconds:true,
+		showMeridian:false,
+		defaultTime:"18:00:00"
+	});
+})

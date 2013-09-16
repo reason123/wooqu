@@ -1,0 +1,125 @@
+b.amount input{
+	width: 30px;
+}
+.amount button{
+	position: relative;
+	top: -5px;
+	width: 25px;
+}
+.cBtn{
+	cursor: pointer;
+	color: #3A87AD;
+}
+
+#commentList textarea{
+	width: 515px;
+}
+#commentList .sub{
+	float: right;
+}
+#comList{
+	padding: 20px;
+}
+
+#fruitBody input{
+	width: 30px;
+	height: 16px;
+}
+#fruitBody button{
+	width: 24px;
+	height: 24px;
+	position: relative;
+	top: -5px;
+}
+#fruitBody .amount{
+	width: 100px;
+}
+.ordList p{
+	font: 15px "microsoft yahei","宋体b8b\4f53";
+}
+.ordList select{
+	margin-top: 5px; 
+	position:fixed;
+}
+
+.delBtn{
+	cursor: pointer;
+}
+.goodName{
+	color: #08C;
+}
+
+
+.triangle-up {
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-bottom: 6px solid black;
+	margin-left: 5px;
+	display: inline-block;
+}
+.triangle-down {
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 6px solid black;
+	margin-left: 5px;
+	display: inline-block;
+}
+
+#cartBtn {
+	margin-top: 6px;
+	margin-right: 3px;
+}
+
+
+
+
+.wrap {
+	position:relative;
+	float:left;
+	width: 350px;
+	height:250px;
+	margin:5px;  
+	background:#ffffff;
+	overflow:hidden;
+} 
+
+.wrap img {
+	max-height:250px;
+	max-width:350px;
+	position:absolute;
+	top:0;
+	left:0
+}
+
+.wrap h3 {
+	margin-top:10px;
+	margin-bottom:10px;
+	line-height:30px;
+	font-size:14px;
+	color:#fff
+} 
+.wrap p{
+	line-height:20px;
+	color:#eee;
+} 
+.cover{
+	position:absolute;
+	background:#000;
+	height:170px;
+	width:100%;  
+	padding:3px;
+	top:201px;
+} 
+.price-tag{
+	float:right;
+	color:#fff;
+}
+.input-group {
+	width:120px;
+}
+
+.bottombar{
+	position: fixed;
+	bottom: 0;
+	width: 80%;
+}

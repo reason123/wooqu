@@ -1,0 +1,13 @@
+function addGroup(){
+	$.post('/group/addgroup',
+	{
+		'parentID':$("#parentID").val(),
+		'type':$("#type")[0].options[$("#type")[0].selectedIndex].value,
+		'name':$("#groupName").val()
+	},
+	function(data){
+		alert(data);
+		var re = $.parseJSON(data);
+		alert(re['error']['message']);
+	})
+}

@@ -1,0 +1,11 @@
+.ordInfo{
+	padding: 5px;
+}
+.infoHead{
+	padding-left: 5px;
+	padding-right: 7px;
+}
+.delBtn{
+	cursor: pointer;
+	color: #3A87AD;
+}

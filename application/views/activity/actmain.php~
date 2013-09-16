@@ -1,0 +1,32 @@
+<?php foreach($actlist as $key => $activity) :?>
+
+<?php endforeach ?>
+    <div class="actInfo">
+         <div class="title">
+             <h3>马兰花开订票</h3>
+             <span class="nickName">生活部</span>
+         </div>
+         <div class="content">
+             <div class="act-unit">
+                 <label class="base">当前报名人数：</label>
+                 <span class="added signNum">41</span>
+             </div>
+             <div class="act-unit">
+                 <label class="base">地点：</label>
+                 <span class="added">紫荆公寓</span>
+             </div>
+             <div class="act-unit">
+                 <label class="base">活动时间：</label>
+                 <span class="added">2013-05-18 19:00:00 ~ 2013-05-19 19:00:00</span>
+             </div>
+             <div class="act-unit">
+                 <label class="base">活动介绍：</label>
+                 <span class="added long"> 1.请大家于周五中午12：00之前进行抽票登记，13:00发布抽签结果，21:00在408领票。 2.请大家于周五中午12：00之前进行抽票登记，13:00发布抽签结果，21:00在408领票。</span>
+             </div>
+             <div class="act-unit">
+                 <label class="base"></label>
+                 <span class="added" onclick="signup(31)">点击报名</span>
+             </div>
+         
+         </div>
+     </div>

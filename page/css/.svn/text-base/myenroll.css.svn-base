@@ -1,0 +1,3 @@
+.panel-body label{
+	width: 60px;
+}
