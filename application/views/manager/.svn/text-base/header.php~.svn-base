@@ -1,6 +1,0 @@
-<div id="manager_nav">
-    <div class="nav nav-tabs">
-        <li class="active"><a href="/group">群组管理</a></li>
-        <li><a href="#">商店管理</a></li>
-    </div>
-</div>

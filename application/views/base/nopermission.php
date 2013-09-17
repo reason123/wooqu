@@ -1,1 +1,0 @@
-<h1>No permissions.</h1>

@@ -1,6 +1,0 @@
-.myLength{
-	width: 180px;
-}
-select.myLength{
-	width: 195px;
-}
