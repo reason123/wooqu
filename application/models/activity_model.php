@@ -59,6 +59,7 @@ class activity_model extends CI_Model{
         $actID = $this->db->insert_id();
         $groupList = explode(';',$group_list);
         foreach($groupList as $key => $groupID){
+            if(!isGID($groupID)) continue;
             $this->permission_model->checkPermission($groupID, MANAGE_ACTIVITY);
         }
         foreach($groupList as $key => $groupID){

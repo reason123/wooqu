@@ -68,6 +68,8 @@ class Activity extends CI_Controller{
                                               $_REQUEST['baseType'],
                                               $_REQUEST['subType'],
                                               $check);
+            echo json_encode($result);
+            return;
             $this->addPic($result['ID'],$_FILES['pic']);
             if($_REQUEST['baseType'] == 1){
                 header('Location: /volunteer');
@@ -167,7 +169,7 @@ class Activity extends CI_Controller{
     function getsignlist(){
         $this->load->model('activity_model', 'act');
         $permissionCheck = $this->act->checkUserPermission($_REQUEST['actID']);
-        if($permissionCheck['code'] != 1){
+        if($permissionCheck['error']['code'] != 1){
             die('No permissions.');
         }
         $sign_list = $this->act->getSignList($_REQUEST['actID']);

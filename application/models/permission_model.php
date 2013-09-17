@@ -80,11 +80,11 @@ class permission_model extends CI_Model{
     function checkPermission($groupID,$permissionName,$flag = 1){
     
         if(!isset($_SESSION['myGroup'][$groupID])){
-            return $this->noPermission($permissionName,$flag);
+            return $this->noPermission($permissionName,$flag,$groupID);
         }
         $permission = $_SESSION['myGroup'][$groupID]['permission'];
         if(!(($permission >> $permissionName) & 1)){
-            return $this->noPermission($permissionName,$flag);
+            return $this->noPermission($permissionName,$flag,$groupID);
         }
         return true;
     }
@@ -108,9 +108,9 @@ class permission_model extends CI_Model{
      * @param int $permissionName
      * @param int $flag 没有权限的处理方式,1:Relocation 0:return -1
      */
-    function noPermission($permissionName, $flag = 1){
+    function noPermission($permissionName, $flag = 1,$extra=''){
         if($flag == 1){
-            die('No permission');
+            die('No permission'.$extra);
         }else if($flag == 0){
             return false;
         }
