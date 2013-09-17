@@ -1,0 +1,18 @@
+.redColor{
+	color: red;
+}
+.error{
+	color: red;
+}
+.remind{
+	color: gray;
+}
+img{
+	margin-top: 5px;
+}
+
+.applyBtn{
+	margin-left: 20px;
+	position: relative;
+	top: -5px;
+}
