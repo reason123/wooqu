@@ -61,7 +61,7 @@ function addGoods(id)
 		});
 }
 
-function deleteCargo(id)
+function deleteGoods(id)
 {
 	$.post("/shop/delGoods",
 		{
@@ -75,6 +75,6 @@ function deleteCargo(id)
 				alert(data.error);
 				$("#confirmDeleteCargoModal").modal("hide");
 			}
-	)
+	});
 
 }

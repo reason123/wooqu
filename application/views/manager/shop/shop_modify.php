@@ -120,7 +120,7 @@
 			</div>
 			<div class="modal-footer">
 				<a href="#" class="btn btn-default" data-dismiss="modal">取消</a>
-				<a href="#" class="btn btn-primary" onclick="deleteCargo();">确认</a>
+				<a href="#" class="btn btn-primary" onclick="deleteGoods();">确认</a>
 			</div>
 		</div>
 	</div>
