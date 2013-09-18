@@ -203,9 +203,9 @@ class shop_model extends CI_Model{
 		$this->db->insert('shop_group',$item);
 	}
 
-	function addGoods($shopID,$name,$price,$detail)
+	function addGoods($shopID,$name,$price,$detail,$priceType='元/个')
 	{
-		$item = array('shopID'=>$shopID, 'name' => $name, 'price' => $price, 'detail' => $detail);
+		$item = array('shopID'=>$shopID, 'name' => $name, 'price' => $price, 'detail' => $detail,'priceType'=>$priceType);
 		$this->db->insert('shop_goods',$item);	
 		return $this->db->insert_id();
 	}
