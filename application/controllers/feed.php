@@ -13,7 +13,7 @@ class Feed extends CI_Controller {
 	//	echo json_encode($this->feed->getNewsList());
  		//echo $this->feed->getNewsList();
 	}
-	
+    
 }
 
 ?>

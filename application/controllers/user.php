@@ -7,6 +7,14 @@ class User extends CI_Controller{
 		parent::__construct();
 	}
 
+    public function newhome(){
+        $news_list = array(array('title'=>'test'),array('title'=>'test2'));
+        $this->load->view('base/header',array('page'=>'newhome','type'=>'all'));
+        $this->load->view('homepage/nav');
+        $this->load->view('homepage/news',array('news_list'=>$news_list));
+        $this->load->view('base/footer');
+    }
+    
     public function index(){
 		if(!isset($_GET['ann'])) {
 			$ann = 'all';
