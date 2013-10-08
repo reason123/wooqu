@@ -55,8 +55,18 @@ class activity_model extends CI_Model{
             'baseType'=>$baseType,
             'subType'=>$subType,
             'check'=>$check);
+        $this->load->model('groupfeed_model','feed');
         $this->db->insert('activity_list', $newAct);
         $actID = $this->db->insert_id();
+        $this->feed->addFeedItem(0,
+                                 $title,
+                                 $_SESSION['userID'],
+                                 nowTime(),
+                                 '/storage/act_'.$actID.'.jpeg',
+                                 substr($detail,0,40),
+                                 '/activity',
+                                 $actID,
+                                 '{}');
         $groupList = explode(';',$group_list);
 /*        foreach($groupList as $key => $groupID){
             if(!isGID($groupID)) continue;
@@ -65,6 +75,9 @@ class activity_model extends CI_Model{
         foreach($groupList as $key => $groupID){
             if(!isGID($groupID)) continue;
             $this->db->insert('group_act', array('actID'=>$actID,'groupID'=>$groupID,'state'=>$this->permission_model->manageGroup($groupID)));
+            if($this->permission_model->manageGroup($groupID)){
+                $this->feed->sendFeed(0,$actID,$groupID);
+            }
         }
         return array_merge(errorMessage(1, '活动添加成功'),array('ID'=>$actID));
     }
