@@ -1,0 +1,48 @@
+.mesClass{
+	padding-top: 15px;
+	padding-left: 15px;
+	padding-bottom: 15px;
+	border-top: 1px solid #E3EEF8;
+	border-bottom: 1px solid #E3EEF8;
+	background-color: #EAEAEA;
+	margin-bottom: 5px;
+}
+
+.mesPart{
+	padding-top: 9px;
+	padding-bottom: 9px;
+	border-bottom: 1px solid #E3EEF8;
+}
+
+.mesPart .mesTime{
+	width: 100%;
+	text-align: right;
+	margin-left: 10px;
+	color: #AAAAAA;
+}
+
+.mesRep .hiddenButton {
+	color: #ffffff;
+}
+
+.unread{
+	font-weight:bold;
+}
+
+a:link {
+	text-decoration:none;
+}
+
+.now{
+	font-weight:bold;
+}
+
+.category{
+	margin-left:20px;
+	margin-right:20px;
+}
+
+.pagelink {
+	width:100%;
+	text-align: right;
+}

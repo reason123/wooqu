@@ -1,0 +1,135 @@
+.title{
+	color: rgb(15, 139, 218);
+	font-weight: bold;
+}
+.groupInfo{
+	margin-top: -10px;
+	margin-left: 10px;
+}
+.groupInfo .base{
+	clear: left;
+	float: left;
+	font: 17px "microsoft yahei","宋体b8b\4f53";
+	font-weight: bold;
+	line-height: 25px;
+	display: inline-block;
+	width: 150px;
+}
+.groupInfo .added{
+	font: 15px "microsoft yahei","宋体b8b\4f53";
+	float: left;
+	display: inline-block;
+}
+.groupInfo .added.long{
+	margin-bottom: 10px;
+}
+.stateInfo{
+	font: 18px "microsoft yahei","宋体b8b\4f53";
+	margin-left: 10px;
+	border-radius: 4px;
+	padding: 5px;
+	font-weight: bold;
+	color: white;
+	position: relative;
+	top: -4px;
+}
+
+#goodsList{
+	margin-left: -10px;
+	padding: 10px;
+	clear: both;
+}
+.goodsInfo{
+	padding: 10px;
+	margin-left: 10px;
+	border-radius: 10px;
+	display: block;
+	clear: both;
+	height: 220px;
+}
+.goodsInfo .picContainer{
+	display: inline-block;
+	width: 200px;
+	height: 200px;
+	float: left;
+	margin-right: 20px;
+}
+.goodsInfo .picContainer img{
+	width: 200px;
+	height: 200px;
+	cursor: pointer;
+	float: left;
+}
+.goodsInfo .buyNum span{
+	color: #005AA0;
+	font-size: 30px;
+}
+.goodsInfo .buyNum{
+	float: right;
+	position: relative;
+	font-size: 16px;
+}
+.goodsInfo .pContainer{
+	float: left;
+	display: inline-block;
+	position: relative;
+}
+.goodsInfo .base{
+	float: left;
+	clear: left;
+	font: 16px "microsoft yahei","宋体b8b\4f53";
+	font-weight: bold;
+	line-height: 20px;
+	display: inline-block;
+	width: 90px;
+}
+.goodsInfo .added{
+	font: 14px "microsoft yahei","宋体b8b\4f53";
+	float: left;
+	line-height: 20px;
+	width: 400px;
+	display: inline-block;
+}
+.goodsInfo .mesBox{
+	float: left;
+	clear: both;
+}
+.goodsInfo button{
+	clear: both;
+	float: right;
+	position: relative;
+	top: -40px;
+}
+
+#cartBtn {
+	margin-top: 6px;
+	margin-right: 3px;
+}
+
+.triangle-up {
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-bottom: 6px solid black;
+	margin-left: 5px;
+	display: inline-block;
+}
+.triangle-down {
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 6px solid black;
+	margin-left: 5px;
+	display: inline-block;
+}
+
+.countBtn {
+	position: relative;
+	width: 20px;
+}
+
+.bottombar {
+	position: fixed;
+	bottom: 0;
+	width: 1070px;
+	background-color: rgba(240, 240, 240, 0.8);
+}
+
