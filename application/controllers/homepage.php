@@ -52,11 +52,10 @@ class Homepage extends CI_Controller{
         $subtype_list = $this->act->getSubType(0);
         if($this->form_validation->run() == FALSE){$this->load->view('base/header',
                               array(
-                                  'page'=>'newactivity',
+                                  'page'=>'newnact',
                                   'status'=>'failed',
                                   'basetype_list'=>$basetype_list,
                                   'subtype_list'=>$subtype_list,
-                                  'page'=>'homenewact',
                                   'type'=>'newact')
                               );
             $this->load->view('homepage/nav');
@@ -90,7 +89,7 @@ class Homepage extends CI_Controller{
                 header('Location: /volunteer');
                 return;
             }
-            $this->load->view('base/header',array('page'=>'homenewact','type'=>'newact','basetype_list'=>$basetype_list,'subtype_list'=>$subtype_list));
+            $this->load->view('base/header',array('page'=>'newnact','type'=>'newact','basetype_list'=>$basetype_list,'subtype_list'=>$subtype_list));
             $this->load->view('homepage/nav');
             $this->load->view('homepage/actnav');
             $this->load->view('homepage/newact',array('status'=>'success'));
