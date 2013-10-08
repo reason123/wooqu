@@ -6,14 +6,16 @@ class Feed extends CI_Controller {
 		parent::__construct();
 	}
 
-	function test()
-	{
-	//	$this->load->model('groupFeed_model','feed');
-		//$this->feed->addNews("test","test!");
-	//	echo json_encode($this->feed->getNewsList());
- 		//echo $this->feed->getNewsList();
+	function test()	{
+        $this->load->model('groupfeed_model','feed');
+            //$this->feed->addFeedItem(0,'测试新鲜事',$_SESSION['userID'],nowTime(),'','呵呵呵','http://www.baidu.com',12,'test');
+        $this->feed->sendFeed(0,12,'1000100000000');
 	}
-    
+
+    function getNews(){
+        $this->load->model('groupfeed_model','feed');
+        echo json_encode($this->feed->getNewsListByType(0));
+    }
 }
 
 ?>

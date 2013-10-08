@@ -38,7 +38,11 @@
 |
 */
 
-$route['default_controller'] = "user/newhome";
+$route['default_controller'] = "homepage";
+$route['normal'] = "homepage/normal";
+$route['groupbuy'] = "homepage/groupbuy";
+$route['shop'] = "homepage/shop";
+$route['newact'] = "homepage/newact";
 $route['404_override'] = '';
 
 

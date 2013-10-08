@@ -6,14 +6,6 @@ class User extends CI_Controller{
 	function __construct(){
 		parent::__construct();
 	}
-
-    public function newhome(){
-        $news_list = array(array('title'=>'test'),array('title'=>'test2'));
-        $this->load->view('base/header',array('page'=>'newhome','type'=>'all'));
-        $this->load->view('homepage/nav');
-        $this->load->view('homepage/news',array('news_list'=>$news_list));
-        $this->load->view('base/footer');
-    }
     
     public function index(){
 		if(!isset($_GET['ann'])) {
@@ -31,8 +23,9 @@ class User extends CI_Controller{
     }
 
     public function test(){
-        $this->load->model('group_model','test');
-        var_dump($this->test->getMyGroup());
+        $this->load->model('sms_model','sms');
+        echo $this->sms->getRequest('http://localhost/user/getMyInfo',array());
+        return 1;
     }
 
     /**
