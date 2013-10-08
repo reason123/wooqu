@@ -26,9 +26,17 @@
           if(isset($_SESSION['loginName'])){
               $loginName = $_SESSION['loginName'];
         ?>
-        <div class="navbar-right" syle="padding-right:20px;">
-          <p class="navbar-text"><?php echo $loginName ?></p>
-        </div>
+        <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo $loginName ?><span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="/manager">管理界面</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="/userpage/fruitorder">个人中心</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" href="/user/logout">注销</a></li>
+          </ul>
+        </li>
+        </ul>
         <?php } else { ?>
 		<div class="navbar-right" style="padding-right:20px;">
 		  <a type="button" class="btn btn-default navbar-btn" href="/user/login">登录</a>
