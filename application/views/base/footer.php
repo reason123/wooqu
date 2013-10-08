@@ -37,6 +37,7 @@
 </div>
 
 <!-- Chat -->
+<!--div>                                                                               
 <?php if (isset($_SESSION['userID'])): ?>
 <script src = "/page/js/chat.js"></script>
 <link href = "/page/css/chat.css" rel = "stylesheet">
@@ -77,7 +78,7 @@
 </div>
 -->
 </div>
-
+</div-->                           
 <!--iframe class="cometFrame" src="/page/comet/chatframe.html"></iframe-->
 
 <?php endif ?>
