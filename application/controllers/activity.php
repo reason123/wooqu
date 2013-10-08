@@ -68,8 +68,6 @@ class Activity extends CI_Controller{
                                               $_REQUEST['baseType'],
                                               $_REQUEST['subType'],
                                               $check);
-            echo json_encode($result);
-            return;
             $this->addPic($result['ID'],$_FILES['pic']);
             if($_REQUEST['baseType'] == 1){
                 header('Location: /volunteer');

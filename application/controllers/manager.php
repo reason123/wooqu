@@ -80,7 +80,7 @@ class Manager extends CI_Controller{
             $groupName = $this->group->getGroupName($_REQUEST['groupID']);
             $_SESSION['mcgroupName'] = $groupName['groupName'];
         }
-        $this->announcement();
+        $this->activity();
     }
     
     /**
@@ -211,7 +211,34 @@ class Manager extends CI_Controller{
 		$this->load->view("base/footer");
 	}
 
+    /**
+     * 活动审批页面
+     * @author ca007
+     */
+    function examine() {
+        $this->load->model('manager_model','man');
+        $actList = $this->man->getExamineList();
+        
+        $this->load->view('base/header', array('page'=>'examine'));
+        $this->load->view('manager/header',array('mh'=>'group'));
+        $this->load->view('manager/group_header',array('mgh'=>'activity'));
+        $this->load->view('manager/examine/index',array('actList'=>$actList));
+        $this->load->view('base/footer');
+    }
 
+    /**
+     * 审批通过活动
+     * @author ca007
+     */
+    function passAct() {
+        $type = $_REQUEST['type'];
+        $relationID = $_REQUEST['relationID'];
+        if($type=='act'){
+            $this->load->model('activity_model','act');
+            $result = $this->act->passAct($relationID);
+        }
+        echo json_encode($result);
+    }
 
 }
 

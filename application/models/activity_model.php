@@ -58,10 +58,10 @@ class activity_model extends CI_Model{
         $this->db->insert('activity_list', $newAct);
         $actID = $this->db->insert_id();
         $groupList = explode(';',$group_list);
-        foreach($groupList as $key => $groupID){
+/*        foreach($groupList as $key => $groupID){
             if(!isGID($groupID)) continue;
             $this->permission_model->checkPermission($groupID, MANAGE_ACTIVITY);
-        }
+            }*/
         foreach($groupList as $key => $groupID){
             if(!isGID($groupID)) continue;
             $this->db->insert('group_act', array('actID'=>$actID,'groupID'=>$groupID,'state'=>$this->permission_model->manageGroup($groupID)));
@@ -166,7 +166,7 @@ class activity_model extends CI_Model{
                        act_end_date, sign_start_date, sign_end_date, title, 
                        detail, nickName, baseType as type, total, nowTotal 
                 from activity_list, user_list, group_act 
-                where activity_list.ID=group_act.actID and userID=user_list.ID and (";
+                where activity_list.ID=group_act.actID and userID=user_list.ID and state=1 and (";
         $count = 0;
         foreach($_SESSION['myGroup'] as $groupID => $groupInfo){
             if($count != 0) $sql = $sql."or ";
@@ -292,6 +292,34 @@ class activity_model extends CI_Model{
             return errorMessage(-2, '没有对该活动的权限');
         }
         return errorMessage(1, 'OK');
+    }
+
+    /**
+     * 审批通过活动
+     * @author ca007
+     */
+    function passAct($relationID){
+        $relationList = $this->db->from('group_act')->where('ID',$relationID)->get()->result_array();
+        if(!count($relationID)){
+            return errorMessage(-1, 'No such activity relation');
+        }
+        if(!$this->permission_model->manageGroup($relationList[0]['groupID'])){
+            return errorMessage(-10, 'No permission');
+        }
+        $this->db->where('ID',$relationID)->update('group_act',array('state'=>1));
+        return errorMessage(1,'OK');
+    }
+
+    function closeAct(){
+        $relationList = $this->db->from('group_act')->where('ID',$relationID)->get()->result_array();
+        if(!count($relationID)){
+            return errorMessage(-1, 'No such activity relation');
+        }
+        if(!$this->permission_model->manageGroup($relationList[0]['groupID'])){
+            return errorMessage(-10, 'No permission');
+        }
+        $this->db->where('ID',$relationID)->update('group_act',array('state'=>1));
+        return errorMessage(1,'OK');
     }
 }
 
