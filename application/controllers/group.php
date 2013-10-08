@@ -117,19 +117,21 @@ class group extends CI_Controller{
     public function addGroup(){
         $this->load->model('group_model','group');
         $this->permission_model->checkBasePermission(GROUP_MANAGE);
-        if(!isset($_REQUEST['type']) || $_REQUEST['type'] == -1){
-            echo json_encode(errorMessage(-3,'尚未选择种类'));
-            return;
-        }
-        switch($_REQUEST['type']){
+		$parentID = $_REQUEST["parentID"];
+		$this->permission_model->checkManage($parentID);
+		$parentID = $parentID."";
+		if (strcmp(substr($parentID, 1, 4), "0000") == 0) $type = 0; else 
+		if (strcmp(substr($parentID, 5, 4), "0000") == 0) $type = 1; else 
+		if (strcmp(substr($parentID, 9, 4), "0000") == 0) $type = 2; else $type = 3;
+		switch($type){
             case 0:
                 echo json_encode($this->group->newSchool($_REQUEST['name']));
                 return;
             case 1:
-                echo json_encode($this->group->newDepartment($_REQUEST['parentID'],$_REQUEST['name']));
+                echo json_encode($this->group->newDepartment($_REQUEST["parentID"],$_REQUEST['name']));
                 return ;
             case 2:
-                echo json_encode($this->group->newclass($_REQUEST['parentID'],$_REQUEST['name']));
+                echo json_encode($this->group->newclass($_REQUEST["parentID"],$_REQUEST['name']));
                 return;
             case 3:
                 echo json_encode(errorMessage(-1,'尚未开放'));
@@ -139,6 +141,20 @@ class group extends CI_Controller{
                 return;
         }
     }
+
+	public function delGroup(){
+        $this->load->model('group_model','group');
+        $this->permission_model->checkBasePermission(GROUP_MANAGE);
+		$parentID = $_REQUEST["parentID"];
+		$this->permission_model->checkManage($parentID);
+		$groupID = $_REQUEST["groupID"];
+		$IDItv = $this->group->getChildIndexes($parentID);
+		if (strcmp($groupID, $IDItv[0]) <= 0 || strcmp($groupID, $IDItv[1]) > 0) {
+			echo json_encode(errorMessage(-1,"ID范围错误"));
+			return;
+		}
+		echo json_encode($this->group->deleteGroup($groupID));
+	}
 
 	/*
 	public function test(){

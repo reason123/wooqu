@@ -194,6 +194,14 @@ class group_model extends CI_Model{
 	}
 
 	/**
+	 * 删除群组
+	 * @author Hewr
+	 * @param groupID
+	 */
+	function deleteGroup($groupID) {
+	}
+
+	/**
 	 * 检查当前用户是否为群组用户
 	 * @author LJNanest
 	 * @param string $groupID
@@ -286,7 +294,7 @@ class group_model extends CI_Model{
      */
     function getMyManageGroup(){
         $this->load->model('permission_model','per');
-        $sql = "select group_list.groupID,class,school,department,roles from group_list,member_list where userID=? and group_list.groupID=member_list.groupID";
+        $sql = "select group_list.groupID,class,school,department,roles from group_list,member_list where userID=? and group_list.groupID=member_list.groupID order by group_list.groupID";
         $group_list = $this->db->query($sql,array($_SESSION['userID']))->result_array();
         $manage_group = array();
         foreach($group_list as $i => $group){
@@ -296,6 +304,39 @@ class group_model extends CI_Model{
         }
         return $manage_group;
     }
+
+	/**
+	 * 获取群组子群组ID范围
+	 * @author Hewr
+	 */
+	function getChildIndexes($groupID) {
+		if (strcmp(substr($groupID, 1, 4), "0000") == 0) {
+			$minID = substr($groupID,0,1)."000000000000";
+			$maxID = substr($groupID,0,1)."999999999999";
+		} else if (strcmp(substr($groupID, 5, 4), "0000") == 0) {
+			$minID = substr($groupID,0,5)."00000000";
+			$maxID = substr($groupID,0,5)."99999999";
+		} else if (strcmp(substr($groupID, 9, 4), "0000") == 0) {
+			$minID = substr($groupID,0,9)."0000";
+			$maxID = substr($groupID,0,9)."9999";
+		} else {
+			$minID = "1";
+			$maxID = "0";
+		}
+		return array($minID, $maxID);
+	}
+
+	/**
+	 * 获取群组所有子群组
+	 * @author Hewr
+	 */
+	function getAllChildGroups($groupID) {
+		$arr = $this->getChildIndexes($groupID);
+		$sql = "SELECT `groupID`,`class`,`school`,`department` FROM `group_list` WHERE `groupID`>? AND `groupID`<=? ORDER BY `groupID`";
+		$res = $this->db->query($sql, array($arr[0], $arr[1]))->result_array();
+		return $res;
+	}
+
 
 /*
 	function delClassbyUser()

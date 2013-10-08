@@ -12,7 +12,7 @@ class Groupbuy extends CI_Controller {
 	 */
 	function backend() {
 		$this->load->model('groupbuy_model', 'groupbuy');
-		$res = $this->groupbuy->splitGroupStr($content);
+		//$res = $this->groupbuy->wtf();
 
 		$this->load->view('base/mainnav', array('page' => 'backend'));
         $this->load->view('groupbuy/backend', array('res' => json_encode($res)));
@@ -365,7 +365,7 @@ class Groupbuy extends CI_Controller {
 	 * 团购页面主页
 	 * @author Hewr
 	 */
-	function index() {
+    function index() {
 		$this->load->model('groupbuy_model', 'groupbuy');
 		$list = $this->groupbuy->getAllShops();
 		

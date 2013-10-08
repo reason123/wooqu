@@ -306,7 +306,7 @@ class activity_model extends CI_Model{
         }
         return errorMessage(1, 'OK');
     }
-
+    
     /**
      * 审批通过活动
      * @author ca007

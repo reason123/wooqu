@@ -1,3 +1,5 @@
+var goodsID = 0;
+
 function confirmModifyInfo() {
 	$("#confirmModifyInfoModal").modal("show");
 }
@@ -31,7 +33,8 @@ function confirmModifyCargo(id) {
 	$("#modifyModal").modal("show");
 }
 
-function confirmDeleteCargo(name) {
+function confirmDeleteCargo(id) {
+	goodsID = id;
 	$("#deleteBody").html("<h4>一旦删除商品\""+name+"\"则不可恢复</h4>");
 	$("#confirmDeleteCargoModal").modal("show");
 }
@@ -61,11 +64,11 @@ function addGoods(id)
 		});
 }
 
-function deleteCargo(id)
+function deleteGoods()
 {
 	$.post("/shop/delGoods",
 		{
-			ID:id
+			ID:goodsID
 		},
 		function(jsdata){
 			var data = $.parseJSON(jsdata);
@@ -75,6 +78,6 @@ function deleteCargo(id)
 				alert(data.error);
 				$("#confirmDeleteCargoModal").modal("hide");
 			}
-	)
+	});
 
 }

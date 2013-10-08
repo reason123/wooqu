@@ -70,17 +70,24 @@ class Manager extends CI_Controller{
 
     /**
      * 群组管理首页
-     * @author ca007
+     * @author Hewr
      */
     function group(){
-        if(isset($_REQUEST['groupID'])){
-            $this->permission_model->checkManage($_REQUEST['groupID']);
-            $_SESSION['mcgroupID'] = $_REQUEST['groupID'];
-            $this->load->model('group_model','group');
-            $groupName = $this->group->getGroupName($_REQUEST['groupID']);
-            $_SESSION['mcgroupName'] = $groupName['groupName'];
-        }
-        $this->examine();
+		if (!isset($_GET["groupID"])) $groupID = ""; else $groupID = $_GET["groupID"];
+		if ($groupID != "") $this->permission_model->checkManage($groupID);
+
+        $this->load->model('group_model','group');
+        $group_list = $this->group->getMyManageGroup();
+		if ($groupID == "" && count($group_list) > 0) $groupID = $group_list[0]["groupID"];
+
+        $this->load->view('base/mainnav',array('page'=>'group_manage'));
+        $this->load->view('manager/header',array('mh'=>'group'));
+        $this->load->view('manager/group/header',array("default" => $groupID, "list" => $group_list, "mgh" => "add"));
+		if ($groupID != "") {
+			$childGroups = $this->group->getAllChildGroups($groupID);
+        	$this->load->view('manager/group/index',array("childGroups" => $childGroups));
+		}
+        $this->load->view('base/footer');
     }
     
     /**
@@ -94,7 +101,7 @@ class Manager extends CI_Controller{
         $this->load->view('manager/group_header',array('mgh'=>'announcement'));
         $this->load->view('base/footer');
     }
-
+    
     /**
      * 活动管理首页
      * @author ca007

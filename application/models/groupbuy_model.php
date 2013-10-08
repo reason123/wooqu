@@ -6,6 +6,26 @@ class groupbuy_model extends CI_Model{
 		$this->load->database();
 	}
 
+	function wtf() {
+		$sql = "SELECT `ID`,`class` FROM `user_list`";
+		$res = $this->db->query($sql)->result_array();
+		foreach ($res as $key => $value) {
+			$id = intval($value["ID"]);
+			$class = $value["class"];
+			
+			$sql = "SELECT `groupID` from `group_list` WHERE `class`=?";
+			$res2 = $this->db->query($sql, array($class))->result_array();
+			$classID = intval($res2[0]["groupID"]);
+			
+			$sql = "INSERT INTO `member_list`(`userID`,`groupID`,`roles`) VALUES(?,?,2)";
+			$this->db->query($sql, array($id, $classID));
+
+			$gradeID = substr($classID, 0, 9)."0000";
+			$sql = "INSERT INTO `member_list`(`userID`,`groupID`,`roles`) VALUES(?,?,2)";
+			$this->db->query($sql, array($id, $gradeID));
+		}
+	}
+
 	/**
 	 * 返回团购的所有群组ID
 	 * @author Hewr
@@ -102,7 +122,7 @@ class groupbuy_model extends CI_Model{
                 $this->permission_model->noPermission(1);
             }
         }
-        $sql = "select realName,`list`,amount,class 
+        $sql = "select realName,`list`,amount,class, user_list.phoneNumber,defaultGroupID,comment 
                 from user_list,groupbuy_order 
                 where userID=user_list.ID and shopid=? and del=0 
                 order by class asc";

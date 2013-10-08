@@ -239,6 +239,12 @@ class Shop extends CI_Controller {
 		$this->shop->delGoods($_POST["ID"]);
 		echo json_encode(array("error"=>""));
 	}
+
+	function test()
+	{
+		$this->load->model("shop_model", "shop");
+		echo $this->shop->delGoods(159);
+	}
 }
 
 ?>

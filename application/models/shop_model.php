@@ -199,21 +199,31 @@ class shop_model extends CI_Model{
 	 */
 	function addShopGroup($shopID, $groupID) 
 	{
+		$sql = 'SELECT DISTINCT userID FROM shop_list WHERE ID = ?';
+		$tmp = $this->db->query($sql,array($shopID))->result_array();
+		if ($tmp[0]['userID'] != $_SESSION['userID']) return;
 		$item = array('shopID' => $shopID, 'groupID' => $groupID, 'state' => 1);
 		$this->db->insert('shop_group',$item);
 	}
 
 	function addGoods($shopID,$name,$price,$detail)
 	{
+		$sql = 'SELECT DISTINCT userID FROM shop_list WHERE ID = ?';
+		$tmp = $this->db->query($sql,array($shopID))->result_array();
+		if ($tmp[0]['userID'] != $_SESSION['userID']) return;
 		$item = array('shopID'=>$shopID, 'name' => $name, 'price' => $price, 'detail' => $detail);
 		$this->db->insert('shop_goods',$item);	
 		return $this->db->insert_id();
 	}
 
-	function delGoods($GoodsID)
+	function delGoods($goodsID)
 	{
-		$sql = "DELETE ";	
-		return $this->db->insert_id();
+		$sql = 'SELECT DISTINCT shop_list.userID FROM shop_list,shop_goods WHERE shop_list.ID = shop_goods.shopID AND shop_goods.ID = ?';
+		$tmp = $this->db->query($sql,array($goodsID))->result_array();
+		if ($tmp[0]['userID'] != $_SESSION['userID']) return 1;
+		$sql = "DELETE FROM shop_goods WHERE ID = ?";
+		$this->db->query($sql,array($goodsID));
+
 	}	
 
 }
