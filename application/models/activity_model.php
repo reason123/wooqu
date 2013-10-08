@@ -310,7 +310,11 @@ class activity_model extends CI_Model{
         return errorMessage(1,'OK');
     }
 
-    function closeAct(){
+    /**
+     * 关闭已审批活动
+     * @author ca007
+     */
+    function closeAct($relationID){
         $relationList = $this->db->from('group_act')->where('ID',$relationID)->get()->result_array();
         if(!count($relationID)){
             return errorMessage(-1, 'No such activity relation');
@@ -318,7 +322,7 @@ class activity_model extends CI_Model{
         if(!$this->permission_model->manageGroup($relationList[0]['groupID'])){
             return errorMessage(-10, 'No permission');
         }
-        $this->db->where('ID',$relationID)->update('group_act',array('state'=>1));
+        $this->db->where('ID',$relationID)->update('group_act',array('state'=>0));
         return errorMessage(1,'OK');
     }
 }

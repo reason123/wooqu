@@ -80,7 +80,7 @@ class Manager extends CI_Controller{
             $groupName = $this->group->getGroupName($_REQUEST['groupID']);
             $_SESSION['mcgroupName'] = $groupName['groupName'];
         }
-        $this->activity();
+        $this->examine();
     }
     
     /**
@@ -236,6 +236,30 @@ class Manager extends CI_Controller{
         if($type=='act'){
             $this->load->model('activity_model','act');
             $result = $this->act->passAct($relationID);
+        }else{
+            $result = errorMessage(-2,'Error act type');
+        }
+        if($result['error']['code'] == 1){
+            header('Location: /manager/examine');
+        }
+        echo json_encode($result);
+    }
+
+    /**
+     * 关闭已审批活动
+     * @author ca007
+     */
+    function closeAct() {
+        $type = $_REQUEST['type'];
+        $relationID = $_REQUEST['relationID'];
+        if($type=='act'){
+            $this->load->model('activity_model','act');
+            $result = $this->act->closeAct($relationID);
+        }else{
+            $result = errorMessage(-2,'Error act type');
+        }
+        if($result['error']['code'] == 1){
+            header('Location: /manager/examine');
         }
         echo json_encode($result);
     }
