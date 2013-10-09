@@ -13,6 +13,7 @@
 	background-color: rgba(254, 67, 101, 1.0);
 	border: 5px solid rgba(252, 157, 154, 1.0);
 	cursor: pointer;
+	box-shadow: 4px 4px 2px #bbbbbb;
 }
 .red {
 	background-color: rgba(254, 67, 101, 1.0);
@@ -49,6 +50,7 @@
 .newsimg {
 	float: left;
 	height: 100%;
+	width: 28%;
 }
 
 .newscontainer{

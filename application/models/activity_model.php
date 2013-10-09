@@ -186,7 +186,7 @@ class activity_model extends CI_Model{
             $sql = $sql."groupID=".$groupID." ";
             $count += 1;
         }
-        $sql = $sql.")";
+        $sql = $sql.") order by activity_list.ID desc";
         $actList = $this->db->query($sql)->result_array();
         return $actList;
     }

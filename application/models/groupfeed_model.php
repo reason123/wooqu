@@ -141,7 +141,7 @@ class groupFeed_model extends CI_Model{
             $sql = $sql."groupID=".$groupID." ";
             $count += 1;
         }
-        $sql = $sql.")";
+        $sql = $sql.") order by feed_list.ID desc";
         $newsList = $this->db->query($sql,array($type))->result_array();
         return $newsList;
     }
