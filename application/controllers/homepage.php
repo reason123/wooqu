@@ -45,7 +45,7 @@ class Homepage extends CI_Controller{
     }
 
     public function newAct(){
-        $this->load->view('base/header',array('page'=>'homenewnact','type'=>'newact'));
+        $this->load->view('base/header',array('page'=>'homenewnact','type'=>'newact','actType'=>'null'));
         $this->load->view('homepage/nav');
         $this->load->view('homepage/actnav');
         $this->load->view('base/footer');
@@ -66,6 +66,7 @@ class Homepage extends CI_Controller{
                                   'status'=>'failed',
                                   'basetype_list'=>$basetype_list,
                                   'subtype_list'=>$subtype_list,
+                                  'actType'=>'normal',
                                   'type'=>'newact')
                               );
             $this->load->view('homepage/nav');
@@ -99,7 +100,7 @@ class Homepage extends CI_Controller{
                 header('Location: /volunteer');
                 return;
             }
-            $this->load->view('base/header',array('page'=>'newnact','type'=>'newact','basetype_list'=>$basetype_list,'subtype_list'=>$subtype_list));
+            $this->load->view('base/header',array('page'=>'newnact','type'=>'newact','basetype_list'=>$basetype_list,'actType'=>'normal','subtype_list'=>$subtype_list));
             $this->load->view('homepage/nav');
             $this->load->view('homepage/actnav');
             $this->load->view('homepage/newact',array('status'=>'success'));
@@ -107,6 +108,31 @@ class Homepage extends CI_Controller{
         }
     }
 
+    /**
+     * 新增团购活动
+     * @author ca007
+     */
+    function newGroupbuy(){
+        $this->load->view('base/header',array('page'=>'groupbuy_manager','type'=>'newact','actType'=>'groupbuy'));
+        $this->load->view('homepage/nav');
+        $this->load->view('homepage/actnav');
+        $this->load->view('manager/groupbuy/groupbuy_list');
+        $this->load->view('base/footer');
+    }
+    
+	/**
+	 * 团购修改页面
+	 * @author Hewr
+	 */
+    function groupbuy_modify() {
+        $this->load->view('base/header',array('page'=>'groupbuy_manager_modify','type'=>'newact','actType'=>'groupbuy'));
+		if (!isset($_GET["id"])) exit(0);
+        $this->load->view('homepage/nav');
+        $this->load->view('homepage/actnav');
+		$this->load->view("manager/groupbuy/groupbuy_modify", array("id" => $_GET["id"]));
+		$this->load->view("base/footer");
+    }
+    
     /**
      * 为活动添加图片
      * @author ca007

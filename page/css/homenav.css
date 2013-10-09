@@ -30,6 +30,7 @@
 	height: 110%;
 	width: 105%;
 	z-index: 100;
+	box-shadow: 0px 3px 1px #bbbbbb;
 }
 
 .nav-b1{

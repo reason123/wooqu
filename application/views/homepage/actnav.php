@@ -5,9 +5,9 @@
     <label class="control-label col-lg-2">活动类型</label>
     <div class="col-lg-3">
       <select style="position:relative;top:6px;" id="type-select" onchange="selectType()">
-        <option value="-1" selected="selected">请选择类型...</option>
-        <option value="0">普通活动</option>
-        <option value="1">团购活动</option>
+     <option value="-1" <?php if($actType=='null') echo 'selected="selected"'?>>请选择类型...</option>
+        <option value="0" <?php if($actType=='normal') echo 'selected="selected"'?>>普通活动</option>
+        <option value="1" <?php if($actType=='groupbuy') echo 'selected="selected"'?>>团购活动</option>
       </select>
     </div>
   </div>

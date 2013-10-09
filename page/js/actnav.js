@@ -6,7 +6,7 @@ function selectType(){
 		window.location.href="/homepage/newnormalact";
 		break;
 	case 1:
-		window.location.href="/";
+		window.location.href="/homepage/newgroupbuy";
 		break;
 	}
 }
