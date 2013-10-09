@@ -7,10 +7,6 @@ class Manager extends CI_Controller{
         parent::__construct();
     }
 
-    function test(){
-        $this->load->model('group_model','test');
-        echo json_encode($this->test->getMyManageGroup());
-    }
 
     function index(){
         if(isset($_SESSION['mcgroupList'])){
@@ -271,6 +267,14 @@ class Manager extends CI_Controller{
         echo json_encode($result);
     }
 
+
+    function test()
+    {
+        $this->load->model('goods_model','goods');
+       // $goodsInfo = array('name'=>'samsung S4','detail'=>'nop','price'=>3400,'priceType'=>'元/台','pic'=>'');
+       // $this->goods->addGoods($goodsInfo,$_SESSION['userID']);
+        $this->goods->delGoods(1);
+    }
 }
 
 ?>
