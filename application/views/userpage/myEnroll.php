@@ -4,7 +4,6 @@
 	<li class="active"><a href="/userpage/myEnroll">我的报名</a></li>
 	<li><a href="/userpage/myInfo">个人信息</a></li>
 </ul>
-<legend>我的报名</legend>
 
 <div class="panel-group" id="accordion">
 <?php foreach($signList as $key => $signInfo): ?>
