@@ -7,7 +7,11 @@ class Homepage extends CI_Controller{
 		parent::__construct();
 	}
 
-    public function index(){        
+    public function index(){
+        $this->all();
+    }
+    
+    public function all(){        
         $this->load->model('groupfeed_model','feed');
         $news_list = $this->feed->getNewsList();
         $this->load->view('base/header',array('page'=>'newhome','type'=>'all'));
