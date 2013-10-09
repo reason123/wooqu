@@ -96,5 +96,20 @@ class Homepage extends CI_Controller{
             $this->load->view('base/footer');
         }
     }
+
+    /**
+     * 为活动添加图片
+     * @author ca007
+     */
+    function addPic($actID,$pic){
+        $picType = explode('/',$pic['type']);
+        if ((($pic["type"] == "image/gif")
+             || ($pic["type"] == "image/jpeg")
+             || ($pic["type"] == "image/pjpeg"))
+            && ($pic["size"] < 200000)){
+            move_uploaded_file($pic['tmp_name'],'./storage/act_'.$actID.'.jpeg');
+        }
+    }
+
 }
 ?>
