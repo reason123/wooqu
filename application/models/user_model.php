@@ -140,6 +140,26 @@ class user_model extends CI_Model{
         return errorMessage(1, '修改成功'); 
     }
 
+    /**
+     * 修改当前登录用户密码
+     * @author ca007
+     * @param string $oldPass
+     * @param string $newPass
+     */
+    function modMyPass($oldPass, $newPass){
+        if(strlen($newPass) < 6) return errorMessage(-1,'New Password is too short');
+		$passsalt = subStr($oldPass,0,2).$this->_getSalt();
+        $user = $this->db->from('user_list')->where('ID',$_SESSION['userID'])->get()->result_array();
+        if($user[0]['password'] != crypt($oldPass,$passsalt)){
+            return errorMessage(-2,'Error Old Password');
+        }
+        $newPasssalt = subStr($newPass,0,2).$this->_getSalt();
+        $setPass = array('password'=>crypt($newPass,$newPasssalt));
+        $this->db->where('ID',$_SESSION['userID'])->update('user_list',$setPass);
+        $this->checkUser($_SESSION['loginName'],$newPass);
+        return errorMessage('1','OK');
+    }
+
  	/**
 	 * 清除用户登陆信息
 	 */

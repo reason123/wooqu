@@ -205,6 +205,15 @@ class User extends CI_Controller{
     }
 
     /**
+     * 修改当前用户密码
+     * @author ca007
+     */
+    public function modMyPass(){
+        $this->load->model('user_model','user');
+        echo json_encode($this->user->modMyPass($_REQUEST['oldPass'],$_REQUEST['newPass']));
+    }
+
+    /**
      * 初始化短信功能
      * @author ca007
      */ 
