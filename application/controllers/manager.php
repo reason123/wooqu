@@ -273,7 +273,8 @@ class Manager extends CI_Controller{
         $this->load->model('goods_model','goods');
        // $goodsInfo = array('name'=>'samsung S4','detail'=>'nop','price'=>3400,'priceType'=>'元/台','pic'=>'');
        // $this->goods->addGoods($goodsInfo,$_SESSION['userID']);
-        $this->goods->delGoods(1);
+        //$this->goods->delGoods(1);
+        echo $this->goods->delGoodsAtOBJ('{"1":13}','1');
     }
 }
 

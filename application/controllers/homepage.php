@@ -14,21 +14,27 @@ class Homepage extends CI_Controller{
     public function all(){        
         $this->load->model('groupfeed_model','feed');
         $news_list = $this->feed->getNewsList();
-        $this->load->view('base/header',array('page'=>'newhome','type'=>'all'));
+        $this->load->view('base/header',array('page'=>'homeall','type'=>'all'));
         $this->load->view('homepage/nav');
         $this->load->view('homepage/news',array('news_list'=>$news_list));
         $this->load->view('base/footer');
     }
 
     public function normal(){
+        $this->load->model('groupfeed_model','feed');
+        $news_list = $this->feed->getNewsListByType(0);
         $this->load->view('base/header',array('page'=>'homenormal','type'=>'normal'));
         $this->load->view('homepage/nav');
+        $this->load->view('homepage/news',array('news_list'=>$news_list));
         $this->load->view('base/footer');
     }
 
     public function groupbuy(){
-        $this->load->view('base/header',array('page'=>'homenormal','type'=>'groupbuy'));
+        $this->load->model('groupfeed_model','feed');
+        $news_list = $this->feed->getNewsListByType(1);
+        $this->load->view('base/header',array('page'=>'homegroupbuy','type'=>'groupbuy'));
         $this->load->view('homepage/nav');
+        $this->load->view('homepage/news',array('news_list'=>$news_list));
         $this->load->view('base/footer');
     }
 

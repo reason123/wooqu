@@ -35,6 +35,21 @@ class goods_model extends CI_Model{
 		} else
 			$this->permission_model->noPermission(1);
 	}
+
+	function addGoodsAtOBJ($goodsListByJSon,$goodsInfo)	
+	{
+		$goodsList = json_decode($goodsListByJSon);
+		$goodsList[$goodsInfo['ID']] = $goodsInfo['price'];
+		return json_encode($goodsList);
+	}
+
+	function delGoodsAtOBJ($goodsListByJSon,$goodsID)
+	{
+		$goodsList = json_decode($goodsListByJSon);
+		//if (isset($goodsList[$goodsID])) 
+		//	unset($goodsList[$goodsID]);
+		return json_encode($goodsList);
+	}
 }
 
 ?>
