@@ -223,8 +223,7 @@ class Manager extends CI_Controller{
         $actList = $this->man->getExamineList();
         
         $this->load->view('base/header', array('page'=>'examine'));
-        $this->load->view('manager/header',array('mh'=>'group'));
-        $this->load->view('manager/group_header',array('mgh'=>'activity'));
+        $this->load->view('manager/header',array('mh'=>'examine'));
         $this->load->view('manager/examine/index',array('actList'=>$actList));
         $this->load->view('base/footer');
     }

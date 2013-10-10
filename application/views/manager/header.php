@@ -6,5 +6,6 @@
 		<li <?php if($mh=='shop') echo 'class="active"' ?>><a href="/manager/shop">商店管理</a></li>        
         <li <?php if($mh=='goods') echo 'class="active"' ?>><a href="/manager/goods">商品管理</a></li>
         <li <?php if($mh=='statistics') echo 'class="active"' ?> ><a href="/manager/statistics_fruit">统计管理</a></li>
+        <li <?php if($mh=='examine') echo 'class="active"' ?> ><a href="/manager/examine">活动审批</a></li>
     </div>
 </div>
