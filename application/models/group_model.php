@@ -337,6 +337,19 @@ class group_model extends CI_Model{
 		return $res;
 	}
 
+    /**
+     * 获取群组成员
+     * @author ca007
+     * @param string $groupID
+     */
+    function getMemberByGroup($groupID){
+        $sql = "select userID, member_list.ID, loginName, realName, phoneNumber
+                from user_list, member_list 
+                where userID=user_list.ID and member_list.groupID=?";
+        $user_list = $this->db->query($sql, array($_SESSION['memGroupID']))->result_array();
+        return $user_list;
+    }
+    
 
 /*
 	function delClassbyUser()

@@ -74,7 +74,10 @@ class Manager extends CI_Controller{
 
         $this->load->model('group_model','group');
         $group_list = $this->group->getMyManageGroup();
-		if ($groupID == "" && count($group_list) > 0) $groupID = $group_list[0]["groupID"];
+		if ($groupID == "" && count($group_list) > 0) {
+            $groupID = $group_list[0]["groupID"];
+            $_SESSION['memGroupID'] = $groupID;
+        }
 
         $this->load->view('base/mainnav',array('page'=>'group_manage'));
         $this->load->view('manager/header',array('mh'=>'group'));
@@ -83,6 +86,20 @@ class Manager extends CI_Controller{
 			$childGroups = $this->group->getAllChildGroups($groupID);
         	$this->load->view('manager/group/index',array("childGroups" => $childGroups));
 		}
+        $this->load->view('base/footer');
+    }
+
+    /**
+     * 群组成员管理
+     * @author ca007
+     */
+    function memberin(){
+        $this->load->model('group_model','group');
+        $userList = $this->group->getMemberByGroup($_SESSION['memGroupID']);
+        $this->permission_model->checkManage($_SESSION['memGroupID']);
+        $this->load->view('base/header',array('page'=>'member_manage'));
+        $this->load->view('manager/header',array('mh'=>'group'));
+        $this->load->view('manager/group/memberin',array('userList'=>$userList));
         $this->load->view('base/footer');
     }
     
