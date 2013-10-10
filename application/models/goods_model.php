@@ -6,13 +6,6 @@ class goods_model extends CI_Model{
 		$this->load->database();
 	}
 
-
-	function getGoodsInfo($goodsID)
-	{
-		$tmp = $this->db->from('goods_list')->where('ID', $goodsID)->get()->result_array();
-		return $tmp[0];
-	}
-
 	/*
 	*  新增商品
 	*  @author LJNanest
@@ -45,16 +38,16 @@ class goods_model extends CI_Model{
 
 	function addGoodsAtOBJ($goodsListByJSon,$goodsInfo)	
 	{
-		$goodsList = json_decode($goodsListByJSon,true);
+		$goodsList = json_decode($goodsListByJSon);
 		$goodsList[$goodsInfo['ID']] = $goodsInfo['price'];
 		return json_encode($goodsList);
 	}
 
 	function delGoodsAtOBJ($goodsListByJSon,$goodsID)
 	{
-		$goodsList = json_decode($goodsListByJSon,true);
-		if (isset($goodsList[$goodsID])) 
-			unset($goodsList[$goodsID]);
+		$goodsList = json_decode($goodsListByJSon);
+		//if (isset($goodsList[$goodsID])) 
+		//	unset($goodsList[$goodsID]);
 		return json_encode($goodsList);
 	}
 }
