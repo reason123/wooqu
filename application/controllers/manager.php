@@ -274,7 +274,8 @@ class Manager extends CI_Controller{
        // $goodsInfo = array('name'=>'samsung S4','detail'=>'nop','price'=>3400,'priceType'=>'元/台','pic'=>'');
        // $this->goods->addGoods($goodsInfo,$_SESSION['userID']);
         //$this->goods->delGoods(1);
-        echo $this->goods->delGoodsAtOBJ('{"1":13}','1');
+        echo $this->goods->delGoodsAtOBJ('{"1":13,"2":14}','1');
+     //   echo $this->goods->addGoodsAtOBJ('{"1":13}',array('ID'=>2,'price'=>14));
     }
 }
 
