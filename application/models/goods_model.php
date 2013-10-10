@@ -15,7 +15,7 @@ class goods_model extends CI_Model{
 
 	function getGoodsListByUser()
 	{
-		$tmp = $this->db->from('goods_list')->where('userID', $_SESSION['userID'] )->get()->result_array();
+		$tmp = $this->db->from('goods_list')->where('userID', $_SESSION['userID'])->where('available',1)->get()->result_array();
 		return $tmp;	
 	}
 
@@ -29,7 +29,8 @@ class goods_model extends CI_Model{
 	{
 		
 		$newItem = array(
-			'userID' => $_SESSION["userID"],
+			'userID' => 
+			$_SESSION["userID"],
 			'name' => $goodsInfo['name'],
 			'detail' => $goodsInfo['detail'],
 			'price' => $goodsInfo['price'],
@@ -38,6 +39,16 @@ class goods_model extends CI_Model{
 			);
 		$this->db->insert('goods_list',$newItem);
 		return $this->db->insert_id();
+	}
+
+	function modGoods($goodsInfo,$goodsID)
+	{
+		$newItem = array('name' => $goodsInfo['name'],
+				'detail' => $goodsInfo['detail'],
+				'price' => $goodsInfo['price'],
+				'priceType' => $goodsInfo['priceType'],
+				'pic' => $goodsInfo['pic']);
+		$this->db->where('ID',$goodsID)->update('goods_list', $newItem);
 	}
 
 	function delGoods($goodsID)
