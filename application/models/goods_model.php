@@ -13,16 +13,23 @@ class goods_model extends CI_Model{
 		return $tmp[0];
 	}
 
+	function getGoodsListByUser()
+	{
+		$tmp = $this->db->from('goods_list')->where('userID', $_SESSION['userID'] )->get()->result_array();
+		return $tmp;	
+	}
+
+
 	/*
 	*  新增商品
 	*  @author LJNanest
 	*  $name,$detail,$price,$priceType,$pic
 	*/
-	function addGoods($goodsInfo,$userID)
+	function addGoods($goodsInfo)
 	{
 		
 		$newItem = array(
-			'userID' => $userID,
+			'userID' => $_SESSION["userID"],
 			'name' => $goodsInfo['name'],
 			'detail' => $goodsInfo['detail'],
 			'price' => $goodsInfo['price'],

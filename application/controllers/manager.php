@@ -117,8 +117,8 @@ class Manager extends CI_Controller{
 	 */
 	function groupbuy() {
 		$this->load->view("base/mainnav", array("page" => "groupbuy_manager"));
-		$this->load->view("manager/header", array("mh" => "shop"));
-		$this->load->view("manager/shop_header", array("mgh" => "groupbuy"));
+		$this->load->view("manager/header", array("mh" => "groupbuy"));
+		//$this->load->view("manager/shop_header", array("mgh" => "groupbuy"));
 		$this->load->view("manager/groupbuy/groupbuy_list");
 		$this->load->view("base/footer");
 	}
@@ -128,7 +128,7 @@ class Manager extends CI_Controller{
      * @author Hewr
      * @author xanda
      */
-    function shoplist() {
+    function shop() {
         $this->load->model('shop_model','shop');
         if (isset($_SESSION['userID']))
             $list = $this->shop->getShopListByUser($_SESSION['userID']);
@@ -136,7 +136,7 @@ class Manager extends CI_Controller{
             $list = array();
         $this->load->view("base/mainnav", array("page" => "shoplist_manager"));
         $this->load->view("manager/header", array("mh" => "shop"));
-        $this->load->view("manager/shop_header", array("mgh" => "fruit"));
+     //   $this->load->view("manager/shop_header", array("mgh" => "fruit"));
         $this->load->view("manager/shop/shoplist_manager", array("list" => $list));
         $this->load->view("base/footer");
     }
@@ -152,7 +152,7 @@ class Manager extends CI_Controller{
         if (!isset($_GET["id"])) exit(0);
         $this->load->view("base/mainnav", array("page" => "shop_manager_modify"));
         $this->load->view("manager/header", array("mh" => "shop"));
-        $this->load->view("manager/shop_header", array("mgh" => "fruit"));
+        //$this->load->view("manager/shop_header", array("mgh" => "fruit"));
         $this->load->model('shop_model','shop');
         $shopInfo = $this->shop->getShopInfoByID($_GET["id"]);
         $goodsList = $this->shop->getGoodListByShop($_GET["id"]);
@@ -167,8 +167,8 @@ class Manager extends CI_Controller{
 	function groupbuy_modify() {
 		if (!isset($_GET["id"])) exit(0);
 		$this->load->view("base/mainnav", array("page" => "groupbuy_manager_modify"));
-		$this->load->view("manager/header", array("mh" => "shop"));
-		$this->load->view("manager/shop_header", array("mgh" => "groupbuy"));
+		$this->load->view("manager/header", array("mh" => "groupbuy"));
+	//	$this->load->view("manager/shop_header", array("mgh" => "groupbuy"));
 		$this->load->view("manager/groupbuy/groupbuy_modify", array("id" => $_GET["id"]));
 		$this->load->view("base/footer");
 	}
@@ -265,6 +265,21 @@ class Manager extends CI_Controller{
             header('Location: /manager/examine');
         }
         echo json_encode($result);
+    }
+
+   /**
+     * 商品管理
+     * @author LJNnanest
+     */
+    function goods()
+    {
+        $this->load->model('goods_model','goods');
+        $goodsList = $this->goods->getGoodsListByUser();
+        $this->load->view("base/mainnav", array("page" => "goods_manager"));
+        $this->load->view("manager/header", array("mh" => "goods"));
+        $this->load->view("manager/goods/goodslist", array("goodsList" => $goodsList));
+        $this->load->view("base/footer");
+        //echo json_encode($goodsList);
     }
 
 
