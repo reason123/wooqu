@@ -386,6 +386,10 @@ class Groupbuy extends CI_Controller {
         $this->load->view('base/footer');
 	}
 
+	/**
+	 * 新建团购
+	 * @author LJNanest
+	 */
 	function newGroupbuy()
 	{
 		$this->load->library('form_validation');
@@ -394,8 +398,6 @@ class Groupbuy extends CI_Controller {
         $this->form_validation->set_rules('source','source','required'); 
         $this->form_validation->set_rules('comment','comment','required'); 
         $this->form_validation->set_rules('illustration','illustration','required'); 
-        
-
         $this->load->model('groupbuy_model','groupbuy');
         if($this->form_validation->run() == FALSE){
         	$this->load->view('base/mainnav',array('page'=>'newgroupbuy'));

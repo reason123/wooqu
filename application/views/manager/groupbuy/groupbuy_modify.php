@@ -2,7 +2,7 @@
 
 <legend>修改团购</legend>
 <div id="groupbuy_info" class="container"></div>
-
+<!--
 <legend>商品信息</legend>
 <table id="cargo_list_table" class="table table-striped table-hover">
 	<thead>
@@ -19,6 +19,7 @@
 	</tbody>
 </table>
 <button class="btn btn-primary pull-right" onclick="addCargo();">新增商品</button>
+
 
 <div id="confirmModifyInfoModal" class="modal fade">
 	<div class="modal-dialog">
@@ -73,3 +74,4 @@
 </div>
 
 <iframe src=""  width="0" height="0" style="display:none;" name="noneframe"></iframe>
+-->

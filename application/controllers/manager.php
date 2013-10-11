@@ -168,10 +168,25 @@ class Manager extends CI_Controller{
 		if (!isset($_GET["id"])) exit(0);
 		$this->load->view("base/mainnav", array("page" => "groupbuy_manager_modify"));
 		$this->load->view("manager/header", array("mh" => "groupbuy"));
+        $this->load->view("manager/groupbuy_header",array("mgh"=>"infoManager","groupbuyID"=>$_GET["id"]));
 	//	$this->load->view("manager/shop_header", array("mgh" => "groupbuy"));
 		$this->load->view("manager/groupbuy/groupbuy_modify", array("id" => $_GET["id"]));
 		$this->load->view("base/footer");
 	}
+
+    /**
+     * 团购商品
+     * @author LJNnaest
+     */
+    function groupbuy_goods() {
+        if (!isset($_GET["id"])) exit(0);
+        $this->load->view("base/mainnav", array("page" => "groupbuy_manager_modify"));
+        $this->load->view("manager/header", array("mh" => "groupbuy"));
+        $this->load->view("manager/groupbuy_header",array("mgh"=>"goodsManager","groupbuyID"=>$_GET["id"]));
+        $this->load->view("base/footer");
+    }
+
+
 
 	/**
 	 * 统计管理水果页面
@@ -280,6 +295,8 @@ class Manager extends CI_Controller{
         $this->load->view("base/footer");
         //echo json_encode($goodsList);
     }
+
+
 
 
 

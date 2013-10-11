@@ -1,71 +1,64 @@
 <div style="padding:20px;">
-<form class="pubForm form-horizontal" action="/homepage/newgroupbuy" method = "post" enctype="multipart/form-data">
-<?php if(isset($status) and $status == 'success'):?>
-     <div class="alert alert-success">添加团购成功</div>
-<?php endif ?>
-     <!--div class="form-group">
-        <label class="control-label col-lg-2">参与者权限</label>
-        <div class="col-lg-3">
-            <select class="form-control" id="actLimitlevel">
-                <option value="0">注册用户</option>
-                <option value="1">班委</option>
-            </select>
-        </div>
-     </div-->
+<form class="pubForm form-horizontal" action="/groupbuy/newGroupbuy" method = "post" enctype="multipart/form-data">
      <div class="form-group" >
-        <label class="control-label col-lg-2">活动标题</label>
+        <label class="control-label col-lg-2">团购标题</label>
         <div class="col-lg-3">
-            <input type="text" class="form-control" name="title">
+            <input type="text" class="form-control" name="title" value="<?php if (isset($groupbuyInfo['title'])) echo $groupbuyInof['title']; ?>">
             <?php echo form_error('title',"<span class='error'>","</span>");?>
-        </div>
-     </div>
-     <div class="form-group">
-        <label class="control-label col-lg-2">报名是否需要审核</label>
-        <div class="col-lg-3">
-            <input type="checkbox" name="check">
         </div>
      </div>
      <div class="form-group" >
         <label class="control-label col-lg-2">加入群组</label>
         <div class="col-lg-3">
-           <!--input type="text" class="form-control" name="group_list" value="<?php echo $_SESSION['mcgroupID'].';';?>"-->
            <input type="text" class="form-control" name="group_list" value="1000100000000;">
         </div>
-     </div>
-     <div class="form-group">
-        <label class="control-label col-lg-2">活动地点</label>
+    </div>
+    <div class="form-group" >
+        <label class="control-label col-lg-2">支付方式</label>
         <div class="col-lg-3">
-            <input type="text" class="form-control" name="address">
+            <input type="text" class="form-control" name="howtopay" value="<?php if (isset($groupbuyInfo['howtopay'])) echo $groupbuyInof['howtopay']; ?>">
+            <?php echo form_error('howtopay',"<span class='error'>","</span>");?>
+        </div>
+     </div>
+     <div class="form-group" >
+        <label class="control-label col-lg-2">货源</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control" name="source" value="<?php if (isset($groupbuyInfo['source'])) echo $groupbuyInof['source']; ?>">
+            <?php echo form_error('source',"<span class='error'>","</span>");?>
+        </div>
+     </div>
+     <div class="form-group" >
+        <label class="control-label col-lg-2">备注</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control" name="comment" value="<?php if (isset($groupbuyInfo['comment'])) echo $groupbuyInof['comment']; ?>">
+            <?php echo form_error('comment',"<span class='error'>","</span>");?>
         </div>
      </div>
      <div class="form-group">
-        <label class="control-label col-lg-2">活动海报</label>
+        <label class="control-label col-lg-2">详细信息</label>
+        <div class="col-lg-5">
+            <textarea rows="5" name="illustration" class="form-control" value="<?php if (isset($groupbuyInfo['illustration'])) echo $groupbuyInof['illustration']; ?>"></textarea>
+        </div>
+     </div>
+    <div class="form-group">
+        <label class="control-label col-lg-2">团购结束时间</label>
         <div class="col-lg-3">
-            <input type="file" name="pic">
+            <input type="hidden" name="act_end_date" id="act_end_date">
+            <input type="text" class="form-control dp" id="dpe">
+            <input type="text" value="10:00:00" class="form-control tp" id="tpe">
+            <?php echo form_error('act_end_date',"<span class='error'>","</span>");?>
         </div>
      </div>
      <div class="form-group">
-        <label class="control-label col-lg-2">报名开始日期</label>
-        <div class="col-lg-3">
-            <input type="hidden" name="sign_start_date" id="sign_start_date">
-            <input type="text" class="form-control dp" id="dpst">
-            <input type="text" value="10:00:00" class="form-control tp" id="tpst">
-        </div>
-     </div>
-     <div class="form-group">
-        <label class="control-label col-lg-2">报名结束日期</label>
+        <label class="control-label col-lg-2">发货时间</label>
         <div class="col-lg-3">
             <input type="hidden" name="sign_end_date" id="sign_end_date">
             <input type="text" class="form-control dp" id="dpse">
             <input type="text" value="10:00:00" class="form-control tp" id="tpse">
+            <?php echo form_error('sign_end_date',"<span class='error'>","</span>");?>
         </div>
      </div>
-     <div class="form-group">
-        <label class="control-label col-lg-2">活动简介</label>
-        <div class="col-lg-5">
-            <textarea rows="5" name="detail" class="form-control"></textarea>
-        </div>
-     </div>
+
      <div class="form-group">
         <label class="control-label col-lg-2"></label>
         <div class="col-lg-3">

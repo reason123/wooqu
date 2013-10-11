@@ -297,7 +297,7 @@ $(function(){
 					format: "yyyy-mm-dd"
 				});
 			})
-		$.post("/groupbuy/getCargoByShopId",
+		/*$.post("/groupbuy/getCargoByShopId",
 			{ shopid: document.getElementById("groupID").value }, 
 			function(jsdata){
 				var data = $.parseJSON(jsdata);
@@ -308,7 +308,7 @@ $(function(){
 					var goodHTML = makeGood(data[x], cargoCnt - 1);
 					$("#cargo_list_table").append(goodHTML);
 				}
-			})
+			})*/
 	});
 })
 

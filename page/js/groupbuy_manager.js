@@ -14,7 +14,7 @@ function makeShop(data) {
 			"<td>"+data.comment+"</td>"+
 			"<td>"+onSaleHTML+"</td>"+
 			"<td>"+
-				"<a class=\"btn btn-small btn-primary\" onclick=\"window.location.href='groupbuy_modify?id="+data.id+"'\">修改</a>&nbsp;"+
+				"<a class=\"btn btn-small btn-primary\" onclick=\"window.location.href='groupbuy_goods?id="+data.id+"'\">修改</a>&nbsp;"+
 				"<a class=\"btn btn-small btn-danger\" onclick=\"confirmDeleteShop("+data.id+")\">删除</a>"+
 			"</td>"+
 		"</tr>"
