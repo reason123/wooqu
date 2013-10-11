@@ -414,7 +414,10 @@ class Groupbuy extends CI_Controller {
         				"source"=>$_REQUEST['source']);
         	//echo $_REQUEST['act_end_date'];
         	$this->groupbuy->insertShop($shop,$_SESSION['loginName']);
-            header('Location: /manager/groupbuy');                 
+            header('Location: /manager/groupbuy');
+            /**
+             * TODO: Add group_shop
+             */
         }
 	}
 

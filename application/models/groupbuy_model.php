@@ -106,6 +106,16 @@ class groupbuy_model extends CI_Model{
 				(`title`, `status`, `comment`, `howtopay`, `illustration`, `deadline`, `pickuptime`, `source`, `username`) 
 				VALUES(?,?,?,?,?,?,?,?,?)";
 		$res = $this->db->query($sql, array($shop['title'], $shop['status'], $shop['comment'], $shop['howtopay'], $shop['illustration'], $shop['deadline'], $shop['pickuptime'], $shop['source'], $userName)) or die(mysql_error());
+        $shopID = $this->db->insert_id();
+        $this->load->model('groupfeed_model','feed');
+        $this->feed->addFeedItem(1,
+                                 $shop['title'],
+                                 $_SESSION['userID'],
+                                 nowTime(),
+                                 '/storage/default_groupbuy.jpg',
+                                 substr($detail,0,40),
+                                 '/groupbuy/groupInfo?id='.$shopID,
+                                 '{}');
 		return $this->db->insert_id();
 	}
 
