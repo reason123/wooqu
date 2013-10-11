@@ -139,7 +139,7 @@ class groupbuy_model extends CI_Model{
      * @param string $userID
      */
     function getGroupbuyByID($userID){
-        $sql = "select groupbuy_list.ID,title,username from user_list,groupbuy_list where username=user_list.loginName and user_list.ID=?";
+        $sql = "select groupbuy_list.ID,title,username from user_list,groupbuy_list where username=user_list.loginName and user_list.ID=? and available=1";
         $groupbuy_list = $this->db->query($sql,array($userID))->result_array();
         return $groupbuy_list;
     }
@@ -150,7 +150,7 @@ class groupbuy_model extends CI_Model{
      * @param string $username
      */
     function getGroupbuyByUserName($username){
-		$sql = "SELECT DISTINCT `id`,`title`,`status`,`comment`,`howtopay`,`illustration`,`deadline`,`pickuptime`,`source` FROM `groupbuy_list` WHERE `username`=?";
+		$sql = "SELECT DISTINCT `id`,`title`,`status`,`comment`,`howtopay`,`illustration`,`deadline`,`pickuptime`,`source` FROM `groupbuy_list` WHERE `username`=? and available=1";
         $groupbuy_list = $this->db->query($sql,array($username))->result_array();
         return $groupbuy_list;
     }
@@ -178,7 +178,7 @@ class groupbuy_model extends CI_Model{
 	 * @param shopID userName
 	 */
 	function deleteShopById($id, $userName) {
-		$sql = "DELETE FROM `groupbuy_list` WHERE `id`=? and `username`=?";
+		$sql = "UPDATE groupbuy_list SET available = 0  WHERE `id`=? and `username`=?";
 		$res = $this->db->query($sql, array($id, $userName)) or die(mysql_error());
 		$this->clearShopGroup($id);
 	}
@@ -289,7 +289,7 @@ class groupbuy_model extends CI_Model{
 	 * @return list 商店
 	 */
 	function getAllShops() {
-		$sql = "SELECT DISTINCT groupbuy_list.`id`,`title`,`status`,`comment`,`howtopay`,`illustration`,`deadline`,`pickuptime`,`source` FROM `groupbuy_list`,`groupbuy_act` WHERE groupbuy_list.`id`=groupbuy_act.`groupbuyID` and (";
+		$sql = "SELECT DISTINCT groupbuy_list.`id`,`title`,`status`,`comment`,`howtopay`,`illustration`,`deadline`,`pickuptime`,`source` FROM `groupbuy_list`,`groupbuy_act` WHERE groups_list.available = 1 and groupbuy_list.`id`=groupbuy_act.`groupbuyID` and (";
 		$count = 0;
 		foreach ($_SESSION["myGroup"] as $groupID => $groupInfo) {
 			if ($count > 0) $sql .= " or ";

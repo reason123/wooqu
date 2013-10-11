@@ -1,3 +1,5 @@
+<legend>新增团购</legend>
+<a href="/groupbuy/newGroupbuy"  style="margin: 0 0 20px 20px" class="btn btn-default">创建团购活动</a><br/>
 <legend>团购列表</legend>
 <table id="groupbuy_list_table" class="table table-striped table-bordered table-hover">
 	<thead>
@@ -16,7 +18,6 @@
 	<tbody>
 	</tbody>
 </table>
-<button class="btn btn-primary pull-right" onclick="addShop();">新增团购</button>
 
 <div id="confirmDeleteShopModal" class="modal fade">
 	<div class="modal-dialog">

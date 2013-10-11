@@ -27,29 +27,36 @@ class goods_model extends CI_Model{
 	*/
 	function addGoods($goodsInfo)
 	{
-		
-		$newItem = array(
-			'userID' => 
-			$_SESSION["userID"],
-			'name' => $goodsInfo['name'],
-			'detail' => $goodsInfo['detail'],
-			'price' => $goodsInfo['price'],
-			'priceType' => $goodsInfo['priceType'],
-			'pic' => $goodsInfo['pic']
-			);
-		$this->db->insert('goods_list',$newItem);
-		return $this->db->insert_id();
+		if (isset($_SESSION["userID"]))
+		{
+			$newItem = array(
+				'userID' => $_SESSION["userID"],
+				'name' => $goodsInfo['name'],
+				'detail' => $goodsInfo['detail'],
+				'price' => $goodsInfo['price'],
+				'priceType' => $goodsInfo['priceType'],
+				'pic' => $goodsInfo['pic']
+				);
+			$this->db->insert('goods_list',$newItem);
+			return $this->db->insert_id();
+		}
 	}
 
 	function modGoods($goodsInfo,$goodsID)
 	{
-		$newItem = array('name' => $goodsInfo['name'],
+		$tmp = $this->db->from('goods_list')->where('ID', $goodsID)->get()->result_array();
+		$user = $tmp[0]['userID'];
+		if (isset($_SESSION["userID"]) && $user == $_SESSION["userID"]) {
+			$newItem = array('name' => $goodsInfo['name'],
 				'detail' => $goodsInfo['detail'],
 				'price' => $goodsInfo['price'],
 				'priceType' => $goodsInfo['priceType'],
 				'pic' => $goodsInfo['pic']);
-		$this->db->where('ID',$goodsID)->update('goods_list', $newItem);
+			$this->db->where('ID',$goodsID)->update('goods_list', $newItem);
+		} else
+			$this->permission_model->noPermission(1);
 	}
+		
 
 	function delGoods($goodsID)
 	{

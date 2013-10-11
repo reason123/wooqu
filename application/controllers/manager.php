@@ -282,6 +282,7 @@ class Manager extends CI_Controller{
     }
 
 
+
     function test()
     {
         $this->load->model('goods_model','goods');

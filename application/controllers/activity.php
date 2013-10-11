@@ -37,7 +37,8 @@ class Activity extends CI_Controller{
         $this->load->model('activity_model','act');
         $basetype_list = $this->act->getBaseType();
         $subtype_list = $this->act->getSubType(0);
-        if($this->form_validation->run() == FALSE){$this->load->view('base/mainnav',
+        if($this->form_validation->run() == FALSE){
+          $this->load->view('base/mainnav',
                               array(
                                   'page'=>'newactivity',
                                   'status'=>'failed',

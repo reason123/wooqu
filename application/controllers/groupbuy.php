@@ -386,6 +386,36 @@ class Groupbuy extends CI_Controller {
         $this->load->view('base/footer');
 	}
 
+	function newGroupbuy()
+	{
+		$this->load->library('form_validation');
+        $this->form_validation->set_rules('title','title','required'); 
+        $this->form_validation->set_rules('howtopay','howtopay','required'); 
+        $this->form_validation->set_rules('source','source','required'); 
+        $this->form_validation->set_rules('comment','comment','required'); 
+        $this->form_validation->set_rules('illustration','illustration','required'); 
+        
+
+        $this->load->model('groupbuy_model','groupbuy');
+        if($this->form_validation->run() == FALSE){
+        	$this->load->view('base/mainnav',array('page'=>'newgroupbuy'));
+            $this->load->view('manager/groupbuy/newgroupbuy',array('$groupbuyInfo'=>$_REQUEST));
+            $this->load->view('base/footer');
+        }else{        	
+        	$shop = array("title"=>$_REQUEST['title'],
+        				"status"=>"1",
+        				"comment"=>$_REQUEST['comment'],
+        				"howtopay"=>$_REQUEST['howtopay'],
+        				"illustration"=>$_REQUEST['illustration'],
+        				"deadline"=>$_REQUEST['act_end_date'],
+        				"pickuptime"=>$_REQUEST['sign_end_date'], 
+        				"source"=>$_REQUEST['source']);
+        	//echo $_REQUEST['act_end_date'];
+        	$this->groupbuy->insertShop($shop,$_SESSION['loginName']);
+            header('Location: /manager/groupbuy');                 
+        }
+	}
+
 }
 
 ?>

@@ -51,6 +51,13 @@ class Goods extends CI_Controller{
             header('Location: /manager/goods'); 
         }
     }
+
+    function delGoods()
+    {
+        $this->load->model('goods_model','goods');
+        $this->goods->delGoods($_GET['goodsID']);
+        header('Location: /manager/goods'); 
+    }
 }
 
 ?>
