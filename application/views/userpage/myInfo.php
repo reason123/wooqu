@@ -1,9 +1,3 @@
-<ul class="nav nav-pills" style="margin-bottom: 10px">
-	<li><a href="/userpage/fruitOrder">水果订单</a></li>
-	<li><a href="/userpage/groupbuyOrder">团购订单</a></li>
-	<li><a href="/userpage/myEnroll">我的报名</a></li>
-	<li class="active"><a href="/userpage/myInfo">个人信息</a></li>
-</ul>
 <legend>修改密码</legend>
 &nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-default" onclick="showModal()">修改密码</button>
 <legend style="margin-top:10px;">个人信息</legend>
