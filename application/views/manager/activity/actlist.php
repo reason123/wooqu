@@ -22,7 +22,7 @@
          <td><?php echo $activity['state'] ?></td>
          <td><?php echo $activity['loginName'] ?></td>
          <td><?php echo $activity['nowTotal'] ?>&nbsp;<a href="/activity/getsignlist?actID=<?php echo $activity['ID']?>">点击查看</a></td>
-         <td><a href="/activity/modactivity?actID=<?php echo $activity['ID']?>">修改</a> <a href="#">审批通过</a></td>
+         <td><a href="/activity/modactivity?actID=<?php echo $activity['ID']?>">修改</a></td>
      </tr>
      <?php endforeach ?>
      </tbody>
