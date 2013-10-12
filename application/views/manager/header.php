@@ -7,7 +7,7 @@
         <?php if(isset($_SESSION['mcgroupList'])){
         	$tmp = "<li ";
             if($mh=='group') $tmp=$tmp.'class="active"';
-            $tmp = $tmp."><a href='/manager/'>群组管理</a></li>";
+            $tmp = $tmp."><a href='/manager/group'>群组管理</a></li>";
        		$tmp = $tmp."<li ";
        		if($mh=='examine') $tmp = $tmp.'class="active"';
        		$tmp = $tmp."><a href='/manager/examine'>活动审批</a></li>";

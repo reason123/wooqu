@@ -24,7 +24,12 @@ class Goods extends CI_Controller{
             $this->load->view('base/footer');
         }else{
             $goodsInfo = array('name'=>$_REQUEST['name'],'detail'=>$_REQUEST['detail'],'price'=>$_REQUEST['price'],'priceType'=>$_REQUEST['priceType'],'pic'=>'');
-            $this->goods->addGoods($goodsInfo);
+            $goodsID = $this->goods->addGoods($goodsInfo);
+            if (isset($_GET['id'])) {
+                $this->goods->addGoodsAtGroupbuy($_GET['id'], $goodsID, $_REQUEST['price']);
+                header('Location: /manager/groupbuy_goods?id='.$_GET['id']);     
+                return;
+            }
             header('Location: /manager/goods'); 
         }
     }
@@ -58,6 +63,7 @@ class Goods extends CI_Controller{
         $this->goods->delGoods($_GET['goodsID']);
         header('Location: /manager/goods'); 
     }
+
 }
 
 ?>

@@ -211,9 +211,13 @@ class Manager extends CI_Controller{
      */
     function groupbuy_goods() {
         if (!isset($_GET["id"])) exit(0);
-        $this->load->view("base/mainnav", array("page" => "groupbuy_manager_modify"));
+        $this->load->model('goods_model','goods');
+        $goodsList = $this->goods->getGoodsListByGroupbuy($_GET["id"]);
+        //echo json_encode($goodsList);
+        $this->load->view("base/mainnav", array("page" => "groupbuy_manager_goods"));
         $this->load->view("manager/header", array("mh" => "groupbuy"));
         $this->load->view("manager/groupbuy_header",array("mgh"=>"goodsManager","groupbuyID"=>$_GET["id"]));
+        $this->load->view("manager/groupbuy/goodslist",array("goodsList"=>$goodsList));
         $this->load->view("base/footer");
     }
 
@@ -328,16 +332,14 @@ class Manager extends CI_Controller{
     }
 
 
-
-
-
     function test()
     {
         $this->load->model('goods_model','goods');
        // $goodsInfo = array('name'=>'samsung S4','detail'=>'nop','price'=>3400,'priceType'=>'元/台','pic'=>'');
        // $this->goods->addGoods($goodsInfo,$_SESSION['userID']);
         //$this->goods->delGoods(1);
-        echo $this->goods->delGoodsAtOBJ('{"1":13}','1');
+        //echo $this->goods->delGoodsAtOBJ('{"1":13}','1');
+        $this->goods->addGoodsAtGroupbuy(1064,3,23);
     }
 }
 

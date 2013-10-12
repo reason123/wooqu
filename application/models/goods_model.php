@@ -68,10 +68,10 @@ class goods_model extends CI_Model{
 			$this->permission_model->noPermission(1);
 	}
 
-	function addGoodsAtOBJ($goodsListByJSon,$goodsInfo)	
+	function addGoodsAtOBJ($goodsListByJSon,$goodsID,$price)	
 	{
 		$goodsList = json_decode($goodsListByJSon,true);
-		$goodsList[$goodsInfo['ID']] = $goodsInfo['price'];
+		$goodsList[$goodsID] = $price;
 		return json_encode($goodsList);
 	}
 
@@ -81,6 +81,40 @@ class goods_model extends CI_Model{
 		if (isset($goodsList[$goodsID])) 
 			unset($goodsList[$goodsID]);
 		return json_encode($goodsList);
+	}
+
+	function getGoodsListByGroupbuy($groupbuyID)
+	{
+		$tmp = $this->db->from('groupbuy_list')->where('ID', $groupbuyID)->get()->result_array();
+		$GL = json_decode($tmp[0]['goodslist'],true);
+		$goodsList = array();
+		foreach ($GL as $goodsID=>$price)
+		{
+			$goodsInfo = $this->getGoodsInfo($goodsID);
+			$goodsInfo['price'] = $price;
+			array_push($goodsList, $goodsInfo);
+		}
+		return $goodsList;
+	}
+
+	function addGoodsAtGroupbuy($groupbuyID,$goodsID,$price)
+	{
+		$tmp = $this->db->from('goods_list')->where('ID', $goodsID)->get()->result_array();
+		$user = $tmp[0]['userID'];
+		if (!isset($_SESSION["userID"]) || $user != $_SESSION["userID"]) return;
+		$tmp = $this->db->from('groupbuy_list')->where('ID', $groupbuyID)->get()->result_array();
+		$newItem = array('goodslist' => $this->addGoodsAtOBJ($tmp[0]['goodslist'],$goodsID,$price));
+		$this->db->where('ID',$groupbuyID)->update('groupbuy_list', $newItem);
+	}
+
+	function delGoodsAtGroupbuy($groupbuyID,$goodsID)
+	{
+		$tmp = $this->db->from('goods_list')->where('ID', $goodsID)->get()->result_array();
+		$user = $tmp[0]['userID'];
+		if (!isset($_SESSION["userID"]) || $user != $_SESSION["userID"]) return;
+		$tmp = $this->db->from('groupbuy_list')->where('ID', $groupbuyID)->get()->result_array();
+		$newItem = array('goodslist' => $this->delGoodsAtOBJ($tmp[0]['goodslist'],$goodsID));
+		$this->db->where('ID',$groupbuyID)->update('groupbuy_list', $newItem);
 	}
 }
 
