@@ -294,7 +294,7 @@ class activity_model extends CI_Model{
      * @author ca007
      */
     function checkUserPermission($actID){
-        if($this->permission_model->checkBasePermission(BASE_VOLUNTEER_MANAGE)){
+        if($this->permission_model->checkBasePermission(BASE_VOLUNTEER_MANAGE, 0)){
             return errorMessage(1,'OK');
         }
         $tmp = $this->db->from('activity_list')->where('ID',$actID)->get()->result_array();

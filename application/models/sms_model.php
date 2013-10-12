@@ -47,21 +47,21 @@ class sms_model extends CI_Model {
 		}
 
 		$count = 0;
-		$errors = array();
+		$error = 1;
 		foreach ($numberList as $number) {
 			$url = "$this->baseUrl?accesskey=$this->accesskey&secretkey=$this->secretkey&mobile=$number&content=".urlencode($message);
 			$res = $this->getRequest($url);
-			if ($res->result != "01") {
-				$errors[$number] = $res->result;
-			} else {
+			if ($res->result == "01") {
 				$count ++;
+			} else {
+				$error = $res->result;
 			}
 		}
 		$this->db->where('userID',$_SESSION['userID'])->update('sms_list',array('amount'=>($myAmount - $count * $cost)));
-		if (count($errors) == 0) {
-			return array_merge(errorMessage(1,'ok'),array('num'=>$count));
+		if ($error == 1) {
+			return array_merge(errorMessage(1,'发送成功'),array('num'=>$count));
 		} else {
-			return array_merge(errorMessage(-1,$errors),array('num'=>$count));
+			return array_merge(errorMessage(-1,"发送失败:$error 。发送条数:$count"),array('num'=>$count));
 		}
 	}
 
