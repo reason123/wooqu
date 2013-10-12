@@ -156,6 +156,19 @@ class group extends CI_Controller{
 		echo json_encode($this->group->deleteGroup($groupID));
 	}
 
+    /**
+     * 删除群组成员
+     * @author ca007
+     */
+    public function removeMember(){
+        if(!isset($_REQUEST['relationID'])){
+            echo errorMessage(-1,'No relation ID');
+            return;
+        }
+        $this->load->model('group_model','group');
+        echo json_encode($this->group->removeMember($_REQUEST['relationID']));
+    }
+
 	/*
 	public function test(){
 		$this->load->model('arealist_model','area');

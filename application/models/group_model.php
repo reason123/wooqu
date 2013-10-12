@@ -349,7 +349,45 @@ class group_model extends CI_Model{
         $user_list = $this->db->query($sql, array($_SESSION['memGroupID']))->result_array();
         return $user_list;
     }
-    
+
+    /**
+     * 获取群组申请列表
+     * @author ca007
+     * @param string $groupID
+     */
+    function getSignByGroup($groupID){
+        $sql = "select userID, member_apply.ID, loginName, realName, phoneNumber
+                from user_list, member_apply 
+                where userID=user_list.ID and member_apply.groupID=?";
+        $user_list = $this->db->query($sql, array($_SESSION['memGroupID']))->result_array();
+        return $user_list;
+    }
+
+    /**
+     * 删除群组成员
+     * @author ca007
+     */
+    function removeMember($relationID){
+        $tmp = $this->db->from('member_list')->where('ID',$relationID)->get()->result_array();
+        if(!count($tmp)){
+            return errorMessage(-2,'No such relation');
+        }
+        $this->permission_model->checkManage($tmp[0]['groupID']);
+        $this->db->delete('member_list',array('ID'=>$relationID));
+        return errorMessage(1,'OK');
+    }
+
+    /**
+     * 获取我加入的群组列表
+     * @author ca007
+     */
+    function getMyGroupList(){
+        $sql = "select class as groupName,member_list.groupID,member_list.ID
+                from member_list,group_list 
+                where member_list.groupID=group_list.groupID and userID=?";
+        $tmp = $this->db->query($sql,array($_SESSION['userID']))->result_array();
+        return $tmp;
+    }
 
 /*
 	function delClassbyUser()

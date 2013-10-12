@@ -20,14 +20,32 @@
   </thead>
   <tbody>
   <?php foreach($userList as $key => $userInfo):?>
-    <tr>
+    <tr id="memlist_<?php echo $userInfo['ID'] ?>">
       <td><?php echo $userInfo['ID']?></td>
       <td><?php echo $userInfo['userID']?></td>
-      <td><?php echo $userInfo['loginName']?></td>
+      <td class='loginName'><?php echo $userInfo['loginName']?></td>
       <td><?php echo $userInfo['realName']?></td>
       <td><?php echo $userInfo['phoneNumber']?></td>
-      <td><button class="btn btn-danger btn-small">踢出群组</button></td>
+      <td><button class="btn btn-danger btn-small" onclick="removeModal(<?php echo $userInfo['ID']; ?>)">踢出群组</button></td>
     </tr>
   <?php endforeach ?>
   </tbody>
 </table>
+
+<div id="conModal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h3 class="modal-title" style="color: rgb(15, 139, 218);"><b>确认踢出成员？</b></h3>
+			</div>
+			<div class="modal-body">
+				<h5 class="modal-title" style="color: black;">确认踢出成员 <b id="confirmUser"></b></h5>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn btn-default" data-dismiss="modal">取消</a>
+				<a href="#" class="btn btn-primary" id="conBtn" onclick="removeMember()">确认</a>
+			</div>
+		</div>
+	</div>
+</div>

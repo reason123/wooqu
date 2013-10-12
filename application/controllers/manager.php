@@ -76,8 +76,8 @@ class Manager extends CI_Controller{
         $group_list = $this->group->getMyManageGroup();
 		if ($groupID == "" && count($group_list) > 0) {
             $groupID = $group_list[0]["groupID"];
-            $_SESSION['memGroupID'] = $groupID;
         }
+        $_SESSION['memGroupID'] = $groupID;
 
         $this->load->view('base/mainnav',array('page'=>'group_manage'));
         $this->load->view('manager/header',array('mh'=>'group'));
@@ -97,9 +97,23 @@ class Manager extends CI_Controller{
         $this->load->model('group_model','group');
         $userList = $this->group->getMemberByGroup($_SESSION['memGroupID']);
         $this->permission_model->checkManage($_SESSION['memGroupID']);
-        $this->load->view('base/header',array('page'=>'member_manage'));
+        $this->load->view('base/header',array('page'=>'memberin_manage'));
         $this->load->view('manager/header',array('mh'=>'group'));
         $this->load->view('manager/group/memberin',array('userList'=>$userList));
+        $this->load->view('base/footer');
+    }
+
+    /**
+     * 群组申请成员管理
+     * @author ca007
+     */
+    function membersign(){
+        $this->load->model('group_model','group');
+        $userList = $this->group->getSignByGroup($_SESSION['memGroupID']);
+        $this->permission_model->checkManage($_SESSION['memGroupID']);
+        $this->load->view('base/header',array('page'=>'membersign_manage'));
+        $this->load->view('manager/header',array('mh'=>'group'));
+        $this->load->view('manager/group/membersign',array('userList'=>$userList));
         $this->load->view('base/footer');
     }
     
