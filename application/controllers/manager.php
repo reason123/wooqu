@@ -74,7 +74,10 @@ class Manager extends CI_Controller{
 
         $this->load->model('group_model','group');
         $group_list = $this->group->getMyManageGroup();
-		if ($groupID == "" && count($group_list) > 0) $groupID = $group_list[0]["groupID"];
+		if ($groupID == "" && count($group_list) > 0) {
+            $groupID = $group_list[0]["groupID"];
+        }
+        $_SESSION['memGroupID'] = $groupID;
 
         $this->load->view('base/mainnav',array('page'=>'group_manage'));
         $this->load->view('manager/header',array('mh'=>'group'));
@@ -83,6 +86,34 @@ class Manager extends CI_Controller{
 			$childGroups = $this->group->getAllChildGroups($groupID);
         	$this->load->view('manager/group/index',array("childGroups" => $childGroups));
 		}
+        $this->load->view('base/footer');
+    }
+
+    /**
+     * 群组成员管理
+     * @author ca007
+     */
+    function memberin(){
+        $this->load->model('group_model','group');
+        $userList = $this->group->getMemberByGroup($_SESSION['memGroupID']);
+        $this->permission_model->checkManage($_SESSION['memGroupID']);
+        $this->load->view('base/header',array('page'=>'memberin_manage'));
+        $this->load->view('manager/header',array('mh'=>'group'));
+        $this->load->view('manager/group/memberin',array('userList'=>$userList));
+        $this->load->view('base/footer');
+    }
+
+    /**
+     * 群组申请成员管理
+     * @author ca007
+     */
+    function membersign(){
+        $this->load->model('group_model','group');
+        $userList = $this->group->getSignByGroup($_SESSION['memGroupID']);
+        $this->permission_model->checkManage($_SESSION['memGroupID']);
+        $this->load->view('base/header',array('page'=>'membersign_manage'));
+        $this->load->view('manager/header',array('mh'=>'group'));
+        $this->load->view('manager/group/membersign',array('userList'=>$userList));
         $this->load->view('base/footer');
     }
     
@@ -180,9 +211,13 @@ class Manager extends CI_Controller{
      */
     function groupbuy_goods() {
         if (!isset($_GET["id"])) exit(0);
-        $this->load->view("base/mainnav", array("page" => "groupbuy_manager_modify"));
+        $this->load->model('goods_model','goods');
+        $goodsList = $this->goods->getGoodsListByGroupbuy($_GET["id"]);
+        //echo json_encode($goodsList);
+        $this->load->view("base/mainnav", array("page" => "groupbuy_manager_goods"));
         $this->load->view("manager/header", array("mh" => "groupbuy"));
         $this->load->view("manager/groupbuy_header",array("mgh"=>"goodsManager","groupbuyID"=>$_GET["id"]));
+        $this->load->view("manager/groupbuy/goodslist",array("goodsList"=>$goodsList));
         $this->load->view("base/footer");
     }
 
@@ -297,16 +332,14 @@ class Manager extends CI_Controller{
     }
 
 
-
-
-
     function test()
     {
         $this->load->model('goods_model','goods');
        // $goodsInfo = array('name'=>'samsung S4','detail'=>'nop','price'=>3400,'priceType'=>'元/台','pic'=>'');
        // $this->goods->addGoods($goodsInfo,$_SESSION['userID']);
         //$this->goods->delGoods(1);
-        echo $this->goods->delGoodsAtOBJ('{"1":13}','1');
+        //echo $this->goods->delGoodsAtOBJ('{"1":13}','1');
+        $this->goods->addGoodsAtGroupbuy(1064,3,23);
     }
 }
 

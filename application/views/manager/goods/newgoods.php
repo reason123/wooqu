@@ -1,6 +1,9 @@
-<a class="btn btn-default" style="margin-bottom: 10px;" href="/manager/goods">返回商品管理</a>
+<?php 
+    if (!isset($_GET['id'])) echo '<a class="btn btn-default" style="margin-bottom: 10px;" href="/manager/goods">返回商品管理</a>'; 
+    if (isset($_GET['id'])) echo '<a class="btn btn-default" style="margin-bottom: 10px;" href="/manager/groupbuy_goods?id='.$_GET['id'].'">返回商品管理</a>'; 
+?>
 <legend>新增商品</legend>
-<form class="pubForm form-horizontal" action="/goods/newGoods" method = "post" enctype="multipart/form-data">
+<form class="pubForm form-horizontal" action="/goods/newGoods<?php if (isset($_GET['id'])) echo '?id='.$_GET['id']; ?>" method = "post" enctype="multipart/form-data">
      <div class="form-group" >
         <label class="control-label col-lg-2">商品名称</label>
         <div class="col-lg-3">

@@ -1,3 +1,6 @@
+<legend>管理成员</legend>
+<a class="btn btn-primary" href="/manager/memberin">管理成员</a>
+<br/><br/>
 <legend>添加群组</legend>
 <form action="" target="none" method="GET" class="form-horizontal" role="form">
 	<div class="form-group">

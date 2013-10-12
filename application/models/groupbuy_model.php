@@ -113,10 +113,20 @@ class groupbuy_model extends CI_Model{
                                  $_SESSION['userID'],
                                  nowTime(),
                                  '/storage/default_groupbuy.jpg',
-                                 substr($detail,0,40),
+                                 substr($shop['illustration'],0,40),
                                  '/groupbuy/groupInfo?id='.$shopID,
+                                 $shopID,
                                  '{}');
-		return $this->db->insert_id();
+        $groupList = explode(';',$shop['group_list']);
+        foreach($groupList as $key => $groupID){
+            if(!isGID($groupID)) continue;
+            $this->db->insert('groupbuy_act', array('groupbuyID'=>$shopID,'groupID'=>$groupID,'state'=>$this->permission_model->manageGroup($groupID)));
+            if($this->permission_model->manageGroup($groupID)){
+                $this->feed->sendFeed(1,$shopID,$groupID);
+            }
+        }
+
+		return $shopID;
 	}
 
     /**
@@ -149,7 +159,7 @@ class groupbuy_model extends CI_Model{
      * @param string $userID
      */
     function getGroupbuyByID($userID){
-        $sql = "select groupbuy_list.ID,title,username from user_list,groupbuy_list where username=user_list.loginName and user_list.ID=? and available=1";
+        $sql = "select groupbuy_list.ID,title,username,goodslist,createTime from user_list,groupbuy_list where username=user_list.loginName and user_list.ID=? and available=1";
         $groupbuy_list = $this->db->query($sql,array($userID))->result_array();
         return $groupbuy_list;
     }
@@ -329,7 +339,7 @@ class groupbuy_model extends CI_Model{
 		if ($this->isOwnShop($id)) {
 	    	return $this->getGroupbuyByUserNameAndID($_SESSION["loginName"], $id);
 		}
-		$sql = "SELECT DISTINCT groupbuy_list.`id`,`title`,`status`,`comment`,`howtopay`,`illustration`,`deadline`,`pickuptime`,`source` FROM `groupbuy_list`,`groupbuy_act` WHERE groupbuy_list.`id`=".$id." and groupbuy_list.`id`=groupbuy_act.`groupbuyID` and (";
+		$sql = "SELECT DISTINCT groupbuy_list.`id`,`title`,`status`,`comment`,`howtopay`,`illustration`,`deadline`,`pickuptime`,`source`,goodslist,createTime FROM `groupbuy_list`,`groupbuy_act` WHERE groupbuy_list.`id`=".$id." and groupbuy_list.`id`=groupbuy_act.`groupbuyID` and (";
 		$count = 0;
 		foreach ($_SESSION["myGroup"] as $groupID => $groupInfo) {
 			if ($count > 0) $sql .= " or ";
@@ -451,6 +461,18 @@ class groupbuy_model extends CI_Model{
 		$sql = "UPDATE `groupbuy_order` SET `del`=1 WHERE `id`=".$id;
 		$res = $this->db->query($sql) or die(mysql_error());
 	}
+
+
+	/**
+	 * @author LJNanest
+	 */
+
+	function getGroupbuyInfoByID($groupbuyID)
+	{
+		$tmp = $this->db->from('groupbuy_list')->where('ID', $groupbuyID)->get()->result_array();
+		return $tmp[0];
+	}
+
 
 }
 

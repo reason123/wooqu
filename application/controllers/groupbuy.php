@@ -380,7 +380,6 @@ class Groupbuy extends CI_Controller {
 	 */
 	function groupInfo() {
 		$groupID = $_GET['id'];
-
         $this->load->view('base/mainnav',array('page'=>'groupinfo'));
         $this->load->view('groupbuy/groupInfo', array('groupID' => $groupID));
         $this->load->view('base/footer');
@@ -411,7 +410,8 @@ class Groupbuy extends CI_Controller {
         				"illustration"=>$_REQUEST['illustration'],
         				"deadline"=>$_REQUEST['act_end_date'],
         				"pickuptime"=>$_REQUEST['sign_end_date'], 
-        				"source"=>$_REQUEST['source']);
+        				"source"=>$_REQUEST['source'],
+        				"group_list"=>$_REQUEST['group_list']);
         	//echo $_REQUEST['act_end_date'];
         	$this->groupbuy->insertShop($shop,$_SESSION['loginName']);
             header('Location: /manager/groupbuy');
@@ -419,6 +419,47 @@ class Groupbuy extends CI_Controller {
              * TODO: Add group_shop
              */
         }
+	}
+
+	function modGoods()
+	{
+		if (!isset($_GET['groupbuyID'])) return;
+		if (isset($_GET['goodsID']))
+		{
+			$this->load->model('goods_model','goods');
+			$this->load->model('groupbuy_model','groupbuy');
+			if (!isset($_REQUEST['price']))
+			{
+				$groupbuyInfo = $this->groupbuy->getGroupbuyInfoByID($_GET['groupbuyID']);
+				//echo json_encode($groupbuyInfo);
+				$goodsList = json_decode($groupbuyInfo['goodslist'],true);
+				$_REQUEST['price']=$goodsList[$_GET['goodsID']];
+			}
+			$this->load->library('form_validation');
+       	    $this->form_validation->set_rules('price','price','required|numeric');
+        	if($this->form_validation->run() == FALSE){
+	            $this->load->view('base/mainnav',array('page'=>'groupbuy_modgoods'));
+	            $this->load->view("manager/header", array("mh" => "groupbuy"));
+       			$this->load->view("manager/groupbuy_header",array("mgh"=>"goodsManager","groupbuyID"=>$_GET["groupbuyID"]));
+            	$this->load->view('manager/groupbuy/modgoods');
+            	$this->load->view('base/footer');
+        	}else{
+            	 $this->goods->addGoodsAtGroupbuy($_GET['groupbuyID'], $_GET['goodsID'], $_REQUEST['price']);
+            	header('Location: /manager/groupbuy_goods?id='.$_GET['groupbuyID']);	
+        	}
+		} else 
+			header('Location: /manager/groupbuy_goods?id='.$_GET['groupbuyID']);	
+	}
+
+	function delGoods()
+	{
+		if (!isset($_GET['groupbuyID'])) return;
+		if (isset($_GET['goodsID']))
+		{
+			$this->load->model('goods_model','goods');
+			$this->goods->delGoodsAtGroupbuy($_GET['groupbuyID'],$_GET['goodsID']);
+		}
+		header('Location: /manager/groupbuy_goods?id='.$_GET['groupbuyID']);
 	}
 
 }

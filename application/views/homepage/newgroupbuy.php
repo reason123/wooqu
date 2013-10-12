@@ -1,5 +1,5 @@
 <div style="padding:20px;">
-<form class="pubForm form-horizontal" action="/groupbuy/newGroupbuy" method = "post" enctype="multipart/form-data">
+<form class="pubForm form-horizontal" action="/homepage/newgroupbuy" method = "post" enctype="multipart/form-data">
      <div class="form-group" >
         <label class="control-label col-lg-2">团购标题</label>
         <div class="col-lg-3">
@@ -10,7 +10,7 @@
      <div class="form-group" >
         <label class="control-label col-lg-2">加入群组</label>
         <div class="col-lg-3">
-           <input type="text" class="form-control" name="group_list" value="1000100000000;">
+           <input type="text" class="form-control" name="group_list" value="<?php echo $_SESSION['defaultGroupID'] ?>;">
         </div>
     </div>
     <div class="form-group" >

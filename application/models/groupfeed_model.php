@@ -97,15 +97,15 @@ class groupFeed_model extends CI_Model{
         $sql = "select distinct feed_list.ID, 
                                 type, 
                                 title, 
-                                userID, 
+                                loginName as userName, 
                                 time, 
                                 imgurl, 
                                 shortdescription, 
                                 url, 
                                 sourceID,
                                 param1 
-               from feed_list, group_feed 
-               where feed_list.ID=group_feed.newsID and (";
+               from feed_list, group_feed, user_list
+               where userID=user_list.ID and feed_list.ID=group_feed.newsID and (";
         $count = 0;
         foreach($_SESSION['myGroup'] as $groupID => $groupInfo){
             if($count != 0) $sql = $sql."or ";
@@ -126,15 +126,15 @@ class groupFeed_model extends CI_Model{
         $sql = "select distinct feed_list.ID, 
                                 type, 
                                 title, 
-                                userID, 
+                                loginName as userName, 
                                 time, 
                                 imgurl, 
                                 shortdescription, 
                                 url, 
                                 sourceID,
                                 param1 
-               from feed_list, group_feed 
-               where feed_list.ID=group_feed.newsID and type=? and (";
+               from feed_list, group_feed, user_list
+               where userID=user_list.ID and feed_list.ID=group_feed.newsID and type=? and (";
         $count = 0;
         foreach($_SESSION['myGroup'] as $groupID => $groupInfo){
             if($count != 0) $sql = $sql."or ";

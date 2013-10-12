@@ -169,7 +169,7 @@ class Activity extends CI_Controller{
         $this->load->model('activity_model', 'act');
         $permissionCheck = $this->act->checkUserPermission($_REQUEST['actID']);
         if($permissionCheck['error']['code'] != 1){
-            die('No permissions.');
+            die($permissionCheck['error']['message']);
         }
         $sign_list = $this->act->getSignList($_REQUEST['actID']);
         $act_title = $this->act->actTitle($_REQUEST['actID']);
@@ -186,8 +186,8 @@ class Activity extends CI_Controller{
             $numList[] = $signInfo['phoneNumber'];
         }
         $this->load->model('sms_model','sms');
-        $this->sms->sendSms($numList,$_REQUEST['content']);
-        echo json_encode(errorMessage(1,'发送成功'));
+        $res = $this->sms->sendSms($numList,$_REQUEST['content']);
+        echo json_encode($res);
     }
     
     /**

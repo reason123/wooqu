@@ -135,7 +135,8 @@ class Homepage extends CI_Controller{
                 "illustration"=>$_REQUEST['illustration'],
                 "deadline"=>$_REQUEST['act_end_date'],
                 "pickuptime"=>$_REQUEST['sign_end_date'], 
-                "source"=>$_REQUEST['source']);
+                "source"=>$_REQUEST['source'],
+                "group_list"=>$_REQUEST['group_list']);
           
           $this->groupbuy->insertShop($shop,$_SESSION['loginName']);
           header('Location: /manager/groupbuy');                 

@@ -78,7 +78,7 @@ class user_model extends CI_Model{
 		}
 		$passsalt = subStr($password,0,2).$this->_getSalt();
 		if($tmp[0]['password'] == crypt($password,$passsalt)){
-			$this->_setUserInfo($loginName,$tmp[0]['ID'],crypt($password,$passsalt),$tmp[0]['defaultGroupID'],$tmp[0]['baseRole'],array(), $tmp[0]['nickName'],$tmp[0]['baseRole']);
+			$this->_setUserInfo($loginName,$tmp[0]['ID'],crypt($password,$passsalt),$tmp[0]['defaultGroupID'],$tmp[0]['baseRole'],array(), $tmp[0]['nickName'],$tmp[0]['baseRole'],$tmp[0]['defaultGroupID']);
 			return errorMessage(1,'OK.');
 		}else{
 			return errorMessage(-1,'error password.');
@@ -102,7 +102,7 @@ class user_model extends CI_Model{
             return false;
         }
         if($_COOKIE['userKey'] == $tmp[0]['password']){
-			$this->_setUserInfo($_COOKIE['loginName'],$tmp[0]['ID'],$_COOKIE['userKey'],$tmp[0]['defaultGroupID'],$tmp[0]['baseRole'],array(), $tmp[0]['nickName'],$tmp[0]['baseRole']);
+			$this->_setUserInfo($_COOKIE['loginName'],$tmp[0]['ID'],$_COOKIE['userKey'],$tmp[0]['defaultGroupID'],$tmp[0]['baseRole'],array(), $tmp[0]['nickName'],$tmp[0]['baseRole'],$tmp[0]['defaultGroupID']);
             return true;
         }else{
             return false;
@@ -187,8 +187,9 @@ class user_model extends CI_Model{
 	 * @param string $userKey cookie密码
 	 * @param string $myGroup 我的群组列表
 	 * @param string $baseRole 基本角色
+	 * @param string $defaultGroupID
 	 */
-	private function _setUserInfo($loginName,$userID,$userKey,$defaultGroupID,$baseRole,$myGroup, $nickName,$baseRole) {
+	private function _setUserInfo($loginName,$userID,$userKey,$defaultGroupID,$baseRole,$myGroup, $nickName,$baseRole,$defaultGroupID) {
 		$group_list = $this->db->from('group_list')->where('groupID',$defaultGroupID)->get()->result_array();
 		if(count($group_list) != 0){
 			$_SESSION['groupName'] = $group_list[0]['class'];
@@ -200,6 +201,7 @@ class user_model extends CI_Model{
 		$_SESSION['baseRole'] = $baseRole;
 		$_SESSION['groupID'] = $defaultGroupID;
 		$_SESSION['nickName'] = $nickName;
+        $_SESSION['defaultGroupID'] = $defaultGroupID;
 		setcookie('loginName',$loginName,time()+60*60*24*10,'/');
 		setcookie('userKey',$userKey,time()+60*60*24*10,'/');
 		$this->load->model('group_model','group');

@@ -1,7 +1,7 @@
 <p id="board"></p>
 <input type="hidden" value="<?php echo $groupID; ?>" id="groupID" />
 
-<legend>酒井团购：<span class="title" id="title"></span><span class="stateInfo"></span></legend>
+<legend><span class="title" id="title"></span><span class="stateInfo"></span></legend>
 <div class="groupInfo" id="groupInfo"></div><br>
 <div id="goodsList"></div>
 <div id="brdiv"><br><br><br></div>
