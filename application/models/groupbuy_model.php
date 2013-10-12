@@ -113,8 +113,9 @@ class groupbuy_model extends CI_Model{
                                  $_SESSION['userID'],
                                  nowTime(),
                                  '/storage/default_groupbuy.jpg',
-                                 substr($detail,0,40),
+                                 substr($shop['illustration'],0,40),
                                  '/groupbuy/groupInfo?id='.$shopID,
+                                 $shopID,
                                  '{}');
         $groupList = explode(';',$shop['group_list']);
         foreach($groupList as $key => $groupID){
