@@ -1,4 +1,4 @@
-.second-nav{
+﻿.second-nav{
 	padding-left: 10px;
 	width: 99%;
 	height: 50px;
@@ -24,6 +24,7 @@
 }
 .nav-block h3{
 	margin-top: 10px;
+	font-family: 微软雅黑;
 }
 .nav-block:hover,.nav-block.active{
 	left: -5px;

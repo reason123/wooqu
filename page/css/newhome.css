@@ -1,10 +1,5 @@
-#mainwrapper {
-	width: 1024px;
-	margin-left: auto;
-	margin-right: auto;
-}
-.newswrapper {
-	width: 1024px;
+﻿.newswrapper {
+	width: 99%;
 	height: 256px;
 	margin-top: 0px;
 	margin-bottom: 10px;
@@ -15,23 +10,27 @@
 	cursor: pointer;
 	box-shadow: 4px 4px 2px #bbbbbb;
 }
-.red {
-	background-color: rgba(254, 67, 101, 1.0);
-	border: 5px solid rgba(252, 157, 154, 1.0);
-}
-.green {
+.shopgreen {
 	background-color: rgba(131, 175, 155, 1.0);
 	border: 5px solid rgba(199, 237, 233, 1.0);
 }
-.blue {
+.oldblue {
 	background-color: rgba(92, 167, 186, 1.0);
 	border: 5px solid rgba(175, 215, 237, 1.0);
+}
+.green {
+	background-color: rgb(147, 199, 80);
+	border: 5px solid rgba(201, 226, 169, 1.0);
+}
+.blue {
+	background-color: rgb(100, 181, 218);
+	border: 5px solid rgb(172, 217, 233)
 }
 .newstext {
 	float: left;
 	margin-top: 10px;
 	margin-left: 10px;
-	width: 70%;
+	width: 75%;
 	height: 100%;
 }
 .newstitle {
@@ -50,9 +49,32 @@
 .newsimg {
 	float: left;
 	height: 100%;
-	width: 28%;
 }
 
-.newscontainer{
+.newscontainer {
 	margin-top: 30px;
+}
+
+.newstotaltext {
+	color: rgb(255, 255, 255);
+	font-size: 1em;
+	float: right;
+	font-family: 微软雅黑;
+}
+
+.newstotalnum {
+	color: #fdc162;
+	font-size: 1.75em;
+}
+
+.newsstarttime {
+	color: rgb(255, 255, 255);
+	font-size: 1em;
+	font-family: 微软雅黑;
+}
+
+.newsendtime {
+	color: rgb(255, 255, 255);
+	font-size: 1em;
+	font-family: 微软雅黑;
 }
