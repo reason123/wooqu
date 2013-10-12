@@ -10,7 +10,7 @@
             if($mh=='group') $tmp=$tmp.'class="active"';
             $tmp = $tmp."><a href='/manager/'>群组管理</a></li>";
        		$tmp = $tmp."<li ";
-       		if($mh=='examine') $tmp = $tmp.'class=:active"';
+       		if($mh=='examine') $tmp = $tmp.'class="active"';
        		$tmp = $tmp."><a href='/manager/examine'>活动审批</a></li>";
        		echo $tmp;
         } ?>
