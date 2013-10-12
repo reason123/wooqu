@@ -50,7 +50,7 @@
         <label class="control-label col-lg-2">加入群组</label>
         <div class="col-lg-3">
            <!--input type="text" class="form-control" name="group_list" value="<?php echo $_SESSION['mcgroupID'].';';?>"-->
-           <input type="text" class="form-control" name="group_list" value="1000100000000;">
+           <input type="text" class="form-control" name="group_list" value="<?php echo $_SESSION['defaultGroupID'] ?>;">
         </div>
      </div>
      <div class="form-group">
