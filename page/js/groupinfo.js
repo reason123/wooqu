@@ -49,13 +49,13 @@ function makeGood(data, cnt) {
 	var res = $(
 		"<div class=\"goodsInfo grayBack\">"+
 			"<div class=\"picContainer\">"+
-				"<img src=\"/storage/goodsPic/pic_"+data.id+".jpg\" href=\"/storage/goodsPic/pic_"+data.id+".jpg\" class=\"img-rounded fancybox\" rel=\"gallery\" title=\""+data.title+"\">"+
+				"<img src=\"/storage/goodsPic/pic_"+data.id+".jpg\" href=\"/storage/goodsPic/pic_"+data.id+".jpg\" class=\"img-rounded fancybox\" rel=\"gallery\" title=\""+data.name+"\">"+
 			"</div>"+
-			"<span class=\"buyNum\">累计售出<span>"+data.howmanybuy+"</span>份</span>"+
+			"<span class=\"buyNum\">累计售出<span>"+data.total+"</span>份</span>"+
 			"<div class=\"pContainer\">"+
-				"<label class=\"base\">商品名：</label><span class=\"added\">"+data.title+"</span><br>"+
-				"<label class=\"base\">单价：</label><span class=\"added\">¥&nbsp;"+data.price+"</span><br>"+
-				"<label class=\"base\">商品描述：</label><span class=\"added\">"+data.illustration+"</span><br>"+
+				"<label class=\"base\">商品名：</label><span class=\"added\">"+data.name+"</span><br>"+
+				"<label class=\"base\">价格：</label><span class=\"added\">"+data.price+" "+data.priceType+"</span><br>"+
+				"<label class=\"base\">商品描述：</label><span class=\"added\">"+data.detail+"</span><br>"+
 				"<div class=\"mesBox\" id=\"mesBox"+cnt+"\"></div>"+
 			"</div>"+
 			"<button class=\"btn btn-success "+purchase+"\" onclick=\""+toggle+"\" id=\"cartBtn"+cnt+"\">放入购物车</button>"+
@@ -75,15 +75,15 @@ function toggleCargo(id){
 		$("#shopTable").append(
 			"<tr id='cartcargo"+id+"'>"+
 				"<td width=10%>"+cargo.id+"</td>"+
-				"<td width=30%>"+cargo.title+"</td>"+
-				"<td width=15%>¥ "+cargo.price+"</td>"+
+				"<td width=30%>"+cargo.nama+"</td>"+
+				"<td width=15%> "+cargo.price+" "+cargo.priceType+"</td>"+
 				"<td width=15%>"+
 					"<input id='cartnum"+id+"' onchange=\"updatePrice("+id+");\" maxlength='5' style='width:50px; font-size:14px;' value='1' type='text' />"+
 					"&nbsp;&nbsp;"+
 					"<i class='countBtn icon-chevron-down' onclick='changeCartNum("+id+",-1)'></i>"+
 					"<i class='countBtn icon-chevron-up' onclick='changeCartNum("+id+",1)'></i>"+
 				"</td>"+
-				"<td width=15%>¥ <span id='cartprice"+id+"'>"+cargo.price+"</span></td>"+
+				"<td width=15%>¥ <span id='cartprice"+id+"'>"+cargo.price+" "+cargo.priceType+"</span></td>"+
 				"<td width=5% ><a href='#' onclick='toggleCargo("+id+")'>删除</a></td>"+
 			"</tr>"
 		);
@@ -217,8 +217,8 @@ $(function(){
 				var infoHTML = makeInfo(data);
 				$("#groupInfo").append(infoHTML);
 
-				$.post("/groupbuy/getCargoByShopId",
-					{ shopid: document.getElementById("groupID").value }, 
+				$.post("/groupbuy/getGoodsList",
+					{ groupbugID: document.getElementById("groupID").value }, 
 					function(jsdata){
 						var data = $.parseJSON(jsdata);
 						cargoList = new Array(data.length);

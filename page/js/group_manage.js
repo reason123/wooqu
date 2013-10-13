@@ -1,4 +1,5 @@
 function addGroup(){
+	
 	$.post('/group/addgroup',
 		{
 			'name':$("#newGroupName").val(),

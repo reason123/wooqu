@@ -380,7 +380,8 @@ class Groupbuy extends CI_Controller {
 	 */
 	function groupInfo() {
 		$groupID = $_GET['id'];
-        $this->load->view('base/mainnav',array('page'=>'groupinfo'));
+        $this->load->view('base/mainnav',array('page'=>'groupinfo','type'=>'groupbuy'));
+        $this->load->view('homepage/nav');
         $this->load->view('groupbuy/groupInfo', array('groupID' => $groupID));
         $this->load->view('base/footer');
 	}
@@ -462,6 +463,11 @@ class Groupbuy extends CI_Controller {
 		header('Location: /manager/groupbuy_goods?id='.$_GET['groupbuyID']);
 	}
 
+	function getGoodsList()
+	{
+		$this->load->model('goods_model','goods');
+		return $this->goods->getGoodsListByGroupbuy($_GET['groupbuyID']);
+	}
 }
 
 ?>

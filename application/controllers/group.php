@@ -115,14 +115,18 @@ class group extends CI_Controller{
     }
 
     public function addGroup(){
+
+
         $this->load->model('group_model','group');
-        $this->permission_model->checkBasePermission(GROUP_MANAGE);
+        //$this->permission_model->checkBasePermission(GROUP_MANAGE);
 		$parentID = $_REQUEST["parentID"];
 		$this->permission_model->checkManage($parentID);
 		$parentID = $parentID."";
-		if (strcmp(substr($parentID, 1, 4), "0000") == 0) $type = 0; else 
+        if (strcmp(substr($parentID, 1, 4), "0000") == 0) $type = 0; else 
 		if (strcmp(substr($parentID, 5, 4), "0000") == 0) $type = 1; else 
 		if (strcmp(substr($parentID, 9, 4), "0000") == 0) $type = 2; else $type = 3;
+
+        
 		switch($type){
             case 0:
                 echo json_encode($this->group->newSchool($_REQUEST['name']));
@@ -131,7 +135,7 @@ class group extends CI_Controller{
                 echo json_encode($this->group->newDepartment($_REQUEST["parentID"],$_REQUEST['name']));
                 return ;
             case 2:
-                echo json_encode($this->group->newclass($_REQUEST["parentID"],$_REQUEST['name']));
+                echo json_encode($this->group->newClass($_REQUEST["parentID"],$_REQUEST['name']));
                 return;
             case 3:
                 echo json_encode(errorMessage(-1,'尚未开放'));
