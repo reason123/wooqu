@@ -100,7 +100,7 @@
 						}else {
 							$myAddress = 2;
 						}
-						for($i = 0;$i < 28;$i ++){
+						for($i = 0;$i < 33;$i ++){
 							if($i == $myAddress) echo "<option value=".$i." selected='selected'>紫荆".$i."#</option>";
 							else echo '<option value='.$i.'>紫荆'.$i.'#</option>';
 						}
