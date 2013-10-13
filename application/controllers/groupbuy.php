@@ -234,8 +234,9 @@ class Groupbuy extends CI_Controller {
 		$comment = "";
 		if (isset($_POST["comment"])) $comment = $_POST["comment"];
 
-		$this->load->model('groupbuy_model', 'groupbuy');
-		$cargo = $this->groupbuy->getCargoByShopId($shopid);
+		$this->load->model('goods_model','goods');
+		$cargo = $this->goods->getGoodsListByGroupbuy($shopid);
+		//$cargo = $this->groupbuy->getCargoByShopId($shopid);
 		$cargoSize = count($cargo);
 		if ($cargoSize == 0) {
 			$ret = array("error"=>"商店不存在");
@@ -243,6 +244,7 @@ class Groupbuy extends CI_Controller {
 			return;
 		}
 
+		$this->load->model('groupbuy_model', 'groupbuy');
 		$shop = $this->groupbuy->getShopById($shopid);
 		$shopname = $shop[0]["title"];
 		if ($shop[0]["status"] == 0) {
@@ -259,8 +261,8 @@ class Groupbuy extends CI_Controller {
 				echo json_encode($ret);
 				return;
 			}
-			$order[$i][2] = $cargo[$idx]["title"];
-			$order[$i][0] = intval($cargo[$idx]["id"]);
+			$order[$i][2] = $cargo[$idx]["name"];
+			$order[$i][0] = intval($cargo[$idx]["ID"]);
 			if ($order[$i][0] == -1) {
 				$ret = array("error"=>"商品重复");
 				echo json_encode($ret);
@@ -278,7 +280,7 @@ class Groupbuy extends CI_Controller {
 			$cargo[$idx]["id"] = -1;
 		}
 
-		for ($i = 0; $i < $orderSize; ++$i)	$this->groupbuy->plusCargo($order[$i][0], $order[$i][1]);
+		//for ($i = 0; $i < $orderSize; ++$i)	$this->groupbuy->plusCargo($order[$i][0], $order[$i][1]);
 		
 		$this->groupbuy->submitOrder($shopid, $shopname, $loginName, $order, $amount, $comment);
 		$ret = array( "content"=>"成功提交！", "error"=>"" );

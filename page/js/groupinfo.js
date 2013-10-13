@@ -49,7 +49,7 @@ function makeGood(data, cnt) {
 	var res = $(
 		"<div class=\"goodsInfo grayBack\">"+
 			"<div class=\"picContainer\">"+
-				"<img src=\"/storage/goodsPic/pic_"+data.id+".jpg\" href=\"/storage/goodsPic/pic_"+data.id+".jpg\" class=\"img-rounded fancybox\" rel=\"gallery\" title=\""+data.name+"\">"+
+				"<img src=\"/storage/goodsPic/pic_"+data.ID+".jpg\" href=\"/storage/goodsPic/pic_"+data.ID+".jpg\" class=\"img-rounded fancybox\" rel=\"gallery\" title=\""+data.name+"\">"+
 			"</div>"+
 			"<span class=\"buyNum\">累计售出<span>"+data.total+"</span>份</span>"+
 			"<div class=\"pContainer\">"+
@@ -74,8 +74,8 @@ function toggleCargo(id){
 		ordList[""+id] = 1;
 		$("#shopTable").append(
 			"<tr id='cartcargo"+id+"'>"+
-				"<td width=10%>"+cargo.id+"</td>"+
-				"<td width=30%>"+cargo.nama+"</td>"+
+				"<td width=10%>"+cargo.ID+"</td>"+
+				"<td width=30%>"+cargo.name+"</td>"+
 				"<td width=15%> "+cargo.price+" "+cargo.priceType+"</td>"+
 				"<td width=15%>"+
 					"<input id='cartnum"+id+"' onchange=\"updatePrice("+id+");\" maxlength='5' style='width:50px; font-size:14px;' value='1' type='text' />"+
