@@ -4,7 +4,7 @@ function showModal(){
 
 function modifyPass(){
 	$("#confirm-btn").attr('disabled','disabled');
-	if($('#old-pass').val() != $('#new-pass').val()){
+	if($('#new-pass').val() != $('#confirm-pass').val()){
 		alert('两次输入密码不同');
 		$("#confirm-btn").removeAttr('disabled');
 		return;
