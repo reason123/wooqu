@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	$(".newswrapper").hover(function() {
-		$(this).fadeTo(200, 0.6);
+		$(this).fadeTo(200, 0.8);
 	}, function() {
 		$(this).fadeTo(200, 1.0);
 	});
