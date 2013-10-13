@@ -6,7 +6,7 @@
   <div class="newswrapper <?php echo $color[$newsInfo['type']];?>" data-url="<?php echo $newsInfo['url']?>">
     <img class="newsimg" src="<?php echo $newsInfo['imgurl']?>"></img>
     <div class="newstext">
-      <p class="newstotaltext">已报名<span class="newstotalnum"></span>人</p>
+      <!--p class="newstotaltext">已报名<span class="newstotalnum"></span>人</p-->
 	  <p class="newstitle"><?php echo $newsInfo['title']?></p>
       <p class="newscontent"><?php echo $newsInfo['shortdescription']?></p>
 	  <p class="newsstarttime"></p>
