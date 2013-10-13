@@ -120,7 +120,7 @@ class group extends CI_Controller{
         $this->load->model('group_model','group');
         //$this->permission_model->checkBasePermission(GROUP_MANAGE);
 		$parentID = $_REQUEST["parentID"];
-		//$this->permission_model->checkManage($parentID);
+		$this->permission_model->checkManage($parentID);
 		$parentID = $parentID."";
         if (strcmp(substr($parentID, 1, 4), "0000") == 0) $type = 0; else 
 		if (strcmp(substr($parentID, 5, 4), "0000") == 0) $type = 1; else 
