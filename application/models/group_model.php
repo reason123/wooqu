@@ -332,7 +332,10 @@ class group_model extends CI_Model{
 	 */
 	function getAllChildGroups($groupID) {
 		$arr = $this->getChildIndexes($groupID);
-		$sql = "SELECT `groupID`,`class`,`school`,`department` FROM `group_list` WHERE `groupID`>? AND `groupID`<=? ORDER BY `groupID`";
+		$sql = "SELECT `groupID`,`class`,`school`,`department` FROM `group_list` WHERE `groupID`>? AND `groupID`<=? ";
+		if (strcmp(substr($groupID, 5, 4), "0000") == 0) 
+			$sql = $sql."AND groupID LIKE '1________0000' ";
+		$sql = $sql."ORDER BY `groupID`";
 		$res = $this->db->query($sql, array($arr[0], $arr[1]))->result_array();
 		return $res;
 	}
