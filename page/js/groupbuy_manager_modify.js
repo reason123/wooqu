@@ -150,6 +150,7 @@ function confirmModifyCargo(idx) {
 }
 
 function confirmModifyInfo() {
+
 	$("#confirmModifyInfoModal").modal("show");
 }
 

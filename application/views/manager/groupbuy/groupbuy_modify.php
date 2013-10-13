@@ -19,7 +19,7 @@
 	</tbody>
 </table>
 <button class="btn btn-primary pull-right" onclick="addCargo();">新增商品</button>
-
+-->
 
 <div id="confirmModifyInfoModal" class="modal fade">
 	<div class="modal-dialog">
@@ -74,4 +74,3 @@
 </div>
 
 <iframe src=""  width="0" height="0" style="display:none;" name="noneframe"></iframe>
--->
