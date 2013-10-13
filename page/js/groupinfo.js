@@ -217,8 +217,7 @@ $(function(){
 				var infoHTML = makeInfo(data);
 				$("#groupInfo").append(infoHTML);
 
-				$.post("/groupbuy/getGoodsList",
-					{ groupbugID: document.getElementById("groupID").value }, 
+				$.post("/groupbuy/getGoodsList?groupbuyID="+document.getElementById("groupID").value,  
 					function(jsdata){
 						var data = $.parseJSON(jsdata);
 						cargoList = new Array(data.length);

@@ -466,7 +466,7 @@ class Groupbuy extends CI_Controller {
 	function getGoodsList()
 	{
 		$this->load->model('goods_model','goods');
-		return $this->goods->getGoodsListByGroupbuy($_GET['groupbuyID']);
+		echo json_encode($this->goods->getGoodsListByGroupbuy($_GET['groupbuyID']));
 	}
 }
 
