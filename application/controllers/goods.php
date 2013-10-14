@@ -46,12 +46,15 @@ class Goods extends CI_Controller{
         if (!isset($_REQUEST['price'])) $_REQUEST['price'] = $goodsInfo['price'];
         if (!isset($_REQUEST['priceType'])) $_REQUEST['priceType'] = $goodsInfo['priceType'];
         if (!isset($_REQUEST['detail'])) $_REQUEST['detail'] = $goodsInfo['detail'];
+        if (!isset($_REQUEST['pic'])) $_REQUEST['pic'] = $goodsInfo['pic'];
         if($this->form_validation->run() == FALSE){
             $this->load->view('base/mainnav',array('page'=>'newgoods'));
             $this->load->view('manager/goods/modgoods',array('goodsInfo'=>$_REQUEST,'goodsID'=>$_GET['goodsID']));
             $this->load->view('base/footer');
         }else{
-             $goodsInfo = array('name'=>$_REQUEST['name'],'detail'=>$_REQUEST['detail'],'price'=>$_REQUEST['price'],'priceType'=>$_REQUEST['priceType'],'pic'=>'');
+            if(!isset($_REQUEST['pic'])) $pic = null;
+            else $pic = $_REQUEST['pic'];
+            $goodsInfo = array('name'=>$_REQUEST['name'],'detail'=>$_REQUEST['detail'],'price'=>$_REQUEST['price'],'priceType'=>$_REQUEST['priceType'],'pic'=>$_REQUEST['pic']);
             $this->goods->modGoods($goodsInfo,$_GET['goodsID']);
             header('Location: /manager/goods'); 
         }

@@ -4,14 +4,19 @@
 ?>
 <legend>新增商品</legend>
 <form class="pubForm form-horizontal" action="/goods/newGoods<?php if (isset($_GET['id'])) echo '?id='.$_GET['id']; ?>" method = "post" enctype="multipart/form-data">
-     <div class="form-group" >
+    <div class="form-group" >
         <label class="control-label col-lg-2">商品名称</label>
         <div class="col-lg-3">
             <input type="text" class="form-control" name="name" value="<?php if (isset($goodsinfo["name"])) echo $goodsInfo["name"]; ?>">
             <?php echo form_error('name',"<span class='error'>","</span>");?>
         </div>
-     </div>
-
+    </div>
+    <div class="form-group">
+        <label class="control-label col-lg-2">商品图片</label>
+        <div class="col-lg-3">
+            <input type="file" name="pic" value="<?php if (isset($goodsinfo["pic"])) echo $goodsInfo["pic"]; ?>">
+        </div>
+    </div>
     <div class="form-group" >
         <label class="control-label col-lg-2">商品价格</label>
         <div class="col-lg-3">
