@@ -91,11 +91,11 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-lg-3">地址</label>
+			<label class="control-label col-lg-3"><span class="redColor">* </span>地址</label>
 			<div class="col-lg-4">
-				<select class="form-control" name="address">
+				<!-- <select class="form-control" name="address">
 					<?php 
-						if(isset($address)){
+						/*if(isset($address)){
 							$myAddress = (int)$address;
 						}else {
 							$myAddress = 2;
@@ -103,10 +103,11 @@
 						for($i = 0;$i < 33;$i ++){
 							if($i == $myAddress) echo "<option value=".$i." selected='selected'>紫荆".$i."#</option>";
 							else echo '<option value='.$i.'>紫荆'.$i.'#</option>';
-						}
+						}*/
 					?>
-				</select>
-				<span class="remind">请选择你的住址</span><br/>
+				</select> --!>
+				<input class="form-control" type="text" name="address" value="紫荆#" />
+				<span class="remind">请输入你的地址，示例：紫荆#2</span><br/>
 				<?php echo form_error('address',"<span class='error'>","</span>");?>
 			</div>
 		</div>

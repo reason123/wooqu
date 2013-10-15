@@ -33,6 +33,12 @@
     </div>
   </div>
   <div class="form-group">
+    <label class="control-label col-lg-1">地址</label>
+    <div class="col-lg-2">
+      <input type="text" name="address" id="address" class="form-control" value="紫荆#<?php echo $userInfo['address']?>">
+    </div>
+  </div>
+  <div class="form-group">
     <label class="control-label col-lg-1"></label>
     <div class="col-lg-2">
       <input type="submit" class="btn btn-default">

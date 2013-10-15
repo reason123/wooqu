@@ -28,6 +28,19 @@ class User extends CI_Controller{
         return 1;
     }
 
+	/**
+	 * 获取紫荆楼号
+	 * @author Hewr
+	 */
+	public function getAddress($address) {
+		$len = strlen($address);
+		for ($i = 0; $i <= $len; ++$i) {
+			if ($i == $len) return "";
+			if ($address[$i] == '#') 
+				return intval(substr($address, $i + 1, $len));
+		}
+	}
+
     /**
      * 生成用户注册页面
      * @author ca007
@@ -43,6 +56,7 @@ class User extends CI_Controller{
 		$this->form_validation->set_rules('school','school','callback_school_check');
 		$this->form_validation->set_rules('department','department','callback_department_check');
 		$this->form_validation->set_rules('class','class','callback_class_check');
+		$this->form_validation->set_rules('address','address','required');
 		$this->form_validation->set_rules('studentid','studentid','required|alpha_numeric');
 		$this->form_validation->set_rules('verificationcode','Verification Code','callback_verificationcode_check');
 		$this->form_validation->set_message('verificationcode_check','%s error.');
@@ -59,6 +73,7 @@ class User extends CI_Controller{
 			$this->load->view('base/footer');
 		}else{
 			$this->load->model('user_model');
+			$address = $this->getAddress($_REQUEST['address']);
 			$res = $this->user_model->addUser(
 								$_REQUEST['regusername'],
 								$_REQUEST['nickname'],
@@ -69,7 +84,7 @@ class User extends CI_Controller{
 								$_REQUEST['department'],
 								$_REQUEST['class'],
 								$_REQUEST['studentid'],
-								$_REQUEST['address']);
+								$address);
 			if($res['error']['code'] == 1){
 				gotoHomepage();
 			}else{
@@ -199,9 +214,11 @@ class User extends CI_Controller{
      */
     public function modMyInfo(){
         $this->load->model('user_model','user');
+		$address = $this->getAddress($_REQUEST['address']);
         echo json_encode($this->user->modMyInfo($_REQUEST['nickName'],
                                                 $_REQUEST['phoneNumber'],
-                                                $_REQUEST['studentID']));
+												$_REQUEST['studentID'],
+												$address));
     }
 
     /**
