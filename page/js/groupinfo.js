@@ -1,6 +1,7 @@
 var ordList = new Object();
 var cargoList;
 var onSale = 1;
+var submitting = false;
 
 function debug(str) {
 	document.getElementById("board").innerHTML = str;
@@ -167,6 +168,11 @@ function confirmOrder() {
 }
 
 function subOrd() {
+	if (submitting == true) {
+		alert("正在提交上次订单，请稍候");
+		return;
+	}
+	submitting = true;
 	var cnt = 0;
 	for (var i = 0; i < cargoList.length; ++i) if (cargoInCart(i)) {
 		var num = parseInt(document.getElementById("cartnum" + i).value);
@@ -185,6 +191,7 @@ function subOrd() {
 			comment: document.getElementById("comment").value
 		}, 
 		function (jsdata) {
+			submitting = false;
 			var data = $.parseJSON(jsdata);
 			if (data.error=="") {
 				alert(data.content);
@@ -202,7 +209,6 @@ $(function(){
 		$.post("/groupbuy/getShopById",
 			{ id: document.getElementById("groupID").value }, 
 			function(jsdata){
-				alert(jsdata);
 				var data = $.parseJSON(jsdata);
 
 				$("#title").append(data.title);

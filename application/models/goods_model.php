@@ -116,6 +116,15 @@ class goods_model extends CI_Model{
 		$newItem = array('goodslist' => $this->delGoodsAtOBJ($tmp[0]['goodslist'],$goodsID));
 		$this->db->where('ID',$groupbuyID)->update('groupbuy_list', $newItem);
 	}
+
+	/**
+	 * 更新商品历史销售量
+	 * @author Hewr
+	 */
+	function increaseGoodsTotal($goodsID, $delta) {
+		$sql = "UPDATE `goods_list` SET `total`=`total`+? WHERE `ID`=?";
+		$this->db->query($sql, array($delta, $goodsID));
+	}
 }
 
 ?>

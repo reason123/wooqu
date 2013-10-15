@@ -280,7 +280,9 @@ class Groupbuy extends CI_Controller {
 			$cargo[$idx]["id"] = -1;
 		}
 
-		//for ($i = 0; $i < $orderSize; ++$i)	$this->groupbuy->plusCargo($order[$i][0], $order[$i][1]);
+		for ($i = 0; $i < $orderSize; ++$i)	
+			//$this->groupbuy->plusCargo($order[$i][0], $order[$i][1]);
+			$this->goods->increaseGoodsTotal($order[$i][0], $order[$i][1]);
 		
 		$this->groupbuy->submitOrder($shopid, $shopname, $loginName, $order, $amount, $comment);
 		$ret = array( "content"=>"成功提交！", "error"=>"" );
@@ -327,8 +329,11 @@ class Groupbuy extends CI_Controller {
 			return;
 		}
 
+		$this->load->model('goods_model','goods');
 		$list = $order["list"]; $listSize = count($list);
-		for ($i = 0; $i < $listSize; ++$i) $this->groupbuy->plusCargo($list[$i][0], -intval($list[$i][1]));
+		for ($i = 0; $i < $listSize; ++$i) 
+			//$this->groupbuy->plusCargo($list[$i][0], -intval($list[$i][1]));
+			$this->goods->increaseGoodsTotal($list[$i][0], -intval($list[$i][1]));
 		$this->groupbuy->deleteOrderById($id);
 
 		$ret = array( "content"=>"成功删除！", "error"=>"" );
