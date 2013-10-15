@@ -99,7 +99,7 @@ class User extends CI_Controller{
 	}
 
     /**
-     * 生成用户登录页面
+     * 生成用户登陆页面
      * @author: ca007
      */
 	public function login(){

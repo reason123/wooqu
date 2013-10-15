@@ -5,7 +5,7 @@ if(isset($errorMes))
 <div style="padding-top: 40px">
 	<form class="form-horizontal" action="/user/login" method="post">
 		<div class="form-group">
-			<label class="col-lg-1 control-label" for="inputLoginame">登录名</label>
+			<label class="col-lg-1 control-label" for="inputLoginame">登陆名</label>
 			<div class="col-lg-3">
 				<input type="text" class="form-control" name="username" id="inputLoginame" placeholder="loginame" value="<?php if(isset($username)) echo $username; ?>">
 				<?php echo form_error('username',"<span class='error'>","</span>");?>

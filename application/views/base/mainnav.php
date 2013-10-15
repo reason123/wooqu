@@ -39,7 +39,7 @@
         </ul>
         <?php } else { ?>
 		<div class="navbar-right" style="padding-right:20px;">
-		  <a type="button" class="btn btn-default navbar-btn" href="/user/login">登录</a>
+		  <a type="button" class="btn btn-default navbar-btn" href="/user/login">登陆</a>
 		  <a type="button" class="btn btn-success navbar-btn" href="/user/usereg">注册</a>
 		</div>
         <?php } ?>
