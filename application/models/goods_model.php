@@ -83,18 +83,36 @@ class goods_model extends CI_Model{
 		return json_encode($goodsList);
 	}
 
+	function getGoodsListByOBJ($goodslist)
+	{
+		$sql = "SELECT DISTINCT * FROM goods_list WHERE ID = 0 ";
+		foreach ($goodslist as $goodsID=>$price)
+		{
+			$sql = $sql."OR ID = ".$goodsID." ";
+		}
+		$sql = $sql."ORDER BY priority DESC,total DESC";
+		$goodsInfoList = $this->db->query($sql)->result_array();
+		foreach ($goodsInfoList as $key=>$goodsInfo)
+		{
+			$goodsInfoList[$key]['price'] = $goodslist[$goodsInfo['ID']];
+		}		
+		return $goodsInfoList;
+	}
+
 	function getGoodsListByGroupbuy($groupbuyID)
 	{
 		$tmp = $this->db->from('groupbuy_list')->where('ID', $groupbuyID)->get()->result_array();
 		$GL = json_decode($tmp[0]['goodslist'],true);
-		$goodsList = array();
+		return $this->getGoodsListByOBJ($GL);
+		/*$goodsList = array();
 		foreach ($GL as $goodsID=>$price)
 		{
 			$goodsInfo = $this->getGoodsInfo($goodsID);
 			$goodsInfo['price'] = $price;
 			array_push($goodsList, $goodsInfo);
 		}
-		return $goodsList;
+
+		return $goodsList;*/
 	}
 
 	function addGoodsAtGroupbuy($groupbuyID,$goodsID,$price)
