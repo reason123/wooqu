@@ -51,7 +51,7 @@ class Activity extends CI_Controller{
 
             if(!isset($_REQUEST['pic'])) $pic = null;
             else $pic = $_REQUEST['pic'];
-            echo($pic);
+            //echo($pic);
             $check = 0;
             if(isset($_REQUEST['check']) && $_REQUEST['check'] == 'on'){
                 $check = 1;
