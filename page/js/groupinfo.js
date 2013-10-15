@@ -202,6 +202,7 @@ $(function(){
 		$.post("/groupbuy/getShopById",
 			{ id: document.getElementById("groupID").value }, 
 			function(jsdata){
+				alert(jsdata);
 				var data = $.parseJSON(jsdata);
 
 				$("#title").append(data.title);

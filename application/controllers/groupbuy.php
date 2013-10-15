@@ -47,7 +47,7 @@ class Groupbuy extends CI_Controller {
 	 * @author Hewr
 	 */
 	function getShopById() {
-		$id = $_GET["id"];
+		$id = $_REQUEST["id"];
 		$this->load->model('groupbuy_model', 'groupbuy');
 		$shop = $this->groupbuy->getShopById($id);
 		echo json_encode($shop[0]);
