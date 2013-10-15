@@ -92,7 +92,6 @@ class goods_model extends CI_Model{
 		{
 			$goodsInfo = $this->getGoodsInfo($goodsID);
 			$goodsInfo['price'] = $price;
-			$goodsInfo['pic'] = "/storage/goodsPic/pic_".$goodsID.".jpg";
 			array_push($goodsList, $goodsInfo);
 		}
 		return $goodsList;

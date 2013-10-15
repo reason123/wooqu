@@ -1,6 +1,5 @@
 <a class="btn btn-default" style="margin-bottom: 10px;" href="/manager/goods">返回商品管理</a>
 <legend>修改商品</legend>
-<?php print_r($goodsInfo); ?>
 <img src="<?php echo $goodsInfo['pic']; ?>" height="180" style="margin-left:190px;" /><br><br>
 <form class="pubForm form-horizontal" action="/goods/modGoods?goodsID=<?php echo $goodsID;?>" method = "post" enctype="multipart/form-data">
     <div class="form-group" >
