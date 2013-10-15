@@ -50,7 +50,7 @@ function makeGood(data, cnt) {
 	var res = $(
 		"<div class=\"goodsInfo grayBack\">"+
 			"<div class=\"picContainer\">"+
-				"<img src=\"/storage/goodsPic/pic_"+data.ID+".jpg\" href=\"/storage/goodsPic/pic_"+data.ID+".jpg\" class=\"img-rounded fancybox\" rel=\"gallery\" title=\""+data.name+"\">"+
+				"<img src=\""+data.pic+"\" href=\""+data.pic+"\" class=\"img-rounded fancybox\" rel=\"gallery\" title=\""+data.name+"\">"+
 			"</div>"+
 			"<span class=\"buyNum\">累计售出<span>"+data.total+"</span>份</span>"+
 			"<div class=\"pContainer\">"+

@@ -46,16 +46,21 @@ class Goods extends CI_Controller{
         if (!isset($_REQUEST['price'])) $_REQUEST['price'] = $goodsInfo['price'];
         if (!isset($_REQUEST['priceType'])) $_REQUEST['priceType'] = $goodsInfo['priceType'];
         if (!isset($_REQUEST['detail'])) $_REQUEST['detail'] = $goodsInfo['detail'];
-        if (!isset($_REQUEST['pic'])) $_REQUEST['pic'] = $goodsInfo['pic'];
+		if (!isset($_REQUEST['pic'])) $_REQUEST['pic'] = $goodsInfo['pic'];
         if($this->form_validation->run() == FALSE){
             $this->load->view('base/mainnav',array('page'=>'newgoods'));
             $this->load->view('manager/goods/modgoods',array('goodsInfo'=>$_REQUEST,'goodsID'=>$_GET['goodsID']));
             $this->load->view('base/footer');
         }else{
-            if(!isset($_REQUEST['pic'])) $pic = null;
-            else $pic = $_REQUEST['pic'];
-            $goodsInfo = array('name'=>$_REQUEST['name'],'detail'=>$_REQUEST['detail'],'price'=>$_REQUEST['price'],'priceType'=>$_REQUEST['priceType'],'pic'=>$_REQUEST['pic']);
+			$picPath = "/storage/goodsPic/pic_".$_GET['goodsID'].".jpg";
+            $goodsInfo = array('name'=>$_REQUEST['name'],'detail'=>$_REQUEST['detail'],'price'=>$_REQUEST['price'],'priceType'=>$_REQUEST['priceType'],'pic'=>$picPath);
             $this->goods->modGoods($goodsInfo,$_GET['goodsID']);
+
+			if ($_FILES['pic']['size'] > 0) {
+				$photo = $_FILES['pic'];
+				move_uploaded_file($photo['tmp_name'], substr($picPath, 1, strlen($picPath)));
+			}
+
             header('Location: /manager/goods'); 
         }
     }
