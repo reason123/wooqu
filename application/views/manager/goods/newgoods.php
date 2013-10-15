@@ -14,7 +14,7 @@
     <div class="form-group">
         <label class="control-label col-lg-2">商品图片</label>
         <div class="col-lg-3">
-            <input type="file" name="pic" value="<?php if (isset($goodsinfo["pic"])) echo $goodsInfo["pic"]; ?>">
+            <input type="file" class="form-control" name="pic" />
         </div>
     </div>
     <div class="form-group" >

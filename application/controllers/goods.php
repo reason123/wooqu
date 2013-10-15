@@ -25,9 +25,16 @@ class Goods extends CI_Controller{
         }else{
             $goodsInfo = array('name'=>$_REQUEST['name'],'detail'=>$_REQUEST['detail'],'price'=>$_REQUEST['price'],'priceType'=>$_REQUEST['priceType'],'pic'=>'');
             $goodsID = $this->goods->addGoods($goodsInfo);
+			$picPath = "/storage/goodsPic/pic_".$goodsID.".jpg";
+			$goodsInfo['pic'] = $picPath;
+			$this->goods->modGoods($goodsInfo,$goodsID);
+			if ($_FILES['pic']['size'] > 0) {
+				$photo = $_FILES['pic'];
+				move_uploaded_file($photo['tmp_name'], substr($picPath, 1, strlen($picPath)));
+			}
             if (isset($_GET['id'])) {
                 $this->goods->addGoodsAtGroupbuy($_GET['id'], $goodsID, $_REQUEST['price']);
-                header('Location: /manager/groupbuy_goods?id='.$_GET['id']);     
+                header('Location: /manager/groupbuy_goods?id='.$_GET['id']); 
                 return;
             }
             header('Location: /manager/goods'); 
