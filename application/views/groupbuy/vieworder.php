@@ -2,9 +2,10 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th>群组号</th>
+      <!--<th>群组号</th>-->
       <th>班级</th>
       <th>姓名</th>
+      <th>地址</th>
       <th>联系方式</th>
       <th>总金额</th>
       <th>详细信息</th>
@@ -14,9 +15,10 @@
   <tbody>
   <?php foreach($order_list as $key => $order): ?>
     <tr>
-      <td><?php echo $order['defaultGroupID'] ?></td>
+      <!--<td><?php echo $order['defaultGroupID'] ?></td>-->
       <td><?php echo $order['class'] ?></td>
       <td><?php echo $order['realName'] ?></td>
+      <td><?php echo $order['address'] ?></td>
       <td><?php echo $order['phoneNumber'] ?></td>
       <td><?php echo $order['amount'] ?></td>
       <td>

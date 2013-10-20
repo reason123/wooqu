@@ -85,12 +85,12 @@ class goods_model extends CI_Model{
 
 	function getGoodsListByOBJ($goodslist)
 	{
-		$sql = "SELECT DISTINCT * FROM goods_list WHERE ID = 0 ";
+		$sql = "SELECT DISTINCT * FROM goods_list WHERE available = 1 AND ( ID = 0 ";
 		foreach ($goodslist as $goodsID=>$price)
 		{
 			$sql = $sql."OR ID = ".$goodsID." ";
 		}
-		$sql = $sql."ORDER BY priority DESC,total DESC";
+		$sql = $sql." ) ORDER BY priority DESC,total DESC";
 		$goodsInfoList = $this->db->query($sql)->result_array();
 		foreach ($goodsInfoList as $key=>$goodsInfo)
 		{
@@ -120,7 +120,8 @@ class goods_model extends CI_Model{
 		$tmp = $this->db->from('goods_list')->where('ID', $goodsID)->get()->result_array();
 		$user = $tmp[0]['userID'];
 		if (!isset($_SESSION["userID"]) || $user != $_SESSION["userID"]) return;
-		$tmp = $this->db->from('groupbuy_list')->where('ID', $groupbuyID)->get()->result_array();
+		if ($pirce = -1) $price = $tmp[0]['price'];
+		$tmp = $this->db->from('groupbuy_list')->where('ID', $groupbuyID)->get()->result_array();		
 		$newItem = array('goodslist' => $this->addGoodsAtOBJ($tmp[0]['goodslist'],$goodsID,$price));
 		$this->db->where('ID',$groupbuyID)->update('groupbuy_list', $newItem);
 	}
