@@ -3,7 +3,7 @@
      <div class="form-group" >
         <label class="control-label col-lg-2">团购标题</label>
         <div class="col-lg-3">
-            <input type="text" class="form-control" name="title" value="<?php if (isset($groupbuyInfo['title'])) echo $groupbuyInof['title']; ?>">
+            <input type="text" class="form-control" name="title" value="<?php if (isset($groupbuyInfo['title'])) echo $groupbuyInfo['title']; ?>">
             <?php echo form_error('title',"<span class='error'>","</span>");?>
         </div>
      </div>
@@ -16,28 +16,28 @@
     <div class="form-group" >
         <label class="control-label col-lg-2">支付方式</label>
         <div class="col-lg-3">
-            <input type="text" class="form-control" name="howtopay" value="<?php if (isset($groupbuyInfo['howtopay'])) echo $groupbuyInof['howtopay']; ?>">
+            <input type="text" class="form-control" name="howtopay" value="<?php if (isset($groupbuyInfo['howtopay'])) echo $groupbuyInfo['howtopay']; ?>">
             <?php echo form_error('howtopay',"<span class='error'>","</span>");?>
         </div>
      </div>
      <div class="form-group" >
         <label class="control-label col-lg-2">货源</label>
         <div class="col-lg-3">
-            <input type="text" class="form-control" name="source" value="<?php if (isset($groupbuyInfo['source'])) echo $groupbuyInof['source']; ?>">
+            <input type="text" class="form-control" name="source" value="<?php if (isset($groupbuyInfo['source'])) echo $groupbuyInfo['source']; ?>">
             <?php echo form_error('source',"<span class='error'>","</span>");?>
         </div>
      </div>
      <div class="form-group" >
         <label class="control-label col-lg-2">备注</label>
         <div class="col-lg-3">
-            <input type="text" class="form-control" name="comment" value="<?php if (isset($groupbuyInfo['comment'])) echo $groupbuyInof['comment']; ?>">
+            <input type="text" class="form-control" name="comment" value="<?php if (isset($groupbuyInfo['comment'])) echo $groupbuyInfo['comment']; ?>">
             <?php echo form_error('comment',"<span class='error'>","</span>");?>
         </div>
      </div>
      <div class="form-group">
         <label class="control-label col-lg-2">详细信息</label>
         <div class="col-lg-5">
-            <textarea rows="5" name="illustration" class="form-control" value="<?php if (isset($groupbuyInfo['illustration'])) echo $groupbuyInof['illustration']; ?>"></textarea>
+            <textarea rows="5" name="illustration" class="form-control" value="<?php if (isset($groupbuyInfo['illustration'])) echo $groupbuyInfo['illustration']; ?>"></textarea>
         </div>
      </div>
     <div class="form-group">

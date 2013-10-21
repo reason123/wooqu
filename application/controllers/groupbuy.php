@@ -96,13 +96,13 @@ class Groupbuy extends CI_Controller {
 			echo json_encode(array("error"=>"illegal account"));
 			return;
 		}
-		$group_list = $this->groupbuy->splitGroupStr($shop["groups"]);
+		/*$group_list = $this->groupbuy->splitGroupStr($shop["groups"]);
 		if (count($group_list) == 0) {
 			echo json_encode(array("error"=>"illegal groups"));
 			return;
 		}
 		$this->groupbuy->clearShopGroup($shopID);
-		for ($i = 1; $i < count($group_list); ++$i) $this->groupbuy->shopJoinGroup($shopID, $group_list[$i]);
+		for ($i = 1; $i < count($group_list); ++$i) $this->groupbuy->shopJoinGroup($shopID, $group_list[$i]);*/
 		$this->groupbuy->modifyShop($shop, $userName);
 		echo json_encode(array("error"=>""));
 	}
@@ -406,9 +406,20 @@ class Groupbuy extends CI_Controller {
         $this->form_validation->set_rules('comment','comment','required'); 
         $this->form_validation->set_rules('illustration','illustration','required'); 
         $this->load->model('groupbuy_model','groupbuy');
+        if (isset($_GET['id']))
+        if (!isset($_REQUEST['title']))
+        {
+        	$groupbuyInfo = $this->groupbuy->getGroupbuyInfoByID($_GET['id']);
+        	$_REQUEST['title'] = $groupbuyInfo['title'];
+        	$_REQUEST['comment'] = $groupbuyInfo['comment'];
+        	$_REQUEST['howtopay'] = $groupbuyInfo['howtopay'];
+        	$_REQUEST['source'] = $groupbuyInfo['source'];
+        	$_REQUEST['illustration'] = $groupbuyInfo['illustration'];
+        }
         if($this->form_validation->run() == FALSE){
+        	
         	$this->load->view('base/mainnav',array('page'=>'newgroupbuy'));
-            $this->load->view('manager/groupbuy/newgroupbuy',array('$groupbuyInfo'=>$_REQUEST));
+            $this->load->view('manager/groupbuy/newgroupbuy');
             $this->load->view('base/footer');
         }else{        	
         	$shop = array("title"=>$_REQUEST['title'],
