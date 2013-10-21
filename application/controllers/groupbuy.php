@@ -432,7 +432,13 @@ class Groupbuy extends CI_Controller {
         				"source"=>$_REQUEST['source'],
         				"group_list"=>$_REQUEST['group_list']);
         	//echo $_REQUEST['act_end_date'];
-        	$this->groupbuy->insertShop($shop,$_SESSION['loginName']);
+        	$groupbuyID = $this->groupbuy->insertShop($shop,$_SESSION['loginName']);
+        	if (isset($_GET['id']))
+        	{
+        		$groupbuyInfo = $this->groupbuy->getGroupbuyInfoByID($_GET['id']);
+        		echo $groupbuyInfo['goodslist'];
+        		$this->groupbuy->updataGoodsList($groupbuyID,$groupbuyInfo['goodslist']);
+        	}
             header('Location: /manager/groupbuy');
             /**
              * TODO: Add group_shop
@@ -528,6 +534,14 @@ class Groupbuy extends CI_Controller {
 		$this->load->model('goods_model','goods');
         $this->goods->addGoodsAtGroupbuy($_GET['groupbuyID'],$_GET['goodsID'],-1);
         header('Location: /groupbuy/selectGoods?id='.$_GET['groupbuyID']);
+	}
+
+	function test()
+	{
+		$this->load->model('groupbuy_model','groupbuy');
+		$groupbuyInfo = $this->groupbuy->getGroupbuyInfoByID(1102);
+		echo $groupbuyInfo['goodslist'];
+        $this->groupbuy->updataGoodsList(1104,$groupbuyInfo['goodslist']);
 	}
 }
 

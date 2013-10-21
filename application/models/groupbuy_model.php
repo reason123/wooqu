@@ -473,6 +473,16 @@ class groupbuy_model extends CI_Model{
 		return $tmp[0];
 	}
 
+	/**
+	 * @author LJNanest
+	 */
+
+	function updataGoodsList($groupbuyID,$JsonGoodsList)
+	{
+		$sql = "UPDATE `groupbuy_list` SET goodslist =? WHERE `ID`=".$groupbuyID;
+		$res = $this->db->query($sql,array($JsonGoodsList));
+	}	
+
 
 }
 

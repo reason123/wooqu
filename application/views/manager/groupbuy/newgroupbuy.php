@@ -1,7 +1,7 @@
 <a class="btn btn-default" style="margin-bottom: 10px;" href="/manager/groupbuy">返回团购列表</a>
 <legend>创建团购活动</legend>
 <div style="padding:20px;">
-<form class="pubForm form-horizontal" action="/groupbuy/newGroupbuy" method = "post" enctype="multipart/form-data">
+<form class="pubForm form-horizontal" action="/groupbuy/newGroupbuy<?php if (isset($_GET['id'])) echo '?id='.$_GET['id']; ?>" method = "post" enctype="multipart/form-data">
      <div class="form-group" >
         <label class="control-label col-lg-2">团购标题</label>
         <div class="col-lg-3">
