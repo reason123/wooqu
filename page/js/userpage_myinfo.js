@@ -24,3 +24,24 @@ function modifyPass(){
 		   })
 	$("#confirm-btn").removeAttr('disabled');
 }
+
+$(function(){
+	$(".modinfo-form").submit(function(e){
+		e.preventDefault();
+		$.post('/user/modMyInfo',
+			   {
+				   'nickName':$("#nickName").val(),
+				   'phoneNumber':$("#phoneNumber").val(),
+				   'studentID':$("#studentID").val(),
+				   'address':$("#address").val()
+			   },function(data){
+				   var re = $.parseJSON(data);
+				   if(re['error']['code'] == 1){
+					   alert('修改成功');
+					   window.location.reload();
+				   }else{
+					   alert(re['error']['message']);
+				   }
+			   })
+	})
+})

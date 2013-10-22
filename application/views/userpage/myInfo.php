@@ -1,7 +1,7 @@
 <legend>修改密码</legend>
 &nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-default" onclick="showModal()">修改密码</button>
 <legend style="margin-top:10px;">个人信息</legend>
-<form class="form-horizontal" id="info-form" action="/user/modMyInfo" method="post">
+<form class="modinfo-form form-horizontal" id="info-form" action="/user/modMyInfo" method="post">
   <div class="form-group">
     <label class="control-label col-lg-1">登录名</label>
     <div class="col-lg-2">
