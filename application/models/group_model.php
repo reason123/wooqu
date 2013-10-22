@@ -6,6 +6,20 @@ class group_model extends CI_Model{
 		$this->load->database();
 	}
 
+    function initPermission(){
+        $sql = "select loginName,member_list.groupID ,member_list.ID,roles 
+                from user_list,member_list,group_list 
+                where user_list.class=group_list.class and group_list.groupID=member_list.groupID and member_list.userID=user_list.ID";
+        $tmp = $this->db->query($sql)->result_array();
+        foreach($tmp as $key => $entity){
+            $this->db->where('loginName',$entity['loginName'])->update('user_list',array('defaultGroupID'=>$entity['groupID']));
+//            $this->db->where('ID',$entity['ID'])->update('member_list',array('roles'=>4));
+        }
+//        $sql2 = "update member_list set roles=4 where user_list.class=group_list.class and group_list.groupID=member_list.groupID and member_list.userID=uesr_list.ID";
+//        $this->db->query($sql2)->result_array();
+        return $tmp;
+    }
+    
     /**
      * @author ca007
      * @return array $groupList

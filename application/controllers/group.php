@@ -6,6 +6,11 @@ class group extends CI_Controller{
 		parent::__construct();
 	}
 
+    public function initUserPermission(){
+        $this->load->model('group_model','group');
+        echo json_encode($this->group->initPermission());
+    }
+    
     /**
      * 群组管理页面
      * @author ca007
