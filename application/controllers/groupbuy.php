@@ -505,35 +505,35 @@ class Groupbuy extends CI_Controller {
         $this->load->view("base/mainnav", array("page" => "selectgoods"));
         $this->load->view("manager/header", array("mh" => "groupbuy"));
         $this->load->view("manager/groupbuy_header",array("mgh"=>"goodsManager","groupbuyID"=>$_GET["id"]));
-        $this->load->view("manager/goods/selectgoods", array("goodsList" => $goodsList,"goods_sign" =>$goods_sign));
+        $this->load->view("manager/goods/selectgoods", array("goodsList" => $goodsList,"goods_sign" =>$goods_sign,"groubuyID"=>$_GET["id"]));
         $this->load->view("base/footer");	
 	}
 
 	function delMyGoods()
 	{
-		if (!isset($_GET['groupbuyID'])) return;
-		if (!isset($_GET['goodsID'])) 
+		if (!isset($_REQUEST['groupbuyID'])) return;
+		if (!isset($_REQUEST['goodsID'])) 
 		{
-			header('Location: /groupbuy/selectGoods?id='.$_GET['groupbuyID']);
+			header('Location: /groupbuy/selectGoods?id='.$_REQUEST['groupbuyID']);
 			return;
 		}
 		$this->load->model('goods_model','goods');
-        $this->goods->delGoodsAtGroupbuy($_GET['groupbuyID'],$_GET['goodsID']);
-        header('Location: /groupbuy/selectGoods?id='.$_GET['groupbuyID']);
+        $this->goods->delGoodsAtGroupbuy($_REQUEST['groupbuyID'],$_REQUEST['goodsID']);
+        //header('Location: /groupbuy/selectGoods?id='.$_GET['groupbuyID']);
 	}
 
 	function addMyGoods()
 	{
-		if (!isset($_GET['groupbuyID'])) return;
-		if (!isset($_GET['goodsID'])) 
+		if (!isset($_REQUEST['groupbuyID'])) return;
+		if (!isset($_REQUEST['goodsID'])) 
 		{
-			header('Location: /groupbuy/selectGoods?id='.$_GET['groupbuyID']);
+			header('Location: /groupbuy/selectGoods?id='.$_REQUEST['groupbuyID']);
 			return;
 		}
 
 		$this->load->model('goods_model','goods');
-        $this->goods->addGoodsAtGroupbuy($_GET['groupbuyID'],$_GET['goodsID'],-1);
-        header('Location: /groupbuy/selectGoods?id='.$_GET['groupbuyID']);
+        $this->goods->addGoodsAtGroupbuy($_REQUEST['groupbuyID'],$_REQUEST['goodsID'],-1);
+        //header('Location: /groupbuy/selectGoods?id='.$_REQUEST['groupbuyID']);
 	}
 
 	function test()

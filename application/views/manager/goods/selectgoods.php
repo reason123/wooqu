@@ -23,9 +23,9 @@
 				<td>
 					<?php 
 						if (isset($goods_sign[$goodsInfo['ID']]))
-							echo '<a class="btn btn-small btn-danger" href="/groupbuy/delMyGoods?goodsID='.$goodsInfo['ID'].'&groupbuyID='.$_GET['id'].'">卸载商品</a>';
+							echo '<button id="but'.$goodsInfo['ID'].'" class="btn btn-small btn-danger" onclick="turnGoods('.$goodsInfo['ID'].','.$groupbuyID.')" value="del">卸载商品</button>';
 						else
-							echo '<a class="btn btn-small btn-primary" href="/groupbuy/addMyGoods?goodsID='.$goodsInfo['ID'].'&groupbuyID='.$_GET['id'].'">加入商品</a>';
+							echo '<button id="but'.$goodsInfo['ID'].'" class="btn btn-small btn-primary" onclick="turnGoods('.$goodsInfo['ID'].','.$groupbuyID.')" value="add">加入商品</button>';
 					?>
 				</td>
 			</tr>
