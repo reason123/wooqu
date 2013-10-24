@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta property="wb:webmaster" content="0aa04336e3901ae0" />
     <title>Wooqu</title>
     <script src = "/page/js/jquery.js"></script>
     <script src = "/page/js/base.js"></script>
