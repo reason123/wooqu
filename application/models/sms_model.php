@@ -5,6 +5,8 @@ class sms_model extends CI_Model {
 	private $accesskey = "30";
 	private $secretkey = "b1114fe4391a8e5021d1fb2eb01c4e64be5c6c54";
 	private $baseUrl = "sms.bechtech.cn/Api/send/data/json";
+	private $prefix = "【Wooqu提醒】";
+	private $suffix = "";
 
 	function __construct() {
 		parent::__construct();
@@ -28,7 +30,7 @@ class sms_model extends CI_Model {
 	/**
 	 * 向目标用户列表发送短信，并扣除用户短信余量
 	 * @param array $numberList 目标号码列表，以字符串数组传入
-	 * @param string $message 短信内容，按每条67字计费
+	 * @param string $message 短信内容，按每条67字计费(包括前缀和后缀)
 	 * @return 一条errorMessage，若成功，则其error->code为1，num为成功发出短信的条数
 	 */
 	function sendSms($numberList, $message) {
@@ -37,6 +39,7 @@ class sms_model extends CI_Model {
 		}
 		$this->initSmsIfNot();
 
+		$message = $this->prefix.$message.$this->suffix;
 		$recordList = $this->db->from('sms_list')->where('userID',$_SESSION['userID'])->get()->result_array();
 		$myAmount = (int)$recordList[0]['amount'];
 		$messageLength = strlen($message);
