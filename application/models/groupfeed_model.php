@@ -199,7 +199,7 @@ class groupFeed_model extends CI_Model{
         if(!$this->permission_model->manageGroup($tmp[0]['groupID'])){
             return errorMessage(-2,'No permission');
         }
-        $this->db->delete('group_feed',array('ID',$relationID));
+        $this->db->delete('group_feed',array('ID'=>$relationID));
         return errorMessage(1,'OK');
     }
 }
