@@ -74,9 +74,11 @@ class activity_model extends CI_Model{
             }*/
         foreach($groupList as $key => $groupID){
             if(!isGID($groupID)) continue;
-            $this->db->insert('group_act', array('actID'=>$actID,'groupID'=>$groupID,'state'=>$this->permission_model->manageGroup($groupID)));
+            $this->db->insert('group_act', array('actID'=>$actID,'groupID'=>$groupID,'state'=>1));
             if($this->permission_model->manageGroup($groupID)){
-                $this->feed->sendFeed(0,$actID,$groupID);
+                $this->feed->sendFeed(0,$actID,$groupID,1);
+            }else{
+                $this->feed->sendFeed(0,$actID,$groupID,0);
             }
         }
         return array_merge(errorMessage(1, '活动添加成功'),array('ID'=>$actID));

@@ -60,15 +60,17 @@ class groupFeed_model extends CI_Model{
      * @param int $type 类型
      * @param int $sourceID 源内容ID
      * @param string $groupID 群组ID
+     * @param int $state feed状态
      */
-    function sendFeed($type, $sourceID, $groupID){
+    function sendFeed($type, $sourceID, $groupID, $state = 0){
         $feedList = $this->db->from('feed_list')->where('type',$type)->where('sourceID',$sourceID)->get()->result_array();
         if(!count($feedList)){
             return errorMessage('-1','No such feed');
         }
         $feedID = $feedList[0]['ID'];
         $newRelation = array('groupID'=>$groupID,
-                             'newsID'=>$feedID);
+                             'newsID'=>$feedID,
+                             'state'=>$state);
         $this->db->insert('group_feed',$newRelation);
     }
 
@@ -105,7 +107,8 @@ class groupFeed_model extends CI_Model{
                                 sourceID,
                                 param1 
                from feed_list, group_feed, user_list
-               where userID=user_list.ID and feed_list.ID=group_feed.newsID and (";
+               where userID=user_list.ID and feed_list.ID=group_feed.newsID 
+                     and group_feed.state=1 and (";
         $count = 0;
         foreach($_SESSION['myGroup'] as $groupID => $groupInfo){
             if($count != 0) $sql = $sql."or ";
@@ -134,7 +137,8 @@ class groupFeed_model extends CI_Model{
                                 sourceID,
                                 param1 
                from feed_list, group_feed, user_list
-               where userID=user_list.ID and feed_list.ID=group_feed.newsID and type=? and (";
+               where userID=user_list.ID and feed_list.ID=group_feed.newsID 
+                     and group_feed.state=1 and type=? and (";
         $count = 0;
         foreach($_SESSION['myGroup'] as $groupID => $groupInfo){
             if($count != 0) $sql = $sql."or ";
