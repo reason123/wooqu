@@ -14,6 +14,7 @@ function makeShop(data) {
 			"<td>"+data.comment+"</td>"+
 			"<td>"+onSaleHTML+"</td>"+
 			"<td>"+
+				"<a class=\"btn btn-small btn-primary\" onclick=\"window.location.href='/groupbuy/vieworder?groupbuyID="+data.id+"'\">查看订单</a>&nbsp;"+
 				"<a class=\"btn btn-small btn-primary\" onclick=\"window.location.href='groupbuy_goods?id="+data.id+"'\">修改</a>&nbsp;"+
 				"<a class=\"btn btn-small btn-primary\" onclick=\"window.location.href='/groupbuy/newGroupbuy?id="+data.id+"'\">复制</a>&nbsp;"+
 				"<a class=\"btn btn-small btn-danger\" onclick=\"confirmDeleteShop("+data.id+")\">删除</a>"+

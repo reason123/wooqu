@@ -1,4 +1,9 @@
 <legend>订单列表</legend>
+<div class="col-lg-12">
+    <textarea class="form-control" id="sms-content"></textarea>
+    <br/>
+    <button class="btn btn-default pull-right" onclick="smsGroupbuy(<?php echo $_REQUEST['groupbuyID']?>)">群发短信</button>
+</div>
 <table class="table table-hover">
   <thead>
     <tr>
@@ -30,3 +35,4 @@
   <?php endforeach ?>
   </tbody>
 </table>
+
