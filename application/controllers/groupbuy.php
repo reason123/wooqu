@@ -361,9 +361,12 @@ class Groupbuy extends CI_Controller {
      * @author ca007
      */
     function vieworder(){
+
         $this->load->model('groupbuy_model','gb');
         $order_list = $this->gb->getOrderByGbID($_REQUEST['groupbuyID']);
         $this->load->view('base/mainnav',array('page'=>'gborder'));
+		$this->load->view("manager/header", array("mh" => "statistics"));
+		$this->load->view("manager/statistics_header", array("mgh" => "groupbuy"));
         $this->load->view('groupbuy/vieworder',array('order_list'=>$order_list));
         $this->load->view('base/footer');
     }
@@ -455,7 +458,7 @@ class Groupbuy extends CI_Controller {
         		echo $groupbuyInfo['goodslist'];
         		$this->groupbuy->updataGoodsList($groupbuyID,$groupbuyInfo['goodslist']);
         	}
-            header('Location: /manager/groupbuy');
+            header('Location: /groupbuy/selectGoods?id='.$groupbuyID);
             /**
              * TODO: Add group_shop
              */

@@ -125,7 +125,7 @@ class Homepage extends CI_Controller{
           $this->load->view('homepage/nav');
           $this->load->view('homepage/actnav');
           //$this->load->view('base/mainnav',array('page'=>'newgroupbuy'));
-          $this->load->view('homepage/newgroupbuy',array('$groupbuyInfo'=>$_REQUEST));
+          $this->load->view('homepage/newgroupbuy');
           $this->load->view('base/footer');
         }else{          
           $shop = array("title"=>$_REQUEST['title'],
@@ -138,8 +138,8 @@ class Homepage extends CI_Controller{
                 "source"=>$_REQUEST['source'],
                 "group_list"=>$_REQUEST['group_list']);
           
-          $this->groupbuy->insertShop($shop,$_SESSION['loginName']);
-          header('Location: /manager/groupbuy');                 
+          $groupbuyID = $this->groupbuy->insertShop($shop,$_SESSION['loginName']);
+          header('Location: /groupbuy/selectGoods?id='.$groupbuyID);          
         }
     }
     

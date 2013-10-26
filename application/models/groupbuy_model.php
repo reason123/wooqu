@@ -159,7 +159,7 @@ class groupbuy_model extends CI_Model{
      * @param string $userID
      */
     function getGroupbuyByID($userID){
-        $sql = "select groupbuy_list.ID,title,username,goodslist,createTime from user_list,groupbuy_list where username=user_list.loginName and user_list.ID=? and available=1";
+        $sql = "select groupbuy_list.ID,title,username,goodslist,createTime from user_list,groupbuy_list where username=user_list.loginName and user_list.ID=? and available=1 order by groupbuy_list.createTime DESC";
         $groupbuy_list = $this->db->query($sql,array($userID))->result_array();
         return $groupbuy_list;
     }
@@ -170,7 +170,7 @@ class groupbuy_model extends CI_Model{
      * @param string $username
      */
     function getGroupbuyByUserName($username){
-		$sql = "SELECT DISTINCT `id`,`title`,`status`,`comment`,`howtopay`,`illustration`,`deadline`,`pickuptime`,`source` FROM `groupbuy_list` WHERE `username`=? and available=1";
+		$sql = "SELECT DISTINCT `id`,`title`,`status`,`comment`,`howtopay`,`illustration`,`deadline`,`pickuptime`,`source` FROM `groupbuy_list` WHERE `username`=? and available=1 order by groupbuy_list.createTime DESC";
         $groupbuy_list = $this->db->query($sql,array($username))->result_array();
         return $groupbuy_list;
     }
