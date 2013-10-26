@@ -82,18 +82,18 @@ class Homepage extends CI_Controller{
             }else{
                 $check = 0;
             }
-            $result = $this->act->addActivity($_REQUEST['act_start_date'],
-                                              $_REQUEST['act_end_date'],
-                                              $_REQUEST['sign_start_date'],
-                                              $_REQUEST['sign_end_date'],
-                                              $_REQUEST['address'],
-                                              $_REQUEST['title'],
-                                              $_REQUEST['detail'],
+            $result = $this->act->addActivity(cleanString($_REQUEST['act_start_date']),
+                                              cleanString($_REQUEST['act_end_date']),
+                                              cleanString($_REQUEST['sign_start_date']),
+                                              cleanString($_REQUEST['sign_end_date']),
+                                              cleanString($_REQUEST['address']),
+                                              cleanString($_REQUEST['title']),
+                                              cleanString($_REQUEST['detail']),
                                               $pic,
-                                              $_REQUEST['total'],
-                                              $_REQUEST['group_list'],
-                                              $_REQUEST['baseType'],
-                                              $_REQUEST['subType'],
+                                              cleanString($_REQUEST['total']),
+                                              cleanString($_REQUEST['group_list']),
+                                              cleanString($_REQUEST['baseType']),
+                                              cleanString($_REQUEST['subType']),
                                               $check);
             $this->addPic($result['ID'],$_FILES['pic']);
             if($_REQUEST['baseType'] == 1){
@@ -128,15 +128,16 @@ class Homepage extends CI_Controller{
           $this->load->view('homepage/newgroupbuy');
           $this->load->view('base/footer');
         }else{          
-          $shop = array("title"=>$_REQUEST['title'],
-                "status"=>"1",
-                "comment"=>$_REQUEST['comment'],
-                "howtopay"=>$_REQUEST['howtopay'],
-                "illustration"=>$_REQUEST['illustration'],
-                "deadline"=>$_REQUEST['act_end_date'],
-                "pickuptime"=>$_REQUEST['sign_end_date'], 
-                "source"=>$_REQUEST['source'],
-                "group_list"=>$_REQUEST['group_list']);
+          $shop = array(
+              "title"=>cleanString($_REQUEST['title']),
+              "status"=>"1",
+              "comment"=>cleanString($_REQUEST['comment']),
+              "howtopay"=>cleanString($_REQUEST['howtopay']),
+              "illustration"=>cleanString($_REQUEST['illustration']),
+              "deadline"=>cleanString($_REQUEST['act_end_date']),
+              "pickuptime"=>cleanString($_REQUEST['sign_end_date']), 
+              "source"=>cleanString($_REQUEST['source']),
+              "group_list"=>cleanString($_REQUEST['group_list']));
           
           $groupbuyID = $this->groupbuy->insertShop($shop,$_SESSION['loginName']);
           header('Location: /groupbuy/selectGoods?id='.$groupbuyID);          

@@ -191,7 +191,7 @@ class groupFeed_model extends CI_Model{
      * @author ca007
      * @param int $feedID
      */
-    function delFeed(){
+    function delFeed($relationID){
         $tmp = $this->db->from('group_feed')->where('ID',$relationID)->get()->result_array();
         if(!count($tmp)){
             return errorMessage(-1,'No such relation');
