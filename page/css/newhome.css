@@ -30,7 +30,7 @@
 	float: left;
 	margin-top: 10px;
 	margin-left: 10px;
-	width: 75%;
+	width: 70%;
 	height: 100%;
 }
 .newstitle {
@@ -45,6 +45,7 @@
 	font-size: 1em;
 	color: rgb(255, 255, 255);
 	font-family: 微软雅黑;
+	word-break: break-all;
 }
 .newsimg {
 	float: left;
