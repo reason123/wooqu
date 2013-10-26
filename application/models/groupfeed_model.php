@@ -149,6 +149,59 @@ class groupFeed_model extends CI_Model{
         $newsList = $this->db->query($sql,array($type))->result_array();
         return $newsList;
     }
+
+    /**
+     * 审批通过新鲜事
+     * @author ca007
+     * @param int $relationID
+     */
+    function passFeed($relationID){
+        $tmp = $this->db->from('group_feed')->where('ID',$relationID)->get()->result_array();
+        if(!count($tmp)){
+            return errorMessage(-1,'No such relation');
+        }
+        if(!$this->permission_model->manageGroup($tmp[0]['groupID'])){
+            return errorMessage(-2,'No permission');
+        }
+        $updateState = array('state'=>1);
+        $this->db->where('ID',$relationID)->update('group_feed',$updateState);
+        return errorMessage(1,'OK');
+    }
+    
+    /**
+     * 关闭新鲜事
+     * @author ca007
+     * @param int $relationID
+     */
+    function closeFeed($relationID){
+        $tmp = $this->db->from('group_feed')->where('ID',$relationID)->get()->result_array();
+        if(!count($tmp)){
+            return errorMessage(-1,'No such relation');
+        }
+        if(!$this->permission_model->manageGroup($tmp[0]['groupID'])){
+            return errorMessage(-2,'No permission');
+        }
+        $updateState = array('state'=>0);
+        $this->db->where('ID',$relationID)->update('group_feed',$updateState);
+        return errorMessage(1,'OK');
+    }
+    
+    /**
+     * 删除新鲜事
+     * @author ca007
+     * @param int $feedID
+     */
+    function delFeed(){
+        $tmp = $this->db->from('group_feed')->where('ID',$relationID)->get()->result_array();
+        if(!count($tmp)){
+            return errorMessage(-1,'No such relation');
+        }
+        if(!$this->permission_model->manageGroup($tmp[0]['groupID'])){
+            return errorMessage(-2,'No permission');
+        }
+        $this->db->delete('group_feed',array('ID',$relationID));
+        return errorMessage(1,'OK');
+    }
 }
 
 ?>

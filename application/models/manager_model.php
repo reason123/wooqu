@@ -63,7 +63,7 @@ class manager_model extends CI_Model{
         $resultList = array();
 
         $actSql = "select feed_list.title,loginName,feed_list.time,feed_list.type, 
-                       feed_list.ID as relationID,group_feed.state,group_list.class
+                       group_feed.ID as relationID,group_feed.state,group_list.class
                    from group_list,user_list,group_feed,feed_list
                    where feed_list.ID=group_feed.newsID and feed_list.userID=user_list.ID 
                        and group_list.groupID=group_feed.groupID and (";
@@ -73,7 +73,7 @@ class manager_model extends CI_Model{
             $actSql = $actSql."group_list.groupID=".$groupInfo['groupID']." ";
             $count += 1;
         }
-        $actSql = $actSql.")";
+        $actSql = $actSql.") order by feed_list.ID desc";
         $actList = $this->db->query($actSql)->result_array();
         return $actList;
     }

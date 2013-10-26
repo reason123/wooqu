@@ -298,6 +298,57 @@ class Manager extends CI_Controller{
     }
 
     /**
+     * 审批通过新鲜事
+     * @author ca007
+     */
+    function passFeed() {
+        if(!isset($_REQUEST['relationID'])){
+            echo "No relation id";
+            return;
+        }
+        $this->load->model('groupfeed_model','feed');
+        $result = $this->feed->passFeed($_REQUEST['relationID']);
+        if($result['error']['code'] == 1){
+            header('Location: /manager/examine');
+        }
+        echo json_encode($result);
+    }
+
+    /**
+     * 关闭新鲜事
+     * @author ca007
+     */
+    function closeFeed() {
+        if(!isset($_REQUEST['relationID'])){
+            echo "No relation id";
+            return;
+        }
+        $this->load->model('groupfeed_model','feed');
+        $result = $this->feed->closeFeed($_REQUEST['relationID']);
+        if($result['error']['code'] == 1){
+            header('Location: /manager/examine');
+        }
+        echo json_encode($result);
+    }
+
+    /**
+     * 删除新鲜事
+     * @author ca007
+     */
+    function delFeed() {
+        if(!isset($_REQUEST['relationID'])){
+            echo "No relation id";
+            return;
+        }
+        $this->load->model('groupfeed_model','feed');
+        $result = $this->feed->delFeed($_REQUEST['relationID']);
+        if($result['error']['code'] == 1){
+            header('Location: /manager/examine');
+        }
+        echo json_encode($result);
+    }
+
+    /**
      * 关闭已审批活动
      * @author ca007
      */

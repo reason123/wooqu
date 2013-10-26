@@ -12,7 +12,7 @@
     </tr>
   </thead>
   <tbody>
-  <?php $type=array("普通活动","团购活动") ?>
+  <?php $type=array("普通活动","团购活动");$state=array("待审批","已通过") ?>
   <?php foreach($actList as $key => $actInfo):?>
   <tr>
     <td><?php echo $actInfo['class']?></td>
@@ -20,8 +20,14 @@
     <td><?php echo $actInfo['title']?></td>
     <td><?php echo $actInfo['loginName']?></td>
     <td><?php echo $actInfo['time']?></td>
-    <td><?php echo $actInfo['state']?></td>
-    <td><a href="/manager/passAct?type=<?php echo $actInfo['type']?>&relationID=<?php echo $actInfo['relationID']?>">通过</a>&nbsp;&nbsp;&nbsp;<a href="/manager/closeAct?type=<?php echo $actInfo['type']?>&relationID=<?php echo $actInfo['relationID']?>">删除</a></td>
+    <td><?php
+     if($actInfo['state'] == 1){
+         echo "<span style='color:green;'>".$state[$actInfo['state']]."</span>";
+     }else{
+         echo "<span style='color:#FFBC19;'>".$state[$actInfo['state']]."</span>";
+     }
+         ?></td>
+    <td><a href="/manager/passFeed?relationID=<?php echo $actInfo['relationID']?>">通过</a>&nbsp;&nbsp;&nbsp;<a href="/manager/closeFeed?relationID=<?php echo $actInfo['relationID']?>">关闭</a>&nbsp;&nbsp;&nbsp;<a href="/manager/delFeed?relationID=<?php echo $actInfo['relationID']?>">删除</a></td>
   </tr>
   <?php endforeach ?>
   </tbody>
