@@ -58,18 +58,18 @@ class Activity extends CI_Controller{
             }else{
                 $check = 0;
             }
-            $result = $this->act->addActivity($_REQUEST['act_start_date'],
-                                              $_REQUEST['act_end_date'],
-                                              $_REQUEST['sign_start_date'],
-                                              $_REQUEST['sign_end_date'],
-                                              $_REQUEST['address'],
-                                              $_REQUEST['title'],
-                                              $_REQUEST['detail'],
+            $result = $this->act->addActivity(cleanString($_REQUEST['act_start_date']),
+                                              cleanString($_REQUEST['act_end_date']),
+                                              cleanString($_REQUEST['sign_start_date']),
+                                              cleanString($_REQUEST['sign_end_date']),
+                                              cleanString($_REQUEST['address']),
+                                              cleanString($_REQUEST['title']),
+                                              cleanString($_REQUEST['detail']),
                                               $pic,
-                                              $_REQUEST['total'],
-                                              $_REQUEST['group_list'],
-                                              $_REQUEST['baseType'],
-                                              $_REQUEST['subType'],
+                                              cleanString($_REQUEST['total']),
+                                              cleanString($_REQUEST['group_list']),
+                                              cleanString($_REQUEST['baseType']),
+                                              cleanString($_REQUEST['subType']),
                                               $check);
             $this->addPic($result['ID'],$_FILES['pic']);
             if($_REQUEST['baseType'] == 1){

@@ -441,15 +441,15 @@ class Groupbuy extends CI_Controller {
             $this->load->view('manager/groupbuy/newgroupbuy');
             $this->load->view('base/footer');
         }else{        	
-        	$shop = array("title"=>$_REQUEST['title'],
-        				"status"=>"1",
-        				"comment"=>$_REQUEST['comment'],
-        				"howtopay"=>$_REQUEST['howtopay'],
-        				"illustration"=>$_REQUEST['illustration'],
-        				"deadline"=>$_REQUEST['act_end_date'],
-        				"pickuptime"=>$_REQUEST['sign_end_date'], 
-        				"source"=>$_REQUEST['source'],
-        				"group_list"=>$_REQUEST['group_list']);
+        	$shop = array("title"=>cleanString($_REQUEST['title']),
+                          "status"=>"1",
+                          "comment"=>cleanString($_REQUEST['comment']),
+                          "howtopay"=>cleanString($_REQUEST['howtopay']),
+                          "illustration"=>cleanString($_REQUEST['illustration']),
+                          "deadline"=>cleanString($_REQUEST['act_end_date']),
+                          "pickuptime"=>cleanString($_REQUEST['sign_end_date']), 
+                          "source"=>cleanString($_REQUEST['source']),
+                          "group_list"=>cleanString($_REQUEST['group_list']));
         	//echo $_REQUEST['act_end_date'];
         	$groupbuyID = $this->groupbuy->insertShop($shop,$_SESSION['loginName']);
         	if (isset($_GET['id']))
