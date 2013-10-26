@@ -12,13 +12,14 @@
     </tr>
   </thead>
   <tbody>
+  <?php $type=array("普通活动","团购活动") ?>
   <?php foreach($actList as $key => $actInfo):?>
   <tr>
     <td><?php echo $actInfo['class']?></td>
-    <td><?php echo $actInfo['type']?></td>
+    <td><?php echo $type[$actInfo['type']]?></td>
     <td><?php echo $actInfo['title']?></td>
     <td><?php echo $actInfo['loginName']?></td>
-    <td><?php echo $actInfo['createTime']?></td>
+    <td><?php echo $actInfo['time']?></td>
     <td><?php echo $actInfo['state']?></td>
     <td><a href="/manager/passAct?type=<?php echo $actInfo['type']?>&relationID=<?php echo $actInfo['relationID']?>">通过</a>&nbsp;&nbsp;&nbsp;<a href="/manager/closeAct?type=<?php echo $actInfo['type']?>&relationID=<?php echo $actInfo['relationID']?>">删除</a></td>
   </tr>
