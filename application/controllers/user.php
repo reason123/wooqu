@@ -23,9 +23,8 @@ class User extends CI_Controller{
     }
 
     public function test(){
-        $this->load->model('sms_model','sms');
-        echo $this->sms->getRequest('http://localhost/user/getMyInfo',array());
-        return 1;
+        $this->load->model('user_model','user');
+        $this->user->initAdd();
     }
 
 	/**

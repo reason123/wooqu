@@ -55,7 +55,7 @@ class user_model extends CI_Model{
         $tmp = $this->db->insert_id();
 
 		//insert to member_list
-		$this->db->insert('member_list',array('userID'=>$tmp,'groupID'=>$classID,'roles'=>2));
+		$this->db->insert('member_list',array('userID'=>$tmp,'groupID'=>$classID,'roles'=>4));
 		$this->db->insert('member_list',array('userID'=>$tmp,'groupID'=>$departmentID,'roles'=>2));
 		$this->db->insert('member_list',array('userID'=>$tmp,'groupID'=>$schoolID,'roles'=>2));
 
@@ -219,6 +219,13 @@ class user_model extends CI_Model{
         }
         $_SESSION['basepermission'] = $permission;
 	}
+
+    function initAdd(){
+        $user_list = $this->db->from('user_list')->get()->result_array();
+        foreach($user_list as $key => $userInfo){
+            $this->db->where('ID',$userInfo['ID'])->update('user_list',array('address'=>"清华大学紫荆公寓".$userInfo['address']."#"));
+        }
+    }
 
     private function _getSalt(){
 		return 'thu';
