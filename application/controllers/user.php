@@ -84,7 +84,7 @@ class User extends CI_Controller{
 								$_REQUEST['department'],
 								$_REQUEST['class'],
 								$_REQUEST['studentid'],
-								$address);
+								$_REQUEST['address']);
 			if($res['error']['code'] == 1){
 				gotoHomepage();
 			}else{
@@ -218,7 +218,7 @@ class User extends CI_Controller{
         echo json_encode($this->user->modMyInfo($_REQUEST['nickName'],
                                                 $_REQUEST['phoneNumber'],
 												$_REQUEST['studentID'],
-												$address));
+												$_REQUEST['address']));
     }
 
     /**

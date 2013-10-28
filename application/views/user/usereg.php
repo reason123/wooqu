@@ -106,7 +106,7 @@
 						}*/
 					?>
 				</select> -->
-				<input class="form-control" type="text" name="address" value="紫荆#" />
+				<input class="form-control" type="text" name="address" value="<?php if(isset($address)) echo $address; ?>" placeholder="例如：紫荆2#"/>
 				<span class="remind">请输入你的地址，示例：紫荆#2； 28号楼</span><br/>
 				<?php echo form_error('address',"<span class='error'>","</span>");?>
 			</div>
