@@ -55,7 +55,7 @@ class user_model extends CI_Model{
         $tmp = $this->db->insert_id();
 
 		//insert to member_list
-		$this->db->insert('member_list',array('userID'=>$tmp,'groupID'=>$classID,'roles'=>2));
+		$this->db->insert('member_list',array('userID'=>$tmp,'groupID'=>$classID,'roles'=>4));
 		$this->db->insert('member_list',array('userID'=>$tmp,'groupID'=>$departmentID,'roles'=>2));
 		$this->db->insert('member_list',array('userID'=>$tmp,'groupID'=>$schoolID,'roles'=>2));
 
