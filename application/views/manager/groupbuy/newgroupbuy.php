@@ -9,6 +9,12 @@
             <?php echo form_error('title',"<span class='error'>","</span>");?>
         </div>
      </div>
+	<div class="form-group">
+		<label class="control-label col-lg-2">团购图片</label>
+		<div class="col-lg-3">
+			<input type="file" class="form-control" name="pic" />
+		</div>
+	</div>
      <div class="form-group" >
         <label class="control-label col-lg-2">加入群组</label>
         <div class="col-lg-3">

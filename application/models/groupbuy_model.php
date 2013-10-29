@@ -112,7 +112,7 @@ class groupbuy_model extends CI_Model{
                                  $shop['title'],
                                  $_SESSION['userID'],
                                  nowTime(),
-                                 '/storage/default_groupbuy.jpg',
+                                 '/storage/groupbuyPic/pic_'.$shopID.'.jpg',
                                  $shop['illustration'],
                                  '/groupbuy/groupInfo?id='.$shopID,
                                  $shopID,
@@ -191,6 +191,7 @@ class groupbuy_model extends CI_Model{
 		$group_str = "";
 		for ($i = 0; $i < count($group_list); ++$i) $group_str .= $group_list[$i]["groupID"].";";
 		$groupbuy_list[0]["groups"] = $group_str;
+		$groupbuy_list[0]["pic"] = "/storage/groupbuyPic/pic_".$id.".jpg";
         return $groupbuy_list;
     }
 
@@ -326,6 +327,7 @@ class groupbuy_model extends CI_Model{
 				$arr[$key]["status"] = 0;
 				$this->expireShop($arr[$key]["id"]);
 			}
+			$arr[$key]["pic"] = "/storage/groupbuyPic/pic_".$arr[$key]["id"].".jpg";
 		}
 		return $arr;
 	}
@@ -356,6 +358,7 @@ class groupbuy_model extends CI_Model{
 				$arr[$key]["status"] = 0;
 				$this->expireShop($arr[$key]["id"]);
 			}
+			$arr[$key]["pic"] = "/storage/groupbuyPic/pic_".$arr[$key]["id"].".jpg";
 		}
 		return $arr;
 	}

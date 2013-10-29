@@ -81,15 +81,24 @@ class Groupbuy extends CI_Controller {
 	 */
 	function modifyShopById() {
 		if (!isset($_SESSION["loginName"])) {
-			echo json_encode(array("error"=>"没有登录"));
+			//echo json_encode(array("error"=>"没有登录"));
+			echo "没有登录";
 			return;
 		}
 		$userName = $_SESSION["loginName"];
-		if (!isset($_POST["content"])) {
-			echo json_encode(array("error"=>"内容错误"));
-			return;
-		}
-		$shop = (array) json_decode($_POST["content"]);
+		//$shop = (array) json_decode($_POST["content"]);
+		$shop = array(
+			"id"=>$_REQUEST["id"],
+			"title"=>$_REQUEST["title"],
+			"deadline"=>$_REQUEST["deadlinedate"]." ".$_REQUEST["deadlinetime"],
+			"pickuptime"=>$_REQUEST["pickuptimedate"]." ".$_REQUEST["pickuptimetime"],
+			"howtopay"=>$_REQUEST["howtopay"],
+			"source"=>$_REQUEST["source"],
+			"comment"=>$_REQUEST["comment"],
+			"illustration"=>$_REQUEST["illustration"],
+			"status"=>$_REQUEST["status"],
+			"groups"=>$_REQUEST["groups"]
+		);
 		$this->load->model("groupbuy_model", "groupbuy");
 		$shopID = intval($shop["id"]);
 		if (!$this->groupbuy->isOwnShop($shopID)) {
@@ -104,7 +113,13 @@ class Groupbuy extends CI_Controller {
 		$this->groupbuy->clearShopGroup($shopID);
 		for ($i = 1; $i < count($group_list); ++$i) $this->groupbuy->shopJoinGroup($shopID, $group_list[$i]);*/
 		$this->groupbuy->modifyShop($shop, $userName);
-		echo json_encode(array("error"=>""));
+		$picPath = "/storage/groupbuyPic/pic_".$shopID.".jpg";
+		if ($_FILES['pic']['size'] > 0) {
+			$photo = $_FILES['pic'];
+			move_uploaded_file($photo['tmp_name'], substr($picPath, 1, strlen($picPath)));
+		}
+		//echo json_encode(array("error"=>""));
+        header('Location: /groupbuy/selectGoods?id='.$shopID);
 	}
 
 	/**
@@ -414,7 +429,7 @@ class Groupbuy extends CI_Controller {
 
 	/**
 	 * 新建团购
-	 * @author LJNanest
+	 * @author LJNanest Hewr
 	 */
 	function newGroupbuy()
 	{
@@ -449,9 +464,14 @@ class Groupbuy extends CI_Controller {
                           "deadline"=>cleanString($_REQUEST['act_end_date']),
                           "pickuptime"=>cleanString($_REQUEST['sign_end_date']), 
                           "source"=>cleanString($_REQUEST['source']),
-                          "group_list"=>cleanString($_REQUEST['group_list']));
+						  "group_list"=>cleanString($_REQUEST['group_list']));
         	//echo $_REQUEST['act_end_date'];
         	$groupbuyID = $this->groupbuy->insertShop($shop,$_SESSION['loginName']);
+			$picPath = "/storage/groupbuyPic/pic_".$groupbuyID.".jpg";
+			if ($_FILES['pic']['size'] > 0) {
+				$photo = $_FILES['pic'];
+				move_uploaded_file($photo['tmp_name'], substr($picPath, 1, strlen($picPath)));
+			}
         	if (isset($_GET['id']))
         	{
         		$groupbuyInfo = $this->groupbuy->getGroupbuyInfoByID($_GET['id']);

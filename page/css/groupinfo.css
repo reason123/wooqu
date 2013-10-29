@@ -5,6 +5,7 @@
 .groupInfo{
 	margin-top: -10px;
 	margin-left: 10px;
+	display: inline-block;
 }
 .groupInfo .base{
 	clear: left;

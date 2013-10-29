@@ -59,7 +59,7 @@ class Goods extends CI_Controller{
             $this->load->view('manager/goods/modgoods',array('goodsInfo'=>$_REQUEST,'goodsID'=>$_GET['goodsID']));
             $this->load->view('base/footer');
         }else{
-			$picPath = "/storage/goodsPic/pic_".$_GET['goodsID'].".jpg";
+			$picPath = "http://www.wooqu.org/storage/goodsPic/pic_".$_GET['goodsID'].".jpg";
             $goodsInfo = array('name'=>$_REQUEST['name'],'detail'=>$_REQUEST['detail'],'price'=>$_REQUEST['price'],'priceType'=>$_REQUEST['priceType'],'pic'=>$picPath);
             $this->goods->modGoods($goodsInfo,$_GET['goodsID']);
 
