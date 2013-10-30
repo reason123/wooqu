@@ -223,7 +223,7 @@ $(function(){
 
 				var infoHTML = makeInfo(data);
 				$("#groupInfo").append(infoHTML);
-				$("#groupPhoto").append("<img src='"+data.pic+"' height=120 style='margin-top: -30px' />");
+				$("#groupPhoto").append("<img src='"+data.pic+"' width=18% />");
 
 				$.post("/groupbuy/getGoodsList?groupbuyID="+document.getElementById("groupID").value,  
 					function(jsdata){

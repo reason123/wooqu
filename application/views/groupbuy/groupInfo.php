@@ -2,7 +2,7 @@
 <input type="hidden" value="<?php echo $groupID; ?>" id="groupID" />
 
 <legend><span class="title" id="title"></span><span class="stateInfo"></span></legend>
-<div style="display: inline;" id="groupPhoto"></div><div class="groupInfo" id="groupInfo"></div><br>
+<div style="display: inline;" id="groupPhoto"></div><div class="groupInfo" style="width:80%" id="groupInfo"></div><br>
 <div id="goodsList"></div>
 <div id="brdiv"><br><br><br></div>
 
