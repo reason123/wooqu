@@ -471,6 +471,8 @@ class Groupbuy extends CI_Controller {
 			if ($_FILES['pic']['size'] > 0) {
 				$photo = $_FILES['pic'];
 				move_uploaded_file($photo['tmp_name'], substr($picPath, 1, strlen($picPath)));
+			} else {
+				exec("cp storage/groupbuyPic/default_groupbuy.jpg storage/groupbuyPic/pic_".$groupbuyID.".jpg");
 			}
         	if (isset($_GET['id']))
         	{
