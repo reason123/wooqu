@@ -35,6 +35,10 @@
 	top: -4px;
 }
 
+#groupbuyPhoto {
+	border-radius: 5px;
+}
+
 #goodsList{
 	margin-left: -10px;
 	padding: 10px;
