@@ -22,6 +22,7 @@ class Messageboard extends CI_Controller {
 			$msg = $this->message->get($id);
 
 			$this->mainnav('messageboard');
+            $this->load->view('homepage/nav',array('type'=>'feedback'));
 			$this->load->view('message/messageboard_single',array('message'=>$msg));
 			$this->load->view('base/footer');
 		}
@@ -47,6 +48,7 @@ class Messageboard extends CI_Controller {
 		$publicList = $this->message->getPublicMessage($p - 1, self::PER_PAGE);
 
 		$this->mainnav('messageboard');
+        $this->load->view('homepage/nav',array('type'=>'feedback'));
 		$this->load->view('message/messageboard',array('publicList'=>$publicList, 'pageLink'=>$page_link));
 		$this->load->view('base/footer');
 	}
@@ -96,7 +98,7 @@ class Messageboard extends CI_Controller {
 	public function mainnav($name,$addArray = array()) {
 		$this->load->model('user_model','user');
 		//$areaList = $this->user->getMyAreas();
-		$this->load->view('base/mainnav',array_merge(array('name'=>$name, 'page'=>$name),$addArray));
+		$this->load->view('base/header',array_merge(array('name'=>$name, 'page'=>$name),$addArray));
 	}
 
 }

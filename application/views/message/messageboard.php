@@ -1,4 +1,4 @@
-<div>
+<div style="padding-top:20px;">
     <div class="mesTextarea">
 	<?php if(isset($_SESSION['userID'])) {
         echo "<textarea rows='3' class='col-lg-10 form-control' id='cont'></textarea><br/><br/>";

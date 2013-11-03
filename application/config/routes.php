@@ -43,6 +43,7 @@ $route['normal'] = "homepage/normal";
 $route['groupbuy'] = "homepage/groupbuy";
 $route['shop'] = "homepage/shop";
 $route['newact'] = "homepage/newact";
+$route['feedback'] = "messageboard";
 $route['404_override'] = '';
 
 
