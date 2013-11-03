@@ -41,3 +41,14 @@ function signup_act(){
 			   lock = false;
 		   })
 }
+
+
+$(function(){
+	$(document).ready(function(){
+		var request = new Object;
+		getRequest(request);
+		if(request['actID'] != void 0){
+			signup(request['actID']);
+		}
+	})
+})

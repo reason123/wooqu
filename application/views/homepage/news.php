@@ -3,7 +3,7 @@
 <div class="newscontainer">
   <?php $color=array('green','blue');?>
   <?php foreach($news_list as $key => $newsInfo): ?>
-  <div class="newswrapper <?php echo $color[$newsInfo['type']];?>" data-url="<?php echo $newsInfo['url']?>">
+  <div class="newswrapper <?php echo $color[$newsInfo['type']];?>" data-url="<?php echo $newsInfo['url']?><?php if($newsInfo['type']==0) echo '?actID='.$newsInfo['sourceID'];?>">
     <img class="newsimg" src="<?php echo $newsInfo['imgurl']?>"></img>
     <div class="newstext">
       <!--p class="newstotaltext">已报名<span class="newstotalnum"></span>人</p-->
