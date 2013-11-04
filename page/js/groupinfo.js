@@ -133,7 +133,7 @@ function updatePrice(id) {
 
 	var unit = cargoList[id].price;
 	var num = parseInt(value);
-	document.getElementById("cartprice"+id).innerHTML = "" + unit * num;
+	document.getElementById("cartprice"+id).innerHTML = "" + (unit * 10) * (num * 10) / 100;
 	updateAmount();
 }
 
