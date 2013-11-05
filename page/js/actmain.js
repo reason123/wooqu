@@ -33,10 +33,10 @@ function signup_act(){
 			   var re = $.parseJSON(data);
 			   if(re['error']['code'] == 1){
 				   alert('活动报名成功');
-				   window.location.reload();
+				   window.location.href="/activity";
 			   }else{
 				   alert(re['error']['message']);
-				   window.location.reload();
+				   window.location.href="/activity";
 			   }
 			   lock = false;
 		   })

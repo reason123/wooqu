@@ -109,7 +109,7 @@ class Activity extends CI_Controller{
                                               $_REQUEST['title'],
                                               $_REQUEST['detail'],
                                               $_REQUEST['total']);
-            if($result['code'] != 1){
+            if($result['error']['code'] != 1){
                 
             }
             $this->load->view('base/mainnav',array('page'=>'newactivity'));
