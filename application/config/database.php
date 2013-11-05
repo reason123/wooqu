@@ -48,9 +48,9 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'www.wooqu.org';
-$db['default']['username'] = 'csshenghuo';
-$db['default']['password'] = 'csshenghuowooqu';
+$db['default']['hostname'] = 'localhost';
+$db['default']['username'] = 'root';
+$db['default']['password'] = 'zamster';
 $db['default']['database'] = 'wooqu';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
