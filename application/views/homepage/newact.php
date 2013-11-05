@@ -25,7 +25,7 @@
             <input type="checkbox" name="check">
         </div>
      </div>
-     <div class="form-group">
+     <div class="form-group" style="display:none;">
         <label class="control-label col-lg-2">基本类型</label>
         <div class="col-lg-3">
             <select class="form-control" name="baseType" id="baseType" onchange="getSubType()">
@@ -37,7 +37,7 @@
         </div>
      </div>
      <div class="form-group">
-        <label class="control-label col-lg-2">子类型</label>
+        <label class="control-label col-lg-2">有无报名表</label>
         <div class="col-lg-3">
             <select class="form-control" name="subType" id="subType">
                 <?php foreach($subtype_list as $key => $subType): ?>
@@ -70,7 +70,7 @@
      <div class="form-group">
         <label class="control-label col-lg-2">活动海报</label>
         <div class="col-lg-3">
-            <input type="file" name="pic">
+            <input type="file" class="form-control" name="pic">
         </div>
      </div>
      <div class="form-group">

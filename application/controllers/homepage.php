@@ -138,8 +138,9 @@ class Homepage extends CI_Controller{
               "pickuptime"=>cleanString($_REQUEST['sign_end_date']), 
               "source"=>cleanString($_REQUEST['source']),
               "group_list"=>cleanString($_REQUEST['group_list']));
-          
+
           $groupbuyID = $this->groupbuy->insertShop($shop,$_SESSION['loginName']);
+          $this->addGroupbuyPic($groupbuyID, $_FILES['pic']);
           header('Location: /groupbuy/selectGoods?id='.$groupbuyID);          
         }
     }
@@ -171,5 +172,18 @@ class Homepage extends CI_Controller{
         }
     }
 
+    /**
+     * 为团购添加图片
+     * @author ca007
+     */
+    function addGroupbuyPic($gbID, $pic){
+        $picType = explode('/',$pic['type']);
+        if ((($pic["type"] == "image/gif")
+             || ($pic["type"] == "image/jpeg")
+             || ($pic["type"] == "image/pjpeg"))
+            && ($pic["size"] < 200000)){
+            move_uploaded_file($pic['tmp_name'],'./storage/groupbuyPic/pic_'.$gbID.'.jpg');
+        }
+    }
 }
 ?>
