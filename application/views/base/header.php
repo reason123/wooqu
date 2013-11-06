@@ -32,7 +32,7 @@
           <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo $loginName ?><span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li role="presentation"><a role="menuitem" tabindex="-1" href="/manager">管理界面</a></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="/userpage/fruitorder">个人中心</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="/userpage">个人中心</a></li>
             <li role="presentation" class="divider"></li>
             <li role="presentation"><a role="menuitem" href="/user/logout">注销</a></li>
           </ul>

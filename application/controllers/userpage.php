@@ -6,6 +6,10 @@ class UserPage extends CI_Controller {
 		parent::__construct();
 	}
 
+    function index(){
+        $this->groupbuyOrder();
+    }
+    
 	/**
 	 * 水果订单页面
 	 * @author Hewr

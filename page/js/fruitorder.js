@@ -15,14 +15,14 @@ function getOrderHTML(data, idx) {
 			"</tr>";
 	}
 	var html = $(
-		"<div class=\"accordion-group\">"+
-			"<div class=\"accordion-heading\">"+
-				"<div class=\"accordion-toggle order-heading\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse"+idx+"\">"+
+		"<div class=\"panel panel-default\">"+
+			"<div class=\"panel-heading order-heading\">"+
+				"<div class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse"+idx+"\">"+
 					"<span class=\"badge pull-right\">¥ "+data.amount+"</span>"+
 					"<span class=\"label label-success\">#"+data.ID+"</span> "+data.shopName+
 				"</div>"+
 			"</div>"+
-			"<div id=\"collapse"+idx+"\" class=\"accordion-body collapse"+firstcss+" order-content\">"+
+			"<div id=\"collapse"+idx+"\" class=\"panel-collapse collapse"+firstcss+" order-content\">"+
 				"<div class=\"accordion-inner\">"+
 					"<input type=\"hidden\" value=\""+data.ID+"\" id=\"orderid"+idx+"\" />"+
 					"<div class = 'well'><table class=\"table table-hover table-bordered\">"+
