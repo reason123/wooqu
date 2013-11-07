@@ -27,3 +27,4 @@
 		  </div>
 		</div>
 	  </div>
+<?php if(!isset($_SESSION['loginName'])): ?><br/><div class="alert alert-info" style="margin-bottom:-20px;">未登录只能浏览计算机系的活动信息哦亲～</div><?php endif ?>
