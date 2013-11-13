@@ -426,7 +426,7 @@ class Groupbuy extends CI_Controller {
         $this->load->view('groupbuy/groupInfo', array('groupID' => $groupID));
         $this->load->view('base/footer');
 	}
-
+    
 	/**
 	 * 新建团购
 	 * @author LJNanest Hewr
@@ -444,11 +444,20 @@ class Groupbuy extends CI_Controller {
         if (!isset($_REQUEST['title']))
         {
         	$groupbuyInfo = $this->groupbuy->getGroupbuyInfoByID($_GET['id']);
+            $groupList = $this->groupbuy->getGroupListByID($_GET['id']);
+            
+            $str = '';
+
+            foreach ($groupList as $key=>$value)
+            {
+                $str = $str.$value.';';
+            }
         	$_REQUEST['title'] = $groupbuyInfo['title'];
         	$_REQUEST['comment'] = $groupbuyInfo['comment'];
         	$_REQUEST['howtopay'] = $groupbuyInfo['howtopay'];
         	$_REQUEST['source'] = $groupbuyInfo['source'];
         	$_REQUEST['illustration'] = $groupbuyInfo['illustration'];
+            $_REQUEST['group_list'] = $str;
         }
         if($this->form_validation->run() == FALSE){
         	
@@ -457,7 +466,7 @@ class Groupbuy extends CI_Controller {
             $this->load->view('base/footer');
         }else{        	
         	$shop = array("title"=>cleanString($_REQUEST['title']),
-                          "status"=>"1",
+                         "status"=>"1",
                           "comment"=>cleanString($_REQUEST['comment']),
                           "howtopay"=>cleanString($_REQUEST['howtopay']),
                           "illustration"=>cleanString($_REQUEST['illustration']),
@@ -477,7 +486,7 @@ class Groupbuy extends CI_Controller {
         	if (isset($_GET['id']))
         	{
         		$groupbuyInfo = $this->groupbuy->getGroupbuyInfoByID($_GET['id']);
-        		echo $groupbuyInfo['goodslist'];
+        		//echo $groupbuyInfo['goodslist'];
         		$this->groupbuy->updataGoodsList($groupbuyID,$groupbuyInfo['goodslist']);
         	}
             header('Location: /groupbuy/selectGoods?id='.$groupbuyID);
@@ -486,7 +495,7 @@ class Groupbuy extends CI_Controller {
              */
         }
 	}
-
+    
 	function modGoods()
 	{
 		if (!isset($_GET['groupbuyID'])) return;

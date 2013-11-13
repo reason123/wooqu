@@ -18,7 +18,7 @@
      <div class="form-group" >
         <label class="control-label col-lg-2">加入群组</label>
         <div class="col-lg-3">
-           <input type="text" class="form-control" name="group_list" value="<?php echo $_SESSION['defaultGroupID'] ?>;">
+           <input type="text" class="form-control" name="group_list" value="<?php if (isset($_REQUEST['group_list'])) echo $_REQUEST['group_list']; else echo $_SESSION['defaultGroupID'].';'; ?>">
         </div>
     </div>
     <div class="form-group" >
