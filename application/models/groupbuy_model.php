@@ -488,7 +488,16 @@ class groupbuy_model extends CI_Model{
 		$res = $this->db->query($sql,array($JsonGoodsList));
 	}	
 
-
+    function getGroupListByID($groupbuyID)
+    {
+        $tmp = $this->db->from('groupbuy_act')->where('groupbuyID',$groupbuyID)->get()->result_array();
+        $groupList = array();
+        foreach ($tmp as $key=>$value)
+        {
+           array_push($groupList,$value['groupID']);
+        }
+        return $groupList;
+    }
 }
 
 ?>
