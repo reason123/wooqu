@@ -78,7 +78,7 @@ function changeMangeGroup(groupID) {
 				   alert(re['error']['message']);
 				   window.location.reload();
 			   }
-		   })
+		   });
 }
 
 $(function(){

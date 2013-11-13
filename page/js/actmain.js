@@ -1,5 +1,9 @@
 var lock = false;
-function signup(actID){
+function signup(actID,$type){
+    if(parseInt($type)==3){
+        window.location.href = '/activity/completeform?actID=' + actID;
+        return;
+    }
 	$.post("/user/getMyInfo",{},
 		   function(data){
 			   var re = $.parseJSON(data);
