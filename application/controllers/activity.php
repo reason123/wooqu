@@ -210,7 +210,16 @@ class Activity extends CI_Controller{
      */
     function completeForm(){
         $this->load->view('base/header',array('page'=>'completeform'));
-        $this->load->view('activity/completeform');
+        $this->load->model('activity_model','act');
+        $context = array();
+        $tmp = $this->act->getActForm($_REQUEST['actID']);
+        if($tmp['error']['code'] == 1){
+            $context['form_content'] = json_decode($tmp['form_content'],true);
+        }else{
+            $context['form_content'] = array();
+        }
+        $context['title'] = $this->act->actTitle($_REQUEST['actID']);
+        $this->load->view('activity/completeform',$context);
         $this->load->view('base/footer');
     }
 
