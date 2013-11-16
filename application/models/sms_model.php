@@ -5,8 +5,8 @@ class sms_model extends CI_Model {
 	private $accesskey = "30";
 	private $secretkey = "b1114fe4391a8e5021d1fb2eb01c4e64be5c6c54";
 	private $baseUrl = "sms.bechtech.cn/Api/send/data/json";
-	private $prefix = "【Wooqu提醒】";
-	private $suffix = "";
+	private $prefix = "";
+	private $suffix = "【Wooqu提醒】";
 
 	function __construct() {
 		parent::__construct();
