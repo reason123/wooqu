@@ -58,13 +58,18 @@ class activity_model extends CI_Model{
         $this->load->model('groupfeed_model','feed');
         $this->db->insert('activity_list', $newAct);
         $actID = $this->db->insert_id();
+        if($baseType == 0 && $subType == 3){
+            $url = '/activity/completeform?actID='.$actID;
+        }else if($baseType == 0 && $subType == 2){
+            $url = '/activity?actID='.$actID;
+        }
         $this->feed->addFeedItem(0,
                                  $title,
                                  $_SESSION['userID'],
                                  nowTime(),
                                  '/storage/act_'.$actID.'.jpeg',
                                  substr($detail,0,40),
-                                 '/activity',
+                                 $url,
                                  $actID,
                                  '{}');
         $groupList = explode(';',$group_list);
@@ -82,6 +87,29 @@ class activity_model extends CI_Model{
             }
         }
         return array_merge(errorMessage(1, '活动添加成功'),array('ID'=>$actID));
+    }
+
+    /**
+     * 添加报名表
+     * @author ca007
+     * @param int $actID
+     * @param string $content
+     */
+    function addForm($actID, $content){
+        $tmp = $this->db->from('activity_list')->where('ID',$actID)->get()->result_array();
+        if(count($tmp) == 0){
+            return errorMessage(-1,'No such activity');
+        }else if($tmp[0]['userID'] != $_SESSION['userID']){
+            return errorMessage(-10, 'No permission');
+        }
+        $newForm = array(
+            'userID'=>$_SESSION['userID'],
+            'content'=>$content,
+            'actID'=>$actID);
+        $this->db->insert('s_form', $newForm);
+        $formID = $this->db->insert_id();
+        $this->db->where('ID',$actID)->update('activity_list',array('formID'=>$formID));
+        return errorMessage(1, 'Add form success');
     }
 
     /**
@@ -154,7 +182,7 @@ class activity_model extends CI_Model{
                 from activity_list,user_list,group_act  
                 where userID=user_list.ID and 
                       activity_list.ID=actID and 
-                      userID=?";
+                      userID=? order by activity_list.ID desc";
         $actList = $this->db->query($sql,array($_SESSION['userID']))->result_array();
         return $actList;
     }
@@ -178,7 +206,7 @@ class activity_model extends CI_Model{
      */
     function getActList(){
         $sql = "select activity_list.ID, activity_list.address, act_start_date, 
-                       act_end_date, sign_start_date, sign_end_date, title, 
+                       act_end_date, sign_start_date, sign_end_date, title, subType,
                        detail, nickName, baseType as type, total, nowTotal 
                 from activity_list, user_list, group_act 
                 where activity_list.ID=group_act.actID and userID=user_list.ID and state=1 and (";
@@ -261,6 +289,25 @@ class activity_model extends CI_Model{
     function actTitle($actID){
         $tmp = $this->db->from('activity_list')->where('ID', $actID)->get()->result_array();
         return $tmp[0]['title'];
+    }
+
+    /**
+     * 获取活动报名表
+     * @author ca007
+     */
+    function getActForm($actID){
+        $tmp = $this->db->from('activity_list')->where('ID', $actID)->get()->result_array();
+        if(!count($tmp)){
+            return errorMessage(-1,'No such activity');
+        }else if($tmp[0]['baseType']!=0 || $tmp[0]['subType'] != 3 || $tmp[0]['formID'] == 0){
+            return errorMessage(-2,'There\'s no s_form for the activity');
+        }
+        $s_form_id = $tmp[0]['formID'];
+        $form_list = $this->db->from('s_form')->where('ID',$s_form_id)->get()->result_array();
+        if(!count($form_list)){
+            return errorMessage(-3,'No such s_form');
+        }
+        return array_merge(errorMessage(1,'Get act form success'), array('form_content'=>$form_list[0]['content']));
     }
 
     /**

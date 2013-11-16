@@ -75,6 +75,9 @@ class Activity extends CI_Controller{
             if($_REQUEST['baseType'] == 1){
                 header('Location: /volunteer');
                 return;
+            }else if($_REQUEST['subType'] == 3 && $_REQUEST['baseType'] == 0){
+                header('Location: /activity/createForm?actID='.$result['ID']);
+                return;
             }
             $this->load->view('base/mainnav',array('page'=>'newactivity','basetype_list'=>$basetype_list,'subtype_list'=>$subtype_list));
             $this->load->view('manager/activity/addact',array('status'=>'success'));
@@ -177,6 +180,46 @@ class Activity extends CI_Controller{
         $act_title = $this->act->actTitle($_REQUEST['actID']);
         $this->load->view('base/mainnav',array('page'=>'signlist'));
         $this->load->view('activity/signlist',array('sign_list'=>$sign_list, 'actTitle'=>$act_title));
+        $this->load->view('base/footer');
+    }
+
+    /**
+     * 报名表创建页面
+     * @author ca007
+     */
+    function createForm(){
+        $this->load->view('base/header',array('page'=>'formm'));
+        $this->load->view('activity/formm');
+        $this->load->view('base/footer');
+    }
+
+    /**
+     * 创建报名表API
+     * @author ca007
+     */
+    function addForm(){
+        $this->load->model('activity_model','act');
+        $res = $this->act->addForm($_REQUEST['actID'],
+                                   $_REQUEST['content']);
+        echo json_encode($res);
+    }
+
+    /**
+     * 填写报名表页面
+     * @author ca007
+     */
+    function completeForm(){
+        $this->load->view('base/header',array('page'=>'completeform'));
+        $this->load->model('activity_model','act');
+        $context = array();
+        $tmp = $this->act->getActForm($_REQUEST['actID']);
+        if($tmp['error']['code'] == 1){
+            $context['form_content'] = json_decode($tmp['form_content'],true);
+        }else{
+            $context['form_content'] = array();
+        }
+        $context['title'] = $this->act->actTitle($_REQUEST['actID']);
+        $this->load->view('activity/completeform',$context);
         $this->load->view('base/footer');
     }
 

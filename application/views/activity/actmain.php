@@ -37,7 +37,7 @@
          </div>
      </div>
      <div class="act-btn">
-         <span class="added btn btn-default sign-btn" onclick="signup(<?php echo $activity['ID'] ?>)">点击报名</span>
+         <span class="added btn btn-default sign-btn" onclick="signup(<?php echo $activity['ID'].','.$activity['subType'] ?>)">点击报名</span>
      </div>
 <?php endforeach ?>
                                                                    

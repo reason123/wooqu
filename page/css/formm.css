@@ -1,0 +1,54 @@
+.itemSpan{
+	margin-left: 15px;
+}
+.size1{
+	padding: 20px;
+}
+.size2{
+	padding: 20px;
+	float: left;
+	display: inline-block;
+}
+h5{
+	margin-left: 5px;
+}
+.itemName{
+	display: inline-block;
+	width: 100px;
+	margin-left: 15px;
+}
+.litemName{
+	display: inline-block;
+	width: 220px;
+	margin-left: 15px;
+	line-height: 25px;
+}
+.classInfo{
+	padding-left: 20px;
+	display: block;
+	height: 40px;
+}
+.classInfo h4{
+	float: left;
+	display: inline-block;
+}
+.classInfo span{
+	position: relative;
+	top: 10px;
+	font-size: 16px;
+	font-weight: bold;
+}
+.infoWidth{
+	width: 100px;
+}
+.btnBox{
+	width: 50%;
+}
+.btnBox .btnBack{
+	float:left;
+}
+.btnBox .btnSub{
+	float:right;
+}
+.grayBack{
+}

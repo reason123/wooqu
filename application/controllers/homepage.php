@@ -99,6 +99,9 @@ class Homepage extends CI_Controller{
             if($_REQUEST['baseType'] == 1){
                 header('Location: /volunteer');
                 return;
+            }else if($_REQUEST['subType'] == 3 && $_REQUEST['baseType'] == 0){
+                header('Location: /activity/createForm?actID='.$result['ID']);
+                return;
             }
             $this->load->view('base/header',array('page'=>'newnact','type'=>'newact','basetype_list'=>$basetype_list,'actType'=>'normal','subtype_list'=>$subtype_list));
             $this->load->view('homepage/nav');
