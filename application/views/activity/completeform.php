@@ -1,18 +1,30 @@
 <legend><?php echo $title ?>&nbsp;&nbsp;&nbsp;报名表</legend>
-<pre><?php echo $detail ?></pre>
+<pre><?php echo $detail; $counter = 0; ?></pre>
 <div class="form-horizontal" style="padding-left: 20px;">
 <?php foreach($form_content as $key => $item): ?>
-<?php                                           
+<?php
     if($item[1] == -5){
         echo "<h2>".$item[0]."</h2>";
     }else if($item[1] == -7){
         echo "<h3 style='margin-left: 20px;'>".$item[0]."</h3><br/>";
     }else if($item[1] == -1){
         echo "<div class='form-group'><label class='control-label col-lg-1'>".$item[0]."</label>".
-            "<div class='col-lg-3'><input class='form-info' style='margin-top:10px;' type='checkbox'/></div></div>";
+            "<div class='col-lg-3'><input class='form-info' style='margin-top:10px;' type='checkbox'";
+        if(isset($myForm)){
+            if((int)$myForm[$counter]){
+                echo 'checked="checked"';
+            }
+            $counter += 1;
+        }
+        echo "/></div></div>";
     }else if($item[1] > 0){
         echo "<div class='form-group'><label class='control-label col-lg-1'>".$item[0]."</label>".
-            "<div class='col-lg-3'><input class='form-info form-control' type='text'></div></div>";
+            "<div class='col-lg-3'><input class='form-info form-control' type='text' ";
+        if(isset($myForm)){
+            echo 'value="'.$myForm[$counter].'"';
+            $counter += 1;
+        }
+        echo "></div></div>";
     }
  ?>
 <?php endforeach ?>

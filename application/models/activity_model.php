@@ -128,14 +128,52 @@ class activity_model extends CI_Model{
         if($timeStat['error']['code'] != 1){
             return $timeStat;
         }
+        $old_form_list = $this->db->from('e_form')
+            ->where('userID', $_SESSION['userID'])->where('actID', $actID)->where('state', 1)
+            ->get()->result_array();
+        if(count($old_form_list)){
+            $state = array('state'=>0);
+            foreach($old_form_list as $index => $formInfo){
+                $this->db->where('ID',$formInfo['ID'])->update('e_form',$state);
+            }
+        }else{
+            $sum = (int)$tmp[0]['nowTotal'] + 1;
+            $this->db->where('ID',$actID)->update('activity_list',array('nowTotal'=>$sum));
+        }
         $newEForm = array(
             'class'=>$_SESSION['class'],
             'userID'=>$_SESSION['userID'],
             'actID'=>$actID,
-            'content'=>$content
+            'content'=>$content,
+            'state'=>1
         );
         $this->db->insert('e_form',$newEForm);
         return errorMessage(1, 'Submit success');
+    }
+
+    /**
+     * 获取报名信息列表
+     * @author ca007
+     */
+    function getEFormList($actID){
+        $tmp = $this->db->from('e_form')
+            ->where('actID',$actID)->where('state',1)
+            ->get()->result_array();
+        return $tmp;
+    }
+
+    /**
+     * 获取我的报名信息
+     * @author ca007
+     */
+    function getMyFormInfo($actID){
+        if(!isset($_SESSION['userID'])){
+            return array();
+        }
+        $tmp = $this->db->from('e_form')
+            ->where('actID',$actID)->where('state', 1)->where('userID', $_SESSION['userID'])
+            ->get()->result_array();
+        return $tmp;
     }
 
     /**
@@ -205,6 +243,8 @@ class activity_model extends CI_Model{
                        total, 
                        group_act.state, 
                        loginName,
+                       baseType,
+                       subType,
                        nowTotal
                 from activity_list,user_list,group_act  
                 where userID=user_list.ID and 

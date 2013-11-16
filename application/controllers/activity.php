@@ -186,6 +186,27 @@ class Activity extends CI_Controller{
     }
 
     /**
+     * 获取报名表列表
+     * @author ca007
+     */
+    function getformlist(){
+        $this->load->model('activity_model', 'act');
+        $permissionCheck = $this->act->checkUserPermission($_REQUEST['actID']);
+        if($permissionCheck['error']['code'] != 1){
+            die($permissionCheck['error']['message']);
+        }
+        $context = array();
+        $context['page'] = 'getformlist';
+        $context['title'] = $this->act->actTitle($_REQUEST['actID']);
+        $res_form = $this->act->getActForm($_REQUEST['actID']);
+        $context['s_form'] = json_decode($res_form['form_content'],true);
+        $context['e_form_list'] = $this->act->getEFormList($_REQUEST['actID']);
+        $this->load->view('base/header',$context);
+        $this->load->view('activity/formlist');
+        $this->load->view('base/footer');
+    }
+
+    /**
      * 报名表创建页面
      * @author ca007
      */
@@ -221,6 +242,10 @@ class Activity extends CI_Controller{
             $context['form_content'] = array();
         }
         $act = $this->act->getActByID($_REQUEST['actID']);
+        $myFormInfo = $this->act->getMyFormInfo($_REQUEST['actID']);
+        if(count($myFormInfo)){
+            $context['myForm'] = json_decode($myFormInfo[0]['content'],true);
+        }
         $context['title'] = $act['title'];
         $context['detail'] = $act['detail'];
         $this->load->view('activity/completeform',$context);
