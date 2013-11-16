@@ -241,8 +241,8 @@ class Manager extends CI_Controller{
 	 */
 	function statistics_groupbuy() {
         $this->load->model('groupbuy_model','gb');
-        $groupbuy_list = $this->gb->getGroupbuyByID($_SESSION['userID']);
-		$this->load->view("base/mainnav", array("page" => "statistics_manager"));
+        $groupbuy_list = $this->gb->getGroupbuyListByUserID($_SESSION['userID']);
+        $this->load->view("base/mainnav", array("page" => "statistics_manager"));
 		$this->load->view("manager/header", array("mh" => "statistics"));
 		$this->load->view("manager/statistics_header", array("mgh" => "groupbuy"));
 		$this->load->view("manager/statistics/groupbuy.php",array('groupbuy_list'=>$groupbuy_list));
@@ -385,12 +385,12 @@ class Manager extends CI_Controller{
 
     function test()
     {
-        $this->load->model('manager_model','goods');
+        $this->load->model('groupbuy_model','goods');
        // $goodsInfo = array('name'=>'samsung S4','detail'=>'nop','price'=>3400,'priceType'=>'元/台','pic'=>'');
        // $this->goods->addGoods($goodsInfo,$_SESSION['userID']);
         //$this->goods->delGoods(1);
         //echo $this->goods->delGoodsAtOBJ('{"1":13}','1');
-        echo json_encode($this->goods->getExamineList());
+        echo json_encode($this->goods->getGroupbuyListByUserID(13));
     }
 }
 
