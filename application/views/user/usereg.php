@@ -123,7 +123,7 @@
 		<div class="form-group">
             <label class="col-lg-3"></label>
             <div class="col-lg-4">
-	    		<input type="submit" class="btn btn-default" name="submit" id="regSub">
+	    		<input type="submit" class="btn btn-default" name="submit" id="regSub" value="确认注册">
             </div>
 		</div>
 	</form>

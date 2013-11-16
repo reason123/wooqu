@@ -104,7 +104,8 @@ class Activity extends CI_Controller{
             $this->load->view('manager/activity/modact',$actInfo);
             $this->load->view('base/footer');
         }else{
-            $result = $this->act->modActivity($_REQUEST['act_start_date'],
+            $result = $this->act->modActivity($_REQUEST['actID'],
+                                              $_REQUEST['act_start_date'],
                                               $_REQUEST['act_end_date'],
                                               $_REQUEST['sign_start_date'],
                                               $_REQUEST['sign_end_date'],
@@ -113,10 +114,11 @@ class Activity extends CI_Controller{
                                               $_REQUEST['detail'],
                                               $_REQUEST['total']);
             if($result['error']['code'] != 1){
-                
+                echo json_encode($result);
+                return;
             }
             $this->load->view('base/mainnav',array('page'=>'newactivity'));
-            $this->load->view('manager/activity/modact',array_merge(array('status'=>'success'),$actInfo));
+            $this->load->view('manager/activity/modact',array_merge(array('status'=>'success'),$result));
             $this->load->view('base/footer');
         }
     }
@@ -218,9 +220,21 @@ class Activity extends CI_Controller{
         }else{
             $context['form_content'] = array();
         }
-        $context['title'] = $this->act->actTitle($_REQUEST['actID']);
+        $act = $this->act->getActByID($_REQUEST['actID']);
+        $context['title'] = $act['title'];
+        $context['detail'] = $act['detail'];
         $this->load->view('activity/completeform',$context);
         $this->load->view('base/footer');
+    }
+
+    /**
+     * 提交报名表API
+     * @author ca007
+     */
+    function subForm(){
+        $this->load->model('activity_model','act');
+        $res = $this->act->subForm($_REQUEST['actID'],$_REQUEST['content']);
+        echo json_encode($res);
     }
 
     function smsAct(){

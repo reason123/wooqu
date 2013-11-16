@@ -131,4 +131,17 @@ function isLogin(){
     return isset($_SESSION['userID']);
 }
 
+/**
+ * 检查当前时间是否合法
+ * @author ca007
+ */
+function checkTime($startTime, $endTime){
+    if(nowTime() < $startTime){
+        return errorMessage(-11, 'Not start');
+    }else if(nowTime() > $endTime){
+        return errorMessage(-12, 'Ended');
+    }
+    return errorMessage(1, 'ok');
+}
+
 ?>

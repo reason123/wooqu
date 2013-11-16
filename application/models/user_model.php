@@ -181,7 +181,7 @@ class user_model extends CI_Model{
 	}
 
 	/**
-	 * 设置用户cookie、session等
+	 * 设置用户cookie、session等 TODO: input only $userID
 	 * @access private
 	 * @param string $loginName 用户登陆名
 	 * @param string $userID 用户ID
@@ -207,6 +207,8 @@ class user_model extends CI_Model{
 		setcookie('userKey',$userKey,time()+60*60*24*10,'/');
 		$this->load->model('group_model','group');
 		$_SESSION['myGroup'] = $this->group->getMyGroup();
+        $tmp = $this->db->from('user_list')->where('ID', $userID)->get()->result_array();
+        $_SESSION['class'] = $tmp[0]['class'];
 
         $permission = 0;
         for($i = 0; $i < 32; $i ++){

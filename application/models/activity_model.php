@@ -113,6 +113,32 @@ class activity_model extends CI_Model{
     }
 
     /**
+     * 提交报名表
+     * @author ca007
+     * @param $actID
+     * @param $content
+     */
+    function subForm($actID, $content){
+        $tmp = $this->db->from('activity_list')->where('ID',$actID)->get()->result_array();
+        if(count($tmp) == 0){
+            return errorMessage(-1, 'No such activity');
+        }
+        $actInfo = $tmp[0];
+        $timeStat = checkTime($actInfo['sign_start_date'], $actInfo['sign_end_date']);
+        if($timeStat['error']['code'] != 1){
+            return $timeStat;
+        }
+        $newEForm = array(
+            'class'=>$_SESSION['class'],
+            'userID'=>$_SESSION['userID'],
+            'actID'=>$actID,
+            'content'=>$content
+        );
+        $this->db->insert('e_form',$newEForm);
+        return errorMessage(1, 'Submit success');
+    }
+
+    /**
      * 修改活动信息
      * @author ca007
      * @param string $act_start_date
@@ -123,7 +149,8 @@ class activity_model extends CI_Model{
      * @param string $title
      * @param string $detail
      */
-    function modActivity($act_start_date,
+    function modActivity($actID,
+                         $act_start_date,
                          $act_end_date,
                          $sign_start_date,
                          $sign_end_date,
@@ -140,8 +167,8 @@ class activity_model extends CI_Model{
             'act_end_date'=>$act_end_date,
             'sign_start_date'=>$sign_start_date,
             'sign_end_date'=>$sign_end_date);
-        $this->db->update('activity_list',$actInfo);
-        return errorMessage(1,'OK');
+        $this->db->where('ID',$actID)->update('activity_list',$actInfo);
+        return array_merge(errorMessage(1,'OK'),$actInfo);
     }
 
     /**

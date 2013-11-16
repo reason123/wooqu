@@ -2,7 +2,7 @@
 <legend>发布活动</legend>
 <form class="pubForm form-horizontal" action="/activity/modActivity?actID=<?php echo $_REQUEST['actID']?>" method = "post">
 <?php if(isset($status) and $status == 'success'):?>
-     <div class="alert alert-success">添加活动成功</div>
+     <div class="alert alert-success">修改活动成功</div>
 <?php endif ?>
      <!--div class="form-group">
         <label class="control-label col-lg-2">参与者权限</label>
