@@ -40,13 +40,13 @@ class activity_model extends CI_Model{
                          $subType,
                          $check) {
         $newAct = array(
-            'act_start_date'=>$act_start_date,
-            'act_end_date'=>$act_end_date,
-            'sign_start_date'=>$sign_start_date,
-            'sign_end_date'=>$sign_end_date,
-            'address'=>$address,
-            'title'=>$title,
-            'detail'=>$detail,
+            'act_start_date'=>cleanString($act_start_date),
+            'act_end_date'=>cleanString($act_end_date),
+            'sign_start_date'=>cleanString($sign_start_date),
+            'sign_end_date'=>cleanString($sign_end_date),
+            'address'=>cleanString($address),
+            'title'=>cleanString($title),
+            'detail'=>cleanString($detail),
             'userID'=>$_SESSION['userID'],
             'pic'=>$pic,
             'total'=>$total,
@@ -197,14 +197,14 @@ class activity_model extends CI_Model{
                          $detail,
                          $total){
         $actInfo = array(
-            'title'=>$title,
-            'detail'=>$detail,
-            'address'=>$address,
-            'total'=>$total,
-            'act_start_date'=>$act_start_date,
-            'act_end_date'=>$act_end_date,
-            'sign_start_date'=>$sign_start_date,
-            'sign_end_date'=>$sign_end_date);
+            'title'=>cleanString($title),
+            'detail'=>cleanString($detail),
+            'address'=>cleanString($address),
+            'total'=>cleanString($total),
+            'act_start_date'=>cleanString($act_start_date),
+            'act_end_date'=>cleanString($act_end_date),
+            'sign_start_date'=>cleanString($sign_start_date),
+            'sign_end_date'=>cleanString($sign_end_date));
         $this->db->where('ID',$actID)->update('activity_list',$actInfo);
         return array_merge(errorMessage(1,'OK'),$actInfo);
     }
@@ -318,12 +318,12 @@ class activity_model extends CI_Model{
             return errorMessage(-5, '报名已结束。');
         }
         $newSign = array('actID' => $actID,
-                         'realName' => $realName,
-                         'class' => $class,
-                         'phoneNumber' => $phoneNumber,
-                         'studentID' => $studentID,
+                         'realName' => cleanString($realName),
+                         'class' => cleanString($class),
+                         'phoneNumber' => cleanString($phoneNumber),
+                         'studentID' => cleanString($studentID),
                          'userID' => $_SESSION['userID'],
-                         'addon' => $addon);
+                         'addon' => cleanString($addon));
         $this->db->insert('sign_list', $newSign);
         $tmp = $this->db->from('activity_list')->where('ID',$actID)->get()->result_array();
         $totalNum = $tmp[0]['nowTotal'] + 1;

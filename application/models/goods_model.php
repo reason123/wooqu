@@ -31,11 +31,11 @@ class goods_model extends CI_Model{
 		{
 			$newItem = array(
 				'userID' => $_SESSION["userID"],
-				'name' => $goodsInfo['name'],
-				'detail' => $goodsInfo['detail'],
-				'price' => $goodsInfo['price'],
-				'priceType' => $goodsInfo['priceType'],
-				'pic' => $goodsInfo['pic']
+				'name' => cleanString($goodsInfo['name']),
+				'detail' => cleanString($goodsInfo['detail']),
+				'price' => cleanString($goodsInfo['price']),
+				'priceType' => cleanString($goodsInfo['priceType']),
+				'pic' => cleanString($goodsInfo['pic'])
 				);
 			$this->db->insert('goods_list',$newItem);
 			return $this->db->insert_id();
@@ -47,11 +47,12 @@ class goods_model extends CI_Model{
 		$tmp = $this->db->from('goods_list')->where('ID', $goodsID)->get()->result_array();
 		$user = $tmp[0]['userID'];
 		if (isset($_SESSION["userID"]) && $user == $_SESSION["userID"]) {
-			$newItem = array('name' => $goodsInfo['name'],
-				'detail' => $goodsInfo['detail'],
-				'price' => $goodsInfo['price'],
-				'priceType' => $goodsInfo['priceType'],
-				'pic' => $goodsInfo['pic']);
+			$newItem = array(
+                'name' => cleanString($goodsInfo['name']),
+                'detail' => cleanString($goodsInfo['detail']),
+				'price' => cleanString($goodsInfo['price']),
+				'priceType' => cleanString($goodsInfo['priceType']),
+				'pic' => cleanString($goodsInfo['pic']));
 			$this->db->where('ID',$goodsID)->update('goods_list', $newItem);
 		} else
 			$this->permission_model->noPermission(1);

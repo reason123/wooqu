@@ -101,7 +101,7 @@ class group_model extends CI_Model{
         $volGroupID = 1000190000000 + ($volNum + 1);
         $newVolGroup = array('school'=>'清华大学',
                              'department'=>'紫荆志愿',
-                             'class'=>$groupName,
+                             'class'=>cleanString($groupName),
                              'groupID'=>$volGroupID);
         $this->db->insert('group_list',$newVolGroup);
         return errorMessage(1, '新增志愿群组成功');
@@ -113,6 +113,7 @@ class group_model extends CI_Model{
 	* @param string $schoolName 学校名称
 	*/
 	function newSchool($schoolName){
+        $schoolName = cleanString($schoolName);
 		if (strlen($schoolName)<1){
 			return errorMessage(-1,'请输入学校名');
 		}
@@ -143,6 +144,7 @@ class group_model extends CI_Model{
 	* @param string $departmentName 学院名称
 	*/
 	function newDepartment($schoolID,$departmemtName){
+        $departmentName = cleanString($departmentName);
 		if (strlen($departmemtName)<1) return array('error'=>array('code'=>-1,'message'=>'请输入院系名称!'));
 		$departmentCount = $this->db->from('group_list')->where('department',$departmemtName)->get()->result_array();
 		if(count($departmentCount) != 0){
@@ -173,6 +175,7 @@ class group_model extends CI_Model{
 	*/
 	function newClass($departmentID,$className)
 	{
+        $className = cleanString($className);
 		if (strlen($className)<1) return errorMessage(-1,'请输入班级名称');
 		$classCount = $this->db->from('group_list')->where('class',$className)->get()->result_array();
 		if(count($classCount) != 0){
