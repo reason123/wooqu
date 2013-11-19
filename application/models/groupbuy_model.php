@@ -137,17 +137,45 @@ class groupbuy_model extends CI_Model{
      */
     function getOrderByGbID($gbID){
         $tmp = $this->db->from('groupbuy_list')->where('ID',$gbID)->get()->result_array();
-        if(!count($gbID)){
+        if(!count($tmp)){
             return array();
-        }else{
-            if($tmp[0]['username'] != $_SESSION['loginName']){
-                $this->permission_model->noPermission(1);
-            }
         }
-        $sql = "select realName,`list`,amount,class, user_list.phoneNumber,user_list.address,defaultGroupID,comment 
+
+        if($tmp[0]['username'] == $_SESSION['loginName']){
+            $sql = "select realName,`list`,amount,class, user_list.phoneNumber,user_list.address,defaultGroupID,comment 
                 from user_list,groupbuy_order 
                 where userID=user_list.ID and shopid=? and del=0 
                 order by class asc";
+            $order_list = $this->db->query($sql,array($gbID))->result_array();
+            foreach($order_list as $key => $order){
+                $order_list[$key]['list'] = json_decode($order_list[$key]['list']);
+            }
+            return $order_list;
+        }
+        
+        $groupIDListA = array();
+        $tmp = $this->db->from('member_list')->where('userID',$_SESSION['userID'])->where('roles',4)->get()->result_array();
+        foreach ($tmp as $k=>$v)
+        {
+            array_push($groupIDListA,$v['groupID']);
+        }
+        array_unique($groupIDListA);
+        $groupIDListB = array();
+        $tmp = $this->db->from('groupbuy_act')->where('groupbuyID',$gbID)->where('state',1)->get()->result_array();
+        foreach ($tmp as $k=>$v)
+        {
+            array_push($groupIDListB,$v['groupID']);
+        }
+        array_unique($groupIDListB);
+        $groupIDList = array_intersect($groupIDListA,$groupIDListB);
+        if (count($groupIDList) == 0) {
+            $this->permission_model->noPermission(1);
+        }
+
+        $sql = "select realName,`list`,amount,class, user_list.phoneNumber,user_list.address,defaultGroupID,comment 
+            from user_list,groupbuy_order 
+            where userID=user_list.ID and shopid=? and del=0 
+            order by class asc";
         $order_list = $this->db->query($sql,array($gbID))->result_array();
         foreach($order_list as $key => $order){
             $order_list[$key]['list'] = json_decode($order_list[$key]['list']);
@@ -497,6 +525,34 @@ class groupbuy_model extends CI_Model{
            array_push($groupList,$value['groupID']);
         }
         return $groupList;
+    }
+
+    /**
+     * 获取用户发布的团购以及所合作的团购列表,供查询订单使用
+     * @author LJNanest
+     */
+    function getGroupbuyListByUserID($userID)
+    {
+        $groupbuyIDList = array();
+        $manager_list = $this->db->from('member_list')->where('userID',$userID)->where('roles',4)->get()->result_array();
+        foreach ($manager_list as $key=>$value)
+        {
+            $groupID = $value['groupID'];
+            $tmp = $this->db->from('groupbuy_act')->where('groupID',$groupID)->where('state',1)->get()->result_array();
+            foreach ($tmp as $k => $v)
+            {
+                array_push($groupbuyIDList,$v['groupbuyID']);
+            }
+        }
+        array_unique($groupbuyIDList);
+        $sql = "SELECT DISTINCT groupbuy_list.ID,title,username,goodslist,createTime FROM user_list, groupbuy_list WHERE (groupbuy_list.username = user_list.loginName AND user_list.ID = ? AND available = 1)";
+        foreach ($groupbuyIDList as $key => $groupbuyID)
+        {
+            $sql = $sql." OR (groupbuy_list.ID = ".$groupbuyID." AND available = 1)";
+        }
+        $sql = $sql." ORDER BY groupbuy_list.createTime DESC";
+        $groupbuyList = $this->db->query($sql,array($userID))->result_array();
+        return $groupbuyList;
     }
 }
 
