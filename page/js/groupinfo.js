@@ -142,7 +142,7 @@ function updateAmount() {
 	for (var i = 0; i < cargoList.length; ++i) 
 		if (cargoInCart(i)) {
 			var price = parseFloat(document.getElementById("cartprice"+i).innerHTML);
-			sum += parseInt(price * 10)/10 ;
+			sum = parseInt(price * 10 + sum * 10)/10 ;
 		}
 	$("#amount").html(""+sum);
 }
