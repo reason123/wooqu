@@ -16,7 +16,14 @@ function signup(actID,$type){
 			   }else{
 				   alert(re['error']['message']);
 			   }
-		   })
+		   });
+    $.post('/activity/actTitle',
+           {
+               'actID': actID
+           },
+           function(data){
+               $("#act-title").val(eval(data));
+           });
 	$("#act-title").val($(".actInfo#"+actID+" .title h3").html());
 	$(".sign-modal").modal('show');
 }
@@ -35,17 +42,24 @@ function signup_act(){
 		   },
 		   function(data){
 			   var re = $.parseJSON(data);
-			   if(re['error']['code'] == 1){
-				   alert('活动报名成功');
-				   window.location.href="/activity";
-			   }else{
-				   alert(re['error']['message']);
-				   window.location.href="/activity";
-			   }
+               handleRes(re);
 			   lock = false;
 		   })
 }
 
+function handleRes(re){
+    $("#conModal").modal('hide');
+    if(re['error']['code'] == 1){
+        alert('活动报名成功');
+        window.location.href="/userpage/myenroll";
+    }else if(re['error']['code'] == -12){
+        alertMod('活动报名已结束');
+    }else if(re['error']['code'] == -11){
+        alertMod('活动报名尚未开始');
+    }else{
+        alertMod(re['error']['message']);
+    }
+}
 
 $(function(){
 	$(document).ready(function(){

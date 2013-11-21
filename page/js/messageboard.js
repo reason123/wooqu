@@ -27,7 +27,6 @@ function leaveMes(backToMessageboard) {
 			function(data) {
 				var re = $.parseJSON(data);
 				if(re.error.code == 1) {
-					alert("留言成功");
 					if (backToMessageboard == 1) {
 						window.location.href = "/messageboard";
 					} else {

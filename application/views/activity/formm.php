@@ -15,14 +15,14 @@
    </div>
    <legend>添加项目</legend>
    <div class="form-horizontal">
-     <div class="form-group">
+     <div class="form-group hide">
        <label class="control-label col-lg-2">一级标题</label>
        <div class="col-lg-3">
          <input type="text" id="groupName" class="form-control content"/><br/>
          <button class="addGroup btn btn-default" onclick="addGroup()">添加标题</button>
        </div>
      </div>
-     <div class="form-group">
+     <div class="form-group hide">
        <label class="control-label col-lg-2">二级标题</label>
        <div class="col-lg-3">
          <input type="text" id="subGroupname" class="form-control content"/><br/>
@@ -53,7 +53,7 @@
 				<h3 class="modal-title" ><b>提交报名表</b></h3>
 			</div>
 			<div class="modal-body">
-				<h5 class="modal-title" style="color: black;"><b>确认提交？ 如果之前已经存在报名表将进行覆盖，之前的报名数据可能出现错位！</b></h5>
+				<h5 class="modal-title" style="color: black;"><b>确认提交？ 提交之后将不可修改。</b></h5>
 			</div>
 			<div class="modal-footer">
 				<a href="#" class="btn btn-default" data-dismiss="modal">取消</a>

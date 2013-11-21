@@ -20,11 +20,20 @@ function subForm(){
            },
            function(data){
                var re = $.parseJSON(data);
-               if(re['error']['code'] == 1){
-                   alert('提交成功');
-                   window.location.reload();
-               }else{
-                   alert(data);
-               }
+               handleRes(re);
            });
+}
+
+function handleRes(re){
+    $("#conModal").modal('hide');
+    if(re['error']['code'] == 1){
+        alert('提交报名表成功');
+        window.location.href="/userpage/myenroll";
+    }else if(re['error']['code'] == -12){
+        alertMod('活动报名已结束');
+    }else if(re['error']['code'] == -11){
+        alertMod('活动报名尚未开始');
+    }else{
+        alertMod(re['error']['message']);
+    }
 }

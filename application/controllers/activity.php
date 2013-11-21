@@ -167,6 +167,26 @@ class Activity extends CI_Controller{
                                         $_REQUEST['addon']);
         echo json_encode($result);
     }
+    
+    /**
+     * 取消报名
+     * @author ca007
+     */
+    function delSign(){
+        $this->load->model('activity_model', 'act');
+        $result = $this->act->delSign($_REQUEST['signID']);
+        echo json_encode($result);
+    }
+
+    /**
+     * 取消报名表
+     * @author ca007
+     */
+    function cancelForm(){
+        $this->load->model('activity_model', 'act');
+        $result = $this->act->cancelForm($_REQUEST['formID']);
+        echo json_encode($result);
+    }
 
     /**
      * 获取报名列表
