@@ -241,7 +241,7 @@ class groupbuy_model extends CI_Model{
 	 */
 	function modifyShop($shop, $userName) {
 		$sql = "UPDATE `groupbuy_list` SET `title`=?,`status`=?,`comment`=?,`howtopay`=?,`illustration`=?,`deadline`=?,`pickuptime`=?,`source`=? WHERE `id`=? and `username`=?";
-		$res = $this->db->query($sql,cleanString(array($shop["title"]),$shop["status"],cleanString($shop["comment"]),cleanString($shop["howtopay"]),cleanString($shop["illustration"]),cleanString($shop["deadline"]),cleanString($shop["pickuptime"]),cleanString($shop["source"]),$shop["id"],$userName)) or die(mysql_error());
+		$res = $this->db->query($sql,array(cleanString($shop["title"]),$shop["status"],cleanString($shop["comment"]),cleanString($shop["howtopay"]),cleanString($shop["illustration"]),cleanString($shop["deadline"]),cleanString($shop["pickuptime"]),cleanString($shop["source"]),$shop["id"],$userName)) or die(mysql_error());
 	}
 
 	/**
