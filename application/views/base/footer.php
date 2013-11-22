@@ -84,6 +84,6 @@
 <?php endif ?>
 
 <!-- End Chat -->
-
+<?php include_once("google_analytics.php") ?>
 </body>
 </html>
