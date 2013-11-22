@@ -11,12 +11,24 @@ class Activity extends CI_Controller{
         $this->load->model('activity_model','act');
         echo json_encode($this->act->getActList());
     }
-    
+
     /**
-     * 活动页面首页
+     * 活动信息页面
      * @author ca007
      */
     function index(){
+        $this->load->model('activity_model','act');
+        $this->load->view('base/mainnav',array('page'=>'actmain'));
+        $actInfo = $this->act->getActByID($_REQUEST['actID']);
+        $this->load->view('activity/actmain',array('actInfo'=>$actInfo));
+        $this->load->view('base/footer');
+    }
+    
+    /**
+     * 活动页面主要
+     * @author ca007
+     */
+    function actmain(){
         $this->load->model('activity_model','act');
         $this->load->view('base/mainnav',array('page'=>'actmain'));
         $actList = $this->act->getActList();
@@ -159,12 +171,21 @@ class Activity extends CI_Controller{
 //          return ;
 //		}
         $this->load->model('activity_model', 'act');
-        $result = $this->act->signupact($_REQUEST['actID'],
-                                        $_REQUEST['realName'],
-                                        $_REQUEST['class'],
-                                        $_REQUEST['phoneNumber'],
-                                        $_REQUEST['studentID'],
-                                        $_REQUEST['addon']);
+        if(isset($_SESSION['userID'])){
+            $result = $this->act->signupact($_REQUEST['actID'],
+                                            $_REQUEST['realName'],
+                                            $_REQUEST['class'],
+                                            $_REQUEST['phoneNumber'],
+                                            $_REQUEST['studentID'],
+                                            $_REQUEST['addon']);
+        }else{
+            $result = $this->act->an_signupact($_REQUEST['actID'],
+                                            $_REQUEST['realName'],
+                                            $_REQUEST['class'],
+                                            $_REQUEST['phoneNumber'],
+                                            $_REQUEST['studentID'],
+                                            $_REQUEST['addon']);
+        }
         echo json_encode($result);
     }
     
@@ -309,7 +330,9 @@ class Activity extends CI_Controller{
      */
     function quickSign(){
         $this->load->view('base/headermobi',array('page'=>'quicksign'));
-        $this->load->view('mobile/quicksign');
+        $this->load->model('activity_model','act');
+        $actInfo = $this->act->getActByID($_REQUEST['actID']);
+        $this->load->view('mobile/quicksign',array('actInfo'=>$actInfo));
         $this->load->view('base/footermobi');
     }
 

@@ -317,12 +317,48 @@ class activity_model extends CI_Model{
         if($nTime > $act[0]['sign_end_date']){
             return errorMessage(-5, '报名已结束。');
         }
+        if($act[0]['total'] != 0 && $act[0]['total'] <= $act[0]['nowTotal']){
+            return errorMessage(-6, '报名人数已满。');
+        }
         $newSign = array('actID' => $actID,
                          'realName' => cleanString($realName),
                          'class' => cleanString($class),
                          'phoneNumber' => cleanString($phoneNumber),
                          'studentID' => cleanString($studentID),
                          'userID' => $_SESSION['userID'],
+                         'addon' => cleanString($addon));
+        $this->db->insert('sign_list', $newSign);
+        $tmp = $this->db->from('activity_list')->where('ID',$actID)->get()->result_array();
+        $totalNum = $tmp[0]['nowTotal'] + 1;
+        $this->db->where('ID',$actID)->update('activity_list', array('nowTotal'=>$totalNum));
+        return errorMessage(1, '添加成功。');
+    }
+
+    /**
+     * 匿名用户活动报名
+     * @author ca007
+     */
+    function an_signupact($actID, $realName, $class, $phoneNumber, $studentID, $addon){
+        $act = $this->db->from('activity_list')->where('ID', $actID)->get()->result_array();
+        if(!count($act)){
+            return errorMessage(-3, '没有对应活动。');
+        }
+        $nTime = nowTime();
+        if($nTime < $act[0]['sign_start_date']){
+            return errorMessage(-4, '报名尚未开始。');
+        }
+        if($nTime > $act[0]['sign_end_date']){
+            return errorMessage(-5, '报名已结束。');
+        }
+        if($act[0]['total'] != 0 && $act[0]['total'] <= $act[0]['nowTotal']){
+            return errorMessage(-6, '报名人数已满。');
+        }
+        $newSign = array('actID' => $actID,
+                         'realName' => cleanString($realName),
+                         'class' => cleanString($class),
+                         'phoneNumber' => cleanString($phoneNumber),
+                         'studentID' => cleanString($studentID),
+                         'userID' => -1,
                          'addon' => cleanString($addon));
         $this->db->insert('sign_list', $newSign);
         $tmp = $this->db->from('activity_list')->where('ID',$actID)->get()->result_array();
@@ -353,6 +389,10 @@ class activity_model extends CI_Model{
             return errorMessage(-5, 'No permission');
         }
         $this->db->delete('sign_list',array('ID'=>$signID));
+        $nowTotal = array(
+            'nowTotal'=>(int)$act_list[0]['nowTotal'] - 1
+        );
+        $this->db->where('ID',$act_list[0]['ID'])->update('activity_list',$nowTotal);
         return errorMessage(1, 'Delete sign info success');
     }
     /**
