@@ -45,7 +45,7 @@ function signup_act(){
 			   var re = $.parseJSON(data);
                handleRes(re);
 			   lock = false;
-		   })
+		   });
 }
 
 function handleRes(re){
