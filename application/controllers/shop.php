@@ -29,8 +29,8 @@ class Shop extends CI_Controller {
 	 */
 	public function showShop(){
 		$this->load->model('shop_model','shop');
-		
-		$goodsList = $this->shop->getGoodListByShop($_GET['ID']);
+	    $this->load->model('goods_model','goods');	
+		$goodsList = $this->goods->getGoodsListByShop($_GET['ID']);
 		$actList = $this->shop->getActListByShop($_GET['ID']);
 		$shopInfo = $this->shop->getShopInfoByID($_GET['ID']);
 		$this->load->view('base/mainnav',array('page'=>'showshop','type'=>'groupbuy'));
