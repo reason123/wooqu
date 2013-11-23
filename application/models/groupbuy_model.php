@@ -105,7 +105,7 @@ class groupbuy_model extends CI_Model{
 		$sql = "INSERT INTO `groupbuy_list`
 				(`title`, `status`, `comment`, `howtopay`, `illustration`, `deadline`, `pickuptime`, `source`, `username`) 
 				VALUES(?,?,?,?,?,?,?,?,?)";
-		$res = $this->db->query($sql, array($shop['title'], $shop['status'], $shop['comment'], $shop['howtopay'], $shop['illustration'], $shop['deadline'], $shop['pickuptime'], $shop['source'], $userName)) or die(mysql_error());
+		$res = $this->db->query($sql, array(cleanString($shop['title']), $shop['status'], cleanString($shop['comment']), cleanString($shop['howtopay']), cleanString($shop['illustration']), cleanString($shop['deadline']), cleanString($shop['pickuptime']), cleanString($shop['source']), $userName)) or die(mysql_error());
         $shopID = $this->db->insert_id();
         $this->load->model('groupfeed_model','feed');
         $this->feed->addFeedItem(1,
@@ -241,7 +241,7 @@ class groupbuy_model extends CI_Model{
 	 */
 	function modifyShop($shop, $userName) {
 		$sql = "UPDATE `groupbuy_list` SET `title`=?,`status`=?,`comment`=?,`howtopay`=?,`illustration`=?,`deadline`=?,`pickuptime`=?,`source`=? WHERE `id`=? and `username`=?";
-		$res = $this->db->query($sql,array($shop["title"],$shop["status"],$shop["comment"],$shop["howtopay"],$shop["illustration"],$shop["deadline"],$shop["pickuptime"],$shop["source"],$shop["id"],$userName)) or die(mysql_error());
+		$res = $this->db->query($sql,array(cleanString($shop["title"]),$shop["status"],cleanString($shop["comment"]),cleanString($shop["howtopay"]),cleanString($shop["illustration"]),cleanString($shop["deadline"]),cleanString($shop["pickuptime"]),cleanString($shop["source"]),$shop["id"],$userName)) or die(mysql_error());
 	}
 
 	/**
@@ -273,7 +273,7 @@ class groupbuy_model extends CI_Model{
 	function insertCargo($cargo, $userName) {
 		if (!$this->isOwnShop($cargo["shopid"])) return;
 		$sql = "INSERT INTO `cargo_list`(`shopid`, `title`, `price`, `illustration`, `username`)  VALUES (?, ?, ?, ?, ?)";
-		$res = $this->db->query($sql,array($cargo["shopid"], $cargo["title"], $cargo["price"], $cargo["illustration"], $userName)) or die(mysql_error());
+		$res = $this->db->query($sql,array($cargo["shopid"], cleanString($cargo["title"]), $cargo["price"], cleanString($cargo["illustration"]), $userName)) or die(mysql_error());
 	}
 
 	/**
@@ -284,7 +284,7 @@ class groupbuy_model extends CI_Model{
 	function modifyCargo($cargo, $userName) {
 		if (!$this->isOwnShop($this->getCargoShopId($cargo["id"]))) return;
 		$sql = "UPDATE `cargo_list` SET `title`=?,`price`=?,`illustration`=? WHERE `id`=? and `username`=?";
-		$res = $this->db->query($sql,array($cargo["title"],floatval($cargo["price"]),$cargo["illustration"],$cargo["id"],$userName)) or die(mysql_error());
+		$res = $this->db->query($sql,array(cleanString($cargo["title"]),floatval($cargo["price"]),cleanString($cargo["illustration"]),$cargo["id"],$userName)) or die(mysql_error());
 	}
 
 	/**

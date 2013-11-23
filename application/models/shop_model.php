@@ -185,12 +185,13 @@ class shop_model extends CI_Model{
 	 * @param shop array userID
 	 */
 	function modifyShop($shop, $userID) {
-		$this->db->where('ID',$shop["ID"])->update('shop_list',
-			array('name'=>$shop["name"],
-				'address'=>$shop["address"],
-				'phone'=>$shop["phone"],
-				'detail'=>$shop["detail"],
-				'fruit'=>$shop["type"]));
+		$this->db->where('ID',$shop["ID"])
+            ->update('shop_list',array(
+                         'name'=> cleanString($shop["name"]),
+                         'address'=> cleanString($shop["address"]),
+                         'phone'=> cleanString($shop["phone"]),
+                         'detail'=> cleanString($shop["detail"]),
+                         'fruit'=> cleanString($shop["type"])));
 	}
 
 	/**
@@ -211,7 +212,7 @@ class shop_model extends CI_Model{
 		$sql = 'SELECT DISTINCT userID FROM shop_list WHERE ID = ?';
 		$tmp = $this->db->query($sql,array($shopID))->result_array();
 		if ($tmp[0]['userID'] != $_SESSION['userID']) return;
-		$item = array('shopID'=>$shopID, 'name' => $name, 'price' => $price, 'detail' => $detail);
+		$item = array('shopID'=> cleanString($shopID), 'name' =>  cleanString($name), 'price' => $price, 'detail' =>  cleanString($detail));
 		$this->db->insert('shop_goods',$item);	
 		return $this->db->insert_id();
 	}

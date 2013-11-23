@@ -42,15 +42,15 @@ class groupFeed_model extends CI_Model{
                          $url,
                          $sourceID,
                          $param1){
-        $newFeed = array('type'=>$type,
-                         'title'=>$title,
-                         'userID'=>$userID,
-                         'time'=>$time,
-                         'imgurl'=>$imgurl,
-                         'shortdescription'=>$shortdescription,
-                         'url'=>$url,
-                         'sourceID'=>$sourceID,
-                         'param1'=>$param1);
+        $newFeed = array('type'=>cleanString($type),
+                         'title'=>cleanString($title),
+                         'userID'=>cleanString($userID),
+                         'time'=>cleanString($time),
+                         'imgurl'=>cleanString($imgurl),
+                         'shortdescription'=>cleanString($shortdescription),
+                         'url'=>cleanString($url),
+                         'sourceID'=>cleanString($sourceID),
+                         'param1'=>cleanString($param1));
         $this->db->insert('feed_list',$newFeed);
     }
 

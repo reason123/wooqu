@@ -133,10 +133,10 @@ class user_model extends CI_Model{
             return errorMessage(-1,'昵称已存在');
         }
         $userInfo = array(
-            'nickName'=>$nickName,
-            'phoneNumber'=>$phoneNumber,
-			'studentID'=>$studentID,
-			'address'=>$address);
+            'nickName'=> cleanString($nickName),
+            'phoneNumber'=> cleanString($phoneNumber),
+			'studentID'=> cleanString($studentID),
+			'address'=> cleanString($address));
         $this->db->where('ID',$_SESSION['userID'])->update('user_list',$userInfo);
         return errorMessage(1, '修改成功'); 
     }

@@ -40,13 +40,13 @@ class activity_model extends CI_Model{
                          $subType,
                          $check) {
         $newAct = array(
-            'act_start_date'=>$act_start_date,
-            'act_end_date'=>$act_end_date,
-            'sign_start_date'=>$sign_start_date,
-            'sign_end_date'=>$sign_end_date,
-            'address'=>$address,
-            'title'=>$title,
-            'detail'=>$detail,
+            'act_start_date'=>cleanString($act_start_date),
+            'act_end_date'=>cleanString($act_end_date),
+            'sign_start_date'=>cleanString($sign_start_date),
+            'sign_end_date'=>cleanString($sign_end_date),
+            'address'=>cleanString($address),
+            'title'=>cleanString($title),
+            'detail'=>cleanString($detail),
             'userID'=>$_SESSION['userID'],
             'pic'=>$pic,
             'total'=>$total,
@@ -79,7 +79,7 @@ class activity_model extends CI_Model{
             }*/
         foreach($groupList as $key => $groupID){
             if(!isGID($groupID)) continue;
-            $this->db->insert('group_act', array('actID'=>$actID,'groupID'=>$groupID,'state'=>1));
+            $this->db->insert('group_act', array('actID'=>$actID,'groupID'=>$groupID,'state'=>$this->permission_model->manageGroup($groupID)));
             if($this->permission_model->manageGroup($groupID)){
                 $this->feed->sendFeed(0,$actID,$groupID,1);
             }else{
@@ -144,7 +144,7 @@ class activity_model extends CI_Model{
             'class'=>$_SESSION['class'],
             'userID'=>$_SESSION['userID'],
             'actID'=>$actID,
-            'content'=>$content,
+            'content'=>cleanString($content),
             'state'=>1
         );
         $this->db->insert('e_form',$newEForm);
@@ -197,14 +197,14 @@ class activity_model extends CI_Model{
                          $detail,
                          $total){
         $actInfo = array(
-            'title'=>$title,
-            'detail'=>$detail,
-            'address'=>$address,
-            'total'=>$total,
-            'act_start_date'=>$act_start_date,
-            'act_end_date'=>$act_end_date,
-            'sign_start_date'=>$sign_start_date,
-            'sign_end_date'=>$sign_end_date);
+            'title'=>cleanString($title),
+            'detail'=>cleanString($detail),
+            'address'=>cleanString($address),
+            'total'=>cleanString($total),
+            'act_start_date'=>cleanString($act_start_date),
+            'act_end_date'=>cleanString($act_end_date),
+            'sign_start_date'=>cleanString($sign_start_date),
+            'sign_end_date'=>cleanString($sign_end_date));
         $this->db->where('ID',$actID)->update('activity_list',$actInfo);
         return array_merge(errorMessage(1,'OK'),$actInfo);
     }
@@ -317,18 +317,107 @@ class activity_model extends CI_Model{
         if($nTime > $act[0]['sign_end_date']){
             return errorMessage(-5, '报名已结束。');
         }
+        if($act[0]['total'] != 0 && $act[0]['total'] <= $act[0]['nowTotal']){
+            return errorMessage(-6, '报名人数已满。');
+        }
         $newSign = array('actID' => $actID,
-                         'realName' => $realName,
-                         'class' => $class,
-                         'phoneNumber' => $phoneNumber,
-                         'studentID' => $studentID,
+                         'realName' => cleanString($realName),
+                         'class' => cleanString($class),
+                         'phoneNumber' => cleanString($phoneNumber),
+                         'studentID' => cleanString($studentID),
                          'userID' => $_SESSION['userID'],
-                         'addon' => $addon);
+                         'addon' => cleanString($addon));
         $this->db->insert('sign_list', $newSign);
         $tmp = $this->db->from('activity_list')->where('ID',$actID)->get()->result_array();
         $totalNum = $tmp[0]['nowTotal'] + 1;
         $this->db->where('ID',$actID)->update('activity_list', array('nowTotal'=>$totalNum));
         return errorMessage(1, '添加成功。');
+    }
+
+    /**
+     * 匿名用户活动报名
+     * @author ca007
+     */
+    function an_signupact($actID, $realName, $class, $phoneNumber, $studentID, $addon){
+        $act = $this->db->from('activity_list')->where('ID', $actID)->get()->result_array();
+        if(!count($act)){
+            return errorMessage(-3, '没有对应活动。');
+        }
+        $nTime = nowTime();
+        if($nTime < $act[0]['sign_start_date']){
+            return errorMessage(-4, '报名尚未开始。');
+        }
+        if($nTime > $act[0]['sign_end_date']){
+            return errorMessage(-5, '报名已结束。');
+        }
+        if($act[0]['total'] != 0 && $act[0]['total'] <= $act[0]['nowTotal']){
+            return errorMessage(-6, '报名人数已满。');
+        }
+        $newSign = array('actID' => $actID,
+                         'realName' => cleanString($realName),
+                         'class' => cleanString($class),
+                         'phoneNumber' => cleanString($phoneNumber),
+                         'studentID' => cleanString($studentID),
+                         'userID' => -1,
+                         'addon' => cleanString($addon));
+        $this->db->insert('sign_list', $newSign);
+        $tmp = $this->db->from('activity_list')->where('ID',$actID)->get()->result_array();
+        $totalNum = $tmp[0]['nowTotal'] + 1;
+        $this->db->where('ID',$actID)->update('activity_list', array('nowTotal'=>$totalNum));
+        return errorMessage(1, '添加成功。');
+    }
+
+    /**
+     * 取消报名
+     * @author ca007
+     */
+    function delSign($signID){
+        $sign_list = $this->db->from('sign_list')->where('ID',$signID)->get()->result_array();
+        if(!count($sign_list)){
+            return errorMessage(-1, 'No such sign info');
+        }
+        $act_list = $this->db->from('activity_list')->where('ID',$sign_list[0]['actID'])->get()->result_array();
+        if(!count($act_list)){
+            return errorMessage(-1, 'No such act');
+        }
+        $actInfo = $act_list[0];
+        $timeStat = checkTime($actInfo['sign_start_date'], $actInfo['sign_end_date']);
+        if($timeStat['error']['code'] != 1){
+            return $timeStat;
+        }
+        if($sign_list[0]['userID'] != $_SESSION['userID']){
+            return errorMessage(-5, 'No permission');
+        }
+        $this->db->delete('sign_list',array('ID'=>$signID));
+        $nowTotal = array(
+            'nowTotal'=>(int)$act_list[0]['nowTotal'] - 1
+        );
+        $this->db->where('ID',$act_list[0]['ID'])->update('activity_list',$nowTotal);
+        return errorMessage(1, 'Delete sign info success');
+    }
+    /**
+     * 取消报名表
+     * @author ca007
+     */
+    function cancelForm($formID){
+        $form_list = $this->db->from('e_form')->where('ID',$formID)->get()->result_array();
+        if(!count($form_list)){
+            return errorMessage(-1, 'No such form');
+        }
+        $act_list = $this->db->from('activity_list')->where('ID',$form_list[0]['actID'])->get()->result_array();
+        if(!count($act_list)){
+            return errorMessage(-1, 'No such act');
+        }
+        $actInfo = $act_list[0];
+        $timeStat = checkTime($actInfo['sign_start_date'], $actInfo['sign_end_date']);
+        if($timeStat['error']['code'] != 1){
+            return $timeStat;
+        }
+        if($form_list[0]['userId'] != $_SESSION['userID']){
+            return errorMessage(-5, 'No permission');
+        }
+        $this->db->where('ID',$formID)->update('e_form', array('state'=>0));
+        return errorMessage(1,'Cancel success');
     }
 
     /**
@@ -344,9 +433,15 @@ class activity_model extends CI_Model{
      * @author ca007
      */
     function getMySign(){
-        $sql = "select sign_list.ID, act_start_date as sdate, act_end_date as edate, title, address, realName, class, phoneNumber, studentID, addon from sign_list, activity_list where activity_list.ID=sign_list.actID and sign_list.userID=?";
+        $sql = "select sign_list.ID, act_start_date as sdate, act_end_date as edate, title, address, realName, class, phoneNumber, studentID, addon from sign_list, activity_list where activity_list.ID=sign_list.actID and sign_list.userID=? order by sign_list.ID desc";
         $tmp = $this->db->query($sql,array($_SESSION['userID']))->result_array();
         return $tmp;
+    }
+
+    function getMyForm(){
+        $sql = "select activity_list.title,activity_list.ID as actID,activity_list.act_start_date,activity_list.act_end_date,e_form.ID from activity_list,e_form where (activity_list.ID=e_form.actID) and (e_form.userID=?) and (e_form.state=1) order by e_form.ID desc";
+        $form_list = $this->db->query($sql,array($_SESSION['userID']))->result_array();
+        return $form_list;
     }
 
     /**

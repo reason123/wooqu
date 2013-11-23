@@ -39,9 +39,10 @@ class UserPage extends CI_Controller {
 	function myEnroll() {
         $this->load->model('activity_model','act');
         $signList = $this->act->getMySign();
+        $formList = $this->act->getMyForm();
         $this->load->view('base/mainnav',array('page'=>'myenroll'));
         $this->load->view('userpage/header',array('header'=>'enroll'));
-        $this->load->view('userpage/myEnroll',array('signList'=>$signList));
+        $this->load->view('userpage/myEnroll',array('signList'=>$signList,'formList'=>$formList));
         $this->load->view('base/footer');
 	}
 

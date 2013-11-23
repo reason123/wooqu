@@ -33,7 +33,7 @@ function subShow() {
 
 function instantView() {
 	$(".formContent").html("");
-	$nowGroup = $("");
+	$nowGroup = $("<div></div>");
 	for(i in formList){
 		if(formList[i][1] == -5){
 			$(".formContent").append($nowGroup);
@@ -41,7 +41,7 @@ function instantView() {
 		}if(formList[i][1] == -6){
 			$(".formContent").append($nowGroup);
 			$nowGroup = $("<div><h3>"+formList[i][0]+"</h3></div>");
-		}else if(formList[i][1] == -7){
+ 		}else if(formList[i][1] == -7){
 			$nowGroup.append("<h3 style='margin-left:30px;'>"+formList[i][0]+"</h3>");
 		}else if(formList[i][1] > 0){
 			$nowGroup.append("<div class='item form-group'>"+
@@ -88,24 +88,24 @@ function addGroup(){
 function addSubgroup(){
 	if ($("#subGroupname").val() == "")
 		return;
-	if (formList.length == 0) {
-		alert("请先添加一个分组!");
-		return;
-	}
-	var tmp = [$("#subGroupname").val(),-7];
-	formList.push(tmp);
-	//$(".formContent").append("<h5>"+tmp[0]+"</h5>");
-	instantView();
-	$(".content").val("");
+    //if (formList.length == 0) {
+	//alert("请先添加一个分组!");
+	//return;
+    //}
+    var tmp = [$("#subGroupname").val(),-7];
+    formList.push(tmp);
+    //$(".formContent").append("<h5>"+tmp[0]+"</h5>");
+    instantView();
+    $(".content").val("");
 }
 
 function addCheck(){
 	if ($("#checkName").val() == "")
 		return;
-	if (formList.length == 0) {
-		alert("请先添加一个分组!");
-		return;
-	}
+	//if (formList.length == 0) {
+	//alert("请先添加一个分组!");
+	//return;
+	//}
 	var tmp = [$("#checkName").val(),-1];
 	formList.push(tmp);
 	//$(".formContent").append("<span class=\"itemSpan\">"+tmp[0]+"： "+"选择项目"+"</span><br/>");
@@ -116,18 +116,18 @@ function addCheck(){
 function subForm(){
     getRequest(request);
 	$.post("/activity/addForm",
-	{
-		'actID':request['actID'],
-		'content':JSON.stringify(formList)
-	},function(data){
-		var re = $.parseJSON(data);
-		if(re['error']['code']==1){
-			alert("添加报名表成功！");
-			window.location.href="/manager/activity";
-		}else{
-			alert(data['error']['message']);
-		}
-	});
+	       {
+		       'actID':request['actID'],
+		       'content':JSON.stringify(formList)
+	       },function(data){
+		       var re = $.parseJSON(data);
+		       if(re['error']['code']==1){
+			       alert("添加报名表成功！");
+			       window.location.href="/manager/activity";
+		       }else{
+			       alert(data['error']['message']);
+		       }
+	       });
 }
 
 $(function(){

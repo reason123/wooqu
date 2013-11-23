@@ -54,3 +54,17 @@
 	float: right;
 	margin-bottom: -20px;
 }
+.act-detail{
+    position: relative;
+    top: 7px;
+    word-break: break-all;
+}
+.act-pic{
+    height: 270px;
+    width: 23%;
+    float: left;
+}
+.act-info{
+    width: 75%;
+    float: left;
+}
