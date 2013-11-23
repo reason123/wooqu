@@ -136,6 +136,44 @@ class goods_model extends CI_Model{
 		$this->db->where('ID',$groupbuyID)->update('groupbuy_list', $newItem);
 	}
 
+	function getGoodsListByShop($shopID)
+	{
+		$tmp = $this->db->from('shop_list')->where('ID', $shopID)->get()->result_array();
+		$GL = json_decode($tmp[0]['goodslist'],true);
+		return $this->getGoodsListByOBJ($GL);
+		/*$goodsList = array();
+		foreach ($GL as $goodsID=>$price)
+		{
+			$goodsInfo = $this->getGoodsInfo($goodsID);
+			$goodsInfo['price'] = $price;
+			array_push($goodsList, $goodsInfo);
+		}
+
+		return $goodsList;*/
+	}
+
+	function addGoodsAtShop($shopID,$goodsID,$price)
+	{
+		$tmp = $this->db->from('goods_list')->where('ID', $goodsID)->get()->result_array();
+		$user = $tmp[0]['userID'];
+		if (!isset($_SESSION["userID"]) || $user != $_SESSION["userID"]) return;
+		if ($pirce = -1) $price = $tmp[0]['price'];
+		$tmp = $this->db->from('shop_list')->where('ID', $shopID)->get()->result_array();		
+		$newItem = array('goodslist' => $this->addGoodsAtOBJ($tmp[0]['goodslist'],$goodsID,$price));
+		$this->db->where('ID',$shopID)->update('shop_list', $newItem);
+	}
+
+	function delGoodsAtShop($shopID,$goodsID)
+	{
+		$tmp = $this->db->from('goods_list')->where('ID', $goodsID)->get()->result_array();
+		$user = $tmp[0]['userID'];
+		if (!isset($_SESSION["userID"]) || $user != $_SESSION["userID"]) return;
+		$tmp = $this->db->from('shop_list')->where('ID', $shopID)->get()->result_array();
+		$newItem = array('goodslist' => $this->delGoodsAtOBJ($tmp[0]['goodslist'],$goodsID));
+		$this->db->where('ID',$shopID)->update('shop_list', $newItem);
+	}
+
+	/**
 	/**
 	 * 更新商品历史销售量
 	 * @author Hewr

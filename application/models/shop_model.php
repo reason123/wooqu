@@ -91,7 +91,7 @@ class shop_model extends CI_Model{
 	 * @return shopInfo 水果店列表
 	 */
 	function getShopInfoByID($shopID){
-		$sql = "SELECT shop_list.ID, name, phone, address, detail, available, createTime, userID, fruit
+		$sql = "SELECT *
 				FROM shop_list 
 				WHERE ID = ?";
 		$shopList = $this->db->query($sql,array($shopID))->result_array(); 
