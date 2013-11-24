@@ -1,4 +1,11 @@
-<legend><?php echo $shopInfo['name']; ?></legend>
+<legend>
+    <span id='title' class='title'><?php echo $shopInfo['name']; ?></span>
+</legend>
+<div id='shopInfo' class='shopInfo' style='width:80%'>
+<label class="base">商店地址：</label><span class="added"><?php echo $shopInfo['address']; ?></span><br>
+<label class="base">商店电话：</label><span class="added"><?php echo $shopInfo['phone']; ?></span><br>
+<label class="base">商店描述：</label><span class="added"><?php echo $shopInfo['detail']; ?></span><br>
+</div>
 <div>
 <div class="tabbable"> <!-- Only required for left/right tabs -->
 	<ul class="nav nav-tabs">

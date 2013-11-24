@@ -29,13 +29,12 @@ class Shop extends CI_Controller {
 	 */
 	public function showShop(){
 		$this->load->model('shop_model','shop');
-		
-		$goodsList = $this->shop->getGoodListByShop($_GET['ID']);
+	    $this->load->model('goods_model','goods');	
+		$goodsList = $this->goods->getGoodsListByShop($_GET['ID']);
 		$actList = $this->shop->getActListByShop($_GET['ID']);
 		$shopInfo = $this->shop->getShopInfoByID($_GET['ID']);
-
-		$this->load->view('base/mainnav',array('page'=>'showshop'));
-
+		$this->load->view('base/mainnav',array('page'=>'showshop','type'=>'groupbuy'));
+        $this->load->view('homepage/nav');
 		$this->load->view('shop/showshop',array('shopInfo'=>$shopInfo,'goodsList'=>$goodsList,'actList'=>$actList));
 		$this->load->view('base/footer');
 	}
@@ -244,6 +243,48 @@ class Shop extends CI_Controller {
 	{
 		$this->load->model("shop_model", "shop");
 		echo $this->shop->delGoods(159);
+	}
+
+    function selectGoods()
+	{
+		if (!isset($_GET['id'])) return;
+		$this->load->model('goods_model','goods');
+        $goodsList = $this->goods->getGoodsListByUser();
+        $this->load->model('shop_model','shop');
+        $shopInfo = $this->shop->getShopInfoByID($_GET['id']);
+        $goods_sign = json_decode($shopInfo['goodslist'],true);
+        $this->load->view("base/mainnav", array("page" => "selectgoods_shop"));
+        $this->load->view("manager/header", array("mh" => "shop"));
+        $this->load->view("manager/shop_header",array("mgh"=>"goodsManager","shopID"=>$_GET["id"]));
+        $this->load->view("manager/shop/selectgoods", array("goodsList" => $goodsList,"goods_sign" =>$goods_sign,"shopID"=>$_GET["id"]));
+        $this->load->view("base/footer");	
+	}
+
+	function delMyGoods()
+	{
+		if (!isset($_REQUEST['shopID'])) return;
+		if (!isset($_REQUEST['goodsID'])) 
+		{
+			header('Location: /shop/selectGoods?id='.$_REQUEST['shopID']);
+			return;
+		}
+		$this->load->model('goods_model','goods');
+        $this->goods->delGoodsAtShop($_REQUEST['shopID'],$_REQUEST['goodsID']);
+        //header('Location: /groupbuy/selectGoods?id='.$_GET['groupbuyID']);
+	}
+
+	function addMyGoods()
+	{
+		if (!isset($_REQUEST['shopID'])) return;
+		if (!isset($_REQUEST['goodsID'])) 
+		{
+			header('Location: /shop/selectGoods?id='.$_REQUEST['shopID']);
+			return;
+		}
+
+		$this->load->model('goods_model','goods');
+        $this->goods->addGoodsAtShop($_REQUEST['shopID'],$_REQUEST['goodsID'],-1);
+        //header('Location: /groupbuy/selectGoods?id='.$_REQUEST['groupbuyID']);
 	}
 }
 

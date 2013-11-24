@@ -1,6 +1,32 @@
 b.amount input{
 	width: 30px;
 }
+.title{
+	color: rgb(15, 139, 218);
+	font-weight: bold;
+}
+.shopInfo{
+	margin-top: -10px;
+	margin-left: 10px;
+	display: inline-block;
+}
+.shopInfo .base{
+	clear: left;
+	float: left;
+	font: 17px "microsoft yahei","宋体b8b\4f53";
+	font-weight: bold;
+	line-height: 25px;
+	display: inline-block;
+	width: 150px;
+}
+.shopInfo .added{
+	font: 15px "microsoft yahei","宋体b8b\4f53";
+	float: left;
+	display: inline-block;
+}
+.shopInfo .added.long{
+	margin-bottom: 10px;
+}
 .amount button{
 	position: relative;
 	top: -5px;

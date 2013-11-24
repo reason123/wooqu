@@ -17,7 +17,7 @@
 				<td><?php echo $shop['phone'];?></td>
 				<td><?php echo $shop['createTime'];?></td>
 				<td>
-					<a class="btn btn-small btn-primary" onclick="window.location.href='shop_modify?id=<?php echo $shop['ID'];?>'">修改</a>&nbsp;
+					<a class="btn btn-small btn-primary" onclick="window.location.href='shop_goods?id=<?php echo $shop['ID'];?>'">修改</a>&nbsp;
 					<a class="btn btn-small btn-danger" onclick="confirmDeleteShop(<?php echo $shop['ID'];?>,'<?php echo $shop['name'];?>')">删除</a>
 				</td>
 			</tr>

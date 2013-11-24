@@ -222,6 +222,22 @@ class Manager extends CI_Controller{
     }
 
 
+    /**
+     * 商店商品管理
+     * @author LJNnaest
+     */
+    function shop_goods() {
+        if (!isset($_GET["id"])) exit(0);
+        $this->load->model('goods_model','goods');
+        $goodsList = $this->goods->getGoodsListByShop($_GET["id"]);
+        //echo json_encode($goodsList);
+
+        $this->load->view("base/mainnav", array("page" => "shop_manager_goods"));
+        $this->load->view("manager/header", array("mh" => "shop"));
+        $this->load->view("manager/shop_header",array("mgh"=>"goodsManager","shopID"=>$_GET["id"]));
+        $this->load->view("manager/shop/goodslist",array("goodsList"=>$goodsList));
+        $this->load->view("base/footer");
+    }
 
 	/**
 	 * 统计管理水果页面
