@@ -2,6 +2,8 @@
 <div class="col-lg-12">
     <textarea class="form-control" id="sms-content"></textarea>
     <br/>
+	<button class="btn btn-default" onclick="checkAll()">全选</button>
+	<button class="btn btn-default" onclick="checkReverse()">反选</button>
     <button class="btn btn-default pull-right" onclick="smsGroupbuy(<?php echo $_REQUEST['groupbuyID']?>)">群发短信</button>
 </div>
 <table class="table table-hover">
@@ -20,6 +22,7 @@
   <tbody>
   <?php foreach($order_list as $key => $order): ?>
     <tr>
+	  <td><input type="checkbox" name="checkID" value="<?php echo $order['ID']?>"></td>
       <!--<td><?php echo $order['defaultGroupID'] ?></td>-->
       <td><?php echo $order['class'] ?></td>
       <td><?php echo $order['realName'] ?></td>

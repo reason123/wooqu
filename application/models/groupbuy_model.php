@@ -142,7 +142,7 @@ class groupbuy_model extends CI_Model{
         }
 
         if($tmp[0]['username'] == $_SESSION['loginName']){
-            $sql = "select realName,`list`,amount,class, user_list.phoneNumber,user_list.address,defaultGroupID,comment 
+            $sql = "select groupbuy_order.ID,realName,`list`,amount,class, user_list.phoneNumber,user_list.address,defaultGroupID,comment 
                 from user_list,groupbuy_order 
                 where userID=user_list.ID and shopid=? and del=0 
                 order by class asc";
@@ -483,6 +483,20 @@ class groupbuy_model extends CI_Model{
 			$arr[$key]["list"] = json_decode($arr[$key]["list"]);
 		}
 		return $arr;
+	}
+
+
+	/**
+	 * 返回某张订单信息和用户电话
+	 * @author daiwentao
+	 * @param orderid
+	 * @return 订单及用户手机号
+	 */
+	function getOrderAndPhoneById($id) {
+		$sql = "SELECT shopid,phoneNumber,amount FROM user_list,groupbuy_order 
+			WHERE groupbuy_order.userID=user_list.ID AND groupbuy_order.id='".$id."'";
+		$res = $this->db->query($sql)->row_array();
+		return $res;
 	}
 
 	/**

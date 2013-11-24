@@ -1,7 +1,10 @@
-function smsAct(actID){
+function smsAct(actID) {
+	var checkedID = new Array();
+	$("input[@name='checkID[]']:checked").each(function() {checkedID.push($(this).val());});
 	$.post('/activity/smsAct',
 		   {
 			   'actID': actID,
+			   'checkedID': checkedID.join('|'),
 			   'content': $('#sms-content').val()
 		   },function(data){
 			   var re = $.parseJSON(data);
@@ -11,3 +14,14 @@ function smsAct(actID){
 			   }
 		   })
 }
+
+function checkAll() {
+	$("input[type='checkbox']").attr('checked', true); 
+}
+
+function checkReverse() {
+	$("input[name='checkID']").each(function() {
+		$(this).attr("checked", !this.checked);
+	});
+}
+

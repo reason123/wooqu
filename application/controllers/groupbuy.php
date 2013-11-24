@@ -392,14 +392,17 @@ class Groupbuy extends CI_Controller {
 	 */
 	function smsGroupbuy(){
         $this->load->model('groupbuy_model','gb');
-        $order_list = $this->gb->getOrderByGbID($_REQUEST['groupbuyID']);
+		$checkedList = explode("|", $_REQUEST['checkedID']);
         $numList = array();
-        foreach($order_list as $key => $orderInfo){
-            $numList[] = $orderInfo['phoneNumber'];
-        }
+        foreach($checkedList as $id){
+			$order = $this->gb->getOrderAndPhoneByID($id);
+			if (isset($order["shopid"]) && isset($order["phoneNumber"]) && $order["shopid"] == $_REQUEST['groupbuyID']) {
+				$numList[] = $order["phoneNumber"];
+			}
+		}
         $this->load->model('sms_model','sms');
         $res = $this->sms->sendSms($numList,$_REQUEST['content']);
-        echo json_encode($res);
+		echo json_encode($res);
     }
 
 	/**

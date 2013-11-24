@@ -426,7 +426,15 @@ class activity_model extends CI_Model{
      */
     function getSignList($actID){
         return $this->db->from('sign_list')->where('actID', $actID)->get()->result_array();
-    }
+	}
+
+	/**
+	 * 通过报名ID获得报名信息,以对象数组返回
+	 * @author daiwentao
+	 */
+	function getSignByID($ID) {
+		return $this->db->from('sign_list')->where('ID', $ID)->get()->row_array();
+	}
 
     /**
      * 获取当前登录用户的报名列表
