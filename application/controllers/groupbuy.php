@@ -543,7 +543,11 @@ class Groupbuy extends CI_Controller {
 		echo json_encode($this->goods->getGoodsListByGroupbuy($_GET['groupbuyID']));
 	}
 
-	function selectGoods()
+	/** 
+      * 我的商品列表
+      * @auther LJNanest
+      */
+    function selectGoods()
 	{
 		if (!isset($_GET['id'])) return;
 		$this->load->model('goods_model','goods');
@@ -552,13 +556,16 @@ class Groupbuy extends CI_Controller {
         $groupbuyInfo = $this->groupbuy->getGroupbuyInfoByID($_GET['id']);
 
         $goods_sign = json_decode($groupbuyInfo['goodslist'],true);
-        $this->load->view("base/mainnav", array("page" => "selectgoods"));
+        $this->load->view("base/mainnav", array("page" => "selectgoods_groupbuy"));
         $this->load->view("manager/header", array("mh" => "groupbuy"));
         $this->load->view("manager/groupbuy_header",array("mgh"=>"goodsManager","groupbuyID"=>$_GET["id"]));
-        $this->load->view("manager/goods/selectgoods", array("goodsList" => $goodsList,"goods_sign" =>$goods_sign,"groubuyID"=>$_GET["id"]));
+        $this->load->view("manager/groupbuy/selectgoods", array("goodsList" => $goodsList,"goods_sign" =>$goods_sign,"groubuyID"=>$_GET["id"]));
         $this->load->view("base/footer");	
 	}
-
+    /**
+      * 卸载我的商品 （供selectGoods里使用）
+      * @auther LJNanest
+      */
 	function delMyGoods()
 	{
 		if (!isset($_REQUEST['groupbuyID'])) return;
@@ -571,7 +578,11 @@ class Groupbuy extends CI_Controller {
         $this->goods->delGoodsAtGroupbuy($_REQUEST['groupbuyID'],$_REQUEST['goodsID']);
         //header('Location: /groupbuy/selectGoods?id='.$_GET['groupbuyID']);
 	}
-
+    
+    /** 
+      * 添加我的商品入团购里 （供selectGoods里使用）
+      * @auther LJNnaest
+      */
 	function addMyGoods()
 	{
 		if (!isset($_REQUEST['groupbuyID'])) return;

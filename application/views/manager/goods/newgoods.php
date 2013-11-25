@@ -1,9 +1,10 @@
 <?php 
-    if (!isset($_GET['id'])) echo '<a class="btn btn-default" style="margin-bottom: 10px;" href="/manager/goods">返回商品管理</a>'; 
-    if (isset($_GET['id'])) echo '<a class="btn btn-default" style="margin-bottom: 10px;" href="/manager/groupbuy_goods?id='.$_GET['id'].'">返回商品管理</a>'; 
+    if (isset($_GET['groupbuyID'])) echo '<a class="btn btn-default" style="margin-bottom: 10px;" href="/manager/groupbuy_goods?id='.$_GET['groupbuyID'].'">返回商品管理</a>'; else 
+    if (isset($_GET['shopID'])) echo '<a class="btn btn-default" style="margin-bottom: 10px;" href="/manager/shop_goods?id='.$_GET['shopID'].'">返回商品管理</a>'; else
+    echo '<a class="btn btn-default" style="margin-bottom: 10px;" href="/manager/goods">返回商品管理</a>'; 
 ?>
 <legend>新增商品</legend>
-<form class="pubForm form-horizontal" action="/goods/newGoods<?php if (isset($_GET['id'])) echo '?id='.$_GET['id']; ?>" method = "post" enctype="multipart/form-data">
+<form class="pubForm form-horizontal" action="/goods/newGoods<?php if (isset($_GET['groupbuyID'])) echo '?groupbuyID='.$_GET['groupbuyID']; if (isset($_GET['shopID'])) echo '?shopID='.$_GET['shopID'];  ?>" method = "post" enctype="multipart/form-data">
     <div class="form-group" >
         <label class="control-label col-lg-2">商品名称</label>
         <div class="col-lg-3">
@@ -42,7 +43,7 @@
      <div class="form-group">
         <label class="control-label col-lg-2"></label>
         <div class="col-lg-3">
-            <input type="submit" class="btn btn-default">
+            <input type="submit" class="btn btn-default" value="提交">
         </div>
      </div>
 </form>
