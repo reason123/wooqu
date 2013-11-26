@@ -22,8 +22,8 @@
 				<td><?php echo $goodsInfo['total'];?></td>
 				<td><?php echo $goodsInfo['createTime'];?></td>
 				<td>
-					<a class="btn btn-small btn-primary" href="/groupbuy/modGoods?goodsID=<?php echo $goodsInfo['ID'].'&'?>groupbuyID=<?php echo $_GET['id']?>">修改</a>&nbsp;
-					<a class="btn btn-small btn-danger" href="/groupbuy/delGoods?goodsID=<?php echo $goodsInfo['ID'].'&'?>groupbuyID=<?php echo $_GET['id']?>">删除</a>
+					<a class="btn btn-small btn-primary" href="/shop/modGoods?goodsID=<?php echo $goodsInfo['ID'].'&'?>shopID=<?php echo $_GET['id']?>">修改</a>&nbsp;
+					<a class="btn btn-small btn-danger" href="/shop/delGoods?goodsID=<?php echo $goodsInfo['ID'].'&'?>shopID=<?php echo $_GET['id']?>">删除</a>
 				</td>
 			</tr>
 		<?php endforeach?>
