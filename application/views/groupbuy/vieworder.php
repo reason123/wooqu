@@ -9,6 +9,7 @@
 <table class="table table-hover">
   <thead>
     <tr>
+      <th>选定</th>
       <!--<th>群组号</th>-->
       <th>班级</th>
       <th>姓名</th>
@@ -38,4 +39,5 @@
   <?php endforeach ?>
   </tbody>
 </table>
+
 
