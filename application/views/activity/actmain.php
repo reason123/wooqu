@@ -43,7 +43,7 @@ if((int)$actInfo['total'] != 0){
     <div class="form-group">
       <label class="col-lg-2 control-label">二维码</label>
       <div class="col-lg-10 act-detail">
-        <span><a href="https://chart.googleapis.com/chart?cht=qr&chld=M&chs=200x200&chl=http%3a%2f%2fwww.wooqu.org%2factivity%2fquickSign%3factID%3d<?php echo $actInfo['ID']?>">获取二维码</a></span>
+        <span><a href="https://chart.googleapis.com/chart?cht=qr&chld=M&chs=200x200&chl=http%3a%2f%2fmobi.wooqu.org%2factivity%2fquickSign%3factID%3d<?php echo $actInfo['ID']?>">获取二维码</a></span>
       </div>
     </div>
     <div class="form-group">

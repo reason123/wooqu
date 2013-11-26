@@ -303,16 +303,23 @@ class Activity extends CI_Controller{
         echo json_encode($res);
     }
 
+	/**
+	 * 发送活动短信API
+	 * @author daiwentao
+	 */
     function smsAct(){
         $this->load->model('activity_model','act');
-        $sign_list = $this->act->getSignList($_REQUEST['actID']);
-        $numList = array();
-        foreach($sign_list as $key => $signInfo){
-            $numList[] = $signInfo['phoneNumber'];
-        }
+		$checkedList = explode("|", $_REQUEST['checkedID']);
+		$numList = array();
+		foreach($checkedList as $id) {
+			$sign = $this->act->getSignByID($id);
+			if (isset($sign["actID"]) && isset($sign["phoneNumber"]) && $sign["actID"] == $_REQUEST['actID']) {
+				$numList[] = $sign["phoneNumber"];
+			}
+		}
         $this->load->model('sms_model','sms');
         $res = $this->sms->sendSms($numList,$_REQUEST['content']);
-        echo json_encode($res);
+		echo json_encode($res);
     }
     
     /**
