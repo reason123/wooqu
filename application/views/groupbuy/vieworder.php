@@ -1,4 +1,12 @@
-<legend>订单列表</legend>
+<legend><?php 
+    $totAmount = 0;
+    foreach ($order_list as $key => $order)
+    {
+        $totAmount += $order['amount'];
+    }   
+    echo $groupbuyInfo['title']."</br>";
+    echo"团购订单总额 : ".$totAmount;
+?></legend>
 <div class="col-lg-12">
     <textarea class="form-control" id="sms-content"></textarea>
     <br/>

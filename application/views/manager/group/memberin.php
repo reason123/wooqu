@@ -14,6 +14,8 @@
       <th>用户ID</th>
       <th>用户名</th>
       <th>真实姓名</th>
+      <th>昵称</th>
+      <th>班级</th>
       <th>手机号</th>
       <th>操作</th>
     <tr>
@@ -25,6 +27,8 @@
       <td><?php echo $userInfo['userID']?></td>
       <td class='loginName'><?php echo $userInfo['loginName']?></td>
       <td><?php echo $userInfo['realName']?></td>
+      <td><?php echo $userInfo['nickName']?></td>
+      <td><?php echo $userInfo['class']?></td>
       <td><?php echo $userInfo['phoneNumber']?></td>
       <td><button class="btn btn-danger btn-small" onclick="removeModal(<?php echo $userInfo['ID']; ?>)">踢出群组</button></td>
     </tr>

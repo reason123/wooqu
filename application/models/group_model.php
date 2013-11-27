@@ -349,7 +349,8 @@ class group_model extends CI_Model{
      * @param string $groupID
      */
     function getMemberByGroup($groupID){
-        $sql = "select userID, member_list.ID, loginName, realName, phoneNumber
+        //$sql = "select userID, member_list.ID, loginName, realName, phoneNumber
+        $sql = "select user_list.*, userID, member_list.ID
                 from user_list, member_list 
                 where userID=user_list.ID and member_list.groupID=?";
         $user_list = $this->db->query($sql, array($_SESSION['memGroupID']))->result_array();
