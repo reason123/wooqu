@@ -1,10 +1,11 @@
 <legend><?php echo $actTitle?> 报名列表</legend>
 <div class="col-lg-12">
-    <textarea class="form-control" id="sms-content"></textarea>
+    <textarea class="form-control" id="sms-content" onkeyup="updateCounter()"></textarea>
     <br/>
 	<button class="btn btn-default" onclick="checkAll()">全选</button>
 	<button class="btn btn-default" onclick="checkReverse()">反选</button>
     <button class="btn btn-default pull-right" onclick="smsAct(<?php echo $_REQUEST['actID']?>)">群发短信</button>
+	<span class="pull-right" id="counter"></span>
 </div>
 <table class="table table-hover">
      <thead>
