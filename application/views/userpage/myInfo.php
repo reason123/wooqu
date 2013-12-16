@@ -80,7 +80,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
         <button type="button" class="btn btn-primary" onclick="modifyPass()" id="confirm-btn">确认修改</button>
-      <div>
+      </div>
     </div>
   </div>
 </div>
