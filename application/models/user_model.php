@@ -94,7 +94,7 @@ class user_model extends CI_Model{
             return true;
         }
         if(!isset($_COOKIE['loginName'])){
-            $_SESSION['myGroup'] = array('1000100010000'=>array('class'=>'计算机系','permission'=>'2'));
+            $_SESSION['myGroup'] = array('1000100010000'=>array('class'=>'计算机系','permission'=>'2'),'1000100000000'=>array('class'=>'清华大学','permission'=>'2'));
             return false;
         }
         $tmp = $this->db->from('user_list')->where('loginName',$_COOKIE['loginName'])->get()->result_array();
