@@ -1,3 +1,7 @@
+
+<div id="souhu" style="font-size:17px;position:fixed;bottom: 0px;right: 0%;">
+  感谢搜狐<img src="/page/img/sohu_logo.jpg" style="width:60px;position:relative;top:-10px;"> -计算机系SIG计划大力支持！
+</div>
 </div>
 <div id = "alertModal" class="modal fade">
    <div class="modal-dialog">
