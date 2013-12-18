@@ -1,14 +1,13 @@
 <?php if(!isset($_SESSION['userID'])) :?>
-<form id="quicklogin" data-ajax="false">
+<form id="quicklogin" data-ajax="true">
   <div class="ui-grid-solo">
     <label>用户名：</label>
     <input type="text" name="username" id="username">
     <label>密码：</label>
     <input type="password" name="password" autocomplete="off" id="password">
   </div>
-  <div class="ui-grid-a">
-    <div class="ui-block-a"><button data-theme="c" id="direct-sign">直接填写报名</button></div>
-    <div class="ui-block-b"><input type="submit" data-theme="b" value="登录wooqu报名"></div>
+  <div class="ui-grid-solo">
+    <div class="ui-block"><input type="submit" data-theme="b" value="登录wooqu报名"></div>
   </div>
  </form>
  <?php endif ?>

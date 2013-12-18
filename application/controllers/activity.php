@@ -179,6 +179,7 @@ class Activity extends CI_Controller{
                                             $_REQUEST['studentID'],
                                             $_REQUEST['addon']);
         }else{
+            return json_encode(errorMessage(-1, '未登录'));
             $result = $this->act->an_signupact($_REQUEST['actID'],
                                             $_REQUEST['realName'],
                                             $_REQUEST['class'],
