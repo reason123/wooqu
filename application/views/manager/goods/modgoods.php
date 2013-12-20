@@ -34,13 +34,13 @@
      <div class="form-group">
         <label class="control-label col-lg-2">商品介绍</label>
         <div class="col-lg-5">
-            <textarea rows="5" name="detail" class="form-control" value ="<?php echo $goodsInfo['detail']?>"></textarea>
+            <textarea rows="5" name="detail" class="form-control" value =""><?php echo $goodsInfo['detail'] ?></textarea>
         </div>
      </div>
      <div class="form-group">
         <label class="control-label col-lg-2"></label>
         <div class="col-lg-3">
-            <input type="submit" class="btn btn-default">
+            <input type="submit" class="btn btn-default" value="确认修改">
         </div>
      </div>
 </form>
