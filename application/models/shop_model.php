@@ -19,7 +19,7 @@ class shop_model extends CI_Model{
 				ORDER BY available DESC";*/
 		$sql = "SELECT DISTINCT shop_list.ID, name, phone, address, detail, createTime, available
 				FROM shop_list, shop_group
-				WHERE shop_list.ID = shop_group.shopID AND shop_list.fruit<>1 AND (";
+				WHERE shop_list.ID = shop_group.shopID AND (";
 		$arrayID = array();
 		foreach($groupList as $i => $group) {
 			$sql .= "(groupID=?) OR ";
