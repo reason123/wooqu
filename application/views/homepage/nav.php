@@ -17,10 +17,15 @@
 		  </div>
 		</div>
 		<div class="nav-container">
-		  <div class="nav-block nav-b4 <?php if($type=='feedback') echo 'active';?>" data-url="/feedback">
-			<h3>留言板</h3>
+		  <div class="nav-block nav-b4 <?php if($type=='shop') echo 'active';?>" data-url="/shop">
+			<h3>商店</h3>
 		  </div>
 		</div>
+	<!--	<div class="nav-container">
+		  <div class="nav-block nav-b5 <?php if($type=='feedback') echo 'active';?>" data-url="/feedback">
+			<h3>留言板</h3>
+		  </div>
+		</div> -->
 		<div class="nav-container">
 		  <div class="nav-block nav-b5 <?php if($type=='newact') echo 'active';?>" data-url="/newact">
 			<h3>发布活动</h3> 

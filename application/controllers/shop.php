@@ -41,7 +41,7 @@ class Shop extends CI_Controller {
 
 	/**
 	 * 提交订单
-	 * @param shopID, goods
+     * @param shopID, goods
 	 * @author Hewr
 	 * @author xanda
 	 */

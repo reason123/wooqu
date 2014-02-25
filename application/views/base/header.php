@@ -19,7 +19,8 @@
   </head>
   <body>
 	<div class="container">
-	  <nav class="navbar navbar-default" role="navigation" style="margin-bottom:0px;">
+<!--      <nav class="navbar navbar-default" role="navigation" style="margin-bottom:0px;">-->
+	  <nav class="navbar navbar-default" role="navigation">
 		<div class="navbar-header">
 		  <a class="navbar-brand" href="/">Wooqu</a>
 		</div>
@@ -46,4 +47,4 @@
 		</div>
         <?php } ?>
 	  </nav>
-      <div class="alert alert-info">计算机系“1001夜”学生节12月22日本周日晚18:30大礼堂，敬请期待！</div>
+<!--      <div class="alert alert-info">计算机系“1001夜”学生节12月22日本周日晚18:30大礼堂，敬请期待！</div>--> 

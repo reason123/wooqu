@@ -39,8 +39,11 @@ class Homepage extends CI_Controller{
     }
 
     public function shop(){
+        $this->load->model('groupfeed_model','feed');
+        $news_list = $this->feed->getNewsListByType(2);
         $this->load->view('base/header',array('page'=>'homenormal','type'=>'shop'));
         $this->load->view('homepage/nav');
+        $this->load->view('homepage/news',array('news_list'=>$news_list));
         $this->load->view('base/footer');
     }
 
