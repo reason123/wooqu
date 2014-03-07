@@ -130,21 +130,19 @@ function subOrder(){
 	$("#confirmButton").attr("disabled", "disabled");
 
 	var shopList = new Object();
-
-
 	$.post('/shop/newOrder',
 	{
 		'shopID':request.ID,
 		'order':JSON.stringify(ord)
 	},function(data){
 		var tmp = $.parseJSON(data);
-			if (tmp.error=="") {
-				alert(tmp.content);
-				window.location.href="/userpage/fruitOrder";
-			} else {
-				alert(tmp.error);
-				$("#ordSub").modal("hide");
-			}
+        if (tmp.error=="") {
+			alert(tmp.content);
+			window.location.href="/userpage/fruitOrder";
+		} else {
+			alert(tmp.error);
+			$("#ordSub").modal("hide");
+		}
 	})
 	$("#confirmButton").removeAttr("disabled");
 }
