@@ -39,16 +39,16 @@ class user_model extends CI_Model{
 		$className = $classList[0]['class'];
 		$passsalt = subStr($password,0,2).$this->_getSalt();
 		$newUser = array(
-			'loginName'=>$loginName,
-			'nickName'=>$nickName,
-			'password'=>crypt($password,$passsalt),
-			'realName'=>cleanString($realName),
-			'phoneNumber'=>$phoneNumber,
-			'class'=>$className,
-			'studentID'=>$studentID,
-			'defaultGroupID'=>$departmentID,
-			'baseRole'=>0,
-			'address'=>$address);
+                         'loginName'=>$loginName,
+                         'nickName'=>$nickName,
+                         'password'=>crypt($password,$passsalt),
+                         'realName'=>cleanString($realName),
+                         'phoneNumber'=>$phoneNumber,
+                         'class'=>$className,
+                         'studentID'=>$studentID,
+                         'defaultGroupID'=>$departmentID,
+                         'baseRole'=>0,
+                         'address'=>$address);
 		$this->db->insert('user_list',$newUser);
 
 		//get the userID
@@ -64,13 +64,50 @@ class user_model extends CI_Model{
         
 		return errorMessage(1,'OK.');
 	}
+
+    function addUser_new($loginName, $nickName, $password,
+                         $realName, $phoneNumber, $schoolID, $departmentID, $classID, $studentID, $address, $completed){
+		$this->cleanUserInfo();
+		$this->db->from('user_list')->where('loginName',$loginName);
+		if(count($this->db->get()->result_array())){
+			return errorMessage(0,'用户名已存在.');
+		}
+		//insert to user_list
+		$className = '未选择班级';
+		$passsalt = subStr($password,0,2).$this->_getSalt();
+		$newUser = array(
+                         'loginName'=>$loginName,
+                         'nickName'=>$nickName,
+                         'password'=>crypt($password,$passsalt),
+                         'realName'=>cleanString($realName),
+                         'phoneNumber'=>$phoneNumber,
+                         'class'=>$className,
+                         'studentID'=>$studentID,
+                         'defaultGroupID'=>$departmentID,
+                         'baseRole'=>0,
+                         'address'=>$address,
+                         'completed'=>$completed);
+		$this->db->insert('user_list',$newUser);
+
+		//get the userID
+        $tmp = $this->db->insert_id();
+
+		//insert to member_list
+		$this->db->insert('member_list',array('userID'=>$tmp,'groupID'=>$departmentID,'roles'=>2));
+		$this->db->insert('member_list',array('userID'=>$tmp,'groupID'=>$schoolID,'roles'=>2));
+
+		//set session and cookie
+		$this->_setUserInfo($loginName,$tmp,crypt($password,$passsalt),$departmentID,0,array(), $loginName,0);
+        
+		return errorMessage(1,'OK.');
+	}
     
-	/**
-	 * 检查当前用户
-	 * @param string $loginName 用户登陆名
-	 * @param string $password 用户密码
-	 */
-	function checkUser($loginName,$password){
+         /**
+          * 检查当前用户
+          * @param string $loginName 用户登陆名
+          * @param string $password 用户密码
+          */
+         function checkUser($loginName,$password){
 		$this->db->from('user_list')->where('loginName',$loginName);
 		$tmp = $this->db->get()->result_array();
 		if(!count($tmp)){
@@ -133,10 +170,10 @@ class user_model extends CI_Model{
             return errorMessage(-1,'昵称已存在');
         }
         $userInfo = array(
-            'nickName'=> cleanString($nickName),
-            'phoneNumber'=> cleanString($phoneNumber),
-			'studentID'=> cleanString($studentID),
-			'address'=> cleanString($address));
+                          'nickName'=> cleanString($nickName),
+                          'phoneNumber'=> cleanString($phoneNumber),
+                          'studentID'=> cleanString($studentID),
+                          'address'=> cleanString($address));
         $this->db->where('ID',$_SESSION['userID'])->update('user_list',$userInfo);
         return errorMessage(1, '修改成功'); 
     }
