@@ -54,7 +54,9 @@ class Shop extends CI_Controller {
 			$userID = $_SESSION["userID"];
 		}
 
-		$shopid = intval($_POST["shopID"]);
+		
+
+        $shopid = intval($_POST["shopID"]);
 		$order = json_decode($_POST["order"]);
 		$orderSize = count($order);
 
@@ -66,11 +68,9 @@ class Shop extends CI_Controller {
 
 		$this->load->model('shop_model', 'shop');
 		$shopInfo = $this->shop->getShopInfoByID($shopid);
-		$this->load->model('fruit_model', 'fruit');
-		if ($shopInfo['fruit'] == 1)
-			$goodsList = $this->fruit->getFruitListByShop($shopid);
-		else
-			$goodsList = $this->shop->getGoodListByShop($shopid);
+		$this->load->model('goods_model', 'goods');
+		$goodsList = $this->goods->getGoodsListByShop($shopid);
+
 		$goodsTrans = array();
 
 		foreach ($goodsList as $good) {
@@ -93,7 +93,8 @@ class Shop extends CI_Controller {
 			return;
 		}
 
-		$amount = 0;
+            
+        $amount = 0;
 		$orderTrans = array();
 		foreach($order as $good => $num) {
 		//for ($i = 0; $i < $orderSize; ++$i) {
@@ -120,9 +121,10 @@ class Shop extends CI_Controller {
 			$amount += doubleval($price) * $num;
 			//next($order);
 		}
+
 		//for ($i = 0; $i < $orderSize; ++$i)
 		foreach($orderTrans as $detail)
-			$this->shop->plusTotal($detail[0], $detail[3], $shopInfo['fruit']);
+			$this->goods->increaseGoodsTotal($detail[0], $detail[3]);
 		
 		$this->shop->submitOrder($shopid, $shopname, $userID, $orderTrans, $amount);
 		$ret = array( "content"=>"成功提交！", "error"=>"" );
