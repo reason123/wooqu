@@ -1,7 +1,8 @@
 <input type="hidden" id="groupID" value="<?php echo $id; ?>" />
 
 <legend>修改团购</legend>
-<div id="groupbuy_info" class="container"></div>
+<div id="groupbuy_info" class="container">
+</div>
 <!--
 <legend>商品信息</legend>
 <table id="cargo_list_table" class="table table-striped table-hover">

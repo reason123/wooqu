@@ -568,6 +568,38 @@ class groupbuy_model extends CI_Model{
         $groupbuyList = $this->db->query($sql,array($userID))->result_array();
         return $groupbuyList;
     }
+
+   
+   function addOrderMessage($gbID,$Message)
+   {
+       $tmp = $this->db->from('groupbuy_list')->where('ID',$gbID)->get()->result_array();
+       $orderMessageList = json_decode($tmp[0]['orderMessage'],true);
+       array_push($orderMessageList,$Message);
+       $newItem = array('orderMessage'=>json_encode($orderMessageList));
+       $this->db->where('ID',$gbID)->update('groupbuy_list',$newItem);
+       return json_encode($orderMessageList);
+   }
+
+   function delOrderMessage($gbID,$Message)
+   {
+      $tmp = $this->db->from('groupbuy_list')->where('ID',$gbID)->get()->result_array();
+      $orderMessageList = json_decode($tmp[0]['orderMessage'],true);
+      $tmp = array();
+      foreach ($orderMessageList as $x)
+      if ($x != $Message)
+      {
+          array_push($tmp,$x);
+      }
+      $newItem = array('orderMessage'=>json_encode($tmp));
+      $this->db->where('ID',$gbID)->update('groupbuy_list',$newItem);
+      return json_encode($tmp);      
+   }
+
+    function getOrderMessageList($gbID)
+    { 
+        $tmp = $this->db->from('groupbuy_list')->where('ID',$gbID)->get()->result_array();
+        return json_decode($tmp[0]['orderMessage'],true);
+    }
 }
 
 ?>

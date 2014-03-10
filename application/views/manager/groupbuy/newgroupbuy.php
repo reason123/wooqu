@@ -48,7 +48,17 @@
             <textarea rows="5" name="illustration" class="form-control" ><?php if (isset($_REQUEST['illustration'])) echo $_REQUEST['illustration']; ?></textarea>
         </div>
      </div>
-    <div class="form-group">
+     <div class="form-group">
+        <label class="control-label col-lg-2">订单备注项</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control" name="orderMessage" id="orderMessage"></input>
+        </div>
+        <button type="button" class="btn btn-defalut" onclick="addOrderMessage()">添加</button>
+     </div>
+     <div id="orderMessageList" class="form-group">
+        <label class="control-label col-lg-2"></label>
+     </div>
+     <div class="form-group">
         <label class="control-label col-lg-2">团购结束时间</label>
         <div class="col-lg-3">
             <input type="hidden" name="act_end_date" id="act_end_date">

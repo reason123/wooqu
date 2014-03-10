@@ -1,6 +1,31 @@
 var cargoList;
 var delCargoIdx = -1;
 
+function delOrderMessage(btnid)
+{
+     document.getElementById("btn"+btnid).style.display="none";
+     $.post("/groupbuy/delOrderMessage",{
+                        gbID: document.getElementById("groupID").value,
+                        message:btnid 
+                    });
+}
+
+function addOrderMessage()
+{
+    if (document.getElementById("orderMessage").value === "") return;
+    if (document.getElementById("btn"+document.getElementById("orderMessage").value))
+    {
+        document.getElementById("btn"+document.getElementById("orderMessage").value).style.display="";
+        return;
+    }
+    $("#orderMessageList").append("<button type='button' class='btn btn-info' id='btn"+document.getElementById("orderMessage").value+"' onclick='delOrderMessage(\""+document.getElementById("orderMessage").value+"\")'>"+document.getElementById("orderMessage").value+"</button>");
+    $.post("/groupbuy/addOrderMessage",{
+                        gbID: document.getElementById("groupID").value,
+                        message: document.getElementById("orderMessage").value
+                    });
+    document.getElementById("orderMessage").value="";
+}
+
 function makeInfo(data) {
 	var deadline_date = data.deadline.substr(0, data.deadline.lastIndexOf(' '));
 	var deadline_time = data.deadline.substr(data.deadline.lastIndexOf(' ') + 1);
@@ -75,6 +100,16 @@ function makeInfo(data) {
 					"<textarea rows=3 class=\"form-control\" name=\"illustration\">"+data.illustration+"</textarea>"+
 				"</div>"+
 			"</div>"+
+            "<div class=\"form-group\">"+
+                "<label class=\"control-label col-lg-3\">订单备注项</label>"+
+                "<div class=\"col-lg-3\">"+
+                    "<input type=\"text\" class=\"form-control\" name=\"orderMessage\" id=\"orderMessage\"></input>"+
+                "</div>"+
+                "<button type=\"button\" class=\"btn btn-defalut\" onclick=\"addOrderMessage()\">添加</button>"+
+            "</div>"+
+            "<div id=\"orderMessageList\" class=\"form-group\">"+
+                "<label class=\"control-label col-lg-3\"></label>"+
+            "</div>"+
 			"<div class=\"form-group\">"+
 				"<label class=\"col-lg-3 control-label\">状态</label>"+
 				"<div class=\"col-lg-5\">"+

@@ -601,12 +601,30 @@ class Groupbuy extends CI_Controller {
         //header('Location: /groupbuy/selectGoods?id='.$_REQUEST['groupbuyID']);
 	}
 
-	function test()
-	{
+	
+	function addOrderMessage()
+    {
+		if (!isset($_REQUEST['gbID'])) return;
 		$this->load->model('groupbuy_model','groupbuy');
-		$groupbuyInfo = $this->groupbuy->getGroupbuyInfoByID(1102);
-		echo $groupbuyInfo['goodslist'];
-        $this->groupbuy->updataGoodsList(1104,$groupbuyInfo['goodslist']);
+        $this->groupbuy->addOrderMessage($_REQUEST['gbID'],$_REQUEST['message']);
+        //header('Location: /groupbuy/selectGoods?id='.$_REQUEST['groupbuyID']);
+        
+	}
+    
+	function delOrderMessage()
+    {
+        if (!isset($_REQUEST['gbID'])) return;
+        $this->load->model('groupbuy_model','groupbuy');
+        $this->groupbuy->delOrderMessage($_REQUEST['gbID'],$_REQUEST['message']);
+        //header('Location: /groupbuy/selectGoods?id='.$_REQUEST['groupbuyID']);
+	}
+
+    function test()
+	{
+        echo 21;
+		$this->load->model('groupbuy_model','groupbuy');
+        $this->groupbuy->delOrderMessage(1143,"123");
+        echo 23;
 	}
 }
 

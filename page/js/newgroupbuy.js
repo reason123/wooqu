@@ -1,3 +1,36 @@
+var orderMessageList = new Array();
+
+function delOrderMessage(btnid)
+{
+  //alert(id);
+     document.getElementById("btn"+btnid).style.display="none";
+     //alert(btnid);
+     for (var i = 0; i < orderMessageList.length; i++)
+     {
+         //alert(orderMessageList[i]);
+         if (orderMessageList[i] == btnid) {
+             orderMessageList.splice(i,1);
+             //alert(i);             
+            //alert(orderMessageList);
+         }
+    }
+}
+
+function addOrderMessage()
+{
+    if (document.getElementById("orderMessage").value === "") return;
+    orderMessageList.push(document.getElementById("orderMessage").value);
+    //var temp = JSON.stringifier();
+    //alert(orderMessageList);
+    if (document.getElementById("btn"+document.getElementById("orderMessage").value))
+    {
+        document.getElementById("btn"+document.getElementById("orderMessage").value).style.display="";
+        return;
+    }
+    $("#orderMessageList").append("<button type='button' class='btn btn-info' id='btn"+document.getElementById("orderMessage").value+"' onclick='delOrderMessage(\""+document.getElementById("orderMessage").value+"\")'>"+document.getElementById("orderMessage").value+"</button>");
+    document.getElementById("orderMessage").value="";
+}
+
 $(function(){
 	$('.tp').timepicker({
 		showSeconds: true,
