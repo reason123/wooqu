@@ -13,11 +13,13 @@
   <tbody>
     <tr>
 <?php foreach($e_form_list as $key => $e_form){
-     echo '<td>'.$e_form['ID'].'</td>';
+     
+     echo '<tr><td>'.$e_form['ID'].'</td>';
      $formInfo = json_decode($e_form['content'],true);
      foreach($formInfo as $index => $val){
          echo '<td>'.$val.'</td>';
      }
+     echo '</tr>';
  }?>
     </tr>
   </tbody>
