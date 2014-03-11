@@ -47,7 +47,16 @@
 			</div>
 			<div class="modal-body">
 				<h4 id="confirmContent" style="font-family: 'microsoft yahei', '宋体b8b\4f53';"></h4>
-				<div class="alert alert-success" id="confirmInfo"><b>祝您购物愉快！</b></div>
+				<div class="alert alert-success" id="confirmInfo">
+                    <form>
+                    <?php
+                       foreach ($orderMessageList as $om)
+                       {
+                               echo "<input type='radio' name='orderMessage' value='".$om."'>".$om."</input><br/>";
+                       }
+                    ?> 
+                    </form>
+                </div>
 			</div>
 			<div class="modal-footer">
 				<a href="#" class="btn btn-default" data-dismiss="modal">取消</a>

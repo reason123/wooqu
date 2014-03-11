@@ -103,9 +103,9 @@ class groupbuy_model extends CI_Model{
 	 */
 	function insertShop($shop, $userName) {
 		$sql = "INSERT INTO `groupbuy_list`
-				(`title`, `status`, `comment`, `howtopay`, `illustration`, `deadline`, `pickuptime`, `source`, `username`) 
-				VALUES(?,?,?,?,?,?,?,?,?)";
-		$res = $this->db->query($sql, array(cleanString($shop['title']), $shop['status'], cleanString($shop['comment']), cleanString($shop['howtopay']), cleanString($shop['illustration']), cleanString($shop['deadline']), cleanString($shop['pickuptime']), cleanString($shop['source']), $userName)) or die(mysql_error());
+				(`title`, `status`, `comment`, `howtopay`, `illustration`, `deadline`, `pickuptime`, `source`, `username`,`orderMessage` ) 
+				VALUES(?,?,?,?,?,?,?,?,?,?)";
+		$res = $this->db->query($sql, array(cleanString($shop['title']), $shop['status'], cleanString($shop['comment']), cleanString($shop['howtopay']), cleanString($shop['illustration']), cleanString($shop['deadline']), cleanString($shop['pickuptime']), cleanString($shop['source']), $userName,$shop['orderMessage'])) or die(mysql_error());
         $shopID = $this->db->insert_id();
         $this->load->model('groupfeed_model','feed');
         $this->feed->addFeedItem(1,
@@ -142,7 +142,7 @@ class groupbuy_model extends CI_Model{
         }
 
         if($tmp[0]['username'] == $_SESSION['loginName']){
-            $sql = "select groupbuy_order.ID,realName,`list`,amount,class, user_list.phoneNumber,user_list.address,defaultGroupID,comment 
+            $sql = "select groupbuy_order.ID,realName,`list`,amount,class, user_list.phoneNumber,user_list.address,defaultGroupID,comment,orderMessage 
                 from user_list,groupbuy_order 
                 where userID=user_list.ID and shopid=? and del=0 
                 order by class asc";
@@ -447,10 +447,10 @@ class groupbuy_model extends CI_Model{
 	 * @author Hewr
 	 * @param shopID shopname username cargoList totalMoney comment
 	 */
-	function submitOrder($shopid, $shopname, $username, $list, $amount, $comment) {
+	function submitOrder($shopid, $shopname, $username, $list, $amount, $comment,$orderMessage) {
 		if (count($this->getShopById($shopid)) == 0) return;
-		$sql = "INSERT INTO `groupbuy_order`(`shopid`, `shopname`, `username`, `list`, `amount`, `createtime`, `userID`, `comment`) VALUES(?,?,?,?,?,?,?,?)";
-		$res = $this->db->query($sql,array($shopid,$shopname,$username,json_encode($list),$amount,date("Y-m-d H:i:s", mktime()), $_SESSION['userID'], $comment)) or die(mysql_error());
+		$sql = "INSERT INTO `groupbuy_order`(`shopid`, `shopname`, `username`, `list`, `amount`, `createtime`, `userID`, `comment`,`orderMessage`) VALUES(?,?,?,?,?,?,?,?,?)";
+		$res = $this->db->query($sql,array($shopid,$shopname,$username,json_encode($list),$amount,date("Y-m-d H:i:s", mktime()), $_SESSION['userID'], $comment,$orderMessage)) or die(mysql_error());
 	}
 
 	/**

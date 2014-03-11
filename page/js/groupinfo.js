@@ -184,11 +184,29 @@ function subOrd() {
 		var num = parseInt(document.getElementById("cartnum" + i).value);
 		if (num > 0) order[cnt++] = new Array(i, num);
 	}
-	$.post("/groupbuy/submitOrder",
+    var radios = document.getElementsByName("orderMessage");
+    var checked = false;
+    if (radios.length == 0) checked = true;
+    var str = "";
+    for (var i in radios) 
+    {
+        if (radios[i].checked == true)
+        {
+            checked = true;
+            str = radios[i].value;
+        }
+    }
+    if (checked == false) {
+        alert("请选择订购信息！");
+	    submitting = false;
+        return;
+    }
+    $.post("/groupbuy/submitOrder",
 		{
 			id: document.getElementById("groupID").value, 
 			list: JSON.stringify(order), 
-			comment: document.getElementById("comment").value
+			comment: document.getElementById("comment").value,
+            orderMessage: str
 		}, 
 		function (jsdata) {
 			submitting = false;

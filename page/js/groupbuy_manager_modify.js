@@ -1,28 +1,27 @@
-var cargoList;
-var delCargoIdx = -1;
+var cargoList; 
+var delCargoIdx = -1; 
 
-function delOrderMessage(btnid)
-{
-     document.getElementById("btn"+btnid).style.display="none";
+function delOrderMessage(btnid) { 
      $.post("/groupbuy/delOrderMessage",{
                         gbID: document.getElementById("groupID").value,
                         message:btnid 
                     });
+     document.getElementById("btn"+btnid).style.display="none";
 }
 
 function addOrderMessage()
 {
     if (document.getElementById("orderMessage").value === "") return;
+    $.post("/groupbuy/addOrderMessage",{
+                        gbID: document.getElementById("groupID").value,
+                        message: document.getElementById("orderMessage").value
+                    });
     if (document.getElementById("btn"+document.getElementById("orderMessage").value))
     {
         document.getElementById("btn"+document.getElementById("orderMessage").value).style.display="";
         return;
     }
     $("#orderMessageList").append("<button type='button' class='btn btn-info' id='btn"+document.getElementById("orderMessage").value+"' onclick='delOrderMessage(\""+document.getElementById("orderMessage").value+"\")'>"+document.getElementById("orderMessage").value+"</button>");
-    $.post("/groupbuy/addOrderMessage",{
-                        gbID: document.getElementById("groupID").value,
-                        message: document.getElementById("orderMessage").value
-                    });
     document.getElementById("orderMessage").value="";
 }
 
@@ -34,97 +33,97 @@ function makeInfo(data) {
 	var unavailSelected = ""; var availSelected = "";
 	if (data.status == 0) unavailSelected = " selected=\"selected\""; else availSelected = " selected=\"selected\"";
 	var res = $(
-		"<form class=\"form-horizontal\" action=\"/groupbuy/modifyShopById\" method = \"post\" enctype=\"multipart/form-data\">"+
-		//"<div class=\"form-horizontal\">"+
-			"<img src='"+data.pic+"' height=180 style=\"margin-left:190px;\" /><br><br>"+
-			"<div class=\"form-group\">"+
-				"<label class=\"col-lg-3 control-label\">团购ID</label>"+
-				"<div class=\"col-lg-5\">"+
-					"<input type=\"text\" class=\"form-control\" value=\""+data.id+"\" disabled>"+
-					"<input type=\"hidden\" class=\"form-control\" name='id' value=\""+data.id+"\">"+
-				"</div>"+
-			"</div>"+
-			"<div class=\"form-group\">"+
-				"<label class=\"control-label col-lg-3\">团购图片</label>"+
-				"<div class=\"col-lg-5\">"+
-					"<input type=\"file\" class=\"form-control\" name=\"pic\" />"+
-				"</div>"+
-			"</div>"+
-			"<div class=\"form-group\">"+
-				"<label class=\"col-lg-3 control-label\">团购标题</label>"+
-				"<div class=\"col-lg-5\">"+
-					"<input type=\"text\" class=\"form-control\" name=\"title\" value=\""+data.title+"\">"+
-				"</div>"+
-			"</div>"+
-			"<div class=\"form-group\">"+
-				"<label class=\"col-lg-3 control-label\">加入群组</label>"+
-				"<div class=\"col-lg-5\">"+
-					"<input type=\"text\" class=\"form-control\" name=\"groups\" value=\""+data.groups+"\">"+
-				"</div>"+
-			"</div>"+
-			"<div class=\"form-group\">"+
-				"<label class=\"col-lg-3 control-label\">截止时间</label>"+
-				"<div class=\"col-lg-5\">"+
-					"<input type=\"text\" class=\"form-control dp\" name=\"deadlinedate\" value=\""+deadline_date+"\">"+
-					"<input type=\"text\" class=\"form-control tp\" name=\"deadlinetime\" value=\""+deadline_time+"\">"+
-				"</div>"+
-			"</div>"+
-			"<div class=\"form-group\">"+
-				"<label class=\"col-lg-3 control-label\">取货时间</label>"+
-				"<div class=\"col-lg-5\">"+
-					"<input type=\"text\" class=\"form-control dp\" name=\"pickuptimedate\" value=\""+pickuptime_date+"\">"+
-					"<input type=\"text\" class=\"form-control tp\" name=\"pickuptimetime\" value=\""+pickuptime_time+"\">"+
-				"</div>"+
-			"</div>"+
-			"<div class=\"form-group\">"+
-				"<label class=\"col-lg-3 control-label\">支付方式</label>"+
-				"<div class=\"col-lg-5\">"+
-					"<textarea rows=3 class=\"form-control\" name=\"howtopay\">"+data.howtopay+"</textarea>"+
-				"</div>"+
-			"</div>"+
-			"<div class=\"form-group\">"+
-				"<label class=\"col-lg-3 control-label\">货源</label>"+
-				"<div class=\"col-lg-5\">"+
-					"<input type=\"text\" class=\"form-control\" name=\"source\" value=\""+data.source+"\" placeholder=\"凡客\">"+
-				"</div>"+
-			"</div>"+
-			"<div class=\"form-group\">"+
-				"<label class=\"col-lg-3 control-label\">备注</label>"+
-				"<div class=\"col-lg-5\">"+
-					"<input type=\"text\" class=\"form-control\" name=\"comment\" value=\""+data.comment+"\">"+
-				"</div>"+
-			"</div>"+
-			"<div class=\"form-group\">"+
-				"<label class=\"col-lg-3 control-label\">详细信息</label>"+
-				"<div class=\"col-lg-5\">"+
-					"<textarea rows=3 class=\"form-control\" name=\"illustration\">"+data.illustration+"</textarea>"+
-				"</div>"+
-			"</div>"+
-            "<div class=\"form-group\">"+
-                "<label class=\"control-label col-lg-3\">订单备注项</label>"+
-                "<div class=\"col-lg-3\">"+
-                    "<input type=\"text\" class=\"form-control\" name=\"orderMessage\" id=\"orderMessage\"></input>"+
+    		"<form class=\"form-horizontal\" action=\"/groupbuy/modifyShopById\" method = \"post\" enctype=\"multipart/form-data\">"+
+		        //"<div class=\"form-horizontal\">"+
+			        "<img src='"+data.pic+"' height=180 style=\"margin-left:190px;\" /><br><br>"+
+			        "<div class=\"form-group\">"+
+				        "<label class=\"col-lg-3 control-label\">团购ID</label>"+
+				        "<div class=\"col-lg-5\">"+
+					        "<input type=\"text\" class=\"form-control\" value=\""+data.id+"\" disabled>"+
+					    "<input type=\"hidden\" class=\"form-control\" name='id' value=\""+data.id+"\">"+
+				    "</div>"+
+			    "</div>"+
+			    "<div class=\"form-group\">"+
+				    "<label class=\"control-label col-lg-3\">团购图片</label>"+
+				    "<div class=\"col-lg-5\">"+
+					    "<input type=\"file\" class=\"form-control\" name=\"pic\" />"+
+				    "</div>"+
+			    "</div>"+
+			    "<div class=\"form-group\">"+
+				    "<label class=\"col-lg-3 control-label\">团购标题</label>"+
+				    "<div class=\"col-lg-5\">"+
+					    "<input type=\"text\" class=\"form-control\" name=\"title\" value=\""+data.title+"\">"+
+				    "</div>"+
+			    "</div>"+
+			    "<div class=\"form-group\">"+
+				    "<label class=\"col-lg-3 control-label\">加入群组</label>"+
+				    "<div class=\"col-lg-5\">"+
+					    "<input type=\"text\" class=\"form-control\" name=\"groups\" value=\""+data.groups+"\">"+
+				    "</div>"+
+			    "</div>"+
+			    "<div class=\"form-group\">"+
+				    "<label class=\"col-lg-3 control-label\">截止时间</label>"+
+				    "<div class=\"col-lg-5\">"+
+					    "<input type=\"text\" class=\"form-control dp\" name=\"deadlinedate\" value=\""+deadline_date+"\">"+
+					    "<input type=\"text\" class=\"form-control tp\" name=\"deadlinetime\" value=\""+deadline_time+"\">"+
+				    "</div>"+
+			    "</div>"+
+			    "<div class=\"form-group\">"+
+				    "<label class=\"col-lg-3 control-label\">取货时间</label>"+
+				    "<div class=\"col-lg-5\">"+
+					    "<input type=\"text\" class=\"form-control dp\" name=\"pickuptimedate\" value=\""+pickuptime_date+"\">"+
+					    "<input type=\"text\" class=\"form-control tp\" name=\"pickuptimetime\" value=\""+pickuptime_time+"\">"+
+	    			"</div>"+
+		    	"</div>"+
+			    "<div class=\"form-group\">"+
+				    "<label class=\"col-lg-3 control-label\">支付方式</label>"+
+				    "<div class=\"col-lg-5\">"+
+					    "<textarea rows=3 class=\"form-control\" name=\"howtopay\">"+data.howtopay+"</textarea>"+
+				    "</div>"+
+			    "</div>"+
+			    "<div class=\"form-group\">"+
+			    	"<label class=\"col-lg-3 control-label\">货源</label>"+
+			    	"<div class=\"col-lg-5\">"+
+				    	"<input type=\"text\" class=\"form-control\" name=\"source\" value=\""+data.source+"\" placeholder=\"凡客\">"+
+				    "</div>"+
+	    		"</div>"+
+		    	"<div class=\"form-group\">"+
+			    	"<label class=\"col-lg-3 control-label\">备注</label>"+
+				    "<div class=\"col-lg-5\">"+
+					    "<input type=\"text\" class=\"form-control\" name=\"comment\" value=\""+data.comment+"\">"+
+    				"</div>"+
+	    		"</div>"+
+		    	"<div class=\"form-group\">"+
+				    "<label class=\"col-lg-3 control-label\">详细信息</label>"+
+			    	"<div class=\"col-lg-5\">"+
+					    "<textarea rows=3 class=\"form-control\" name=\"illustration\">"+data.illustration+"</textarea>"+
+    				"</div>"+
+	    		"</div>"+
+                "<div class=\"form-group\">"+
+                    "<label class=\"control-label col-lg-3\">订单备注项</label>"+
+                    "<div class=\"col-lg-3\">"+
+                        "<input type=\"text\" class=\"form-control\" name=\"orderMessage\" id=\"orderMessage\"></input>"+
+                    "</div>"+
+                    "<button type=\"button\" class=\"btn btn-defalut\" onclick=\"addOrderMessage()\">添加</button>"+
                 "</div>"+
-                "<button type=\"button\" class=\"btn btn-defalut\" onclick=\"addOrderMessage()\">添加</button>"+
-            "</div>"+
-            "<div id=\"orderMessageList\" class=\"form-group\">"+
-                "<label class=\"control-label col-lg-3\"></label>"+
-            "</div>"+
-			"<div class=\"form-group\">"+
-				"<label class=\"col-lg-3 control-label\">状态</label>"+
-				"<div class=\"col-lg-5\">"+
-					"<select class=\"form-control\" name=\"status\">"+
-						"<option value=\"0\""+unavailSelected+">截止</option>"+
-						"<option value=\"1\""+availSelected+">在售</option>"+
-					"</select>"+
-				"</div>"+
-			"</div>"+
-			//"<span class=\"btn btn-primary pull-right\" onclick=\"confirmModifyInfo()\">确认修改</span>"+
-			"<input type='submit' class='btn btn-primary pull-right' value='确认修改' />"+
-		//"</div>"+
-		"</form>"
-	);
-	return res;
+                "<div id=\"orderMessageList\" class=\"form-group\">"+
+                    "<label class=\"control-label col-lg-3\"></label>"+
+                "</div>"+
+			    "<div class=\"form-group\">"+
+				    "<label class=\"col-lg-3 control-label\">状态</label>"+
+    				"<div class=\"col-lg-5\">"+
+	    				"<select class=\"form-control\" name=\"status\">"+
+		    				"<option value=\"0\""+unavailSelected+">截止</option>"+
+			    			"<option value=\"1\""+availSelected+">在售</option>"+
+				    	"</select>"+
+    				"</div>"+
+	    		"</div>"+
+		    	//"<span class=\"btn btn-primary pull-right\" onclick=\"confirmModifyInfo()\">确认修改</span>"+
+			    "<input type='submit' class='btn btn-primary pull-right' value='确认修改' />"+
+    		//"</div>"+
+	    	"</form>"
+	    );
+	    return res;
 }
 
 function makeGood(data, idx) {
@@ -335,6 +334,17 @@ $(function(){
 				var data = $.parseJSON(jsdata);
 				var infoHTML = makeInfo(data);
 				$("#groupbuy_info").append(infoHTML);
+                $.post("/groupbuy/getOrderMessageList",
+            	    { gbID: document.getElementById("groupID").value }, 
+            		function(jsdata){
+			            var data = $.parseJSON(jsdata);
+                        //alert(data);
+                        var tmp = "";
+                        for (var i in data) {
+                            tmp = tmp+"<button type='button' class='btn btn-info' id='btn"+data[i]+"' onclick='delOrderMessage(\""+data[i]+"\")'>"+data[i]+"</button>";
+                        }
+                        $("#orderMessageList").append(tmp);
+                   });
 				$('.tp').timepicker({
 					showSeconds: true,
 					showMeridian: false,

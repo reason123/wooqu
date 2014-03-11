@@ -14,20 +14,22 @@ function delOrderMessage(btnid)
             //alert(orderMessageList);
          }
     }
+    var temp = JSON.stringify(orderMessageList);
+    document.getElementById("orderMessageList").value=temp;
 }
 
 function addOrderMessage()
 {
     if (document.getElementById("orderMessage").value === "") return;
     orderMessageList.push(document.getElementById("orderMessage").value);
-    //var temp = JSON.stringifier();
-    //alert(orderMessageList);
+    var temp = JSON.stringify(orderMessageList);
+    document.getElementById("orderMessageList").value=temp;
     if (document.getElementById("btn"+document.getElementById("orderMessage").value))
     {
         document.getElementById("btn"+document.getElementById("orderMessage").value).style.display="";
         return;
     }
-    $("#orderMessageList").append("<button type='button' class='btn btn-info' id='btn"+document.getElementById("orderMessage").value+"' onclick='delOrderMessage(\""+document.getElementById("orderMessage").value+"\")'>"+document.getElementById("orderMessage").value+"</button>");
+    $("#orderMessageBody").append("<button type='button' class='btn btn-info' id='btn"+document.getElementById("orderMessage").value+"' onclick='delOrderMessage(\""+document.getElementById("orderMessage").value+"\")'>"+document.getElementById("orderMessage").value+"</button>");
     document.getElementById("orderMessage").value="";
 }
 

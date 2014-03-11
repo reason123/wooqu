@@ -55,7 +55,8 @@
         </div>
         <button type="button" class="btn btn-defalut" onclick="addOrderMessage()">添加</button>
      </div>
-     <div id="orderMessageList" class="form-group">
+     <div id="orderMessageBody" class="form-group" >
+        <input type="hidden" name="orderMessageList" id="orderMessageList" value="[]">
         <label class="control-label col-lg-2"></label>
      </div>
      <div class="form-group">

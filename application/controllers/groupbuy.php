@@ -299,7 +299,7 @@ class Groupbuy extends CI_Controller {
 			//$this->groupbuy->plusCargo($order[$i][0], $order[$i][1]);
 			$this->goods->increaseGoodsTotal($order[$i][0], $order[$i][1]);
 		
-		$this->groupbuy->submitOrder($shopid, $shopname, $loginName, $order, $amount, $comment);
+		$this->groupbuy->submitOrder($shopid, $shopname, $loginName, $order, $amount, $comment,$_POST["orderMessage"]);
 		$ret = array( "content"=>"成功提交！", "error"=>"" );
 		echo json_encode($ret);
 	}
@@ -425,9 +425,11 @@ class Groupbuy extends CI_Controller {
 	 */
 	function groupInfo() {
 		$groupID = $_GET['id'];
+        $this->load->model('groupbuy_model','groupbuy');
+        $orderMessageList = $this->groupbuy->getOrderMessageList($groupID);
         $this->load->view('base/mainnav',array('page'=>'groupinfo','type'=>'groupbuy'));
         $this->load->view('homepage/nav');
-        $this->load->view('groupbuy/groupInfo', array('groupID' => $groupID));
+        $this->load->view('groupbuy/groupInfo', array('groupID' => $groupID,'orderMessageList'=>$orderMessageList));
         $this->load->view('base/footer');
 	}
     
@@ -477,7 +479,9 @@ class Groupbuy extends CI_Controller {
                           "deadline"=>cleanString($_REQUEST['act_end_date']),
                           "pickuptime"=>cleanString($_REQUEST['sign_end_date']), 
                           "source"=>cleanString($_REQUEST['source']),
-						  "group_list"=>cleanString($_REQUEST['group_list']));
+						  "group_list"=>cleanString($_REQUEST['group_list']),
+                          "orderMessage"=>$_REQUEST['orderMessageList']
+                          );
         	//echo $_REQUEST['act_end_date'];
         	$groupbuyID = $this->groupbuy->insertShop($shop,$_SESSION['loginName']);
 			$picPath = "/storage/groupbuyPic/pic_".$groupbuyID.".jpg";
@@ -619,6 +623,14 @@ class Groupbuy extends CI_Controller {
         //header('Location: /groupbuy/selectGoods?id='.$_REQUEST['groupbuyID']);
 	}
 
+	function getOrderMessageList()
+    {
+        if (!isset($_REQUEST['gbID'])) return;
+        $this->load->model('groupbuy_model','groupbuy');
+        echo json_encode($this->groupbuy->getOrderMessageList($_REQUEST['gbID']));
+        //header('Location: /groupbuy/selectGoods?id='.$_REQUEST['groupbuyID']);
+	}
+    
     function test()
 	{
         echo 21;
