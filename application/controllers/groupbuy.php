@@ -376,14 +376,15 @@ class Groupbuy extends CI_Controller {
      * @author ca007
      */
     function vieworder(){
-
+        if (isset($_GET['OM'])) $OM = $_GET['OM']; else $OM = "LJNisHansome!";
         $this->load->model('groupbuy_model','gb');
         $order_list = $this->gb->getOrderByGbID($_REQUEST['groupbuyID']);
         $groupbuyInfo = $this->gb->getGroupbuyInfoByID($_REQUEST['groupbuyID']);
+        $orderMessageList = $this->gb->getOrderMessageList($_REQUEST['groupbuyID']);
         $this->load->view('base/mainnav',array('page'=>'gborder'));
 		$this->load->view("manager/header", array("mh" => "statistics"));
 		$this->load->view("manager/statistics_header", array("mgh" => "groupbuy"));
-        $this->load->view('groupbuy/vieworder',array('order_list'=>$order_list, 'groupbuyInfo'=>$groupbuyInfo));
+        $this->load->view('groupbuy/vieworder',array('gbID'=>$_REQUEST['groupbuyID'],'order_list'=>$order_list, 'groupbuyInfo'=>$groupbuyInfo, 'orderMessageList'=>$orderMessageList,'OM'=>$OM));
         $this->load->view('base/footer');
     }
 

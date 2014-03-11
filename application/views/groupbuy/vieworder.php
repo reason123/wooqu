@@ -27,11 +27,32 @@
       <th>总金额</th>
       <th>详细信息</th>
       <th>备注</th>
-      <th>订购信息</th>
+      <!--<th>订购信息</th>-->
+      <th>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">订购信息<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+               <?php
+               echo "<li><a href='/groupbuy/vieworder?groupbuyID=".$gbID."'>全部订单</a></li>";
+               echo "<li class='divider'></li>";
+               foreach ($orderMessageList as $x)
+               {
+                    echo "<li><a href='/groupbuy/vieworder?groupbuyID=".$gbID."&OM=".$x."'>".$x."</a></li>";
+               }
+               //<li><a href="#">Another action</a></li>
+               //<li><a href="#">Something else here</a></li>
+               //<li><a href="#">Separated link</a></li>
+               //<li><a href="#">One more separated link</a></li>
+               
+               ?>
+           </ul>
+       </li>
+     </th>
     </tr>
   </thead>
   <tbody>
   <?php foreach($order_list as $key => $order): ?>
+     <?php if ($OM != "LJNisHansome!" && $OM != $order['orderMessage']) continue; ?>
     <tr>
 	  <td><input type="checkbox" name="checkID" value="<?php echo $order['ID']?>"></td>
       <!--<td><?php echo $order['defaultGroupID'] ?></td>-->
