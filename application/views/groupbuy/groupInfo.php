@@ -48,14 +48,18 @@
 			<div class="modal-body">
 				<h4 id="confirmContent" style="font-family: 'microsoft yahei', '宋体b8b\4f53';"></h4>
 				<div class="alert alert-success" id="confirmInfo">
-                    <form>
                     <?php
-                       foreach ($orderMessageList as $om)
-                       {
-                               echo "<input type='radio' name='orderMessage' value='".$om."'>".$om."</input><br/>";
+                       if (count($orderMessageList) == 0){
+                            echo "祝您购物愉快！";
+                       } else {                   
+                            echo "请选择你的订购信息！<form>";
+                            foreach ($orderMessageList as $om)
+                            {
+                                echo "<input type='radio' name='orderMessage' value='".$om."'>".$om."</input><br/>";
+                            }
+                            echo "</form>";
                        }
                     ?> 
-                    </form>
                 </div>
 			</div>
 			<div class="modal-footer">
