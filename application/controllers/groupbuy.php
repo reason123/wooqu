@@ -233,6 +233,10 @@ class Groupbuy extends CI_Controller {
 	 * @author Hewr
 	 */
 	function submitOrder() {
+        $this->load->model('user_model', 'user');
+        if(isset($_POST['realname']) && isset($_POST['cellphone'])){
+            $this->user->improveInformation($_POST['realname'],$_POST['cellphone']);
+        }
 		if (!isset($_SESSION["loginName"])) {
 			$ret = array("error"=>"未登录");
 			echo json_encode($ret);

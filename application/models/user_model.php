@@ -107,15 +107,15 @@ class user_model extends CI_Model{
           * @param string $loginName 用户登陆名
           * @param string $password 用户密码
           */
-         function checkUser($loginName,$password){
-		$this->db->from('user_list')->where('loginName',$loginName);
+    function checkUser($loginName,$password){
+        $this->db->from('user_list')->where('loginName',$loginName);
 		$tmp = $this->db->get()->result_array();
 		if(!count($tmp)){
 			return errorMessage(0,'username not exist.');
 		}
 		$passsalt = subStr($password,0,2).$this->_getSalt();
 		if($tmp[0]['password'] == crypt($password,$passsalt)){
-			$this->_setUserInfo($loginName,$tmp[0]['ID'],crypt($password,$passsalt),$tmp[0]['defaultGroupID'],$tmp[0]['baseRole'],array(), $tmp[0]['nickName'],$tmp[0]['baseRole'],$tmp[0]['defaultGroupID']);
+			$this->_setUserInfo($loginName,$tmp[0]['ID'],crypt($password,$passsalt),$tmp[0]['defaultGroupID'],$tmp[0]['baseRole'],array(), $tmp[0]['nickName'],$tmp[0]['baseRole'],$tmp[0]['defaultGroupID'],$tmp[0]['completed']);
 			return errorMessage(1,'OK.');
 		}else{
 			return errorMessage(-1,'error password.');
@@ -198,6 +198,18 @@ class user_model extends CI_Model{
         return errorMessage('1','OK');
     }
 
+    function improveInformation($realname, $cellphone){
+        $user = $this->db->from('user_list')->where('ID',$_SESSION['userID'])->get()->result_array();
+        if($user[0]['realName'] != '' && $user[0]['phoneNumber'] != ''){
+            return ;
+        }
+        $userInfo = array(
+                          'realName'=> cleanString($realname),
+                          'phoneNumber'=> cleanString($cellphone));
+        $this->db->where('ID',$_SESSION['userID'])->update('user_list',$userInfo);
+        return errorMessage('1', 'OK');
+    }
+
  	/**
 	 * 清除用户登陆信息
 	 */
@@ -215,6 +227,7 @@ class user_model extends CI_Model{
         unset($_SESSION['managerInfo']);
 		setcookie('loginName','',-1,'/');
 		setcookie('userKey','',-1,'/');
+        unset($_SESSION['completed']);
 	}
 
 	/**
@@ -227,7 +240,7 @@ class user_model extends CI_Model{
 	 * @param string $baseRole 基本角色
 	 * @param string $defaultGroupID
 	 */
-	private function _setUserInfo($loginName,$userID,$userKey,$defaultGroupID,$baseRole,$myGroup, $nickName,$baseRole,$defaultGroupID) {
+	private function _setUserInfo($loginName,$userID,$userKey,$defaultGroupID,$baseRole,$myGroup, $nickName,$baseRole,$defaultGroupID, $completed) {
 		$group_list = $this->db->from('group_list')->where('groupID',$defaultGroupID)->get()->result_array();
 		if(count($group_list) != 0){
 			$_SESSION['groupName'] = $group_list[0]['class'];
@@ -246,6 +259,7 @@ class user_model extends CI_Model{
 		$_SESSION['myGroup'] = $this->group->getMyGroup();
         $tmp = $this->db->from('user_list')->where('ID', $userID)->get()->result_array();
         $_SESSION['class'] = $tmp[0]['class'];
+        $_SESSION['completed'] = $completed;
 
         $permission = 0;
         for($i = 0; $i < 32; $i ++){

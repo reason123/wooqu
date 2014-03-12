@@ -188,7 +188,9 @@ function subOrd() {
 		{
 			id: document.getElementById("groupID").value, 
 			list: JSON.stringify(order), 
-			comment: document.getElementById("comment").value
+			comment: document.getElementById("comment").value,
+            realname: $('#realname').val(),
+            cellphone: $('#cellphone').val()
 		}, 
 		function (jsdata) {
 			submitting = false;
@@ -237,7 +239,7 @@ $(function(){
 						}
 						initGrayback();
 						toggleShopList();
-					})
-			})
+					});
+			});
 	});
 })
