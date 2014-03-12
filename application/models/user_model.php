@@ -142,7 +142,7 @@ class user_model extends CI_Model{
             return false;
         }
         if($_COOKIE['userKey'] == $tmp[0]['password']){
-			$this->_setUserInfo($_COOKIE['loginName'],$tmp[0]['ID'],$_COOKIE['userKey'],$tmp[0]['defaultGroupID'],$tmp[0]['baseRole'],array(), $tmp[0]['nickName'],$tmp[0]['baseRole'],$tmp[0]['defaultGroupID']);
+			$this->_setUserInfo($_COOKIE['loginName'],$tmp[0]['ID'],$_COOKIE['userKey'],$tmp[0]['defaultGroupID'],$tmp[0]['baseRole'],array(), $tmp[0]['nickName'],$tmp[0]['baseRole'],$tmp[0]['defaultGroupID'],$tmp[0]['completed']);
             return true;
         }else{
             return false;
