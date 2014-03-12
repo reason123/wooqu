@@ -73,6 +73,9 @@ class user_model extends CI_Model{
 			return errorMessage(0,'用户名已存在.');
 		}
 		//insert to user_list
+        if($nickName == ''){
+            $nickName = $loginName;
+        }
 		$className = '未选择班级';
 		$passsalt = subStr($password,0,2).$this->_getSalt();
 		$newUser = array(
@@ -97,7 +100,7 @@ class user_model extends CI_Model{
 		$this->db->insert('member_list',array('userID'=>$tmp,'groupID'=>$schoolID,'roles'=>2));
 
 		//set session and cookie
-		$this->_setUserInfo($loginName,$tmp,crypt($password,$passsalt),$departmentID,0,array(), $loginName,0);
+		$this->_setUserInfo($loginName,$tmp,crypt($password,$passsalt),$departmentID,0,array(), $loginName,'None');
         
 		return errorMessage(1,'OK.');
 	}
@@ -151,9 +154,9 @@ class user_model extends CI_Model{
      * @author ca007
      */
     function getMyInfo(){
-        $sql = "select loginName, realName, nickName, phoneNumber, class, studentID, address from user_list where ID=?";
+        $sql = "select loginName, realName, nickName, phoneNumber, class, studentID, address, completed from user_list where ID=?";
         $tmp = $this->db->query($sql, array($_SESSION['userID']))->result_array();
-        return array_merge($tmp[0],array('session'=>$_SESSION));
+        //return array_merge($tmp[0],array('session'=>$_SESSION));
         return array_merge($tmp[0],array('basepermission'=>$_SESSION['basepermission']));
     }
 
@@ -205,8 +208,10 @@ class user_model extends CI_Model{
         }
         $userInfo = array(
                           'realName'=> cleanString($realname),
-                          'phoneNumber'=> cleanString($cellphone));
+                          'phoneNumber'=> cleanString($cellphone),
+                          'completed'=> 'Yes');
         $this->db->where('ID',$_SESSION['userID'])->update('user_list',$userInfo);
+        $_SESSION['completed'] = 'Yes';
         return errorMessage('1', 'OK');
     }
 

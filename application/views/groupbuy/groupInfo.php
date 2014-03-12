@@ -46,6 +46,7 @@
 				<h2 class="modal-title" style="font-family: 'microsoft yahei', '宋体b8b\4f53'; color: rgb(15, 139, 218);"><b>确认订单</b></h2>
 			</div>
 			<div class="modal-body">
+              <div id="improve-information">
                 <h4 style="font-family: 'microsoft yahei', '宋体b8b\4f53';">完善个人信息并提交</h4>
                 <div class="form-horizontal">
                    <div class="form-group">
@@ -61,6 +62,7 @@
                      </div>
                    </div>
                 </div>
+              </div>
 				<h4 id="confirmContent" style="font-family: 'microsoft yahei', '宋体b8b\4f53';"></h4>
 				<div class="alert alert-success" id="confirmInfo"><b>祝您购物愉快！</b></div>
 			</div>
