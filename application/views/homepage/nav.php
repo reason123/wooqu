@@ -21,15 +21,15 @@
 			<h3>商店</h3>
 		  </div>
 		</div>
-	<!--	<div class="nav-container">
+		<div class="nav-container">
 		  <div class="nav-block nav-b5 <?php if($type=='feedback') echo 'active';?>" data-url="/feedback">
 			<h3>留言板</h3>
 		  </div>
-		</div> -->
-		<div class="nav-container">
+		</div>
+		<!--div class="nav-container">
 		  <div class="nav-block nav-b5 <?php if($type=='newact') echo 'active';?>" data-url="/newact">
 			<h3>发布活动</h3> 
 		  </div>
-		</div>
+		</div-->
 	  </div>
 <?php if(!isset($_SESSION['loginName'])): ?><!--br/><div class="alert alert-info" style="margin-bottom:-20px;">未登录只能浏览计算机系的活动信息哦亲～</div--><?php endif ?>
