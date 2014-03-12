@@ -140,18 +140,6 @@ class groupbuy_model extends CI_Model{
         if(!count($tmp)){
             return array();
         }
-
-        if($tmp[0]['username'] == $_SESSION['loginName']){
-            $sql = "select groupbuy_order.ID,realName,`list`,amount,class, user_list.phoneNumber,user_list.address,defaultGroupID,comment,orderMessage 
-                from user_list,groupbuy_order 
-                where userID=user_list.ID and shopid=? and del=0 
-                order by class asc";
-            $order_list = $this->db->query($sql,array($gbID))->result_array();
-            foreach($order_list as $key => $order){
-                $order_list[$key]['list'] = json_decode($order_list[$key]['list']);
-            }
-            return $order_list;
-        }
         
         $groupIDListA = array();
         $tmp = $this->db->from('member_list')->where('userID',$_SESSION['userID'])->where('roles',4)->get()->result_array();
@@ -168,7 +156,7 @@ class groupbuy_model extends CI_Model{
         }
         array_unique($groupIDListB);
         $groupIDList = array_intersect($groupIDListA,$groupIDListB);
-        if (count($groupIDList) == 0) {
+        if (count($groupIDList) == 0 && $tmp[0]['username'] != $_SESSION['loginName']) {
             $this->permission_model->noPermission(1);
         }
 

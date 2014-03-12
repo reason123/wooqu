@@ -72,8 +72,10 @@ class Goods extends CI_Controller{
 				$photo = $_FILES['pic'];
 				move_uploaded_file($photo['tmp_name'], substr($picPath, 1, strlen($picPath)));
 			}
-
-            header('Location: /manager/goods'); 
+            if (isset($_GET['gbID'])) 
+                header('Location: /manager/groupbuy_goods?id='.$_GET['gbID']);
+            else
+                header('Location: /manager/goods'); 
         }
     }
 

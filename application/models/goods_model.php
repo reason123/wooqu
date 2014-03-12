@@ -92,10 +92,10 @@ class goods_model extends CI_Model{
 		}
 		$sql = $sql." ) ORDER BY priority DESC,total DESC";
 		$goodsInfoList = $this->db->query($sql)->result_array();
-		foreach ($goodsInfoList as $key=>$goodsInfo)
-		{
-			$goodsInfoList[$key]['price'] = $goodslist[$goodsInfo['ID']];
-		}		
+//		foreach ($goodsInfoList as $key=>$goodsInfo)
+//		{
+//			$goodsInfoList[$key]['price'] = $goodslist[$goodsInfo['ID']];
+//		}		
 		return $goodsInfoList;
 	}
 

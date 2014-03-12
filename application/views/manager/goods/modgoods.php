@@ -1,7 +1,6 @@
-<a class="btn btn-default" style="margin-bottom: 10px;" href="/manager/goods">返回商品管理</a>
 <legend>修改商品</legend>
 <img src="<?php echo $goodsInfo['pic']; ?>" height="180" style="margin-left:190px;" /><br><br>
-<form class="pubForm form-horizontal" action="/goods/modGoods?goodsID=<?php echo $goodsID;?>" method = "post" enctype="multipart/form-data">
+<form class="pubForm form-horizontal" action="/goods/modGoods?goodsID=<?php echo $goodsID; if (isset($_GET['gbID'])) echo "&gbID=".$_GET['gbID']; ?>" method = "post" enctype="multipart/form-data">
     <div class="form-group" >
         <label class="control-label col-lg-2">商品名称</label>
         <div class="col-lg-3">
