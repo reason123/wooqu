@@ -14,7 +14,7 @@ class User extends CI_Controller{
 			$ann = $_GET['ann'];
 		}
 
-	//	$this->load->model('groupFeed_model','feed');
+        //	$this->load->model('groupFeed_model','feed');
 		//$annList = $this->feed->getNewsList();
         $annList = array();
         $this->load->view('base/mainnav',array('page'=>'homepage'));
@@ -45,7 +45,7 @@ class User extends CI_Controller{
      * 生成用户注册页面
      * @author ca007
      */
-	public function usereg(){
+	public function usereg_old(){
 		//set validation rules
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('regusername',"username","required|min_length[4]|max_length[16]|alpha_dash");
@@ -75,28 +75,67 @@ class User extends CI_Controller{
 			$this->load->model('user_model');
 			$address = $this->getAddress($_REQUEST['address']);
 			$res = $this->user_model->addUser(
-								$_REQUEST['regusername'],
-								$_REQUEST['nickname'],
-								$_REQUEST['regpassword'],
-								$_REQUEST['realname'],
-								$_REQUEST['phonenum'],
-								$_REQUEST['school'],
-								$_REQUEST['department'],
-								$_REQUEST['class'],
-								$_REQUEST['studentid'],
-								$_REQUEST['address']);
+                                              $_REQUEST['regusername'],
+                                              $_REQUEST['nickname'],
+                                              $_REQUEST['regpassword'],
+                                              $_REQUEST['realname'],
+                                              $_REQUEST['phonenum'],
+                                              $_REQUEST['school'],
+                                              $_REQUEST['department'],
+                                              $_REQUEST['class'],
+                                              $_REQUEST['studentid'],
+                                              $_REQUEST['address']);
 			if($res['error']['code'] == 1){
 				gotoHomepage();
 			}else{
 				//mainnav
                 $this->load->view('base/mainnav',array('page'=>'usereg'));
 				$this->load->model('user_model','user');
-//				$areaList = $this->user->getMyAreas();
+                //				$areaList = $this->user->getMyAreas();
 				$this->load->view('user/usereg',array_merge($_POST,array('schoolList'=>$schoolList)));
 				$this->load->view('base/footer',array('alertInfo'=>$res['error']['message']));
 			}
 		}
 	}
+
+    public function usereg(){
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('regusername', 'username', 'required|min_length[4]|max_length[16]|alpha_dash');
+		$this->form_validation->set_rules('regpassword',"password","required|min_length[6]|max_length[20]|matches[repassword]");
+        $this->form_validation->set_rules('verificationcode','Verification Code','callback_verificationcode_check');
+        
+        $this->load->model('group_model','group');
+		$schoolList = $this->group->getSchoolList();
+        if($this->form_validation->run() == FALSE){
+            $this->load->view('base/mainnav', array('page'=>'usereg'));
+            $this->load->view('user/usereg', array_merge($_POST,array('schoolList'=>$schoolList)));
+            $this->load->view('base/footer');
+        }else{
+			$this->load->model('user_model');
+			$res = $this->user_model->addUser_new(
+                                              $_REQUEST['regusername'],
+                                              '',
+                                              $_REQUEST['regpassword'],
+                                              '',
+                                              '',
+                                              $_REQUEST['school'],
+                                              $_REQUEST['department'],
+                                              '',
+                                              '',
+                                              '',
+                                              'None');
+			if($res['error']['code'] == 1){
+				gotoHomepage();
+			}else{
+				//mainnav
+                $this->load->view('base/mainnav',array('page'=>'usereg'));
+				$this->load->model('user_model','user');
+                //				$areaList = $this->user->getMyAreas();
+				$this->load->view('user/usereg',array_merge($_POST,array('schoolList'=>$schoolList)));
+				$this->load->view('base/footer',array('alertInfo'=>$res['error']['message']));
+			}            
+        }
+    }
 
     /**
      * 生成用户登陆页面
@@ -110,7 +149,7 @@ class User extends CI_Controller{
 		if($this->form_validation->run() == FALSE){
 			//mainnav
 			$this->load->model('user_model','user');
-//			$areaList = $this->user->getMyAreas();
+            //			$areaList = $this->user->getMyAreas();
             $this->load->view('base/mainnav',array('page'=>'loginpage'));
 			$this->load->view('user/loginpage',$_POST);
 			$this->load->view('base/footer');
@@ -120,21 +159,21 @@ class User extends CI_Controller{
 			if($res['error']['code'] == 1){
 				gotoHomepage();
 			}else{
-/**				$oldLogin = myGet('http://csshenghuo.sinaapp.com/index.php/user/oldLogin',
-							array(
+                /**				$oldLogin = myGet('http://csshenghuo.sinaapp.com/index.php/user/oldLogin',
+                                array(
 								'loginName'=>$_REQUEST['username'],
 								'password'=>$_REQUEST['password']));
-				$logInfo = json_decode($oldLogin,true);**/
+                                $logInfo = json_decode($oldLogin,true);**/
                 $logInfo = array('error'=>0);
 				if($logInfo['error'] == 1){
 					$addOld = $this->user->addOldUser(
-											$_REQUEST['username'],
-											$logInfo['nickName'],
-											$_REQUEST['password'],
-											$logInfo['realName'],
-											$logInfo['phoneNumber'],
-											$logInfo['studentID'],
-											$logInfo['address']);
+                                                      $_REQUEST['username'],
+                                                      $logInfo['nickName'],
+                                                      $_REQUEST['password'],
+                                                      $logInfo['realName'],
+                                                      $logInfo['phoneNumber'],
+                                                      $logInfo['studentID'],
+                                                      $logInfo['address']);
 					if($addOld['error']['code'] == 1){
 						header('Location: /user/selectArea');
 					}else{

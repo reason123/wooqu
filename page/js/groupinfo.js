@@ -2,6 +2,7 @@ var ordList = new Object();
 var cargoList;
 var onSale = 1;
 var submitting = false;
+var userStatus = 'None';
 
 function debug(str) {
 	document.getElementById("board").innerHTML = str;
@@ -201,13 +202,17 @@ function subOrd() {
 	    submitting = false;
         return;
     }
-    $.post("/groupbuy/submitOrder",
-		{
-			id: document.getElementById("groupID").value, 
-			list: JSON.stringify(order), 
-			comment: document.getElementById("comment").value,
-            orderMessage: str
-		}, 
+    var param = {
+		id: document.getElementById("groupID").value, 
+		list: JSON.stringify(order), 
+		comment: document.getElementById("comment").value,
+        orderMessage: str
+    };
+    if(userStatus != 'Yes'){
+        param['realname'] = $('#realname').val();
+        param['cellphone'] = $('#cellphone').val();
+    }
+	$.post("/groupbuy/submitOrder",param, 
 		function (jsdata) {
 			submitting = false;
 			var data = $.parseJSON(jsdata);
@@ -224,6 +229,13 @@ function subOrd() {
 
 $(function(){
 	$(document).ready(function(){
+        $.get('/user/getMyInfo',function(data){
+            var re = $.parseJSON(data);
+            userStatus = re.completed;
+            if(userStatus == 'Yes'){
+                $("#improve-information").html('');
+            }
+        });
 		$.post("/groupbuy/getShopById",
 			{ id: document.getElementById("groupID").value }, 
 			function(jsdata){
@@ -255,7 +267,7 @@ $(function(){
 						}
 						initGrayback();
 						toggleShopList();
-					})
-			})
+					});
+			});
 	});
 })

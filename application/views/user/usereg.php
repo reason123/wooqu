@@ -10,14 +10,6 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-lg-3" for="inputNickname"><span class="redColor">* </span>昵称</label>
-			<div class="col-lg-4">
-				<input class="form-control" type="text" name="nickname" id="inputNickname" placeholder="nickname" value="<?php if(isset($nickname)) echo $nickname; ?>">
-				<span class="remind">请输入你想要的昵称</span><br/>
-				<?php echo form_error('nickname',"<span class='error'>","</span>");?>
-			</div>
-		</div>
-		<div class="form-group">
 			<label class="control-label col-lg-3" for="inputPassword"><span class="redColor">* </span>密码</label>
 			<div class="col-lg-4">
 				<input class="form-control" type="password" name="regpassword" id="inputPassword" placeholder="password">
@@ -31,30 +23,6 @@
 				<input class="form-control" type="password" name="repassword" id="inputrePassword" placeholder="repassword">
 				<span class="remind">请确认密码</span><br/>
 				<?php echo form_error('repassword',"<span class='error'>","</span>");?>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-lg-3" for="inputName"><span class="redColor">* </span>真实姓名</label>
-			<div class="col-lg-4">
-				<input class="form-control" type="text" name="realname" id="inputName" placeholder="real name" value="<?php if(isset($realname)) echo $realname; ?>">
-				<span class="remind">请输入真实姓名，否则部分活动将予忽略。</span><br/>
-				<?php echo form_error('realname',"<span class='error'>","</span>");?>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-lg-3" for="inputPhonenum"><span class="redColor">* </span>手机号</label>
-			<div class="col-lg-4">
-				<input class="form-control" type="text" name="phonenum" id="inputPhonenum" placeholder="phonenum" value="<?php if(isset($phonenum)) echo $phonenum; ?>">
-				<span class="remind">请输入真实的手机号，否则部分活动将予忽略。</span><br/>
-				<?php echo form_error('phonenum',"<span class='error'>","</span>");?>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-lg-3" for="inputStudentid"><span class="redColor">* </span>学号</label>
-			<div class="col-lg-4">
-				<input class="form-control" type="text" name="studentid" id="inputStudentid" placeholder="student id" value="<?php if(isset($studentid)) echo $studentid; ?>">
-				<span class="remind">请输入真实的学号，否则部分活动将予忽略。</span><br/>
-				<?php echo form_error('studentid',"<span class='error'>","</span>");?>
 			</div>
 		</div>
 		<div class="form-group">
@@ -78,37 +46,6 @@
 				</select>
 				<span class="remind">请选择你的院系</span><br/>
 				<?php echo form_error('department',"<span class='error'>","</span>");?>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-lg-3"><span class="redColor">* </span>班级</label>
-			<div class="col-lg-4">
-				<select class="form-control" name="class" id="classSelect">
-					<option value='0'>请选择你的班级</option>
-				</select>
-				<span class="remind">请选择你的班级</span><br/>
-				<?php echo form_error('class',"<span class='error'>","</span>");?>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-lg-3"><span class="redColor">* </span>地址</label>
-			<div class="col-lg-4">
-				<!-- <select class="form-control" name="address">
-					<?php 
-						/*if(isset($address)){
-							$myAddress = (int)$address;
-						}else {
-							$myAddress = 2;
-						}
-						for($i = 0;$i < 33;$i ++){
-							if($i == $myAddress) echo "<option value=".$i." selected='selected'>紫荆".$i."#</option>";
-							else echo '<option value='.$i.'>紫荆'.$i.'#</option>';
-						}*/
-					?>
-				</select> -->
-				<input class="form-control" type="text" name="address" value="<?php if(isset($address)) echo $address; ?>" placeholder="例如：紫荆2#"/>
-				<span class="remind">请输入你的地址，示例：紫荆#2； 28号楼</span><br/>
-				<?php echo form_error('address',"<span class='error'>","</span>");?>
 			</div>
 		</div>
 		<div class="form-group">
