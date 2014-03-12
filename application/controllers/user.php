@@ -106,9 +106,10 @@ class User extends CI_Controller{
         
         $this->load->model('group_model','group');
 		$schoolList = $this->group->getSchoolList();
+        $departmentList = $this->group->getDepartmentList($schoolList[0]['groupID']);
         if($this->form_validation->run() == FALSE){
             $this->load->view('base/mainnav', array('page'=>'usereg'));
-            $this->load->view('user/usereg', array_merge($_POST,array('schoolList'=>$schoolList)));
+            $this->load->view('user/usereg', array_merge($_POST,array('schoolList'=>$schoolList, 'departmentList'=>$departmentList)));
             $this->load->view('base/footer');
         }else{
 			$this->load->model('user_model');
@@ -131,7 +132,7 @@ class User extends CI_Controller{
                 $this->load->view('base/mainnav',array('page'=>'usereg'));
 				$this->load->model('user_model','user');
                 //				$areaList = $this->user->getMyAreas();
-				$this->load->view('user/usereg',array_merge($_POST,array('schoolList'=>$schoolList)));
+				$this->load->view('user/usereg',array_merge($_POST,array('schoolList'=>$schoolList, 'departmentList'=>$deparmentList)));
 				$this->load->view('base/footer',array('alertInfo'=>$res['error']['message']));
 			}            
         }

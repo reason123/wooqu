@@ -29,7 +29,6 @@
 			<label class="control-label col-lg-3"><span class="redColor">* </span>学校</label>
 			<div class="col-lg-4">
 				<select class="form-control" name="school" id="schoolSelect" onchange=getDepartmentList()>
-					<option value='0'>请选择你的学校</option>
 					<?php foreach ($schoolList as $key => $school): ?>
 					<option value='<?php echo $school['groupID'];?>'><?php echo $school['school']; ?></option>
 					<?php endforeach; ?>
@@ -42,7 +41,10 @@
 			<label class="control-label col-lg-3"><span class="redColor">* </span>院系</label>
 			<div class="col-lg-4">
 				<select class="form-control" name="department" id="departmentSelect" onchange=getClassList()>
-					<option value='0'>请选择你的院系</option>
+                    <?php foreach ($departmentList as $key => $department): ?>
+					<option value='<?php echo $department['groupID'];?>'><?php echo $department['department']; ?></option>
+					<?php endforeach; ?>
+
 				</select>
 				<span class="remind">请选择你的院系</span><br/>
 				<?php echo form_error('department',"<span class='error'>","</span>");?>
