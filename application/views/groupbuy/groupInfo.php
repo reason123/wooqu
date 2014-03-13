@@ -50,15 +50,21 @@
                 <h4 style="font-family: 'microsoft yahei', '宋体b8b\4f53';">完善个人信息并提交</h4>
                 <div class="form-horizontal">
                    <div class="form-group">
-                     <label class="col-lg-2 control-label">姓名</label>
+                     <label class="col-lg-2 control-label">真实姓名</label>
                      <div class="col-lg-6">
-                       <input type="text" class="form-control" name="realname" id="realname">
+                       <input type="text" class="form-control" name="realname" id="realname" placeholder="设置后不能修改">
                      </div>
                    </div>
                    <div class="form-group">
                      <label class="col-lg-2 control-label">手机号</label>
                      <div class="col-lg-6">
-                       <input type="text" class="form-control" name="cellphone" id="cellphone">
+                       <input type="text" class="form-control" name="cellphone" id="cellphone" placeholder="方便送货时联系">
+                     </div>
+                   </div>
+                   <div class="form-group">
+                     <label class="col-lg-2 control-label">住址</label>
+                     <div class="col-lg-6">
+                       <input type="text" class="form-control" name="address" id="address" placeholder="具体到宿舍号，方便伟大的班委送货">
                      </div>
                    </div>
                 </div>

@@ -204,7 +204,7 @@ class user_model extends CI_Model{
         return errorMessage('1','OK');
     }
 
-    function improveInformation($realname, $cellphone){
+    function improveInformation($realname, $cellphone, $address){
         $user = $this->db->from('user_list')->where('ID',$_SESSION['userID'])->get()->result_array();
         if($user[0]['realName'] != '' && $user[0]['phoneNumber'] != ''){
             return ;
@@ -212,6 +212,7 @@ class user_model extends CI_Model{
         $userInfo = array(
                           'realName'=> cleanString($realname),
                           'phoneNumber'=> cleanString($cellphone),
+                          'address' => cleanString($address),
                           'completed'=> 'Yes');
         $this->db->where('ID',$_SESSION['userID'])->update('user_list',$userInfo);
         $_SESSION['completed'] = 'Yes';

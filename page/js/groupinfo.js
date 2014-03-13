@@ -211,6 +211,7 @@ function subOrd() {
     if(userStatus != 'Yes'){
         param['realname'] = $('#realname').val();
         param['cellphone'] = $('#cellphone').val();
+        param['address'] = $('#address').val();
     }
 	$.post("/groupbuy/submitOrder",param, 
 		function (jsdata) {
