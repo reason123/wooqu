@@ -234,8 +234,13 @@ class Groupbuy extends CI_Controller {
 	 */
 	function submitOrder() {
         $this->load->model('user_model', 'user');
-        if(isset($_POST['realname']) && isset($_POST['cellphone'])){
+        if(isset($_POST['realname']) && isset($_POST['cellphone'])
+           && ($_POST['realname'] != '') && ($_POST['cellphone'] != '')){
             $this->user->improveInformation($_POST['realname'],$_POST['cellphone']);
+        }else if($_SESSION['completed'] == 'None'){
+            $ret = array('error'=>'请补全您的信息');
+            echo json_encode($ret);
+            return ;
         }
 		if (!isset($_SESSION["loginName"])) {
 			$ret = array("error"=>"未登录");

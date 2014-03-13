@@ -60,7 +60,7 @@ class user_model extends CI_Model{
 		$this->db->insert('member_list',array('userID'=>$tmp,'groupID'=>$schoolID,'roles'=>2));
 
 		//set session and cookie
-		$this->_setUserInfo($loginName,$tmp,crypt($password,$passsalt),$departmentID,0,array(), $nickName,0);
+		$this->_setUserInfo($loginName,$tmp,crypt($password,$passsalt),$departmentID,0,array(), $nickName,0,$departmentID);
         
 		return errorMessage(1,'OK.');
 	}
@@ -76,7 +76,9 @@ class user_model extends CI_Model{
         if($nickName == ''){
             $nickName = $loginName;
         }
-		$className = '未选择班级';
+		$classList = $this->db->from('group_list')->where('groupID',$classID)->get()->result_array();
+		$className = $classList[0]['class'];
+
 		$passsalt = subStr($password,0,2).$this->_getSalt();
 		$newUser = array(
                          'loginName'=>$loginName,
@@ -96,13 +98,14 @@ class user_model extends CI_Model{
         $tmp = $this->db->insert_id();
 
 		//insert to member_list
+		$this->db->insert('member_list',array('userID'=>$tmp,'groupID'=>$classID,'roles'=>4));
 		$this->db->insert('member_list',array('userID'=>$tmp,'groupID'=>$departmentID,'roles'=>2));
 		$this->db->insert('member_list',array('userID'=>$tmp,'groupID'=>$schoolID,'roles'=>2));
 
 		//set session and cookie
-		$this->_setUserInfo($loginName,$tmp,crypt($password,$passsalt),$departmentID,0,array(), $loginName,'None');
+		$this->_setUserInfo($loginName,$tmp,crypt($password,$passsalt),$departmentID,0,array(), $loginName, 0, $departmentID, $completed);
         
-		return errorMessage(1,'OK.');
+		return errorMessage(1,'Ok');
 	}
     
          /**
@@ -156,7 +159,7 @@ class user_model extends CI_Model{
     function getMyInfo(){
         $sql = "select loginName, realName, nickName, phoneNumber, class, studentID, address, completed from user_list where ID=?";
         $tmp = $this->db->query($sql, array($_SESSION['userID']))->result_array();
-        //return array_merge($tmp[0],array('session'=>$_SESSION));
+        return array_merge($tmp[0],array('session'=>$_SESSION));
         return array_merge($tmp[0],array('basepermission'=>$_SESSION['basepermission']));
     }
 
@@ -230,9 +233,9 @@ class user_model extends CI_Model{
         unset($_SESSION['mcgroupList']);
         unset($_SESSION['mcgroupID']);
         unset($_SESSION['managerInfo']);
+        unset($_SESSION['completed']);
 		setcookie('loginName','',-1,'/');
 		setcookie('userKey','',-1,'/');
-        unset($_SESSION['completed']);
 	}
 
 	/**

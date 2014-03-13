@@ -103,6 +103,9 @@ class User extends CI_Controller{
         $this->form_validation->set_rules('regusername', 'username', 'required|min_length[4]|max_length[16]|alpha_dash');
 		$this->form_validation->set_rules('regpassword',"password","required|min_length[6]|max_length[20]|matches[repassword]");
         $this->form_validation->set_rules('verificationcode','Verification Code','callback_verificationcode_check');
+		$this->form_validation->set_rules('school','school','callback_school_check');
+		$this->form_validation->set_rules('department','department','callback_department_check');
+		$this->form_validation->set_rules('class','class','callback_class_check');
         
         $this->load->model('group_model','group');
 		$schoolList = $this->group->getSchoolList();
@@ -121,7 +124,7 @@ class User extends CI_Controller{
                                               '',
                                               $_REQUEST['school'],
                                               $_REQUEST['department'],
-                                              '',
+                                              $_REQUEST['class'],
                                               '',
                                               '',
                                               'None');
