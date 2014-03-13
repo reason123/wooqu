@@ -24,6 +24,9 @@
 		<div class="navbar-header">
 		  <a class="navbar-brand" href="/">Wooqu</a>
 		</div>
+        <ul class="nav navbar-nav" style="margin-left: 30px;">
+          <li><a href="#" onclick="javascript:$('#about').modal();">联系我们</a></li>
+        </ul>
         <?php
           if(isset($_SESSION['loginName'])){
               $loginName = $_SESSION['loginName'];
@@ -48,4 +51,22 @@
 		</div>
         <?php } ?>
 	  </nav>
-<!--      <div class="alert alert-info">计算机系“1001夜”学生节12月22日本周日晚18:30大礼堂，敬请期待！</div>--> 
+<!--      <div class="alert alert-info">计算机系“1001夜”学生节12月22日本周日晚18:30大礼堂，敬请期待！</div>-->
+
+<div class="modal fade" id="about">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">关于</h4>
+      </div>
+      <div class="modal-body" align="center">
+          <h2>HelloThu</h2>
+          加入我们：contact@hellothu.com
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
