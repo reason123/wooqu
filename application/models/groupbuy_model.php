@@ -140,6 +140,7 @@ class groupbuy_model extends CI_Model{
         if(!count($tmp)){
             return array();
         }
+        $tmp_username = $tmp[0]['username'];
         
         $groupIDListA = array();
         $tmp = $this->db->from('member_list')->where('userID',$_SESSION['userID'])->where('roles',4)->get()->result_array();
@@ -156,7 +157,7 @@ class groupbuy_model extends CI_Model{
         }
         array_unique($groupIDListB);
         $groupIDList = array_intersect($groupIDListA,$groupIDListB);
-        if (count($groupIDList) == 0 && $tmp[0]['username'] != $_SESSION['loginName']) {
+        if (count($groupIDList) == 0 && $tmp_username != $_SESSION['loginName']) {
             $this->permission_model->noPermission(1);
         }
 
