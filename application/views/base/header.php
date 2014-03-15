@@ -3,7 +3,8 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta property="wb:webmaster" content="0aa04336e3901ae0" />
-    <title>Wooqu</title>
+    <title>HelloTHU</title>
+    <link rel="icon" type="image/x-icon" href="/page/img/favicon.png">
     <script src = "/page/js/jquery.js"></script>
     <script src = "/page/js/base.js"></script>
     <link href = "/page/css/base.css" rel = "stylesheet">
@@ -18,11 +19,11 @@
     <script type="text/javascript" src="/page/js/stupidtable.js"></script>
   </head>
   <body>
-	<div class="main-container">
+     <div class="main-container">
 <!--      <nav class="navbar navbar-default" role="navigation" style="margin-bottom:0px;">-->
 	  <nav class="navbar navbar-default" role="navigation">
 		<div class="navbar-header">
-		  <a class="navbar-brand" href="/">Wooqu</a>
+		  <a class="navbar-brand" href="/">HelloTHU</a>
 		</div>
         <ul class="nav navbar-nav" style="margin-left: 30px;">
           <li><a href="#" onclick="javascript:$('#about').modal();">联系我们</a></li>
