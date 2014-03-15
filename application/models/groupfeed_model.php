@@ -96,7 +96,23 @@ class groupFeed_model extends CI_Model{
      * @author ca007
      */
     function getNewsList(){
-        $sql = "select distinct feed_list.ID, 
+        $sql = '';
+        if(!isset($_SESSION['loginName'])){
+            $sql = "select distinct feed_list.ID, 
+                                type, 
+                                title, 
+                                loginName as userName, 
+                                time, 
+                                imgurl, 
+                                shortdescription, 
+                                url, 
+                                sourceID,
+                                param1 
+               from feed_list, group_feed, user_list
+               where feed_list.ID=group_feed.newsID and userID=user_list.ID
+                     and group_feed.state=1 order by feed_list.ID desc";
+        }else{
+            $sql = "select distinct feed_list.ID, 
                                 type, 
                                 title, 
                                 loginName as userName, 
@@ -109,13 +125,14 @@ class groupFeed_model extends CI_Model{
                from feed_list, group_feed, user_list
                where userID=user_list.ID and feed_list.ID=group_feed.newsID 
                      and group_feed.state=1 and (";
-        $count = 0;
-        foreach($_SESSION['myGroup'] as $groupID => $groupInfo){
-            if($count != 0) $sql = $sql."or ";
-            $sql = $sql."groupID=".$groupID." ";
-            $count += 1;
+            $count = 0;
+            foreach($_SESSION['myGroup'] as $groupID => $groupInfo){
+                if($count != 0) $sql = $sql."or ";
+                $sql = $sql."groupID=".$groupID." ";
+                $count += 1;
+            }
+            $sql = $sql.") order by feed_list.ID desc";
         }
-        $sql = $sql.") order by feed_list.ID desc";
         $newsList = $this->db->query($sql)->result_array();
         return $newsList;
     }
@@ -126,6 +143,7 @@ class groupFeed_model extends CI_Model{
      * @param int $type 类型
      */
     function getNewsListByType($type){
+        if(!isset($_SESSION['loginName'])){
         $sql = "select distinct feed_list.ID, 
                                 type, 
                                 title, 
@@ -138,14 +156,29 @@ class groupFeed_model extends CI_Model{
                                 param1 
                from feed_list, group_feed, user_list
                where userID=user_list.ID and feed_list.ID=group_feed.newsID 
+                     and group_feed.state=1 and type=? order by feed_list.ID desc";
+        }else{
+            $sql = "select distinct feed_list.ID, 
+                                type, 
+                                title, 
+                                loginName as userName, 
+                                time, 
+                                imgurl, 
+                                shortdescription, 
+                                url, 
+                                sourceID,
+                                param1 
+               from feed_list, group_feed, user_list
+               where userID=user_list.ID and feed_list.ID=group_feed.newsID 
                      and group_feed.state=1 and type=? and (";
-        $count = 0;
-        foreach($_SESSION['myGroup'] as $groupID => $groupInfo){
-            if($count != 0) $sql = $sql."or ";
-            $sql = $sql."groupID=".$groupID." ";
-            $count += 1;
+            $count = 0;
+            foreach($_SESSION['myGroup'] as $groupID => $groupInfo){
+                if($count != 0) $sql = $sql."or ";
+                $sql = $sql."groupID=".$groupID." ";
+                $count += 1;
+            }
+            $sql = $sql.") order by feed_list.ID desc";
         }
-        $sql = $sql.") order by feed_list.ID desc";
         $newsList = $this->db->query($sql,array($type))->result_array();
         return $newsList;
     }
