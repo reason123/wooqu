@@ -125,3 +125,13 @@ body {
 	margin-top: 5px;
 }
 
+#pub-fixed{
+    position: fixed;
+    bottom: 0px;
+    right: 0%;
+    clear: both;
+}
+
+#pub-fixed img{
+    float: right;
+}
