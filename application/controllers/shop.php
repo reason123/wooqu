@@ -14,7 +14,7 @@ class Shop extends CI_Controller {
 	function shoplist() {
 		$this->load->model('shop_model','shop');
 
-		$this->load->view('base/mainnav',array('page'=>'shoplist'));
+		$this->load->view('base/header',array('page'=>'shoplist'));
 		if (isset($_SESSION['myGroup']))
 			$list = $this->shop->getShopListByGroup($_SESSION['myGroup']);
 		else
@@ -33,7 +33,7 @@ class Shop extends CI_Controller {
 		$goodsList = $this->goods->getGoodsListByShop($_GET['ID']);
 		$actList = $this->shop->getActListByShop($_GET['ID']);
 		$shopInfo = $this->shop->getShopInfoByID($_GET['ID']);
-		$this->load->view('base/mainnav',array('page'=>'showshop','type'=>'groupbuy'));
+		$this->load->view('base/header',array('page'=>'showshop','type'=>'groupbuy'));
         $this->load->view('homepage/nav');
 		$this->load->view('shop/showshop',array('shopInfo'=>$shopInfo,'goodsList'=>$goodsList,'actList'=>$actList));
 		$this->load->view('base/footer');
@@ -255,7 +255,7 @@ class Shop extends CI_Controller {
         $this->load->model('shop_model','shop');
         $shopInfo = $this->shop->getShopInfoByID($_GET['id']);
         $goods_sign = json_decode($shopInfo['goodslist'],true);
-        $this->load->view("base/mainnav", array("page" => "selectgoods_shop"));
+        $this->load->view("base/header", array("page" => "selectgoods_shop"));
         $this->load->view("manager/header", array("mh" => "shop"));
         $this->load->view("manager/shop_header",array("mgh"=>"goodsManager","shopID"=>$_GET["id"]));
         $this->load->view("manager/shop/selectgoods", array("goodsList" => $goodsList,"goods_sign" =>$goods_sign,"shopID"=>$_GET["id"]));

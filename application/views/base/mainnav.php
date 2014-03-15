@@ -46,3 +46,4 @@
 		</div>
         <?php } ?>
 	  </nav>
+      <img src="/page/img/banner1_small.jpg">

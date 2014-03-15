@@ -3,7 +3,12 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta property="wb:webmaster" content="0aa04336e3901ae0" />
-    <title>Wooqu</title>
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+    <meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT">
+    <meta http-equiv="expires" content="0">
+    <title>HelloTHU</title>
+    <link rel="icon" type="image/x-icon" href="/page/img/favicon.ico">
     <script src = "/page/js/jquery.js"></script>
     <script src = "/page/js/base.js"></script>
     <link href = "/page/css/base.css" rel = "stylesheet">
@@ -18,11 +23,11 @@
     <script type="text/javascript" src="/page/js/stupidtable.js"></script>
   </head>
   <body>
-	<div class="container">
+     <div class="main-container">
 <!--      <nav class="navbar navbar-default" role="navigation" style="margin-bottom:0px;">-->
 	  <nav class="navbar navbar-default" role="navigation">
 		<div class="navbar-header">
-		  <a class="navbar-brand" href="/">Wooqu</a>
+		  <a class="navbar-brand" href="/">HelloTHU</a>
 		</div>
         <ul class="nav navbar-nav" style="margin-left: 30px;">
           <li><a href="#" onclick="javascript:$('#about').modal();">联系我们</a></li>
@@ -51,6 +56,7 @@
 		</div>
         <?php } ?>
 	  </nav>
+      <img src="/page/img/banner1_small.jpg" style="width: 98.5%;position: relative;top: -20px;margin-left: 6px;">
 <!--      <div class="alert alert-info">计算机系“1001夜”学生节12月22日本周日晚18:30大礼堂，敬请期待！</div>-->
 
 <div class="modal fade" id="about">

@@ -171,7 +171,7 @@ function confirmOrder() {
 
 function subOrd() {
     if(loginState == -1){
-        alert("请您登录后使用。");
+        alert("登录后才可以订购水果哦亲~");
         return ;
     }
 	if (submitting == true) {
@@ -244,7 +244,7 @@ $(function(){
 
             loginState = re.error.code;
             if(re.error.code == -1){
-                alert("请您登录后再使用。");
+                alert("登录后才可以订购水果哦亲~");
             }
         });
 		$.post("/groupbuy/getShopById",

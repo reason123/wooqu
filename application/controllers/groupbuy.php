@@ -14,7 +14,7 @@ class Groupbuy extends CI_Controller {
 		$this->load->model('groupbuy_model', 'groupbuy');
 		//$res = $this->groupbuy->wtf();
 
-		$this->load->view('base/mainnav', array('page' => 'backend'));
+		$this->load->view('base/header', array('page' => 'backend'));
         $this->load->view('groupbuy/backend', array('res' => json_encode($res)));
         $this->load->view('base/footer');
 	}
@@ -391,7 +391,7 @@ class Groupbuy extends CI_Controller {
         $order_list = $this->gb->getOrderByGbID($_REQUEST['groupbuyID']);
         $groupbuyInfo = $this->gb->getGroupbuyInfoByID($_REQUEST['groupbuyID']);
         $orderMessageList = $this->gb->getOrderMessageList($_REQUEST['groupbuyID']);
-        $this->load->view('base/mainnav',array('page'=>'gborder'));
+        $this->load->view('base/header',array('page'=>'gborder'));
 		$this->load->view("manager/header", array("mh" => "statistics"));
 		$this->load->view("manager/statistics_header", array("mgh" => "groupbuy"));
         $this->load->view('groupbuy/vieworder',array('gbID'=>$_REQUEST['groupbuyID'],'order_list'=>$order_list, 'groupbuyInfo'=>$groupbuyInfo, 'orderMessageList'=>$orderMessageList,'OM'=>$OM));
@@ -425,7 +425,7 @@ class Groupbuy extends CI_Controller {
 		$this->load->model('groupbuy_model', 'groupbuy');
 		$list = $this->groupbuy->getAllShops();
 		
-        $this->load->view('base/mainnav',array('page'=>'groupbuy'));
+        $this->load->view('base/header',array('page'=>'groupbuy'));
         $this->load->view('groupbuy/groupBuyManager', array("list"=>$list));
         $this->load->view('base/footer');
 	}
@@ -438,7 +438,7 @@ class Groupbuy extends CI_Controller {
 		$groupID = $_GET['id'];
         $this->load->model('groupbuy_model','groupbuy');
         $orderMessageList = $this->groupbuy->getOrderMessageList($groupID);
-        $this->load->view('base/mainnav',array('page'=>'groupinfo','type'=>'groupbuy'));
+        $this->load->view('base/header',array('page'=>'groupinfo','type'=>'groupbuy'));
         $this->load->view('homepage/nav');
         $this->load->view('groupbuy/groupInfo', array('groupID' => $groupID,'orderMessageList'=>$orderMessageList));
         $this->load->view('base/footer');
@@ -479,7 +479,7 @@ class Groupbuy extends CI_Controller {
         }
         if($this->form_validation->run() == FALSE){
         	
-        	$this->load->view('base/mainnav',array('page'=>'newgroupbuy'));
+        	$this->load->view('base/header',array('page'=>'newgroupbuy'));
             $this->load->view('manager/groupbuy/newgroupbuy');
             $this->load->view('base/footer');
         }else{        	
@@ -533,7 +533,7 @@ class Groupbuy extends CI_Controller {
 			$this->load->library('form_validation');
        	    $this->form_validation->set_rules('price','price','required|numeric');
         	if($this->form_validation->run() == FALSE){
-	            $this->load->view('base/mainnav',array('page'=>'groupbuy_modgoods'));
+	            $this->load->view('base/header',array('page'=>'groupbuy_modgoods'));
 	            $this->load->view("manager/header", array("mh" => "groupbuy"));
        			$this->load->view("manager/groupbuy_header",array("mgh"=>"goodsManager","groupbuyID"=>$_GET["groupbuyID"]));
             	$this->load->view('manager/groupbuy/modgoods');
@@ -576,7 +576,7 @@ class Groupbuy extends CI_Controller {
         $groupbuyInfo = $this->groupbuy->getGroupbuyInfoByID($_GET['id']);
 
         $goods_sign = json_decode($groupbuyInfo['goodslist'],true);
-        $this->load->view("base/mainnav", array("page" => "selectgoods_groupbuy"));
+        $this->load->view("base/header", array("page" => "selectgoods_groupbuy"));
         $this->load->view("manager/header", array("mh" => "groupbuy"));
         $this->load->view("manager/groupbuy_header",array("mgh"=>"goodsManager","groupbuyID"=>$_GET["id"]));
         $this->load->view("manager/groupbuy/selectgoods", array("goodsList" => $goodsList,"goods_sign" =>$goods_sign,"groubuyID"=>$_GET["id"]));

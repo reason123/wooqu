@@ -81,6 +81,10 @@ function changeMangeGroup(groupID) {
 		   });
 }
 
+function close_pub() {
+    $("#pub-fixed").hide();
+}
+
 $(function(){
 	$(".fancybox").fancybox();
 	if(parseInt($("#alertOn").val()) != 0){

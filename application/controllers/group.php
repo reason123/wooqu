@@ -11,7 +11,7 @@ class group extends CI_Controller{
      * @author ca007
      */
     public function groupManage(){
-        $this->load->view('base/mainnav',array('page'=>'groupmanage'));
+        $this->load->view('base/header',array('page'=>'groupmanage'));
         $this->load->view('group/groupManage');
         $this->load->view('base/footer');
     }
@@ -21,7 +21,7 @@ class group extends CI_Controller{
      * @author ca007
      */
     public function groupManager(){
-        $this->load->view('base/mainnav',array('page'=>'groupmanager'));
+        $this->load->view('base/header',array('page'=>'groupmanager'));
         $this->load->view('group/groupmanager');
         $this->load->view('base/footer');
     }

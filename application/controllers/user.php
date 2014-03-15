@@ -17,7 +17,7 @@ class User extends CI_Controller{
         //	$this->load->model('groupFeed_model','feed');
 		//$annList = $this->feed->getNewsList();
         $annList = array();
-        $this->load->view('base/mainnav',array('page'=>'homepage'));
+        $this->load->view('base/header',array('page'=>'homepage'));
         $this->load->view('user/announcement',array('annList'=>$annList,'ann'=>$ann));
         $this->load->view('base/footer');
     }
@@ -67,8 +67,8 @@ class User extends CI_Controller{
 		$this->load->model('group_model','group');
 		$schoolList = $this->group->getSchoolList();
 		if($this->form_validation->run() == FALSE){
-			//mainnav
-			$this->load->view('base/mainnav',array('page'=>'usereg'));			
+			//header
+			$this->load->view('base/header',array('page'=>'usereg'));			
 			$this->load->view('user/usereg',array_merge($_POST,array('schoolList'=>$schoolList)));
 			$this->load->view('base/footer');
 		}else{
@@ -88,8 +88,8 @@ class User extends CI_Controller{
 			if($res['error']['code'] == 1){
 				gotoHomepage();
 			}else{
-				//mainnav
-                $this->load->view('base/mainnav',array('page'=>'usereg'));
+				//header
+                $this->load->view('base/header',array('page'=>'usereg'));
 				$this->load->model('user_model','user');
                 //				$areaList = $this->user->getMyAreas();
 				$this->load->view('user/usereg',array_merge($_POST,array('schoolList'=>$schoolList)));
@@ -111,7 +111,7 @@ class User extends CI_Controller{
 		$schoolList = $this->group->getSchoolList();
         $departmentList = $this->group->getDepartmentList($schoolList[0]['groupID']);
         if($this->form_validation->run() == FALSE){
-            $this->load->view('base/mainnav', array('page'=>'usereg'));
+            $this->load->view('base/header', array('page'=>'usereg'));
             $this->load->view('user/usereg', array_merge($_POST,array('schoolList'=>$schoolList, 'departmentList'=>$departmentList)));
             $this->load->view('base/footer');
         }else{
@@ -131,8 +131,8 @@ class User extends CI_Controller{
 			if($res['error']['code'] == 1){
 				gotoHomepage();
 			}else{
-				//mainnav
-                $this->load->view('base/mainnav',array('page'=>'usereg'));
+				//header
+                $this->load->view('base/header',array('page'=>'usereg'));
 				$this->load->model('user_model','user');
                 //				$areaList = $this->user->getMyAreas();
 				$this->load->view('user/usereg',array_merge($_POST,array('schoolList'=>$schoolList, 'departmentList'=>$deparmentList)));
@@ -151,10 +151,10 @@ class User extends CI_Controller{
 		$this->form_validation->set_rules('password','password','required');
 
 		if($this->form_validation->run() == FALSE){
-			//mainnav
+			//header
 			$this->load->model('user_model','user');
             //			$areaList = $this->user->getMyAreas();
-            $this->load->view('base/mainnav',array('page'=>'loginpage'));
+            $this->load->view('base/header',array('page'=>'loginpage'));
 			$this->load->view('user/loginpage',$_POST);
 			$this->load->view('base/footer');
 		}else{
@@ -181,12 +181,12 @@ class User extends CI_Controller{
 					if($addOld['error']['code'] == 1){
 						header('Location: /user/selectArea');
 					}else{
-						$this->load->view('base/mainnav',array('page'=>'loginpage'));
+						$this->load->view('base/header',array('page'=>'loginpage'));
 						$this->load->view('user/loginpage',$_POST);
 						$this->load->view('base/footer',array('alertInfo'=>$res['error']['message']));	
 					}
 				}else{
-                    $this->load->view('base/mainnav',array('page'=>'loginpage'));
+                    $this->load->view('base/header',array('page'=>'loginpage'));
 					$this->load->view('user/loginpage',$_POST);
 					$this->load->view('base/footer',array('alertInfo'=>$res['error']['message']));
 				}
@@ -224,7 +224,7 @@ class User extends CI_Controller{
         $this->form_validation->set_rules('email','email','required');
 
         if($this->form_validation->run() == FALSE){
-            $this->load->view('base/mainnav',array('page'=>'volinfo'));
+            $this->load->view('base/header',array('page'=>'volinfo'));
             $this->load->view('volunteer/volinfo');
             $this->load->view('base/footer');
         }else{
@@ -232,7 +232,7 @@ class User extends CI_Controller{
             $res = $this->user->improveVolInfo($_REQUEST['politicalStatus'],
                                                $_REQUEST['phoneNumber'],
                                                $_REQUEST['email']);
-            $this->load->view('base/mainnav',array('page'=>'volinfo'));
+            $this->load->view('base/header',array('page'=>'volinfo'));
             $this->load->view('volunteer/volinfo');
             $this->load->view('base/footer');
         }
@@ -338,7 +338,7 @@ class User extends CI_Controller{
      * @authror ca007
      */
     public function nopermission(){
-        $this->load->view('base/mainnav',array('page'=>'managegroup'));
+        $this->load->view('base/header',array('page'=>'managegroup'));
         $this->load->view('base/nopermission');
         $this->load->view('base/footer');
     }

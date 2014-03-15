@@ -24,7 +24,7 @@ class Message extends CI_Controller {
 		
 		$msgList = $this->message->getAllMessage($page - 1, self::PER_PAGE);
 
-		$this->mainnav('message');
+		$this->header('message');
 		$this->load->view('message/message',array('msgList'=>$msgList, 'pageLink'=>$pageLink));
 		$this->load->view('base/footer');
 	}
@@ -43,7 +43,7 @@ class Message extends CI_Controller {
 		$pageLink = $this->makePageLink("/message/unread/", $total_rows, self::PER_PAGE);
 		$msgList = $this->message->getUnreadMessage($page - 1, self::PER_PAGE);
 
-		$this->mainnav('message');
+		$this->header('message');
 		$this->load->view('message/message_unread',array('msgList'=>$msgList, 'pageLink'=>$pageLink));
 		$this->load->view('base/footer');
 	}
@@ -89,8 +89,8 @@ class Message extends CI_Controller {
 	/**
 	 * 生成导航栏
 	 */
-	private function mainnav($name,$addArray = array()) {
-		$this->load->view('base/mainnav',array_merge(array('name'=>$name, 'page'=>$name),$addArray));
+	private function header($name,$addArray = array()) {
+		$this->load->view('base/header',array_merge(array('name'=>$name, 'page'=>$name),$addArray));
 	}
 
 	/**
