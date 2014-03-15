@@ -5,7 +5,7 @@
 </div>
 <div id="pub-fixed">
   <div id="close">
-    <a onclick="close_pub()" href="#">关闭</a>
+    <span onclick="close_pub()" class="close-btn">关闭</span>
   </div>
   <img src="/page/img/pub_small.png">
 </div>

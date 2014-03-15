@@ -135,3 +135,9 @@ body {
 #pub-fixed img{
     float: right;
 }
+
+#pub-fixed .close-btn{
+    cursor: pointer;
+    color: #428bca;
+    text-decoration: none;
+}

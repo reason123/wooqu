@@ -2,6 +2,7 @@
 if(isset($errorMes))
 	echo "<script language=javascript>alert('".$errorMes."');</script>";
 ?>
+<div class="alert alert-info">可以直接使用wooqu网账户登录哦亲~</div>
 <div style="padding-top: 40px">
 	<form class="form-horizontal" action="/user/login" method="post">
 		<div class="form-group">

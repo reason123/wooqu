@@ -1,4 +1,5 @@
 <br/>
+<div class="alert alert-info">可以直接使用wooqu网账户登录哦亲~</div>
 <div class = "container">
 	<form class="form-horizontal" action="/user/usereg" method="post">
 		<div class="form-group">
