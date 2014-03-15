@@ -34,7 +34,8 @@ function addOrderMessage()
 }
 
 $(function(){
-	$('.tp').timepicker({
+    orderMessageList = $.parseJSON(document.getElementById("orderMessageList").value);
+    $('.tp').timepicker({
 		showSeconds: true,
 		showMeridian: false,
 		defaultTime:"10:00:00"

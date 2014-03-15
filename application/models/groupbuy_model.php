@@ -229,8 +229,8 @@ class groupbuy_model extends CI_Model{
 	 * @param shop array userName
 	 */
 	function modifyShop($shop, $userName) {
-		$sql = "UPDATE `groupbuy_list` SET `title`=?,`status`=?,`comment`=?,`howtopay`=?,`illustration`=?,`deadline`=?,`pickuptime`=?,`source`=? WHERE `id`=? and `username`=?";
-		$res = $this->db->query($sql,array(cleanString($shop["title"]),$shop["status"],cleanString($shop["comment"]),cleanString($shop["howtopay"]),cleanString($shop["illustration"]),cleanString($shop["deadline"]),cleanString($shop["pickuptime"]),cleanString($shop["source"]),$shop["id"],$userName)) or die(mysql_error());
+		$sql = "UPDATE `groupbuy_list` SET `title`=?,`status`=?,`comment`=?,`howtopay`=?,`illustration`=?,`deadline`=?,`pickuptime`=?,`source`=?, `orderMessage`=? WHERE `id`=? and `username`=?";
+		$res = $this->db->query($sql,array(cleanString($shop["title"]),$shop["status"],cleanString($shop["comment"]),cleanString($shop["howtopay"]),cleanString($shop["illustration"]),cleanString($shop["deadline"]),cleanString($shop["pickuptime"]),cleanString($shop["source"]),$shop["orderMessage"],$shop["id"],$userName)) or die(mysql_error());
 	}
 
 	/**

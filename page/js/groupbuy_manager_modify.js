@@ -1,29 +1,36 @@
 var cargoList; 
 var delCargoIdx = -1; 
 
-function delOrderMessage(btnid) { 
-     $.post("/groupbuy/delOrderMessage",{
-                        gbID: document.getElementById("groupID").value,
-                        message:btnid 
-                    });
+var orderMessageList = new Array();
+
+function delOrderMessage(btnid)
+{
      document.getElementById("btn"+btnid).style.display="none";
+     for (var i = 0; i < orderMessageList.length; i++)
+     {
+         if (orderMessageList[i] == btnid) {
+             orderMessageList.splice(i,1);
+         }
+    }
+    var temp = JSON.stringify(orderMessageList);
+    document.getElementById("orderMessageList").value=temp;
 }
 
 function addOrderMessage()
 {
     if (document.getElementById("orderMessage").value === "") return;
-    $.post("/groupbuy/addOrderMessage",{
-                        gbID: document.getElementById("groupID").value,
-                        message: document.getElementById("orderMessage").value
-                    });
+    orderMessageList.push(document.getElementById("orderMessage").value);
+    var temp = JSON.stringify(orderMessageList);
+    document.getElementById("orderMessageList").value=temp;
     if (document.getElementById("btn"+document.getElementById("orderMessage").value))
     {
         document.getElementById("btn"+document.getElementById("orderMessage").value).style.display="";
         return;
     }
-    $("#orderMessageList").append("<button type='button' class='btn btn-info' id='btn"+document.getElementById("orderMessage").value+"' onclick='delOrderMessage(\""+document.getElementById("orderMessage").value+"\")'>"+document.getElementById("orderMessage").value+"</button>");
+    $("#orderMessageBody").append("<button type='button' class='btn btn-info' id='btn"+document.getElementById("orderMessage").value+"' onclick='delOrderMessage(\""+document.getElementById("orderMessage").value+"\")'>"+document.getElementById("orderMessage").value+"</button>");
     document.getElementById("orderMessage").value="";
 }
+
 
 function makeInfo(data) {
 	var deadline_date = data.deadline.substr(0, data.deadline.lastIndexOf(' '));
@@ -106,7 +113,8 @@ function makeInfo(data) {
                     "</div>"+
                     "<button type=\"button\" class=\"btn btn-defalut\" onclick=\"addOrderMessage()\">添加</button>"+
                 "</div>"+
-                "<div id=\"orderMessageList\" class=\"form-group\">"+
+                "<div id=\"orderMessageBody\" class=\"form-group\">"+
+                    "<input type=\"hidden\" name=\"orderMessageList\" id=\"orderMessageList\" value=\"[]\"></input>"+
                     "<label class=\"control-label col-lg-3\"></label>"+
                 "</div>"+
 			    "<div class=\"form-group\">"+
@@ -241,6 +249,7 @@ function modifyShop() {
 	arr.illustration = document.getElementById("illustration").value; 
 	arr.status = document.getElementById("status").value; 
 	arr.groups = document.getElementById("groups").value;
+    arr.orderMessage = document.getElementById("orderMessageList").value;
 	if (!legalTime(arr.deadline) || !legalTime(arr.pickuptime)) {
 		alert("时间格式不正确");
 		$("#confirmModifyInfoModal").modal("hide");
@@ -338,12 +347,14 @@ $(function(){
             	    { gbID: document.getElementById("groupID").value }, 
             		function(jsdata){
 			            var data = $.parseJSON(jsdata);
+                        orderMessageList = data;
                         //alert(data);
                         var tmp = "";
                         for (var i in data) {
                             tmp = tmp+"<button type='button' class='btn btn-info' id='btn"+data[i]+"' onclick='delOrderMessage(\""+data[i]+"\")'>"+data[i]+"</button>";
                         }
-                        $("#orderMessageList").append(tmp);
+                        $("#orderMessageBody").append(tmp);
+                        document.getElementById("orderMessageList").value = jsdata;
                    });
 				$('.tp').timepicker({
 					showSeconds: true,
