@@ -174,7 +174,7 @@ class group extends CI_Controller{
     }
 
 	
-	public function test(){
+/*	public function test(){
 		$this->load->model('group_model','group');
         $groupID = $_GET['groupID'];
         $name =  $_GET['name'];
@@ -185,7 +185,7 @@ class group extends CI_Controller{
             echo json_encode($this->group->newClass($groupID,$name.$_GET['G0'].$j));
         }
 //        echo json_encode($this->group->getClassList($groupID));
-    }
+    }*/
 
 } 
 ?>
