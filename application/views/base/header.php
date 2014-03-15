@@ -3,8 +3,12 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta property="wb:webmaster" content="0aa04336e3901ae0" />
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+    <meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT">
+    <meta http-equiv="expires" content="0">
     <title>HelloTHU</title>
-    <link rel="icon" type="image/x-icon" href="/page/img/favicon.png">
+    <link rel="icon" type="image/x-icon" href="/page/img/favicon.ico">
     <script src = "/page/js/jquery.js"></script>
     <script src = "/page/js/base.js"></script>
     <link href = "/page/css/base.css" rel = "stylesheet">
