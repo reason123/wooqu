@@ -110,7 +110,7 @@ class groupFeed_model extends CI_Model{
                                 param1 
                from feed_list, group_feed, user_list
                where feed_list.ID=group_feed.newsID and userID=user_list.ID
-                     and group_feed.state=1 order by feed_list.ID desc";
+                     and group_feed.state=1 and group_feed.groupID LIKE '_________0000' order by feed_list.ID desc";
         }else{
             $sql = "select distinct feed_list.ID, 
                                 type, 
@@ -156,7 +156,7 @@ class groupFeed_model extends CI_Model{
                                 param1 
                from feed_list, group_feed, user_list
                where userID=user_list.ID and feed_list.ID=group_feed.newsID 
-                     and group_feed.state=1 and type=? order by feed_list.ID desc";
+                     and group_feed.state=1 and type=? and group_feed.groupID LIKE '_________0000' order by feed_list.ID desc";
         }else{
             $sql = "select distinct feed_list.ID, 
                                 type, 
