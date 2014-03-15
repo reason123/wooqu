@@ -173,11 +173,19 @@ class group extends CI_Controller{
         echo json_encode($this->group->removeMember($_REQUEST['relationID']));
     }
 
-	/*
+	
 	public function test(){
-		$this->load->model('arealist_model','area');
-		$this->area->delClassByUser();
-	}
-*/
+		$this->load->model('group_model','group');
+        $groupID = $_GET['groupID'];
+        $name =  $_GET['name'];
+          
+     //   echo json_encode($this->group->newClass(1000100200000,'测试'));
+      
+        for ($j = 1;$j <= $_GET['G1']; $j++) {
+            echo json_encode($this->group->newClass($groupID,$name.$_GET['G0'].$j));
+        }
+//        echo json_encode($this->group->getClassList($groupID));
+    }
+
 } 
 ?>
