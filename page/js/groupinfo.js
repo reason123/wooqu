@@ -3,6 +3,7 @@ var cargoList;
 var onSale = 1;
 var submitting = false;
 var userStatus = 'None';
+var loginState = -1;
 
 function debug(str) {
 	document.getElementById("board").innerHTML = str;
@@ -169,6 +170,10 @@ function confirmOrder() {
 }
 
 function subOrd() {
+    if(loginState == -1){
+        alert("请您登录后使用。");
+        return ;
+    }
 	if (submitting == true) {
 		alert("正在提交上次订单，请稍候");
 		return;
@@ -233,8 +238,13 @@ $(function(){
         $.get('/user/getMyInfo',function(data){
             var re = $.parseJSON(data);
             userStatus = re.completed;
-            if(userStatus == 'Yes'){
+            if(userStatus == 'Yes' || re.error.code == -1){
                 $("#improve-information").html('');
+            }
+
+            loginState = re.error.code;
+            if(re.error.code == -1){
+                alert("请您登录后再使用。");
             }
         });
 		$.post("/groupbuy/getShopById",
