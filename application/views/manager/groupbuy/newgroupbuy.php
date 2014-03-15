@@ -56,8 +56,16 @@
         <button type="button" class="btn btn-defalut" onclick="addOrderMessage()">添加</button>
      </div>
      <div id="orderMessageBody" class="form-group" >
-        <input type="hidden" name="orderMessageList" id="orderMessageList" value="[]">
+        <input type="hidden" name="orderMessageList" id="orderMessageList" value=<?php if (isset($_REQUEST['orderMessageList'])) echo $_REQUEST['orderMessageList']; else echo "[]"  ?>>
         <label class="control-label col-lg-2"></label>
+        <?php 
+            if (isset($_REQUEST['orderMessageList'])) {
+                $tmp = json_decode($_REQUEST['orderMessageList'],true);
+                foreach ($tmp as $x){
+                    echo  "<button type='button' class='btn btn-info' id='btn".$x."' onclick='delOrderMessage(\"".$x."\")'>".$x."</button>";
+                }
+            }
+        ?>
      </div>
      <div class="form-group">
         <label class="control-label col-lg-2">团购结束时间</label>

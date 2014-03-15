@@ -97,7 +97,8 @@ class Groupbuy extends CI_Controller {
 			"comment"=>$_REQUEST["comment"],
 			"illustration"=>$_REQUEST["illustration"],
 			"status"=>$_REQUEST["status"],
-			"groups"=>$_REQUEST["groups"]
+			"groups"=>$_REQUEST["groups"],
+            "orderMessage"=>$_REQUEST["orderMessageList"]
 		);
 		$this->load->model("groupbuy_model", "groupbuy");
 		$shopID = intval($shop["id"]);
@@ -474,6 +475,7 @@ class Groupbuy extends CI_Controller {
         	$_REQUEST['source'] = $groupbuyInfo['source'];
         	$_REQUEST['illustration'] = $groupbuyInfo['illustration'];
             $_REQUEST['group_list'] = $str;
+            $_REQUEST['orderMessageList'] = $groupbuyInfo['orderMessage'];
         }
         if($this->form_validation->run() == FALSE){
         	
