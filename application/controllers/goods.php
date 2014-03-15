@@ -19,7 +19,7 @@ class Goods extends CI_Controller{
         $this->form_validation->set_rules('priceType','priceType','required');
         $this->load->model('goods_model','goods');
         if($this->form_validation->run() == FALSE){
-            $this->load->view('base/mainnav',array('page'=>'newgoods'));
+            $this->load->view('base/header',array('page'=>'newgoods'));
             $this->load->view('manager/goods/newgoods',array('goodsInfo'=>$_REQUEST));
             $this->load->view('base/footer');
         }else{
@@ -60,7 +60,7 @@ class Goods extends CI_Controller{
         if (!isset($_REQUEST['detail'])) $_REQUEST['detail'] = $goodsInfo['detail'];
 		if (!isset($_REQUEST['pic'])) $_REQUEST['pic'] = $goodsInfo['pic'];
         if($this->form_validation->run() == FALSE){
-            $this->load->view('base/mainnav',array('page'=>'newgoods'));
+            $this->load->view('base/header',array('page'=>'newgoods'));
             $this->load->view('manager/goods/modgoods',array('goodsInfo'=>$_REQUEST,'goodsID'=>$_GET['goodsID']));
             $this->load->view('base/footer');
         }else{

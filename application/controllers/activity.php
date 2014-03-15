@@ -18,7 +18,7 @@ class Activity extends CI_Controller{
      */
     function index(){
         $this->load->model('activity_model','act');
-        $this->load->view('base/mainnav',array('page'=>'actmain'));
+        $this->load->view('base/header',array('page'=>'actmain'));
         $actInfo = $this->act->getActByID($_REQUEST['actID']);
         $this->load->view('activity/actmain',array('actInfo'=>$actInfo));
         $this->load->view('base/footer');
@@ -30,7 +30,7 @@ class Activity extends CI_Controller{
      */
     function actmain(){
         $this->load->model('activity_model','act');
-        $this->load->view('base/mainnav',array('page'=>'actmain'));
+        $this->load->view('base/header',array('page'=>'actmain'));
         $actList = $this->act->getActList();
         $this->load->view('activity/actmain',array('actlist'=>$actList));
         $this->load->view('base/footer');
@@ -50,7 +50,7 @@ class Activity extends CI_Controller{
         $basetype_list = $this->act->getBaseType();
         $subtype_list = $this->act->getSubType(0);
         if($this->form_validation->run() == FALSE){
-          $this->load->view('base/mainnav',
+          $this->load->view('base/header',
                               array(
                                   'page'=>'newactivity',
                                   'status'=>'failed',
@@ -91,7 +91,7 @@ class Activity extends CI_Controller{
                 header('Location: /activity/createForm?actID='.$result['ID']);
                 return;
             }
-            $this->load->view('base/mainnav',array('page'=>'newactivity','basetype_list'=>$basetype_list,'subtype_list'=>$subtype_list));
+            $this->load->view('base/header',array('page'=>'newactivity','basetype_list'=>$basetype_list,'subtype_list'=>$subtype_list));
             $this->load->view('manager/activity/addact',array('status'=>'success'));
             $this->load->view('base/footer');
         }
@@ -112,7 +112,7 @@ class Activity extends CI_Controller{
         $this->form_validation->set_rules('sign_end_date','报名结束时间','required');
         $actInfo = $this->act->getActByID($_REQUEST['actID']);
         if($this->form_validation->run() == FALSE){
-            $this->load->view('base/mainnav',array('page'=>'newactivity','status'=>'failed'));
+            $this->load->view('base/header',array('page'=>'newactivity','status'=>'failed'));
             $this->load->view('manager/activity/modact',$actInfo);
             $this->load->view('base/footer');
         }else{
@@ -129,7 +129,7 @@ class Activity extends CI_Controller{
                 echo json_encode($result);
                 return;
             }
-            $this->load->view('base/mainnav',array('page'=>'newactivity'));
+            $this->load->view('base/header',array('page'=>'newactivity'));
             $this->load->view('manager/activity/modact',array_merge(array('status'=>'success'),$result));
             $this->load->view('base/footer');
         }
@@ -222,7 +222,7 @@ class Activity extends CI_Controller{
         }
         $sign_list = $this->act->getSignList($_REQUEST['actID']);
         $act_title = $this->act->actTitle($_REQUEST['actID']);
-        $this->load->view('base/mainnav',array('page'=>'signlist'));
+        $this->load->view('base/header',array('page'=>'signlist'));
         $this->load->view('activity/signlist',array('sign_list'=>$sign_list, 'actTitle'=>$act_title));
         $this->load->view('base/footer');
     }

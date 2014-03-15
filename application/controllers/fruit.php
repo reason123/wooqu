@@ -14,7 +14,7 @@ class Fruit extends CI_Controller {
 	function shoplist() {
 		$this->load->model('fruit_model','fruit');
 
-		$this->load->view('base/mainnav',array('page'=>'shoplist'));
+		$this->load->view('base/header',array('page'=>'shoplist'));
 		if (isset($_SESSION['myGroup']))
 			$list = $this->fruit->getShopListByGroup($_SESSION['myGroup']);
 		else
@@ -35,7 +35,7 @@ class Fruit extends CI_Controller {
 		$actList = $this->fruit->getActListByShop($_GET['ID']);
 		$shopInfo = $this->fruit->getShopInfoByID($_GET['ID']);
 
-		$this->load->view('base/mainnav',array('page'=>'showshop'));
+		$this->load->view('base/header',array('page'=>'showshop'));
 
 		$this->load->view('shop/showshop',array('shopInfo'=>$shopInfo,'goodsList'=>$fruitList,'actList'=>$actList));
 		$this->load->view('base/footer');

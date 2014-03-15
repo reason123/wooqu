@@ -30,7 +30,7 @@ class Chat extends CI_Controller {
 			$total_rows = $this->chat->countChatBetween($withID);
 			$pageLink = $this->makePageLink("/chat/history/".$withID, $total_rows, self::PER_PAGE, 4);
 			$list = $this->chat->getAllChatBetween($withID, $page - 1, self::PER_PAGE);
-			$this->mainnav('chat');
+			$this->header('chat');
 			$this->load->view("chat/history", array("list"=>$list, "toNickName"=>$toUser['nickName'], 'pageLink'=>$pageLink));
 		}
 	}
@@ -106,8 +106,8 @@ class Chat extends CI_Controller {
 	/**
 	 * 生成导航栏
 	 */
-	public function mainnav($name,$addArray = array()) {
-		$this->load->view('base/mainnav',array_merge(array('name'=>$name, 'page'=>$name),$addArray));
+	public function header($name,$addArray = array()) {
+		$this->load->view('base/header',array_merge(array('name'=>$name, 'page'=>$name),$addArray));
 	}
 
 	/**
