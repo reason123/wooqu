@@ -2,6 +2,11 @@ body {
 	background-image: url(/images/tweed-content.png);
 }
 
+.main-container{
+    width: 1170px;
+    margin: auto;
+}
+
 #left-sidebar {
 	position: fixed;
 	z-index: 10000;

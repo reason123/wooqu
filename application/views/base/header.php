@@ -18,7 +18,7 @@
     <script type="text/javascript" src="/page/js/stupidtable.js"></script>
   </head>
   <body>
-	<div class="container">
+	<div class="main-container">
 <!--      <nav class="navbar navbar-default" role="navigation" style="margin-bottom:0px;">-->
 	  <nav class="navbar navbar-default" role="navigation">
 		<div class="navbar-header">
@@ -51,6 +51,7 @@
 		</div>
         <?php } ?>
 	  </nav>
+      <img src="/page/img/banner1_small.jpg" style="width: 98.5%;position: relative;top: -20px;margin-left: 6px;">
 <!--      <div class="alert alert-info">计算机系“1001夜”学生节12月22日本周日晚18:30大礼堂，敬请期待！</div>-->
 
 <div class="modal fade" id="about">
