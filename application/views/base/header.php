@@ -56,7 +56,7 @@
 		</div>
         <?php } ?>
 	  </nav>
-      <img src="/page/img/banner1_small.jpg" style="width: 98.5%;position: relative;top: -20px;margin-left: 6px;">
+<!--      <img src="/page/img/banner1_small.jpg" style="width: 98.5%;position: relative;top: -20px;margin-left: 6px;">-->
 <!--      <div class="alert alert-info">计算机系“1001夜”学生节12月22日本周日晚18:30大礼堂，敬请期待！</div>-->
 
 <div class="modal fade" id="about">
@@ -68,7 +68,7 @@
       </div>
       <div class="modal-body" align="center">
           <h2>HelloThu</h2>
-          加入我们：contact@hellothu.com
+          客服邮箱：hellothu@foxmail.com
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
