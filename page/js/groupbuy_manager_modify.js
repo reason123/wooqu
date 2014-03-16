@@ -354,7 +354,7 @@ $(function(){
                             tmp = tmp+"<button type='button' class='btn btn-info' id='btn"+data[i]+"' onclick='delOrderMessage(\""+data[i]+"\")'>"+data[i]+"</button>";
                         }
                         $("#orderMessageBody").append(tmp);
-                        document.getElementById("orderMessageList").value = jsdata;
+                        document.getElementById("orderMessageList").value = JSON.stringify(orderMessageList);
                    });
 				$('.tp').timepicker({
 					showSeconds: true,
