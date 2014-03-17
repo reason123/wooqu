@@ -2,7 +2,7 @@
 <br/><br/>
 
 <div class="nav nav-tabs">
-  <li class="active"><a href="/manager/memberin">已加入成员</a></li>
+  <li class="active"><a href="/manager/memberin">已加入成员(<?php echo count($userList); ?>)</a></li>
   <li><a href="/manager/membersign">申请成员</a></li>
 </div>
 
