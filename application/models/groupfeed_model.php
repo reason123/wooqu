@@ -235,6 +235,28 @@ class groupFeed_model extends CI_Model{
         $this->db->delete('group_feed',array('ID'=>$relationID));
         return errorMessage(1,'OK');
     }
+    
+    /**
+     * 新增feed条目
+     * @author ca007
+     * @param int $type 类型
+     * @param string $title 标题
+     * @param int $userID 发布者ID
+     * @param timestamp $time 发布时间
+     * @param string $imgurl 图片链接
+     * @param string $shortdescription 简介
+     * @param string $url 链接
+     * @param int $sourceID 源内容ID
+     */
+    function modifyFeedItem($type,
+                         $title,
+                         $imgurl,
+                         $shortdescription,
+                         $sourceID,
+                         $param1){
+        $sql = "UPDATE feed_list SET title = ?, imgurl = ?,shortdescription = ?, param1 = ? WHERE type = ? AND sourceID = ?";
+		$res = $this->db->query($sql, array(cleanString($title),cleanString($imgurl),cleanString($shortdescription),cleanString($param1),cleanString($type),cleanString($sourceID))) or die(mysql_error());
+    }
 }
 
 ?>
