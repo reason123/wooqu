@@ -5,6 +5,7 @@
       <th>团购ID</th>
       <th>团购名</th>
       <th>创建者</th>
+      <th>订单总量</th>
       <th>操作</th>
     </tr>
   </thead>
@@ -14,6 +15,7 @@
     <td><?php echo $groupbuy['ID'] ?></td>
     <td><?php echo $groupbuy['title'] ?></td>
     <td><?php echo $groupbuy['username'] ?></td>
+    <td><?php echo $groupbuy['total'] ?></td>
     <td><a href="/groupbuy/vieworder?groupbuyID=<?php echo $groupbuy['ID']?>">查看订单</a></td>
   </tr>
   <?php endforeach ?>

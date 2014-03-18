@@ -145,16 +145,16 @@ class groupbuy_model extends CI_Model{
         $groupIDListA = array();
         $tmp = $this->db->from('member_list')->where('userID',$_SESSION['userID'])->where('roles',4)->get()->result_array();
         foreach ($tmp as $k=>$v)
-        {
-            array_push($groupIDListA,$v['groupID']);
-        }
+            {
+                array_push($groupIDListA,$v['groupID']);
+            }
         array_unique($groupIDListA);
         $groupIDListB = array();
         $tmp = $this->db->from('groupbuy_act')->where('groupbuyID',$gbID)->where('state',1)->get()->result_array();
         foreach ($tmp as $k=>$v)
-        {
-            array_push($groupIDListB,$v['groupID']);
-        }
+            {
+                array_push($groupIDListB,$v['groupID']);
+            }
         array_unique($groupIDListB);
         $groupIDList = array_intersect($groupIDListA,$groupIDListB);
         if (count($groupIDList) == 0 && $tmp_username != $_SESSION['loginName']) {
@@ -233,11 +233,11 @@ class groupbuy_model extends CI_Model{
 		$res = $this->db->query($sql,array(cleanString($shop["title"]),$shop["status"],cleanString($shop["comment"]),cleanString($shop["howtopay"]),cleanString($shop["illustration"]),cleanString($shop["deadline"]),cleanString($shop["pickuptime"]),cleanString($shop["source"]),$shop["orderMessage"],$shop["id"],$userName)) or die(mysql_error());
         $this->load->model("groupfeed_model","feed");
         $this->feed->modifyFeedItem(1,
-                                 $shop['title'],
-                                 '/storage/groupbuyPic/pic_'.$shop['id'].'.jpg',
-                                 $shop['illustration'],
-                                 $shop['id'],
-                                 '{}');
+                                    $shop['title'],
+                                    '/storage/groupbuyPic/pic_'.$shop['id'].'.jpg',
+                                    $shop['illustration'],
+                                    $shop['id'],
+                                    '{}');
         $groupList = explode(';',$shop['group_list']);
 	}
 
@@ -369,14 +369,14 @@ class groupbuy_model extends CI_Model{
 	    	return $this->getGroupbuyByUserNameAndID($_SESSION["loginName"], $id);
 		}
         /**
-		$sql = "SELECT DISTINCT groupbuy_list.`id`,`title`,`status`,`comment`,`howtopay`,`illustration`,`deadline`,`pickuptime`,`source`,goodslist,createTime FROM `groupbuy_list`,`groupbuy_act` WHERE groupbuy_list.`id`=".$id." and groupbuy_list.`id`=groupbuy_act.`groupbuyID` and (";
-		$count = 0;
-		foreach ($_SESSION["myGroup"] as $groupID => $groupInfo) {
-			if ($count > 0) $sql .= " or ";
-			$sql .= "groupbuy_act.`groupID`=".$groupID;
-			++$count;
-		}
-		$sql .= ") ORDER BY groupbuy_list.`id`";
+           $sql = "SELECT DISTINCT groupbuy_list.`id`,`title`,`status`,`comment`,`howtopay`,`illustration`,`deadline`,`pickuptime`,`source`,goodslist,createTime FROM `groupbuy_list`,`groupbuy_act` WHERE groupbuy_list.`id`=".$id." and groupbuy_list.`id`=groupbuy_act.`groupbuyID` and (";
+           $count = 0;
+           foreach ($_SESSION["myGroup"] as $groupID => $groupInfo) {
+           if ($count > 0) $sql .= " or ";
+           $sql .= "groupbuy_act.`groupID`=".$groupID;
+           ++$count;
+           }
+           $sql .= ") ORDER BY groupbuy_list.`id`";
         **/
 		$sql = "SELECT DISTINCT groupbuy_list.`id`,`title`,`status`,`comment`,`howtopay`,`illustration`,`deadline`,`pickuptime`,`source`,goodslist,createTime FROM `groupbuy_list`,`groupbuy_act` WHERE groupbuy_list.`id`=".$id." and groupbuy_list.`id`=groupbuy_act.`groupbuyID` ORDER BY groupbuy_list.`id`";
         
@@ -536,9 +536,9 @@ class groupbuy_model extends CI_Model{
         $tmp = $this->db->from('groupbuy_act')->where('groupbuyID',$groupbuyID)->get()->result_array();
         $groupList = array();
         foreach ($tmp as $key=>$value)
-        {
-           array_push($groupList,$value['groupID']);
-        }
+            {
+                array_push($groupList,$value['groupID']);
+            }
         return $groupList;
     }
 
@@ -551,50 +551,58 @@ class groupbuy_model extends CI_Model{
         $groupbuyIDList = array();
         $manager_list = $this->db->from('member_list')->where('userID',$userID)->where('roles',4)->get()->result_array();
         foreach ($manager_list as $key=>$value)
-        {
-            $groupID = $value['groupID'];
-            $tmp = $this->db->from('groupbuy_act')->where('groupID',$groupID)->where('state',1)->get()->result_array();
-            foreach ($tmp as $k => $v)
             {
-                array_push($groupbuyIDList,$v['groupbuyID']);
+                $groupID = $value['groupID'];
+                $tmp = $this->db->from('groupbuy_act')->where('groupID',$groupID)->where('state',1)->get()->result_array();
+                foreach ($tmp as $k => $v)
+                    {
+                        array_push($groupbuyIDList,$v['groupbuyID']);
+                    }
             }
-        }
         array_unique($groupbuyIDList);
         $sql = "SELECT DISTINCT groupbuy_list.ID,title,username,goodslist,createTime FROM user_list, groupbuy_list WHERE (groupbuy_list.username = user_list.loginName AND user_list.ID = ? AND available = 1)";
         foreach ($groupbuyIDList as $key => $groupbuyID)
-        {
-            $sql = $sql." OR (groupbuy_list.ID = ".$groupbuyID." AND available = 1)";
-        }
+            {
+                $sql = $sql." OR (groupbuy_list.ID = ".$groupbuyID." AND available = 1)";
+            }
         $sql = $sql." ORDER BY groupbuy_list.createTime DESC";
         $groupbuyList = $this->db->query($sql,array($userID))->result_array();
+        foreach($groupbuyList as $k => $v){
+            $groupbuyList[$k]['total'] = $this->getGroupbuyTotalByID($v['ID']);
+        }
         return $groupbuyList;
     }
 
+    function getGroupbuyTotalByID($gbID){
+        $sql = "select count(*) from groupbuy_order where shopid=? and del=0";
+        $totalNum = $this->db->query($sql, array($gbID))->row_array();
+        return $totalNum['count(*)'];
+    }
    
-   function addOrderMessage($gbID,$Message)
-   {
-       $tmp = $this->db->from('groupbuy_list')->where('ID',$gbID)->get()->result_array();
-       $orderMessageList = json_decode($tmp[0]['orderMessage'],true);
-       array_push($orderMessageList,$Message);
-       $newItem = array('orderMessage'=>json_encode($orderMessageList));
-       $this->db->where('ID',$gbID)->update('groupbuy_list',$newItem);
-       return json_encode($orderMessageList);
-   }
+    function addOrderMessage($gbID,$Message)
+    {
+        $tmp = $this->db->from('groupbuy_list')->where('ID',$gbID)->get()->result_array();
+        $orderMessageList = json_decode($tmp[0]['orderMessage'],true);
+        array_push($orderMessageList,$Message);
+        $newItem = array('orderMessage'=>json_encode($orderMessageList));
+        $this->db->where('ID',$gbID)->update('groupbuy_list',$newItem);
+        return json_encode($orderMessageList);
+    }
 
-   function delOrderMessage($gbID,$Message)
-   {
-      $tmp = $this->db->from('groupbuy_list')->where('ID',$gbID)->get()->result_array();
-      $orderMessageList = json_decode($tmp[0]['orderMessage'],true);
-      $tmp = array();
-      foreach ($orderMessageList as $x)
-      if ($x != $Message)
-      {
-          array_push($tmp,$x);
-      }
-      $newItem = array('orderMessage'=>json_encode($tmp));
-      $this->db->where('ID',$gbID)->update('groupbuy_list',$newItem);
-      return json_encode($tmp);      
-   }
+    function delOrderMessage($gbID,$Message)
+    {
+        $tmp = $this->db->from('groupbuy_list')->where('ID',$gbID)->get()->result_array();
+        $orderMessageList = json_decode($tmp[0]['orderMessage'],true);
+        $tmp = array();
+        foreach ($orderMessageList as $x)
+            if ($x != $Message)
+                {
+                    array_push($tmp,$x);
+                }
+        $newItem = array('orderMessage'=>json_encode($tmp));
+        $this->db->where('ID',$gbID)->update('groupbuy_list',$newItem);
+        return json_encode($tmp);      
+    }
 
     function getOrderMessageList($gbID)
     { 
