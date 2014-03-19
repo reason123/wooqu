@@ -394,7 +394,7 @@ class Groupbuy extends CI_Controller {
         {
             array_push($orderMessageList,$order['orderMessage']);
         }
-        array_unique($orderMessageList);
+        $orderMessageList = array_unique($orderMessageList);
         asort($orderMessageList);
         $groupbuyInfo = $this->gb->getGroupbuyInfoByID($_REQUEST['groupbuyID']);
         $this->load->view('base/header',array('page'=>'gborder'));
