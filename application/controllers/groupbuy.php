@@ -389,8 +389,14 @@ class Groupbuy extends CI_Controller {
         if (isset($_GET['OM'])) $OM = $_GET['OM']; else $OM = "LJNisHansome!";
         $this->load->model('groupbuy_model','gb');
         $order_list = $this->gb->getOrderByGbID($_REQUEST['groupbuyID']);
+        $orderMessageList = array();
+        foreach ($order_list as $order)
+        {
+            array_push($orderMessageList,$order['orderMessage']);
+        }
+        array_unique($orderMessageList);
+        asort($orderMessageList);
         $groupbuyInfo = $this->gb->getGroupbuyInfoByID($_REQUEST['groupbuyID']);
-        $orderMessageList = $this->gb->getOrderMessageList($_REQUEST['groupbuyID']);
         $this->load->view('base/header',array('page'=>'gborder'));
 		$this->load->view("manager/header", array("mh" => "statistics"));
 		$this->load->view("manager/statistics_header", array("mgh" => "groupbuy"));
@@ -497,10 +503,12 @@ class Groupbuy extends CI_Controller {
         	//echo $_REQUEST['act_end_date'];
         	$groupbuyID = $this->groupbuy->insertShop($shop,$_SESSION['loginName']);
 			$picPath = "/storage/groupbuyPic/pic_".$groupbuyID.".jpg";
-			if ($_FILES['pic']['size'] > 0) {
+            if ($_FILES['pic']['size'] > 0) {
 				$photo = $_FILES['pic'];
 				move_uploaded_file($photo['tmp_name'], substr($picPath, 1, strlen($picPath)));
-			} else {
+			} if (isset($_GET['id'])){
+				exec("cp storage/groupbuyPic/pic_".$_GET[id].".jpg storage/groupbuyPic/pic_".$groupbuyID.".jpg");
+            } else {
 				exec("cp storage/groupbuyPic/default_groupbuy.jpg storage/groupbuyPic/pic_".$groupbuyID.".jpg");
 			}
         	if (isset($_GET['id']))
