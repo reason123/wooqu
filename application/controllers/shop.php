@@ -174,10 +174,10 @@ class Shop extends CI_Controller {
 			"address" => $_POST["address"],
 			"phone" => $_POST["phone"],
 			"detail" => $_POST["detail"],
-			"type" => $type);
+		    "group_list"=>$_POST["grouplist"]);
 
 		$shopID = $this->shop->addShop($detail, $userID);
-		$this->shop->addShopGroup($shopID,$_POST["groupID"]);
+		//$this->shop->addShopGroup($shopID,$_POST["groupID"]);
 		echo json_encode(array("error"=>""));
 	}
 
@@ -288,6 +288,22 @@ class Shop extends CI_Controller {
         $this->goods->addGoodsAtShop($_REQUEST['shopID'],$_REQUEST['goodsID'],-1);
         //header('Location: /groupbuy/selectGoods?id='.$_REQUEST['groupbuyID']);
 	}
+
+    /**
+     * 获取商店所有订单
+     * @author LJNanest
+     */
+    function vieworder(){
+        $this->load->model('shop_model','shop');
+        $order_list = $this->shop->getOrderByGbID($_REQUEST['shopID']);
+        $shopInfo = $this->shop->getShopInfoByID($_REQUEST['shopID']);
+        $this->load->view('base/header',array('page'=>'shoporder'));
+		$this->load->view("manager/header", array("mh" => "statistics"));
+		$this->load->view("manager/statistics_header", array("mgh" => "shop"));
+        $this->load->view('shop/vieworder',array('gbID'=>$_REQUEST['shopID'],'order_list'=>$order_list, 'shopInfo'=>$shopInfo));
+        $this->load->view('base/footer');
+    }
+
 }
 
 ?>

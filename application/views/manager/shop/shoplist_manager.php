@@ -2,7 +2,7 @@
 <table id="shoplist_table" class="table table-striped table-bordered table-hover">
 	<thead>
 		<tr>
-			<th>商店类别</th>
+			<th>商店ID</th>
 			<th>商店名称</th>
 			<th>联系电话</th>
 			<th>创建时间</th>
@@ -12,7 +12,7 @@
 	<tbody>
 		<?php foreach($list as $key => $shop): ?>
 			<tr>
-				<td><?php if ($shop['fruit'] == 1)echo "水果店"; else echo "商店"?></td>
+				<td><?php echo "#".$shop['ID']?></td>
 				<td><?php echo $shop['name'];?></td>
 				<td><?php echo $shop['phone'];?></td>
 				<td><?php echo $shop['createTime'];?></td>

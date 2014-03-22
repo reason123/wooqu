@@ -17,7 +17,7 @@ function confirmAdd() {
 		phone: phone,
 		detail: detail,
 		type: type,
-		groupID: grouplist
+		grouplist: grouplist
 	},
 	function(jsdata){
 		var data = $.parseJSON(jsdata);

@@ -43,7 +43,7 @@ class shop_model extends CI_Model{
 				FROM shop, shop_area
 				WHERE shop.ID = shop_area.shopID AND shop_area.areaID =?
 				ORDER BY available DESC";*/
-		$sql = "SELECT DISTINCT shop_list.ID, name, phone, address, detail, createTime, available, fruit
+		$sql = "SELECT DISTINCT shop_list.ID, name, phone, address, detail, createTime, available
 				FROM shop_list, shop_group
 				WHERE shop_list.userID = ?
 				AND shop_list.available = 1";
@@ -158,10 +158,31 @@ class shop_model extends CI_Model{
 			'phone'=> $shop["phone"],
 			'address' => $shop["address"],
 			'detail' => $shop["detail"],
-			'fruit' => $shop["type"],
 			'userID' => $userID);
 		$this->db->insert('shop_list',$val);
-		return $this->db->insert_id();
+		$shopID = $this->db->insert_id();
+        $this->load->model('groupfeed_model','feed');
+        $this->feed->addFeedItem(2,
+                                 $shop['name'],
+                                 $_SESSION['userID'],
+                                 nowTime(),
+                                 '/storage/shopPic/pic_'.$shopID.'.jpg',
+                                 $shop['detail'],
+                                 '/shop/showShop?ID='.$shopID,
+                                 $shopID,
+                                 '{}');
+        $groupList = explode(';',$shop['group_list']);
+        foreach($groupList as $key => $groupID){
+            if(!isGID($groupID)) continue;
+            $this->db->insert('shop_group', array('shopID'=>$shopID,'groupID'=>$groupID,'state'=>1));
+            if($this->permission_model->manageGroup($groupID)){
+                $this->feed->sendFeed(2,$shopID,$groupID,1);
+            }else{
+                $this->feed->sendFeed(2,$shopID,$groupID,0);
+            }
+        }
+
+
 	}
 
 	/**
@@ -227,4 +248,74 @@ class shop_model extends CI_Model{
 
 	}	
 
+    /**
+     * 根据商店ID获取相应订单
+     * @author LJNanest
+     */
+    function getOrderByGbID($shopID){
+        $tmp = $this->db->from('shop_list')->where('ID',$shopID)->get()->result_array();
+        if(!count($tmp)){
+            return array();
+        }
+        $tmp_userID = $tmp[0]['userID'];
+        
+        $groupIDListA = array();
+        $tmp = $this->db->from('member_list')->where('userID',$_SESSION['userID'])->where('roles',4)->get()->result_array();
+        foreach ($tmp as $k=>$v)
+            {
+                array_push($groupIDListA,$v['groupID']);
+            }
+        array_unique($groupIDListA);
+        $groupIDListB = array();
+        $tmp = $this->db->from('shop_group')->where('shopID',$shopID)->where('state',1)->get()->result_array();
+        foreach ($tmp as $k=>$v)
+            {
+                array_push($groupIDListB,$v['groupID']);
+            }
+        array_unique($groupIDListB);
+        $groupIDList = array_intersect($groupIDListA,$groupIDListB);
+        if (count($groupIDList) == 0 && $tmp_userID != $_SESSION['userID']) {
+            $this->permission_model->noPermission(1);
+        }
+
+        $sql = "select shop_order.ID, realName,goodsList,amount,class, user_list.phoneNumber, shop_order.createTime
+            from user_list,shop_order 
+            where userID=user_list.ID and shopid=? and shop_order.available=1 
+            order by createTime asc";
+        $order_list = $this->db->query($sql,array($shopID))->result_array();
+        foreach($order_list as $key => $order){
+            $order_list[$key]['goodsList'] = json_decode($order_list[$key]['goodsList']);
+        }
+        return $order_list;
+    }
+
+    /**
+     * 获取用户发布的商店以及所合作的商店列表,供查询订单使用
+     * @author LJNanest
+     */
+    function getshopListByManagerID($userID)
+    {
+        $shopIDList = array();
+        $manager_list = $this->db->from('member_list')->where('userID',$userID)->where('roles',4)->get()->result_array();
+        foreach ($manager_list as $key=>$value)
+            {
+                $groupID = $value['groupID'];
+                $tmp = $this->db->from('shop_group')->where('groupID',$groupID)->where('state',1)->get()->result_array();
+                foreach ($tmp as $k => $v)
+                    {
+                        array_push($shopIDList,$v['shopID']);
+                    }
+            }
+        array_unique($shopIDList);
+        $sql = "SELECT DISTINCT shop_list.*, user_list.realName,user_list.phoneNumber FROM user_list, shop_list WHERE (shop_list.userID = ? AND shop_list.userID = user_list.ID  AND available = 1)";
+        foreach ($shopIDList as $key => $shopID)
+            {
+                $sql = $sql." OR (shop_list.ID = ".$shopID." AND shop_list.userID = user_list.ID AND available = 1)";
+            }
+        $sql = $sql." ORDER BY shop_list.createTime DESC";
+        $shopList = $this->db->query($sql,array($userID))->result_array();
+        return $shopList;
+    }
+
+    
 }

@@ -386,7 +386,7 @@ class Groupbuy extends CI_Controller {
      * @author ca007
      */
     function vieworder(){
-        if (isset($_GET['OM'])) $OM = $_GET['OM']; else $OM = "LJNisHansome!";
+        if (isset($_GET['OM'])) $OM = $_GET['OM']; else $OM = "LJNisHandsome!";
         $this->load->model('groupbuy_model','gb');
         $order_list = $this->gb->getOrderByGbID($_REQUEST['groupbuyID']);
         $orderMessageList = array();

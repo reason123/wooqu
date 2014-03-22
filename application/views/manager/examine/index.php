@@ -12,7 +12,7 @@
     </tr>
   </thead>
   <tbody>
-  <?php $type=array("普通活动","团购活动");$state=array("待审批","已通过") ?>
+  <?php $type=array("普通活动","团购活动","商店");$state=array("待审批","已通过") ?>
   <?php foreach($actList as $key => $actInfo):?>
   <tr>
     <td><?php echo $actInfo['class']?></td>

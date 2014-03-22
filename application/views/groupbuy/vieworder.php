@@ -52,7 +52,7 @@
   </thead>
   <tbody>
   <?php foreach($order_list as $key => $order): ?>
-     <?php if ($OM != "LJNisHansome!" && $OM != $order['orderMessage']) continue; ?>
+     <?php if ($OM != "LJNisHandsome!" && $OM != $order['orderMessage']) continue; ?>
     <tr>
 	  <td><input type="checkbox" name="checkID" value="<?php echo $order['ID']?>"></td>
       <!--<td><?php echo $order['defaultGroupID'] ?></td>-->

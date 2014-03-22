@@ -183,11 +183,11 @@ class Manager extends CI_Controller{
         if (!isset($_GET["id"])) exit(0);
         $this->load->view("base/header", array("page" => "shop_manager_modify"));
         $this->load->view("manager/header", array("mh" => "shop"));
-        $this->load->view("manager/shop_header",array("mgh"=>"infoManager","shopID"=>$_GET["id"]));
         //$this->load->view("manager/shop_header", array("mgh" => "fruit"));
         $this->load->model('shop_model','shop');
         $shopInfo = $this->shop->getShopInfoByID($_GET["id"]);
-        $this->load->view("manager/shop/shop_modify", array("shopInfo" => $shopInfo));
+        $goodsList = $this->shop->getGoodListByShop($_GET["id"]);
+        $this->load->view("manager/shop/shop_modify", array("shopInfo" => $shopInfo, "goodsList" => $goodsList));
         $this->load->view("base/footer");
     }
 
@@ -257,11 +257,11 @@ class Manager extends CI_Controller{
 	 */
 	function statistics_shop() {
         $this->load->model('shop_model','shop');
-        $shop_list = $this->shop->getShopListByManagerID($_SESSION['userID']);
+        $groupbuy_list = $this->shop->getShopListByUserID($_SESSION['userID']);
         $this->load->view("base/header", array("page" => "statistics_manager"));
 		$this->load->view("manager/header", array("mh" => "statistics"));
-		$this->load->view("manager/statistics_header", array("mgh" => "shop"));
-		$this->load->view("manager/statistics/shop.php",array('shop_list'=>$shop_list));
+		$this->load->view("manager/statistics_header", array("mgh" => "groupbuy"));
+		$this->load->view("manager/statistics/groupbuy.php",array('groupbuy_list'=>$groupbuy_list));
 		$this->load->view("base/footer");
 	}
 

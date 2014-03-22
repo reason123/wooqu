@@ -1,10 +1,10 @@
 <legend><?php echo $shopInfo['name']; ?></legend>
 <div>
 <div class="tabbable"> <!-- Only required for left/right tabs -->
-	<ul class="nav nav-tabs">
+    <!--<ul class="nav nav-tabs">
 		<li class="active"><a href="#overAll" data-toggle="tab">店铺信息</a></li>
 		<li><a href="#listview" data-toggle="tab">商品详情</a></li>
-	</ul>
+	</ul>-->
 	<div class="tab-content">
 		<div class="tab-pane active" id="overAll">
 			<div class="form-horizontal">
@@ -12,15 +12,6 @@
 					<label class="col-lg-3 control-label">名称</label>
 					<div class="col-lg-5">
 						<input type="text" class="form-control" id="modify_name" value = "<?php echo $shopInfo['name']; ?>">
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-lg-3 control-label">类别</label>
-					<div class="col-lg-5">
-						<select class="form-control" id = "modify_type">
-							<option value = "1" <?php if($shopInfo['fruit']=='1') echo "selected='selected'";?>>水果店</option>
-							<option value = "0" <?php if($shopInfo['fruit']=='0') echo "selected='selected'";?>>商店</option>
-						</select>
 					</div>
 				</div>
 				<div class="form-group">
@@ -46,7 +37,7 @@
 				<button class="btn btn-primary" onclick="confirmModifyInfo();">确认修改</button>
 			</div>
 		</div>
-		<div class="tab-pane" id="listview">
+<!--		<div class="tab-pane" id="listview">
 			<table class="table table-hover">
 				<thaed>
 					<tr>
@@ -89,7 +80,7 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div>-->
 
 <div id="confirmModifyInfoModal" class="modal fade">
 	<div class="modal-dialog">
@@ -126,7 +117,7 @@
 	</div>
 </div>
 
-
+<!--
 <div id="addGoodsModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -200,5 +191,5 @@
 		</div>
 	</div>
 </div>
-
+-->
 
