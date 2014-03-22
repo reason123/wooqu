@@ -138,7 +138,7 @@ function subOrder(){
 		var tmp = $.parseJSON(data);
         if (tmp.error=="") {
 			alert(tmp.content);
-			window.location.href="/userpage/fruitOrder";
+			window.location.href="/userpage/shopOrder";
 		} else {
 			alert(tmp.error);
 			$("#ordSub").modal("hide");

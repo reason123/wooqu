@@ -241,11 +241,6 @@ class Shop extends CI_Controller {
 		echo json_encode(array("error"=>""));
 	}
 
-	function test()
-	{
-		$this->load->model("shop_model", "shop");
-		echo $this->shop->delGoods(159);
-	}
 
     function selectGoods()
 	{
@@ -295,15 +290,16 @@ class Shop extends CI_Controller {
      */
     function vieworder(){
         $this->load->model('shop_model','shop');
-        $order_list = $this->shop->getOrderByGbID($_REQUEST['shopID']);
+        $order_list = $this->shop->getOrderByID($_REQUEST['shopID']);
         $shopInfo = $this->shop->getShopInfoByID($_REQUEST['shopID']);
+        $orderMessageList = $this->shop->getOrderMessageList($_REQUEST['shopID']);
         $this->load->view('base/header',array('page'=>'shoporder'));
 		$this->load->view("manager/header", array("mh" => "statistics"));
 		$this->load->view("manager/statistics_header", array("mgh" => "shop"));
-        $this->load->view('shop/vieworder',array('gbID'=>$_REQUEST['shopID'],'order_list'=>$order_list, 'shopInfo'=>$shopInfo));
+        $this->load->view('shop/vieworder',array('gbID'=>$_REQUEST['shopID'],'order_list'=>$order_list, 'shopInfo'=>$shopInfo,'orderMessageList'=>$orderMessageList));
         $this->load->view('base/footer');
     }
-
+    
 }
 
 ?>

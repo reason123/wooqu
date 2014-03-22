@@ -14,10 +14,10 @@ class UserPage extends CI_Controller {
 	 * 水果订单页面
 	 * @author Hewr
 	 */
-	function fruitOrder() {
-        $this->load->view('base/header',array('page'=>'fruitorder'));
-        $this->load->view('userpage/header',array('header'=>'fruit'));
-        $this->load->view('userpage/fruitOrder');
+	function shopOrder() {
+        $this->load->view('base/header',array('page'=>'shoporder'));
+        $this->load->view('userpage/header',array('header'=>'shop'));
+        $this->load->view('userpage/shopOrder');
         $this->load->view('base/footer');
 	}
 

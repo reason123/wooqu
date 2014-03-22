@@ -4,47 +4,43 @@ function getOrderHTML(data, idx) {
 	var firstcss = "";
 	if (idx == 1) firstcss = " in";
 	var listHTML = "";
-	for (x in data.list) {
-		var item = data.list[x];
+	for (x in data.goodsList) {
+		var item = data.goodsList[x];
 		listHTML += 
 			"<tr>"+
-				"<td>"+item[0]+"</td>"+
-				"<td>"+item[2]+"</td>"+
 				"<td>"+item[1]+"</td>"+
+				"<td>"+item[2]+"</td>"+
+				"<td>"+item[3]+"</td>"+
+				"<td>"+item[3]*item[2]+"</td>"+
 			"</tr>";
 	}
-    if (data.orderMessage == "") data.orderMessage = "无";
 	var html = $(
 		"<div class=\"panel panel-default\">"+
 			"<div class=\"panel-heading order-heading\">"+
 				"<div class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse"+idx+"\">"+
 					"<span class=\"badge pull-right\">¥ "+data.amount+"</span>"+
-					"<span class=\"label label-success\">#"+data.id+"</span> "+data.shopname+
+					"<span class=\"label label-success\">#"+data.ID+"</span> "+data.shopName+
 				"</div>"+
 			"</div>"+
 			"<div id=\"collapse"+idx+"\" class=\"panel-collapse collapse"+firstcss+" order-content\">"+
-				"<div class=\"panel-body\">"+
-					"<input type=\"hidden\" value=\""+data.id+"\" id=\"orderid"+idx+"\" />"+
-					"<span class='comment text-info'>备注："+data.comment+"</span>"+
-					"<div><table class=\"table table-hover table-bordered\">"+
+				"<div class=\"accordion-inner\">"+
+					"<input type=\"hidden\" value=\""+data.ID+"\" id=\"orderid"+idx+"\" />"+
+					"<div class = 'well'><table class=\"table table-hover table-bordered\">"+
 						"<thead>"+
 							"<tr>"+
-								"<th>#</th>"+
 								"<th>商品名</th>"+
+								"<th>单价</th>"+
 								"<th>数量</th>"+
+								"<th>小计</th>"+
 							"</tr>"+
 						"</thead>"+
 						"<tbody>"+
 							listHTML+
 						"</tbody>"+
-					"</table></div>"+
+					"</table></div></div>"+
+					"<span class='label label-danger del-btn' onclick=\"confirmDelete("+data.ID+")\">删除</span><div class = 'create-time text-success'>下单时间："+data.createTime+"</div><br/>"+
+					//"<div><div class='text-info creat-time'>创建时间</div><div class='label label-danger del-btn' onclick=\"confirmDelete("+data.ID+")\">删除</div></div>"+
 				"</div>"+
-				"<span class=\"label label-danger del-btn\" onclick=\"confirmDelete("+data.id+")\">删除订单</span>"+
-				"<div class=\"create-time text-success\">下单时间："+data.createtime+"</div><br>"+
-				"<div class=\"create-time text-success\">订单信息："+data.orderMessage+"</div>"+
-				"<a class=\"label label-primary del-btn\" href=\"/groupbuy/groupInfo?id="+data.shopid+"\">查看团购</a>"+
-
-				"<br>"+
 			"</div>"+
 		"</div>"
 	);
@@ -52,18 +48,18 @@ function getOrderHTML(data, idx) {
 }
 
 function deleteOrder() {
-	$.post("/groupbuy/deleteOrder",
+	/*$.post("shop/deleteOrder",
 		{ id: orderid }, 
 		function (jsdata) {
 			var data = $.parseJSON(jsdata);
 			if (data.error == "") {
 				alert(data.content);
-				window.location.href="/userpage/groupbuyOrder";
+				window.location.href="/userpage/shopOrder";
 			} else {
 				alert(data.error);
 				$("#conModal").modal("hide");
 			}
-		});
+		});*/
 }
 
 function confirmDelete(id) {
@@ -72,7 +68,7 @@ function confirmDelete(id) {
 }
 
 function getReady() {
-	$.post("/groupbuy/getAllOrders",
+	$.post("/shop/getAllOrders",
 		function(jsdata){
 			var data = $.parseJSON(jsdata);
 			var cnt = 0;

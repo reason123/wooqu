@@ -461,7 +461,7 @@ class groupbuy_model extends CI_Model{
 	 * @return 订单
 	 */
 	function getAllOrders($username) {
-		$sql = "SELECT `id`,`shopid`,`list`,`amount`,`shopname`,`createtime`,`comment` FROM `groupbuy_order` WHERE `username`=? and `del`=0 ORDER BY -`id`";
+		$sql = "SELECT `id`,`shopid`,`list`,`amount`,`shopname`,`createtime`,`comment`,`orderMessage` FROM `groupbuy_order` WHERE `username`=? and `del`=0 ORDER BY -`id`";
 		$res = $this->db->query($sql,array($username)) or die(mysql_error());
 		$arr = $res->result_array();
 		foreach ($arr as $key => $value) {

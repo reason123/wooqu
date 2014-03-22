@@ -46,15 +46,15 @@
       }?>
       </td>
       <?php
-        $orderMessage = json_decode($order['orderMessage'],true);
+        $orderMessage = json_decode($order['orderMessage']);
         foreach($orderMessageList as $key=>$OM)
         {
-            if (isset($orderMessage[$OM]))
-            {  
-                echo "<td>".$orderMessage[$OM]."</td>";
-            } else {
+           // if (isset($orderMessage[$OM]))
+           // {  
+             //   echo "<td>".$orderMessage[$OM]."</td>";
+          //  } else {
                 echo "<td></td>";
-            }
+          //  }
         }   
       ?>
       <td><?php echo $order['createTime'] ?></td>

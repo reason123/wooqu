@@ -252,7 +252,7 @@ class shop_model extends CI_Model{
      * 根据商店ID获取相应订单
      * @author LJNanest
      */
-    function getOrderByGbID($shopID){
+    function getOrderByID($shopID){
         $tmp = $this->db->from('shop_list')->where('ID',$shopID)->get()->result_array();
         if(!count($tmp)){
             return array();
@@ -278,7 +278,7 @@ class shop_model extends CI_Model{
             $this->permission_model->noPermission(1);
         }
 
-        $sql = "select shop_order.ID, realName,goodsList,amount,class, user_list.phoneNumber, shop_order.createTime
+        $sql = "select shop_order.*, user_list.realName,user_list.class, user_list.phoneNumber
             from user_list,shop_order 
             where userID=user_list.ID and shopid=? and shop_order.available=1 
             order by createTime asc";
@@ -316,6 +316,25 @@ class shop_model extends CI_Model{
         $shopList = $this->db->query($sql,array($userID))->result_array();
         return $shopList;
     }
-
     
+    /**
+     * 添加商店属性值
+     * @author LJNanest
+     */
+    function addOrderMessage($shopID,$item)
+    {
+        $sql = "SELECT DISTINCT orderMessage FROM shop_list WHERE ID=?";
+        $temp = $this->db->query($sql,array($shopID))->result_array();
+        $orderMessageList = json_decode($temp[0]['orderMessage']);
+        array_push($orderMessageList,$item);
+        $sql = "UPDATE shop_list SET orderMessage = ? WHERE ID=?";
+        $this->db->query($sql,array(json_encode($orderMessageList),$shopID));
+    }
+
+    function getOrderMessageList($shopID)
+    { 
+        $sql = "SELECT DISTINCT orderMessage FROM shop_list WHERE ID=?";
+        $temp = $this->db->query($sql,array($shopID))->result_array();
+        return $orderMessageList = json_decode($temp[0]['orderMessage']);
+    }
 }
