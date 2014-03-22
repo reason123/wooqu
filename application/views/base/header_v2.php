@@ -25,19 +25,19 @@
   <body>
     <header>
       <div class=" top">
-        <div class="container">
+        <div class="main-container">
           <div class="userinfo">
             欢迎回来！dreamszl
           </div>
         </div>
       </div>
-      <div class="logo-banner container">
+      <div class="logo-banner main-container">
         <img src="/page/img/hello_logo.png"/>
         <div class="logo-ass">
           <span>清华人自己的线上订购平台</span>
         </div>
       </div>
-      <div class="container">
+      <div class="main-container">
         <div class="navtabs">
           <div class="navtab active">
             主页
@@ -54,5 +54,5 @@
         </div>
       </div>
     </header>
-    <div class="container">
+    <div class="main-container">
      

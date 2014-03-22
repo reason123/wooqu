@@ -4,6 +4,8 @@ body {
 .main-container{
     width: 1170px;
     margin: auto;
+    padding-left: 14px;
+    padding-right: 14px;
 }
 #msgNum {
 	background-color: red;
@@ -56,7 +58,7 @@ header .userinfo{
     color: #AC9BB1;
 }
 header .navtabs{
-    height: 30px;
+    height: 35px;
     background-color: #FC9F40;
     margin-top: 20px;
 }
@@ -64,7 +66,7 @@ header .navtabs .navtab{
     width: 130px;
     height: 100%;
     text-align: center;
-    line-height: 30px;
+    line-height: 35px;
     font-size: 16px;
     cursor: pointer;
     float: left;
@@ -76,4 +78,59 @@ header .navtabs .navtab.active{
 }
 header .navtabs .navtab.right{
     float: right;
+}
+.pub-banner{
+    height: 450px;
+}
+.pub-banner .slide{
+    width: 800px;
+    height: 450px;
+    float: left;
+}
+.carousel-caption .info .left{
+    float: left;
+}
+.carousel-caption .info .right{
+    float: right;
+}
+.carousel-caption .info .num .big{
+    color: #F29F40;
+    font-size: 50px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.carousel-caption .info{
+    margin-bottom: -50px;
+    padding-left: 20px;
+    background-color: rgba(0,0,0,0.3);
+    height: 120px;
+    padding: 20px;
+}
+.carousel-caption .info .title{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.carousel-inner{
+    height: 100%;
+}
+.carousel-inner .item{
+    height: 100%;
+}
+
+.pub-banner .fix-right{
+    float: left;
+    width: 330px;
+    height: 450px;
+    margin-left: 10px;
+}
+.pub-banner .fix-right .pic1{
+    width: 330px;
+    height: 300px;
+}
+.pub-banner .fix-right .pic2{
+    margin-top: 10px;
+    width: 330px;
+    height: 140px;
 }
