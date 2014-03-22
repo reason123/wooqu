@@ -211,8 +211,8 @@ class shop_model extends CI_Model{
                          'name'=> cleanString($shop["name"]),
                          'address'=> cleanString($shop["address"]),
                          'phone'=> cleanString($shop["phone"]),
-                         'detail'=> cleanString($shop["detail"]),
-                         'fruit'=> cleanString($shop["type"])));
+                         'detail'=> cleanString($shop["detail"])
+                         ));
 	}
 
 	/**

@@ -33,7 +33,7 @@ class Shop extends CI_Controller {
 		$goodsList = $this->goods->getGoodsListByShop($_GET['ID']);
 		$actList = $this->shop->getActListByShop($_GET['ID']);
 		$shopInfo = $this->shop->getShopInfoByID($_GET['ID']);
-		$this->load->view('base/header',array('page'=>'showshop','type'=>'groupbuy'));
+		$this->load->view('base/header',array('page'=>'showshop','type'=>'shop'));
         $this->load->view('homepage/nav');
 		$this->load->view('shop/showshop',array('shopInfo'=>$shopInfo,'goodsList'=>$goodsList,'actList'=>$actList));
 		$this->load->view('base/footer');

@@ -24,7 +24,7 @@
 						echo $good['pic'];
 					else
 						echo "/page/img/nopic.jpg";
-					echo "' alt='photo' /> 
+					echo "' alt='photo' height='250' width='350'  />                             
 						<div class='cover' id='cover".$good['ID']."'> 
 							<h3>".$good['name']."<span class='price-tag'>".$good['price'].$good['priceType']."</span></h3>
 							<p>".$good['detail']."</p> 

@@ -12,7 +12,6 @@ function modifyShop(id) {
 	arr.address = document.getElementById("modify_address").value;
 	arr.phone = document.getElementById("modify_phone").value;
 	arr.detail = $("#modify_detail").val()
-	arr.type = document.getElementById("modify_type").value;
 
 	$.post("/shop/modifyShopById",
 		{
