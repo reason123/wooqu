@@ -14,8 +14,8 @@ class Homepage extends CI_Controller{
     public function all(){        
         $this->load->model('groupfeed_model','feed');
         $news_list = $this->feed->getNewsList();
-        $this->load->view('base/header',array('page'=>'homeall','type'=>'all'));
-        $this->load->view('homepage/nav');
+        $this->load->view('base/header_v2',array('page'=>'homeall','type'=>'all'));
+        //$this->load->view('homepage/nav');
         $this->load->view('homepage/news',array('news_list'=>$news_list));
         $this->load->view('base/footer');
     }
