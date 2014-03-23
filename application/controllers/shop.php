@@ -292,14 +292,18 @@ class Shop extends CI_Controller {
         $this->load->model('shop_model','shop');
         $order_list = $this->shop->getOrderByID($_REQUEST['shopID']);
         $shopInfo = $this->shop->getShopInfoByID($_REQUEST['shopID']);
-        $orderMessageList = $this->shop->getOrderMessageList($_REQUEST['shopID']);
         $this->load->view('base/header',array('page'=>'shoporder'));
 		$this->load->view("manager/header", array("mh" => "statistics"));
 		$this->load->view("manager/statistics_header", array("mgh" => "shop"));
-        $this->load->view('shop/vieworder',array('gbID'=>$_REQUEST['shopID'],'order_list'=>$order_list, 'shopInfo'=>$shopInfo,'orderMessageList'=>$orderMessageList));
+        $this->load->view('shop/vieworder',array('gbID'=>$_REQUEST['shopID'],'order_list'=>$order_list, 'shopInfo'=>$shopInfo,'inputList'=>$inputList));
         $this->load->view('base/footer');
     }
     
+    function getInputList()
+    {
+        $this->load->model('shop_model','shop');
+        return $this->shop->getInputList($_POST['shopID']);
+    }
 }
 
 ?>

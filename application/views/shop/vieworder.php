@@ -25,9 +25,9 @@
       <th>总金额</th>
       <th>详细信息</th>
       <?php
-        foreach($orderMessageList as $key=>$OM)
+        foreach($inputList as $key=>$IT)
         {
-            echo "<th>".$OM."</th>";
+            echo "<th>".$IT."</th>";
         }
       ?>
       <th>订购时间</th>
@@ -46,12 +46,12 @@
       }?>
       </td>
       <?php
-        $orderMessage = json_decode($order['orderMessage'],true);
-        foreach($orderMessageList as $key=>$OM)
+        $inputItem = json_decode($order['inputItem'],true);
+        foreach($inputList as $key=>$IT)
         {
-            if (isset($orderMessage[$OM]))
+            if (isset($inputItem[$IT]))
             {  
-                echo "<td>".$orderMessage[$OM]."</td>";
+                echo "<td>".$inputItem[$IT]."</td>";
             } else {
                 echo "<td></td>";
             }

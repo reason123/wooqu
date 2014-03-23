@@ -141,7 +141,7 @@
 				<tbody id="ordDetail">
 				</tbody>
 			</table></div>
-			<h2 class = "text-info text-right">总计：<span class = "text-danger" id='confirmAmount'></span></h2>
+			<h4 class = "text-info text-right">总计：<span class = "text-danger" id='confirmAmount'></span></h4>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>

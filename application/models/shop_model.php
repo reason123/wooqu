@@ -321,20 +321,20 @@ class shop_model extends CI_Model{
      * 添加商店属性值
      * @author LJNanest
      */
-    function addOrderMessage($shopID,$item)
+    function addInputItem($shopID,$item)
     {
-        $sql = "SELECT DISTINCT orderMessage FROM shop_list WHERE ID=?";
+        $sql = "SELECT DISTINCT inputItem FROM shop_list WHERE ID=?";
         $temp = $this->db->query($sql,array($shopID))->result_array();
-        $orderMessageList = json_decode($temp[0]['orderMessage']);
-        array_push($orderMessageList,$item);
-        $sql = "UPDATE shop_list SET orderMessage = ? WHERE ID=?";
-        $this->db->query($sql,array(json_encode($orderMessageList),$shopID));
+        $inputItem = json_decode($temp[0]['inputItem']);
+        array_push($inputItem,$item);
+        $sql = "UPDATE shop_list SET inputItem = ? WHERE ID=?";
+        $this->db->query($sql,array(json_encode($inputItem),$shopID));
     }
 
-    function getOrderMessageList($shopID)
+    function getInputList($shopID)
     { 
-        $sql = "SELECT DISTINCT orderMessage FROM shop_list WHERE ID=?";
+        $sql = "SELECT DISTINCT inputItem FROM shop_list WHERE ID=?";
         $temp = $this->db->query($sql,array($shopID))->result_array();
-        return $orderMessageList = json_decode($temp[0]['orderMessage']);
+        return $orderMessageList = json_decode($temp[0]['inputItem'],true);
     }
 }
