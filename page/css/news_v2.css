@@ -6,3 +6,19 @@
     padding-top: 20px;
     color: #5B5B5B;
 }
+.act-info{
+    border-top: 1px #F2B282 solid;
+    padding-top: 17px;
+    padding-bottom: 17px;
+}
+.act-info .act-pic img{
+    width: 200px;
+    height: 200px;
+}
+.act-info .act-pic{
+    padding: 5px;
+    width: 212px;
+    height: 212px;
+    border: 1px #d7d7d7 solid;
+    float: left;
+}

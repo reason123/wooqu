@@ -80,5 +80,16 @@
 <div class="act-container">
   <h4>活动列表</h4>
   <div class="act-list">
+    <div class="act-info">
+      <div class="act-pic">
+        <img src="/page/img/right_1.png">
+      </div>
+      <div class="act-content">
+        <div class="title">清华水果图团购（第四周）</div>
+        <div class="description">需要自提的同学请提前一天下单</div>
+        <div class="start-date">订购开始时间：2014-03-22 21:00:00</div>
+        <div class="start-date">订购开始时间：2014-03-22 21:00:00</div>
+      </div>
+    </div>
   </div>
 </div>
