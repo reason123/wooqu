@@ -92,6 +92,7 @@ header .navtabs .navtab.right{
 }
 .carousel-caption .info .right{
     float: right;
+    margin-top: -12px;
 }
 .carousel-caption .info .num .big{
     color: #F29F40;
