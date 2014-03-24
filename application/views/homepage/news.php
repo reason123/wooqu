@@ -62,7 +62,9 @@
         </a>
       </div>
       <div class="act-content">
-        <div class="title"><?php echo $newsInfo['title']?></div>
+        <a href="<?php echo $newsInfo['url']?>">
+          <div class="title"><?php echo $newsInfo['title']?></div>
+        </a>
         <div class="description"><?php echo $newsInfo['shortdescription']?></div>
         <div class="time">
           <div class="start-date">开始时间：<span class="value"><?php echo $newsInfo['startTime'] ?></span></div>
