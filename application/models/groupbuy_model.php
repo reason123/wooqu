@@ -565,7 +565,7 @@ class groupbuy_model extends CI_Model{
             {
                 $sql = $sql." OR (groupbuy_list.ID = ".$groupbuyID." AND available = 1)";
             }
-        $sql = $sql." ORDER BY groupbuy_list.createTime DESC limit 20";
+        $sql = $sql." ORDER BY groupbuy_list.createTime DESC limit 30";
         $groupbuyList = $this->db->query($sql,array($userID))->result_array();
         foreach($groupbuyList as $k => $v){
             $groupbuyList[$k]['total'] = $this->getGroupbuyTotalByID($v['ID']);
