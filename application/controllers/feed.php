@@ -7,10 +7,14 @@ class Feed extends CI_Controller {
 	}
 
 	function test()	{
-        $this->load->model('groupfeed_model','feed');
-            //$this->feed->addFeedItem(0,'测试新鲜事',$_SESSION['userID'],nowTime(),'','呵呵呵','http://www.baidu.com',12,'test');
-        $this->feed->sendFeed(0,12,'1000100000000');
+        echo "test";
 	}
+
+    function initNewFeed(){
+        $this->load->model('groupfeed_model', 'feed');
+        $res = $this->feed->initNewFeed();
+        echo json_encode($res);
+    }
 
     function getNews(){
         $this->load->model('groupfeed_model','feed');
