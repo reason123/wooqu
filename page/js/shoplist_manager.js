@@ -11,13 +11,18 @@ function confirmAdd() {
 	var detail = $("#add_detail").val();
 	var type = $("#add_type").val();
 	var grouplist = $("#group_list").val();
+    var inputItem = new Array();
+    if (document.getElementById("addressCheck").checked) {
+       inputItem.push("配送地址"); 
+    }
 	$.post("/shop/addShop", {
 		name: name,
 		address: address,
 		phone: phone,
 		detail: detail,
 		type: type,
-		grouplist: grouplist
+		grouplist: grouplist,
+        inputItem: JSON.stringify(inputItem) 
 	},
 	function(jsdata){
 		var data = $.parseJSON(jsdata);

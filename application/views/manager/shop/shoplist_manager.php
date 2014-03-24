@@ -94,7 +94,7 @@
                 <div class="form-group">
         			<label class="control-label col-lg-3">填写领取地址</label>
         			<div class="col-lg-5">
-           				<input type="checkbox" name="check"></input>
+           				<input type="checkbox" id='addressCheck' name="check"></input>
         			</div>
                 </div>
 			</div>

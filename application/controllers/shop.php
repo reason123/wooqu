@@ -125,8 +125,13 @@ class Shop extends CI_Controller {
 		//for ($i = 0; $i < $orderSize; ++$i)
 		foreach($orderTrans as $detail)
 			$this->goods->increaseGoodsTotal($detail[0], $detail[3]);
-		
-		$this->shop->submitOrder($shopid, $shopname, $userID, $orderTrans, $amount);
+		$inputItem = array();
+        $inputList = json_decode($_REQUEST['inputItem'],true);
+        for ($i=0; $i<count($inputList); $i=$i+2)
+        {
+            $inputItem[$inputList[$i]]=$inputList[$i+1];
+        }
+		$this->shop->submitOrder($shopid, $shopname, $userID, $orderTrans, $amount,json_encode($inputItem));
 		$ret = array( "content"=>"成功提交！", "error"=>"" );
 		echo json_encode($ret);
 	}
@@ -174,7 +179,8 @@ class Shop extends CI_Controller {
 			"address" => $_POST["address"],
 			"phone" => $_POST["phone"],
 			"detail" => $_POST["detail"],
-		    "group_list"=>$_POST["grouplist"]);
+		    "group_list"=>$_POST["grouplist"],
+            "inputItem"=>$_POST["inputItem"]);
 
 		$shopID = $this->shop->addShop($detail, $userID);
 		//$this->shop->addShopGroup($shopID,$_POST["groupID"]);
@@ -292,6 +298,7 @@ class Shop extends CI_Controller {
         $this->load->model('shop_model','shop');
         $order_list = $this->shop->getOrderByID($_REQUEST['shopID']);
         $shopInfo = $this->shop->getShopInfoByID($_REQUEST['shopID']);
+        $inputList = $this->shop->getInputList($_REQUEST['shopID']);
         $this->load->view('base/header',array('page'=>'shoporder'));
 		$this->load->view("manager/header", array("mh" => "statistics"));
 		$this->load->view("manager/statistics_header", array("mgh" => "shop"));
@@ -302,7 +309,7 @@ class Shop extends CI_Controller {
     function getInputList()
     {
         $this->load->model('shop_model','shop');
-        return $this->shop->getInputList($_POST['shopID']);
+        echo json_encode($this->shop->getInputList($_POST['shopID']));
     }
 }
 

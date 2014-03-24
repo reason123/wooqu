@@ -141,6 +141,7 @@
 				<tbody id="ordDetail">
 				</tbody>
 			</table></div>
+            <div id="inputBody"></div>
 			<h4 class = "text-info text-right">总计：<span class = "text-danger" id='confirmAmount'></span></h4>
         </div>
         <div class="modal-footer">

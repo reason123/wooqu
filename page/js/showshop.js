@@ -2,6 +2,7 @@ var subId = 0;
 var ord = new Object();
 var request = new Object();
 var actList = new Object();
+var inputList = new Object();
 var totalprice = 0;
 
 function setbr() {
@@ -126,14 +127,20 @@ function toggleShopList() {
 	setbr();
 }
 
-function subOrder(){
+function subOrder() {
 	$("#confirmButton").attr("disabled", "disabled");
 
 	var shopList = new Object();
+    var inputItem = new Array();
+    for (x in inputList) {
+        inputItem.push(inputList[x]);
+        inputItem.push(document.getElementById(inputList[x]).value);
+    }
 	$.post('/shop/newOrder',
 	{
 		'shopID':request.ID,
-		'order':JSON.stringify(ord)
+		'order':JSON.stringify(ord),
+        'inputItem':JSON.stringify(inputItem)
 	},function(data){
 		var tmp = $.parseJSON(data);
         if (tmp.error=="") {
@@ -158,5 +165,18 @@ $(function(){
 
 $(function(){
 	getRequest(request);
-	toggleShopList();
-})
+    $.post('/shop/getInputList',
+    {   
+        'shopID':request.ID
+    },function(data){
+        inputList = $.parseJSON(data);
+        for (x in inputList) 
+        {
+            $("#inputBody").append("<div class='input-group'>"+
+              "<span class='input-group-addon'>"+inputList[x]+"</span>"+
+              "<input type='text' id='"+inputList[x]+"' class='form-control' placeholder='请输入"+inputList[x]+"'>"+
+              "</div>");
+        }
+    });
+    toggleShopList();
+});

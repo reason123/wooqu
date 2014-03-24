@@ -120,12 +120,22 @@ class shop_model extends CI_Model{
 	 * @author xanda
 	 * @param shopID shopname userID goodsList totalMoney
 	 */
-	function submitOrder($shopID, $shopname, $userID, $list, $amount) {
+	function submitOrder($shopID, $shopname, $userID, $list, $amount,$inputItem) {
 
 		$sql = "INSERT INTO `shop_order`
-				(`shopID`, `shopName`, `userID`, `goodsList`, `amount`) 
-				VALUES (".$shopID.", '".$shopname."', ".$userID.", '".addslashes(json_encode($list))."', ".$amount.")";
-		$res = $this->db->query($sql) or die(mysql_error());
+				(`shopID`, `shopName`, `userID`, `goodsList`, `amount`,`inputItem`) 
+				VALUES (".$shopID.", '".$shopname."', ".$userID.", '".addslashes(json_encode($list))."', ".$amount.", ?)";
+		$res = $this->db->query($sql,array($inputItem)) or die(mysql_error());
+
+
+/*		$newItem = array(
+				'shopID'=>$shopID,
+				'shopName'=>$shopname,
+				'userID'=>$userID,
+                'goodsList'=>addslashes(json_encode($list)),
+                'amount'=>$amount
+			);
+        $this->db->insert('shop_order',$newItem);*/
 	}
 
 	/**
@@ -158,7 +168,8 @@ class shop_model extends CI_Model{
 			'phone'=> $shop["phone"],
 			'address' => $shop["address"],
 			'detail' => $shop["detail"],
-			'userID' => $userID);
+			'userID' => $userID,
+            'inputItem' => $shop['inputItem']);
 		$this->db->insert('shop_list',$val);
 		$shopID = $this->db->insert_id();
         $this->load->model('groupfeed_model','feed');
