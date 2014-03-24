@@ -107,6 +107,9 @@ class groupFeed_model extends CI_Model{
                                 shortdescription, 
                                 url, 
                                 sourceID,
+                                startTime,
+                                endTime,
+                                total,
                                 param1 
                from feed_list, group_feed, user_list
                where feed_list.ID=group_feed.newsID and userID=user_list.ID
@@ -121,6 +124,9 @@ class groupFeed_model extends CI_Model{
                                 shortdescription, 
                                 url, 
                                 sourceID,
+                                startTime,
+                                endTime,
+                                total,
                                 param1 
                from feed_list, group_feed, user_list
                where userID=user_list.ID and feed_list.ID=group_feed.newsID 
@@ -153,6 +159,9 @@ class groupFeed_model extends CI_Model{
                                 shortdescription, 
                                 url, 
                                 sourceID,
+                                startTime,
+                                endTime,
+                                total,
                                 param1 
                from feed_list, group_feed, user_list
                where userID=user_list.ID and feed_list.ID=group_feed.newsID 
@@ -167,6 +176,9 @@ class groupFeed_model extends CI_Model{
                                 shortdescription, 
                                 url, 
                                 sourceID,
+                                startTime,
+                                endTime,
+                                total,
                                 param1 
                from feed_list, group_feed, user_list
                where userID=user_list.ID and feed_list.ID=group_feed.newsID 
@@ -256,6 +268,32 @@ class groupFeed_model extends CI_Model{
                          $param1){
         $sql = "UPDATE feed_list SET title = ?, imgurl = ?,shortdescription = ?, param1 = ? WHERE type = ? AND sourceID = ?";
 		$res = $this->db->query($sql, array(cleanString($title),cleanString($imgurl),cleanString($shortdescription),cleanString($param1),cleanString($type),cleanString($sourceID))) or die(mysql_error());
+    }
+
+    function initNewFeed(){
+        $sql = "select * from feed_list";
+        $res = $this->db->query($sql)->result_array();
+        $this->load->model('groupbuy_model','gb');
+        foreach($res as $key => $feed){
+            if($feed['type'] == 1){
+                //团购活动
+                $g_sql = "select * from groupbuy_list where ID=?";
+                $groupbuy_list = $this->db->query($g_sql, array($feed['sourceID']))->result_array();
+                $gb = $groupbuy_list[0];
+                //echo json_encode($gb);
+                $update_sql = "update feed_list set startTime=?,endTime=?,total=? where feed_list.ID=?";
+                $tmp_total = $this->gb->getGroupbuyTotalByID($gb['id']);
+                $this->db->query($update_sql, array($gb['createTime'], $gb['deadline'], $tmp_total, $feed['ID']));
+            }else{
+                $a_sql = "select * from activity_list where ID=?";
+                $activity_list = $this->db->query($a_sql, array($feed['sourceID']))->result_array();
+                $act = $activity_list[0];
+                echo json_encode($act);
+                $update_sql = "update feed_list set startTime=?,endTime=?,total=? where feed_list.ID=?";
+                $this->db->query($update_sql, array($act['act_start_date'], $act['act_end_date'], $act['total'], $feed['ID']));
+            }
+        }
+        return $res;
     }
 }
 
