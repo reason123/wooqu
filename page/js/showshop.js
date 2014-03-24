@@ -172,7 +172,7 @@ $(function(){
         inputList = $.parseJSON(data);
         for (x in inputList) 
         {
-            $("#inputBody").append("<div class='input-group'>"+
+            $("#inputBody").append("<div class='input-group' style='width:100%'>"+
               "<span class='input-group-addon'>"+inputList[x]+"</span>"+
               "<input type='text' id='"+inputList[x]+"' class='form-control' placeholder='请输入"+inputList[x]+"'>"+
               "</div>");
