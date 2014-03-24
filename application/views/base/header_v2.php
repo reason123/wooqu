@@ -24,10 +24,33 @@
   </head>
   <body>
     <header>
-      <div class=" top">
+      <div class="top">
         <div class="main-container">
+
           <div class="userinfo">
-            欢迎回来！dreamszl
+          <?php
+            if(isset($_SESSION['loginName'])){
+              $loginName = $_SESSION['loginName'];
+          ?>
+            欢迎回来！
+          <span class="dropdown">
+            <a class="dropdown-toggle font" data-toggle="dropdown" href="#"><?php echo $loginName ?></a>
+            <ul class="dropdown-menu">
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="/manager">管理界面</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="/userpage">个人中心</a></li>
+              <li role="presentation" class="divider"></li>
+              <li role="presentation"><a role="menuitem" href="/user/logout">注销</a></li>
+            </ul>
+          </span>
+
+          <?php
+            }else{
+          ?>
+            <a href="/user/login" class="font">[登录]</a>&nbsp;
+            <a href="/user/usereg" class="font">[注册]</a>
+          <?php
+            }
+          ?>
           </div>
         </div>
       </div>
@@ -62,5 +85,5 @@
         </div>
       </div>
     </header>
-    <div class="main-container">
+    <div class="main-container content-wrapper">
      

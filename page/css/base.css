@@ -7,6 +7,9 @@ body {
     padding-left: 14px;
     padding-right: 14px;
 }
+.content-wrapper{
+    min-height: 800px;
+}
 #msgNum {
 	background-color: red;
 }
@@ -42,6 +45,16 @@ header .top{
     background-color: #f9f9f9;
     border-bottom: 1px #e7e7e7 solid;
     color: #afafaf;
+}
+.userinfo a.font:hover{
+    color: #afafaf;
+}
+.userinfo a.font{
+    color: #afafaf;
+    text-decoration: none;
+}
+.userinfo .dropdown a.dropdown-toggle{
+    text-decoration: underline;
 }
 header .userinfo{
     float: right;
