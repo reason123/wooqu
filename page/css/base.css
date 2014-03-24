@@ -72,9 +72,17 @@ header .navtabs .navtab{
     float: left;
     color: white;
 }
+header .navtabs .navtab a{
+    color: white;
+    text-decoration: none;
+}
 header .navtabs .navtab.active{
     background-color: #5B5B5B;
     color: #FC9F40;
+}
+header .navtabs .navtab.active a{
+    color: #FC9F40;
+    text-decoration: none;
 }
 header .navtabs .navtab.right{
     float: right;

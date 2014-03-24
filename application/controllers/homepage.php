@@ -23,9 +23,8 @@ class Homepage extends CI_Controller{
     public function normal(){
         $this->load->model('groupfeed_model','feed');
         $news_list = $this->feed->getNewsListByType(0);
-        $this->load->view('base/header',array('page'=>'homenormal','type'=>'normal'));
-        $this->load->view('homepage/nav');
-        $this->load->view('homepage/news',array('news_list'=>$news_list));
+        $this->load->view('base/header_v2',array('page'=>'homenormal','type'=>'normal'));
+        $this->load->view('homepage/news_selected',array('news_list'=>$news_list));
         $this->load->view('base/footer');
     }
 

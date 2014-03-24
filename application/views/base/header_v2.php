@@ -40,16 +40,24 @@
       <div class="main-container">
         <div class="navtabs">
           <div class="navtab active">
-            主页
+            <a href="/">
+              主页
+            </a>
           </div>
           <div class="navtab">
-            团购
+            <a href="/groupbuy">
+              团购
+            </a>
           </div>
           <div class="navtab">
-            商店
+            <a href="/shop">
+              商店
+            </a>
           </div>
           <div class="navtab right">
-            意见反馈
+            <a href="/messageboard">
+              意见反馈
+            </a>
           </div>
         </div>
       </div>
