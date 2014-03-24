@@ -62,26 +62,26 @@
       </div>
       <div class="main-container">
         <div class="navtabs">
-          <div class="navtab<?php if(isset($type)&&$type=='all') echo ' active';?>">
-            <a href="/">
+          <a href="/">
+            <div class="navtab<?php if(isset($type)&&$type=='all') echo ' active';?>">
               主页
-            </a>
-          </div>
-          <div class="navtab<?php if(isset($type)&&$type=='groupbuy') echo ' active';?>">
-            <a href="/groupbuy">
+            </div>
+          </a>
+          <a href="/groupbuy">
+            <div class="navtab<?php if(isset($type)&&$type=='groupbuy') echo ' active';?>">
               团购
-            </a>
-          </div>
-          <div class="navtab<?php if(isset($type)&&$type=='shop') echo ' active';?>">
-            <a href="/shop">
+            </div>
+          </a>
+          <a href="/shop">
+            <div class="navtab<?php if(isset($type)&&$type=='shop') echo ' active';?>">
               商店
-            </a>
-          </div>
-          <div class="navtab right<?php if(isset($type)&&$type=='messageboard') echo ' active';?>">
-            <a href="/messageboard">
+            </div>
+          </a>
+          <a href="/messageboard">
+            <div class="navtab right<?php if(isset($type)&&$type=='messageboard') echo ' active';?>">
               意见反馈
-            </a>
-          </div>
+            </div>
+          </a>
         </div>
       </div>
     </header>
