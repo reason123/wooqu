@@ -11,62 +11,32 @@
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
-      <div class="item active">
+      <?php $counter = 0 ?>
+      <?php foreach($news_list as $key => $newsInfo): ?>
+      <?php if($counter>=3) break; ?>
+      <div class="item<?php if($counter == 0) echo ' active';$counter += 1;?>">
         <a href="#">
           <img src="/page/img/sample.jpg">
         </a>
         <div class="carousel-caption">
           <div class="info">
             <div class="left">
-              <div class="title">清华水果团购</div>
-              <div class="start-date">开始时间：2014-3-22 21:00</div>
-              <div class="start-date">结束时间：2014-3-22 21:00</div>
+              <div class="title"><?php echo $newsInfo['title']?></div>
+              <div class="start-date">开始时间：<?php echo $newsInfo['startTime']?></div>
+              <div class="start-date">结束时间：<?php echo $newsInfo['endTime']?></div>
             </div>
             <div class="right">
               <div class="num">
-                已有<span class="big">217</span>人参加
+                已有<span class="big"><?php echo $newsInfo['total']?></span>人参加
               </div>
               <div class="user">
-                发起者：hellothu
+                发起者：<?php echo $newsInfo['userName'] ?>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="item">
-        <img src="/page/img/sample.jpg">
-        <div class="carousel-caption">
-          <div class="info">
-            <div class="left">
-              <div class="title">清华水果团购</div>
-              <div class="start-date">开始时间：2014-3-22 21:00</div>
-              <div class="start-date">结束时间：2014-3-22 21:00</div>
-            </div>
-            <div class="right">
-              <div class="num">
-                已有 <span class="big">217</span> 人参加
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="item">
-        <img src="/page/img/sample.jpg">
-        <div class="carousel-caption">
-          <div class="info">
-            <div class="left">
-              <div class="title">清华水果团购</div>
-              <div class="start-date">开始时间：2014-3-22 21:00</div>
-              <div class="start-date">结束时间：2014-3-22 21:00</div>
-            </div>
-            <div class="right">
-              <div class="num">
-                已有<span class="big">217</span>人参加
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <?php endforeach ?>
     </div>
 
     <!-- Controls -->
