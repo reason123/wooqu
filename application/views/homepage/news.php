@@ -65,8 +65,8 @@
         <div class="title"><?php echo $newsInfo['title']?></div>
         <div class="description"><?php echo $newsInfo['shortdescription']?></div>
         <div class="time">
-          <div class="start-date">订购开始时间：<span class="value"><?php echo $newsInfo['startTime'] ?></span></div>
-          <div class="start-date">订购截止时间：<span class="value"><?php echo $newsInfo['endTime'] ?></span></div>
+          <div class="start-date">开始时间：<span class="value"><?php echo $newsInfo['startTime'] ?></span></div>
+          <div class="start-date">截止时间：<span class="value"><?php echo $newsInfo['endTime'] ?></span></div>
         </div>
       </div>
       <div class="act-join">
