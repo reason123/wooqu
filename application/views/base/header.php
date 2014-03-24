@@ -55,7 +55,9 @@
         </div>
       </div>
       <div class="logo-banner main-container">
-        <img src="/page/img/hello_logo.png"/>
+        <a href="/">
+          <img src="/page/img/hello_logo.png"/>
+        </a>
         <div class="logo-ass">
           <span>清华人自己的线上订购平台</span>
         </div>
@@ -85,5 +87,6 @@
         </div>
       </div>
     </header>
+    <br/>
     <div class="main-container content-wrapper">
      

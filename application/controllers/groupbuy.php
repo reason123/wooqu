@@ -445,7 +445,6 @@ class Groupbuy extends CI_Controller {
         $this->load->model('groupbuy_model','groupbuy');
         $orderMessageList = $this->groupbuy->getOrderMessageList($groupID);
         $this->load->view('base/header',array('page'=>'groupinfo','type'=>'groupbuy'));
-        $this->load->view('homepage/nav');
         $this->load->view('groupbuy/groupInfo', array('groupID' => $groupID,'orderMessageList'=>$orderMessageList));
         $this->load->view('base/footer');
 	}

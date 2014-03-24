@@ -1,4 +1,3 @@
-<br/>
 <link href = "/page/css/news_v2.css" rel = "stylesheet">
 <div class="pub-banner">
   <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">

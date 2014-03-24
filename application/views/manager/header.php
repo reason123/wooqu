@@ -1,4 +1,3 @@
-<br/>
 <div id="manager_nav" style="margin-bottom: 10px;">
     <div class="nav nav-tabs">
         <li <?php if($mh=='activity') echo 'class="active"' ?>><a href="/manager/activity">活动管理</a></li>
