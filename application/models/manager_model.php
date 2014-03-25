@@ -62,7 +62,7 @@ class manager_model extends CI_Model{
     function getExamineList(){
         $resultList = array();
 
-        $actSql = "select feed_list.title,loginName,feed_list.time,feed_list.type, 
+        $actSql = "select feed_list.title,loginName,feed_list.time,feed_list.type,feed_list.url, 
                        group_feed.ID as relationID,group_feed.state,group_list.class
                    from group_list,user_list,group_feed,feed_list
                    where feed_list.ID=group_feed.newsID and feed_list.userID=user_list.ID 

@@ -126,7 +126,12 @@ class shop_model extends CI_Model{
 				(`shopID`, `shopName`, `userID`, `goodsList`, `amount`,`inputItem`) 
 				VALUES (".$shopID.", '".$shopname."', ".$userID.", '".addslashes(json_encode($list))."', ".$amount.", ?)";
 		$res = $this->db->query($sql,array($inputItem)) or die(mysql_error());
-
+        
+        $sql = "SELECT total FROM feed_list WHERE type=2 AND sourceID = ?";
+        $num = $this->db->query($sql,array($shopID))->result_array();
+        
+        $sql = "UPDATE feed_list SET total=? WHERE type=2 AND sourceID = ?";
+        $this->db->query($sql,array($num[0]['total']+1,$shopID));
 
 /*		$newItem = array(
 				'shopID'=>$shopID,
