@@ -452,6 +452,10 @@ class groupbuy_model extends CI_Model{
 		if (count($this->getShopById($shopid)) == 0) return;
 		$sql = "INSERT INTO `groupbuy_order`(`shopid`, `shopname`, `username`, `list`, `amount`, `createtime`, `userID`, `comment`,`orderMessage`) VALUES(?,?,?,?,?,?,?,?,?)";
 		$res = $this->db->query($sql,array($shopid,$shopname,$username,json_encode($list),$amount,date("Y-m-d H:i:s", mktime()), $_SESSION['userID'], $comment,$orderMessage)) or die(mysql_error());
+        $sql = "SELECT total FROM feed_list WHERE type=1 AND sourceID = ?";
+        $num = $this->db->query($sql,array($shopid))->result_array();
+        $sql = "UPDATE feed_list SET total=? WHERE type=1 AND sourceID = ?";
+        $this->db->query($sql,array($num[0]['total']+1,$shopid));
 	}
 
 	/**
@@ -508,6 +512,10 @@ class groupbuy_model extends CI_Model{
 	function deleteOrderById($id) {
 		$sql = "UPDATE `groupbuy_order` SET `del`=1 WHERE `id`=".$id;
 		$res = $this->db->query($sql) or die(mysql_error());
+        $sql = "SELECT total FROM feed_list WHERE type=1 AND sourceID = ?";
+        $num = $this->db->query($sql,array($shopid))->result_array();
+        $sql = "UPDATE feed_list SET total=? WHERE type=1 AND sourceID = ?";
+        $this->db->query($sql,array($num[0]['total']-1,$shopid));
 	}
 
 
@@ -560,16 +568,16 @@ class groupbuy_model extends CI_Model{
                     }
             }
         array_unique($groupbuyIDList);
-        $sql = "SELECT DISTINCT groupbuy_list.ID,title,username,goodslist,createTime FROM user_list, groupbuy_list WHERE (groupbuy_list.username = user_list.loginName AND user_list.ID = ? AND available = 1)";
+        $sql = "SELECT DISTINCT groupbuy_list.ID,groupbuy_list.title,groupbuy_list.username,groupbuy_list.goodslist,groupbuy_list.createTime,feed_list.total FROM feed_list, user_list, groupbuy_list WHERE (groupbuy_list.username = user_list.loginName AND user_list.ID = ? AND available = 1 AND feed_list.type = 1 AND feed_list.sourceID = groupbuy_list.ID )";
         foreach ($groupbuyIDList as $key => $groupbuyID)
             {
-                $sql = $sql." OR (groupbuy_list.ID = ".$groupbuyID." AND available = 1)";
+                $sql = $sql." OR (groupbuy_list.ID = ".$groupbuyID." AND available = 1 AND feed_list.type = 1 AND feed_list.sourceID = groupbuy_list.ID)";
             }
         $sql = $sql." ORDER BY groupbuy_list.createTime DESC limit 30";
         $groupbuyList = $this->db->query($sql,array($userID))->result_array();
-        foreach($groupbuyList as $k => $v){
-            $groupbuyList[$k]['total'] = $this->getGroupbuyTotalByID($v['ID']);
-        }
+        //foreach($groupbuyList as $k => $v){
+        //    $groupbuyList[$k]['total'] = $this->getGroupbuyTotalByID($v['ID']);
+        //}
         return $groupbuyList;
     }
 
@@ -608,6 +616,17 @@ class groupbuy_model extends CI_Model{
     { 
         $tmp = $this->db->from('groupbuy_list')->where('ID',$gbID)->get()->result_array();
         return json_decode($tmp[0]['orderMessage'],true);
+    }
+
+    function updateFeedTotal()
+    {
+        $sql = "SELECT groupbuy_list.ID FROM groupbuy_list";
+        $groupbuyIDList = $this->db->query($sql)->result_array();
+        foreach ($groupbuyIDList as $key=>$gbID)
+        {
+            $sql = "UPDATE feed_list SET total=? WHERE type=1 AND sourceID = ?";
+            $this->db->query($sql,array($this->getGroupbuyTotalByID($gbID['ID']),$gbID['ID']));
+        }
     }
 }
 

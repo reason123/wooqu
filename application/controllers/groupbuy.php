@@ -658,6 +658,12 @@ class Groupbuy extends CI_Controller {
         $this->groupbuy->delOrderMessage(1143,"123");
         echo 23;
 	}
+    function updateTotal()
+    {
+		$this->load->model('groupbuy_model','groupbuy');
+        $this->groupbuy->updateFeedTotal();
+        echo "OK!";
+    }
 }
 
 ?>
