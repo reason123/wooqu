@@ -16,8 +16,8 @@
   <?php foreach($actList as $key => $actInfo):?>
   <tr>
     <td><?php echo $actInfo['class']?></td>
-    <td><?php echo $type[$actInfo['type']]?></td>
-    <td><?php echo $actInfo['title']?></td>
+    <td><?php echo $type[$actInfo['type']] ?></td>
+    <td><?php echo "<a href='".$actInfo['url']."'>".$actInfo['title']."</a>" ?></td>
     <td><?php echo $actInfo['loginName']?></td>
     <td><?php echo $actInfo['time']?></td>
     <td><?php
