@@ -85,7 +85,34 @@ class Goods extends CI_Controller{
         $this->goods->delGoods($_GET['goodsID']);
         header('Location: /manager/goods'); 
     }
+    
+    function goodsType()
+    {
+        $this->load->model('goods_model','goods');
+        $typeList = $this->goods->getTypeListByGoodsID($_GET['goodsID']);
+        $this->load->view('base/header',array('page'=>'goodsType'));
+        $this->load->view('manager/goods/goodsType',array('typeList'=>$typeList));
+        $this->load->view('base/footer');
+    }
 
+    function getTypeList()
+    {
+        $this->load->model('goods_model','goods');
+        echo json_encode($this->goods->getTypeListByGoodsID($_POST['goodsID']));
+    }
+    
+    function addtype() {
+        $this->load->model('goods_model','goods');
+        $this->goods->newTypeByGoodsID($_POST['goodsID'],$_POST['type']);
+//        $this->goods->newTypeByGoodsID(350,"123");
+        echo json_encode(array("error"=>""));
+    }
+            
+    function deltype() {
+        $this->load->model('goods_model','goods');
+        $this->goods->delTypeByGoodsID($_POST['goodsID'],$_POST['type']);
+        echo json_encode(array("error"=>""));
+    }
 }
 
 ?>

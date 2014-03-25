@@ -183,6 +183,43 @@ class goods_model extends CI_Model{
 		$sql = "UPDATE `goods_list` SET `total`=`total`+? WHERE `ID`=?";
 		$this->db->query($sql, array($delta, $goodsID));
 	}
+
+    function newTypeByGoodsID($goodsID,$type)
+    {
+		$tmp = $this->db->from('goods_list')->where('ID', $goodsID)->get()->result_array();
+		$user = $tmp[0]['userID'];
+		if (!isset($_SESSION["userID"]) || $user != $_SESSION["userID"]) return;
+        $tmp = $this->db->from('goods_list')->where('ID',$goodsID)->get()->result_array();
+        $typeList = json_decode($tmp[0]['typeList'],true);
+        array_push($typeList,$type);
+        $newItem = array('typeList'=>json_encode($typeList));
+        $this->db->where('ID',$goodsID)->update('goods_list',$newItem);
+        return json_encode($typeList);
+    }
+
+    function delTypeByGoodsID($goodsID,$type)
+    {
+		$tmp = $this->db->from('goods_list')->where('ID', $goodsID)->get()->result_array();
+		$user = $tmp[0]['userID'];
+		if (!isset($_SESSION["userID"]) || $user != $_SESSION["userID"]) return;
+        $tmp = $this->db->from('goods_list')->where('ID',$goodsID)->get()->result_array();
+        $typeList = json_decode($tmp[0]['typeList'],true);
+        $tmp = array();
+        foreach ($typeList as $x)
+            if ($x != $type)
+                {
+                    array_push($tmp,$x);
+                }
+        $newItem = array('typeList'=>json_encode($tmp));
+        $this->db->where('ID',$goodsID)->update('goods_list',$newItem);
+        return json_encode($tmp);      
+    }
+    
+    function getTypeListByGoodsID($goodsID)
+    {
+        $tmp = $this->db->from('goods_list')->where('ID',$goodsID)->get()->result_array();
+        return json_decode($tmp[0]['typeList'],true);
+    }
 }
 
 ?>

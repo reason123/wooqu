@@ -49,6 +49,18 @@ function makeGood(data, cnt) {
 		purchase = "disabled";
 		toggle="";
 	}
+
+    var typelist = $.parseJSON(data.typeList);
+
+    var strTypeList = "";
+    strTypeList = "<select name='typeof"+cnt+"' id='typeof"+cnt+"'>";
+    if (typelist.length>0)
+    {
+        for (x in typelist){
+            strTypeList = strTypeList+"<option value='"+typelist[x]+"'>"+typelist[x]+"</option>";    
+        }
+    }
+    strTypeList = strTypeList+"</select>";
 	var res = $(
 		"<div class=\"goodsInfo grayBack\">"+
 			"<div class=\"picContainer\">"+
@@ -61,44 +73,55 @@ function makeGood(data, cnt) {
 				"<label class=\"base\">商品描述：</label><span class=\"added\">"+data.detail+"</span><br>"+
 				"<div class=\"mesBox\" id=\"mesBox"+cnt+"\"></div>"+
 			"</div>"+
+            strTypeList+
 			"<button class=\"btn btn-success "+purchase+"\" onclick=\""+toggle+"\" id=\"cartBtn"+cnt+"\">放入购物车</button>"+
 		"</div>"
 	);
 	return res;
 }
 
-function cargoInCart(id) {
-	return !(!ordList.hasOwnProperty(""+id) || ordList[""+id] == -1);
+function cargoInCart(id,type) {
+	return !(!ordList.hasOwnProperty(""+id+type) || ordList[""+id+type] == -1);
+}
+
+function delCargo(id,type) {
+        
+    ordList[""+id+type] = -1;
+    $("#cartcargo"+id+type).remove();
 }
 
 function toggleCargo(id){
 	var cargo = cargoList[id];
-	if (!cargoInCart(id)) {
-		ordList[""+id] = 1;
+    var cargoType = document.getElementById('typeof'+id).value;
+    var strType = cargoType;
+    if (strType != "") strType = " ("+strType+")";
+	if (!cargoInCart(id,cargoType)) {
+		ordList[""+id+cargoType] = 1;
 		$("#shopTable").append(
-			"<tr id='cartcargo"+id+"'>"+
+			"<tr id='cartcargo"+id+cargoType+"'>"+
 				"<td width=10%>"+cargo.ID+"</td>"+
-				"<td width=30%>"+cargo.name+"</td>"+
+				"<td width=30%>"+cargo.name+strType+"</td>"+
 				"<td width=15%> "+cargo.price+" "+cargo.priceType+"</td>"+
 				"<td width=15%>"+
-					"<input id='cartnum"+id+"' onchange=\"updatePrice("+id+");\" maxlength='5' style='width:50px; font-size:14px;' value='1' type='text' />"+
+					"<input id='cartnum"+id+cargoType+"' onchange=\"updatePrice("+id+",'"+cargoType+"');\" maxlength='5' style='width:50px; font-size:14px;' value='1' type='text' />"+
 					"&nbsp;&nbsp;"+
-					"<i class='countBtn icon-chevron-down' onclick='changeCartNum("+id+",-1)'></i>"+
-					"<i class='countBtn icon-chevron-up' onclick='changeCartNum("+id+",1)'></i>"+
+					"<i class='countBtn icon-chevron-down' onclick='changeCartNum("+id+",-1,\""+cargoType+"\")'></i>"+
+					"<i class='countBtn icon-chevron-up' onclick='changeCartNum("+id+",1,\""+cargoType+"\")'></i>"+
 				"</td>"+
-				"<td width=15%>¥ <span id='cartprice"+id+"'>"+cargo.price+" "+cargo.priceType+"</span></td>"+
-				"<td width=5% ><a href='#' onclick='toggleCargo("+id+")'>删除</a></td>"+
+				"<td width=15%>¥ <span id='cartprice"+id+cargoType+"'>"+cargo.price+" "+cargo.priceType+"</span></td>"+
+				"<td width=5% ><a href='#' onclick='delCargo("+id+",\""+cargoType+"\")'>删除</a></td>"+
 			"</tr>"
 		);
-		$("#cartBtn"+id).html("移出购物车");
-		$("#cartBtn"+id).removeClass().addClass("btn btn-warning");
-		$("#mesBox"+id).html("<div class='label label-success'>成功放入购物车</div>");
+		//$("#cartBtn"+id).html("移出购物车");
+		//$("#cartBtn"+id).removeClass().addClass("btn btn-warning");
+		//$("#mesBox"+id).html("<div class='label label-success'>成功放入购物车</div>");
 	} else {
-		ordList[""+id] = -1;
-		$("#cartcargo"+id).remove();
-		$("#cartBtn"+id).html("放入购物车");
-		$("#cartBtn"+id).removeClass().addClass("btn btn-success");
-		$("#mesBox"+id).html("<div class='label label-warning'>成功移出购物车</div>");
+        changeCartNum(id,1,cargoType);
+		//ordList[""+id] = -1;
+		//$("#cartcargo"+id).remove();
+		//$("#cartBtn"+id).html("放入购物车");
+		//$("#cartBtn"+id).removeClass().addClass("btn btn-success");
+		//$("#mesBox"+id).html("<div class='label label-warning'>成功移出购物车</div>");
 	}
 	updateAmount();
 	setbr();
@@ -120,40 +143,58 @@ function toggleShopList() {
 	setbr();
 }
 
-function changeCartNum(id, cnt) {
-	var cartNum = document.getElementById("cartnum"+id);
+function changeCartNum(id, cnt, type) {
+	var cartNum = document.getElementById("cartnum"+id+type);
 	var value = parseInt(cartNum.value) + cnt;
 	cartNum.value = value;
-	updatePrice(id);
+	updatePrice(id,type);
 }
 
-function updatePrice(id) {
-	var value = document.getElementById("cartnum"+id).value;
+function updatePrice(id,type) {
+	var value = document.getElementById("cartnum"+id+type).value;
 	value = value.replace(/\D/g,'');
 	if (value == "") value = "0";
-	document.getElementById("cartnum"+id).value = value;
+	document.getElementById("cartnum"+id+type).value = value;
 
 	var unit = cargoList[id].price;
 	var num = parseInt(value);
-	document.getElementById("cartprice"+id).innerHTML = "" + (unit * 10) * (num * 10) / 100;
+	document.getElementById("cartprice"+id+type).innerHTML = "" + (unit * 10) * (num * 10) / 100;
 	updateAmount();
 }
 
 function updateAmount() {
 	var sum = 0;
-	for (var i = 0; i < cargoList.length; ++i) 
-		if (cargoInCart(i)) {
-			var price = parseFloat(document.getElementById("cartprice"+i).innerHTML);
-			sum = parseInt(price * 10 + sum * 10)/10 ;
+	for (var i = 0; i < cargoList.length; ++i) {
+        var typelist = $.parseJSON(cargoList[i].typeList);
+        for (x in typelist) {
+            var type = typelist[x];
+            if (cargoInCart(i,type)) {
+			    var price = parseFloat(document.getElementById("cartprice"+i+type).innerHTML);
+			    sum = parseInt(price * 10 + sum * 10)/10 ;
+            }
 		}
+        var type = "";
+        if (cargoInCart(i,type)) {
+    	    var price = parseFloat(document.getElementById("cartprice"+i+type).innerHTML);
+		    sum = parseInt(price * 10 + sum * 10)/10 ;
+        }
+    }
 	$("#amount").html(""+sum);
 }
 
 function clearCart() {
 	for (var i = 0; i < cargoList.length; ++i) {
-		if (cargoInCart(i)) {
-			toggleCargo(i);
+        var typelist = $.parseJSON(cargoList[i].typeList);
+        for (x in typelist) {
+             var type = typelist[x];
+		    if (cargoInCart(i,type)) {
+			    delCargo(i,type);
+            }
 		}
+        var type = "";
+		if (cargoInCart(i,type)) {
+		    delCargo(i,type);
+        }
 	}
 }
 
@@ -181,15 +222,38 @@ function subOrd() {
 	}
 	submitting = true;
 	var cnt = 0;
-	for (var i = 0; i < cargoList.length; ++i) if (cargoInCart(i)) {
-		var num = parseInt(document.getElementById("cartnum" + i).value);
-		if (num > 0) ++cnt;
+	for (var i = 0; i < cargoList.length; ++i) {
+        var typelist = $.parseJSON(cargoList[i].typeList);
+        for (x in typelist){
+            var type = typelist[x];
+            if (cargoInCart(i,type)) {
+		        var num = parseInt(document.getElementById("cartnum" + i+type).value);
+		        if (num > 0) ++cnt;
+            }
+            
+        }
+
+        if (cargoInCart(i,"")) {
+    		var num = parseInt(document.getElementById("cartnum" + i).value);
+	    	if (num > 0) ++cnt;
+        }
 	}
 	var order = new Array(cnt);
 	cnt = 0;
-	for (var i = 0; i < cargoList.length; ++i) if (cargoInCart(i)) {
-		var num = parseInt(document.getElementById("cartnum" + i).value);
-		if (num > 0) order[cnt++] = new Array(i, num);
+	for (var i = 0; i < cargoList.length; ++i) {
+        var typelist = $.parseJSON(cargoList[i].typeList);
+        for (x in typelist) {
+            var type = typelist[x];
+            if (cargoInCart(i,type)) {
+		        var num = parseInt(document.getElementById("cartnum" + i + type).value);
+		        if (num > 0) order[cnt++] = new Array(i, num ,type);
+            }
+        }
+        var type = "";
+        if (cargoInCart(i,type)) {
+		    var num = parseInt(document.getElementById("cartnum" + i + type).value);
+		    if (num > 0) order[cnt++] = new Array(i, num ,type);
+        }
 	}
     var radios = document.getElementsByName("orderMessage");
     var checked = false;
@@ -271,7 +335,7 @@ $(function(){
 					function(jsdata){
 						var data = $.parseJSON(jsdata);
 						cargoList = new Array(data.length);
-						var cargoCnt = 0;
+                        var cargoCnt = 0;
 						for (x in data){
 							cargoList[cargoCnt++] = data[x];
 							var goodHTML = makeGood(data[x], cargoCnt - 1);
