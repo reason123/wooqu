@@ -1,0 +1,87 @@
+.pub-banner{
+    display: block;
+}
+.act-container{
+    display: block;
+    padding-top: 20px;
+    color: #5B5B5B;
+}
+.act-info{
+    border-top: 1px #F2B282 solid;
+    padding-top: 17px;
+    padding-bottom: 20px;
+}
+.act-info .act-pic img{
+    width: 150px;
+    height: 150px;
+}
+.act-info .act-pic{
+    padding: 5px;
+    width: 162px;
+    height: 162px;
+    border: 1px #d7d7d7 solid;
+    float: left;
+}
+.act-content{
+    padding-left: 40px;
+    padding-top: 5px;
+    display: inline-block;
+    width: 635px;
+}
+.act-content a .title{
+    font-size: 18px;
+    font-weight: bold;
+    color: #5B5B5B;
+    text-decoration: none;
+}
+.act-content a:hover{
+    text-decoration: none;
+}
+.act-content .description{
+    padding-top: 4px;
+    padding-right: 20px;
+    font-size: 15px;
+    color: #979797;
+    height: 80px;
+}
+.act-content .time{
+    font-weight: bold;
+}
+.act-content .value{
+    color: #979797;
+    font-weight: normal;
+}
+
+.act-join{
+    display: inline-block;
+    width: 170px;
+    bottom: 10px;
+    position: relative;
+}
+.act-join .num{
+    font-size: 19px;
+    margin-bottom: 20px;
+}
+.act-join .num .value{
+    color: #F29F40;
+    font-size: 30px;
+}
+.act-join .join{
+    color: white;
+    background-color: #F29F40;
+    padding: 8px 31px 8px 31px;
+    font-size: 17px;
+    text-decoration: none;
+}
+.act-user{
+    display: inline-block;
+    font-weight: bold;
+    margin-left: 20px;
+}
+.act-user .user{
+    margin-bottom: 5px;
+}
+.act-user .value{
+    color: #F29F40;
+    font-weight: normal;
+}

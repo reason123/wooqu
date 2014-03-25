@@ -23,56 +23,70 @@
     <script type="text/javascript" src="/page/js/stupidtable.js"></script>
   </head>
   <body>
-     <div class="main-container">
-<!--      <nav class="navbar navbar-default" role="navigation" style="margin-bottom:0px;">-->
-	  <nav class="navbar navbar-default" role="navigation">
-		<div class="navbar-header">
-		  <a class="navbar-brand" href="/">HelloTHU</a>
-		</div>
-        <ul class="nav navbar-nav" style="margin-left: 30px;">
-          <li><a href="#" onclick="javascript:$('#about').modal();">联系我们</a></li>
-        </ul>
-        <?php
-          if(isset($_SESSION['loginName'])){
-              $loginName = $_SESSION['loginName'];
-        ?>
-        <ul class="nav navbar-nav navbar-right">
-        <li><a href="/">首页</a>
-        <li><a href="/userpage">个人中心</a>
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo $loginName ?><span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="/manager">管理界面</a></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="/userpage">个人中心</a></li>
-            <li role="presentation" class="divider"></li>
-            <li role="presentation"><a role="menuitem" href="/user/logout">注销</a></li>
-          </ul>
-        </li>
-        </ul>
-        <?php } else { ?>
-		<div class="navbar-right" style="padding-right:20px;">
-		  <a type="button" class="btn btn-default navbar-btn" href="/user/login">登录</a>
-		  <a type="button" class="btn btn-success navbar-btn" href="/user/usereg">注册</a>
-		</div>
-        <?php } ?>
-	  </nav>
-<!--      <img src="/page/img/banner1_small.jpg" style="width: 98.5%;position: relative;top: -20px;margin-left: 6px;">-->
-<!--      <div class="alert alert-info">计算机系“1001夜”学生节12月22日本周日晚18:30大礼堂，敬请期待！</div>-->
+    <header>
+      <div class="top">
+        <div class="main-container">
 
-<div class="modal fade" id="about">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">关于</h4>
+          <div class="userinfo">
+          <?php
+            if(isset($_SESSION['loginName'])){
+              $loginName = $_SESSION['loginName'];
+          ?>
+            欢迎回来！
+          <span class="dropdown">
+            <a class="dropdown-toggle font" data-toggle="dropdown" href="#"><?php echo $loginName ?></a>
+            <ul class="dropdown-menu">
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="/manager">管理界面</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="/userpage">个人中心</a></li>
+              <li role="presentation" class="divider"></li>
+              <li role="presentation"><a role="menuitem" href="/user/logout">注销</a></li>
+            </ul>
+          </span>
+
+          <?php
+            }else{
+          ?>
+            <a href="/user/login" class="font">[登录]</a>&nbsp;
+            <a href="/user/usereg" class="font">[注册]</a>
+          <?php
+            }
+          ?>
+          </div>
+        </div>
       </div>
-      <div class="modal-body" align="center">
-          <h2>HelloThu</h2>
-          客服邮箱：hellothu@foxmail.com
+      <div class="logo-banner main-container">
+        <a href="/">
+          <img src="/page/img/hello_logo.png"/>
+        </a>
+        <div class="logo-ass">
+          <span>清华人自己的线上订购平台</span>
+        </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      <div class="main-container">
+        <div class="navtabs">
+          <a href="/">
+            <div class="navtab<?php if(isset($type)&&$type=='all') echo ' active';?>">
+              主页
+            </div>
+          </a>
+          <a href="/groupbuy">
+            <div class="navtab<?php if(isset($type)&&$type=='groupbuy') echo ' active';?>">
+              团购
+            </div>
+          </a>
+          <a href="/shop">
+            <div class="navtab<?php if(isset($type)&&$type=='shop') echo ' active';?>">
+              商店
+            </div>
+          </a>
+          <a href="/messageboard">
+            <div class="navtab right<?php if(isset($type)&&$type=='messageboard') echo ' active';?>">
+              意见反馈
+            </div>
+          </a>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
+    </header>
+    <br/>
+    <div class="main-container content-wrapper">
+     

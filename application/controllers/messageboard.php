@@ -21,8 +21,7 @@ class Messageboard extends CI_Controller {
 			$this->load->model('message_board_model','message');
 			$msg = $this->message->get($id);
 
-			$this->header('messageboard');
-            $this->load->view('homepage/nav',array('type'=>'feedback'));
+			$this->header('messageboard',array('type'=>'messageboard'));
 			$this->load->view('message/messageboard_single',array('message'=>$msg));
 			$this->load->view('base/footer');
 		}
@@ -47,8 +46,7 @@ class Messageboard extends CI_Controller {
 		
 		$publicList = $this->message->getPublicMessage($p - 1, self::PER_PAGE);
 
-		$this->header('messageboard');
-        $this->load->view('homepage/nav',array('type'=>'feedback'));
+		$this->header('messageboard',array('type'=>"messageboard"));
 		$this->load->view('message/messageboard',array('publicList'=>$publicList, 'pageLink'=>$page_link));
 		$this->load->view('base/footer');
 	}
