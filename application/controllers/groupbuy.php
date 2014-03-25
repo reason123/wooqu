@@ -281,13 +281,13 @@ class Groupbuy extends CI_Controller {
 		$amount = 0;
 		for ($i = 0; $i < $orderSize; ++$i) {
 			$idx = intval($order[$i][0]);
-            $type = intval($order[$i][2]);
+            if ($order[$i][2] == "") $type = ""; else  $type = "(".$order[$i][2].")";
 			if ($idx < 0 || $idx >= $cargoSize) {
 				$ret = array("error"=>"商品序号非法");
 				echo json_encode($ret);
 				return;
 			}
-			$order[$i][2] = $cargo[$idx]["name"]." (".$type.")";
+			$order[$i][2] = $cargo[$idx]["name"].$type;
 			$order[$i][0] = intval($cargo[$idx]["ID"]);
 			if ($order[$i][0] == -1) {
 				$ret = array("error"=>"商品重复");
