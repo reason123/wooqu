@@ -228,13 +228,13 @@ class Shop extends CI_Controller {
             "inputItem"=>$_POST["inputItem"]);
 
 		$shopID = $this->shop->addShop($detail, $userID);
-		$picPath = "/storage/shopPic/pic_".$shopID.".jpg";
-        if ($_FILES['pic']['size'] > 0) {
-	        $photo = $_FILES['pic'];
-		    move_uploaded_file($photo['tmp_name'], substr($picPath, 1, strlen($picPath)));
-        } else {
+	//	$picPath = "/storage/shopPic/pic_".$shopID.".jpg";
+    //  if ($_FILES['pic']['size'] > 0) {
+	 //       $photo = $_FILES['pic'];
+	//	    move_uploaded_file($photo['tmp_name'], substr($picPath, 1, strlen($picPath)));
+     //   } else {
 		    exec("cp storage/groupbuyPic/default_groupbuy.jpg storage/shopPic/pic_".$shopID.".jpg");
-		}
+//		}
 		//$this->shop->addShopGroup($shopID,$_POST["groupID"]);
 		echo json_encode(array("error"=>""));
 	}

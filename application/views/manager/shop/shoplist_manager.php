@@ -66,12 +66,12 @@
 						</select>
 					</div>
 				</div>
-	            <div class="form-group">
+<!--	            <div class="form-group">
         		<label class="control-label col-lg-3">团购图片</label>
             		<div class="col-lg-5">
        		    	    <input type="file" class="form-control" id="pic" />
 	        	    </div>
-            	</div>
+            	</div>-->
 				<div class="form-group">
 					<label class="col-lg-3 control-label">地址</label>
 					<div class="col-lg-5">
