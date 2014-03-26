@@ -33,8 +33,9 @@ class Shop extends CI_Controller {
 		$goodsList = $this->goods->getGoodsListByShop($_GET['ID']);
 		$actList = $this->shop->getActListByShop($_GET['ID']);
 		$shopInfo = $this->shop->getShopInfoByID($_GET['ID']);
+        $orderMessageList = $this->shop->getOrderMessageList($_GET['ID']);
 		$this->load->view('base/header',array('page'=>'showshop','type'=>'shop'));
-		$this->load->view('shop/showshop',array('shopInfo'=>$shopInfo,'goodsList'=>$goodsList,'actList'=>$actList));
+		$this->load->view('shop/showshop',array('shopInfo'=>$shopInfo,'goodsList'=>$goodsList,'actList'=>$actList,'orderMessageList'=>$orderMessageList));
 		$this->load->view('base/footer');
 	}
 
@@ -130,8 +131,53 @@ class Shop extends CI_Controller {
         {
             $inputItem[$inputList[$i]]=$inputList[$i+1];
         }
-		$this->shop->submitOrder($shopid, $shopname, $userID, $orderTrans, $amount,json_encode($inputItem));
+		$this->shop->submitOrder($shopid, $shopname, $userID, $orderTrans, $amount,json_encode($inputItem),$_POST['orderMessage']);
 		$ret = array( "content"=>"成功提交！", "error"=>"" );
+		echo json_encode($ret);
+	}
+
+	/**
+	 * API:删除某张订单
+	 * @author Hewr
+	 */
+	function deleteOrder() {
+		if (!isset($_SESSION["loginName"])) {
+			$ret = array("error"=>"未登录");
+			echo json_encode($ret);
+			return;
+		} else $userID = $_SESSION["userID"];
+		if (!isset($_POST["id"])) {
+			$ret = array("error"=>"无订单号");
+			echo json_encode($ret);
+			return;
+		} else $id = intval($_POST["id"]);
+		$this->load->model('shop_model', 'shop');
+		$order = $this->shop->getOrderByOrderId($id);
+		if (count($order) == 0) {
+			$ret = array("error"=>"订单号错误");
+			echo json_encode($ret);
+			return;
+		}
+		$order = $order[0];
+		if ($order["userID"] != $userID) {
+			$ret = array("error"=>"你没有这张订单");
+			echo json_encode($ret);
+			return;
+		}
+		if ($order["available"] != 1) {
+			$ret = array("error"=>"订单已删除");
+			echo json_encode($ret);
+			return;
+		}
+
+		$this->load->model('goods_model','goods');
+		$list = $order["goodsList"]; $listSize = count($list);
+		for ($i = 0; $i < $listSize; ++$i) 
+			//$this->groupbuy->plusCargo($list[$i][0], -intval($list[$i][1]));
+			$this->goods->increaseGoodsTotal($list[$i][0], -intval($list[$i][3]));
+		$this->shop->deleteOrderById($id);
+
+		$ret = array( "content"=>"成功删除！", "error"=>"" );
 		echo json_encode($ret);
 	}
 
@@ -294,17 +340,48 @@ class Shop extends CI_Controller {
      * @author LJNanest
      */
     function vieworder(){
+        if (isset($_GET['OM'])) $OM = $_GET['OM']; else $OM = "LJNisHandsome!";
         $this->load->model('shop_model','shop');
-        $order_list = $this->shop->getOrderByID($_REQUEST['shopID']);
         $shopInfo = $this->shop->getShopInfoByID($_REQUEST['shopID']);
         $inputList = $this->shop->getInputList($_REQUEST['shopID']);
+        $order_list = $this->shop->getOrderListByID($_REQUEST['shopID']);
+        $orderMessageList = array();
+        foreach ($order_list as $order)
+        {
+            array_push($orderMessageList,$order['orderMessage']);
+        }
+        $orderMessageList = array_unique($orderMessageList);
+        asort($orderMessageList);
+        $this->load->view('base/header',array('page'=>'gborder'));
         $this->load->view('base/header',array('page'=>'shoporder'));
 		$this->load->view("manager/header", array("mh" => "statistics"));
 		$this->load->view("manager/statistics_header", array("mgh" => "shop"));
-        $this->load->view('shop/vieworder',array('gbID'=>$_REQUEST['shopID'],'order_list'=>$order_list, 'shopInfo'=>$shopInfo,'inputList'=>$inputList));
+        $this->load->view('shop/vieworder',array('gbID'=>$_REQUEST['shopID'],'order_list'=>$order_list, 'shopInfo'=>$shopInfo,'inputList'=>$inputList,'orderMessageList'=>$orderMessageList,'OM'=>$OM));
         $this->load->view('base/footer');
     }
     
+    function getOrderMessageList()
+    {
+        $this->load->model('shop_model','shop');
+        echo json_encode($this->shop->getOrderMessageList($_POST['shopID']));
+    }
+
+    function addOrderMessage()
+    {
+        $this->load->model('shop_model','shop');
+        $this->shop->addOrderMessage($_POST['shopID'],$_POST['orderMessage']);
+    }
+
+    function delOrderMessage()
+    {
+        $this->load->model('shop_model','shop');
+        $this->shop->delOrderMessage($_POST['shopID'],$_POST['orderMessage']);
+    }
+    
+    /**
+      * 获取商店填写信息项目
+      * #author LJNanest
+      */
     function getInputList()
     {
         $this->load->model('shop_model','shop');

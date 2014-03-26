@@ -141,8 +141,22 @@
 				<tbody id="ordDetail">
 				</tbody>
 			</table></div>
-            <div id="inputBody"></div>
 			<h4 class = "text-info text-right">总计：<span class = "text-danger" id='confirmAmount'></span></h4>
+		    <div class="alert alert-success" id="confirmInfo">
+                <?php
+                    if (count($orderMessageList) == 0){
+                        echo "祝您购物愉快！";
+                    } else {                   
+                        echo "请选择你的订购信息！<form>";
+                        foreach ($orderMessageList as $om)
+                        {
+                            echo "<input type='radio' name='orderMessage' value='".$om."'>".$om."</input><br/>";
+                        }
+                        echo "</form>";
+                    }
+                ?> 
+            </div>
+            <div id="inputBody"></div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>

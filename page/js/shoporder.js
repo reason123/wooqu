@@ -48,7 +48,7 @@ function getOrderHTML(data, idx) {
 }
 
 function deleteOrder() {
-	/*$.post("shop/deleteOrder",
+	$.post("/shop/deleteOrder",
 		{ id: orderid }, 
 		function (jsdata) {
 			var data = $.parseJSON(jsdata);
@@ -59,7 +59,7 @@ function deleteOrder() {
 				alert(data.error);
 				$("#conModal").modal("hide");
 			}
-		});*/
+		});
 }
 
 function confirmDelete(id) {

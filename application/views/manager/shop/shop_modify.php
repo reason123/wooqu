@@ -1,10 +1,5 @@
 <legend><?php echo $shopInfo['name']; ?></legend>
-<div>
 <div class="tabbable"> <!-- Only required for left/right tabs -->
-    <!--<ul class="nav nav-tabs">
-		<li class="active"><a href="#overAll" data-toggle="tab">店铺信息</a></li>
-		<li><a href="#listview" data-toggle="tab">商品详情</a></li>
-	</ul>-->
 	<div class="tab-content">
 		<div class="tab-pane active" id="overAll">
 			<div class="form-horizontal">
@@ -37,50 +32,10 @@
 				<button class="btn btn-primary" onclick="confirmModifyInfo();">确认修改</button>
 			</div>
 		</div>
-<!--		<div class="tab-pane" id="listview">
-			<table class="table table-hover">
-				<thaed>
-					<tr>
-						<th>品名</th>
-						<th>描述</th>
-						<th>单价</th>
-						<th>单价类型</th>
-						<th>历史售出</th>
-						<th>操作</th>
-					</tr>
-				</thaed>
-				<tbody>
-					<?php
-					foreach ($goodsList as $i => $good) {
-					echo "<tr class='tablerow' id='tablerow".$good['ID']."'>";
-					if($good['pic'])
-						echo "<td><a href='".$good['pic']."' class='added pointer fancybox' title='".$good['name']."' id='goodName".$good['ID']."'>".$good['name']."</a></td>";
-					else
-						echo "<td><span class='added' title='".$good['name']."' id='goodName".$good['ID']."'>".$good['name']."</span></td>";
-
-					echo "<td id='goodDetail".$good['ID']."'>".$good['detail']."</td>
-						<td id='goodPrice".$good['ID']."'>".$good['price']."</td>
-						<td id='goodType".$good['ID']."'>".$good['priceType']."</td>
-						<td>".$good['total']."</td>
-						<td>
-						<a class=\"btn btn-small btn-primary\" onclick=\"confirmModifyCargo(".$good['ID'].")\">修改</a>&nbsp;
-						<a class=\"btn btn-small btn-danger\" onclick=\"confirmDeleteCargo('".$good['ID']."')\">删除</a>
-						</td>
-					  </tr>";
-					}
-					?>
-				</tbody>
-			</table>
-			<div class="bottombar">
-				<div class="pull-right">
-					<form class="navbar-form">
-						<span class="btn btn-primary" onclick= 'showAddGoodsModal()' >添加商品</span>
-					</form>
-				</div>
-			</div>
-		</div>
 	</div>
-</div>-->
+</div>
+<legend>拓展功能</legend>
+<button class="btn btn-lg btn-info" onclick="showOrderMessageModal(<?php echo$shopInfo['ID'] ?>)" >订购信息</button>&nbsp;
 
 <div id="confirmModifyInfoModal" class="modal fade">
 	<div class="modal-dialog">
@@ -117,79 +72,33 @@
 	</div>
 </div>
 
-<!--
-<div id="addGoodsModal" class="modal fade">
+
+<div id="orderMessageModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h2 class="modal-title" style="font-family: 'microsoft yahei', '宋体b8b\4f53'; color: rgb(15, 139, 218);"><b>添加商品</b></h2>
+				<h2 class="modal-title" style="font-family: 'microsoft yahei', '宋体b8b\4f53'; color: rgb(15, 139, 218);"><b>类型</b></h2>
 			</div>
-			<div class="modal-body" id="addGoodsBody">
-				<div class="form-horizontal">
-					<div class="form-group">
-						<label class="col-lg-3 control-label">商品名</label>
-						<div class="col-lg-8">
-							<input type="text" class="form-control" id="aGname" value="">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-3 control-label">单价</label>
-						<div class="col-lg-8">
-							<input type="text" class="form-control" id="aGprice" value="">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-3 control-label">商品描述</label>
-						<div class="col-lg-8">
-							<textarea rows=3 class="form-control" id="aGdetail"></textarea>
-						</div>
-					</div>
-				</div>
+			<div class="modal-body" id="deleteBody">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <input id="orderMessageText" type="text"  class="form-control" value=""></input>
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" onclick="addOrderMessage()">添加类型</button>
+                            </span>
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+                    <div class="btn-group" id='orderMessageBody'>
+                    </div>
+                </div><!-- /.row -->
 			</div>
 			<div class="modal-footer">
-				<a href="#" class="btn btn-default" data-dismiss="modal">取消</a>
-				<a href="#" class="btn btn-primary" onclick="addGoods(<?php  echo $shopInfo['ID'] ?>)">确认</a>
+				<a href="#" class="btn btn-default" data-dismiss="modal">关闭</a>
 			</div>
 		</div>
 	</div>
 </div>
 
-<div id="modGoodsModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h2 class="modal-title" style="font-family: 'microsoft yahei', '宋体b8b\4f53'; color: rgb(15, 139, 218);"><b>修改商品</b></h2>
-			</div>
-			<div class="modal-body" id="addGoodsBody">
-				<div class="form-horizontal">
-					<div class="form-group">
-						<label class="col-lg-3 control-label">商品名</label>
-						<div class="col-lg-8">
-							<input type="text" class="form-control" id="aGname" value="">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-3 control-label">单价</label>
-						<div class="col-lg-8">
-							<input type="text" class="form-control" id="aGprice" value="">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-3 control-label">商品描述</label>
-						<div class="col-lg-8">
-							<textarea rows=3 class="form-control" id="aGdetail"></textarea>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<a href="#" class="btn btn-default" data-dismiss="modal">取消</a>
-				<a href="#" class="btn btn-primary" onclick="addGoods(<?php  echo $shopInfo['ID'] ?>)">确认</a>
-			</div>
-		</div>
-	</div>
-</div>
--->
 

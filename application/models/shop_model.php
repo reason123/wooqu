@@ -124,7 +124,7 @@ class shop_model extends CI_Model{
 
 		$sql = "INSERT INTO `shop_order`
 				(`shopID`, `shopName`, `userID`, `goodsList`, `amount`,`inputItem`,`orderMessage`) 
-				VALUES (".$shopID.", '".$shopname."', ".$userID.", '".addslashes(json_encode($list))."', ".$amount.", ?,?)";
+				VALUES (".$shopID.", '".$shopname."', ".$userID.", '".addslashes(json_encode($list))."', ".$amount.", ? ,?)";
 		$res = $this->db->query($sql,array(cleanString($inputItem),cleanString($orderMessage))) or die(mysql_error());
         
         $sql = "SELECT total FROM feed_list WHERE type=2 AND sourceID = ?";
@@ -142,6 +142,27 @@ class shop_model extends CI_Model{
 			);
         $this->db->insert('shop_order',$newItem);*/
 	}
+	
+    /**
+	 * 删除某张订单
+	 * @author Hewr
+	 * @param orderid
+	 */
+	function deleteOrderById($id) {
+        $sql = "SELECT shop_order.available FROM shop_order WHERE ID=?";
+        $temp = $this->db->query($sql,array($id))->result_array();
+        if ($temp[0]['available'] == 0) return;
+		$sql = "UPDATE `shop_order` SET `available`=0 WHERE `id`=".$id;
+		$res = $this->db->query($sql) or die(mysql_error());
+        $sql = "SELECT shop_order.shopID FROM shop_order WHERE ID=?";
+        $temp = $this->db->query($sql,array($id))->result_array();
+        $shopid = $temp[0]['shopID'];
+        $sql = "SELECT total FROM feed_list WHERE type=2 AND sourceID = ?";
+        $num = $this->db->query($sql,array($shopid))->result_array();
+        $sql = "UPDATE feed_list SET total=? WHERE type=2 AND sourceID = ?";
+        $this->db->query($sql,array($num[0]['total']-1,$shopid));
+    }	
+
 
 	/**
 	 * 返回所有订单
@@ -268,7 +289,7 @@ class shop_model extends CI_Model{
      * 根据商店ID获取相应订单
      * @author LJNanest
      */
-    function getOrderByID($shopID){
+    function getOrderListByID($shopID){
         $tmp = $this->db->from('shop_list')->where('ID',$shopID)->get()->result_array();
         if(!count($tmp)){
             return array();
@@ -305,6 +326,26 @@ class shop_model extends CI_Model{
         return $order_list;
     }
 
+	/**
+	 * 返回某张订单
+	 * @author Hewr
+	 * @param orderid
+	 * @return 订单
+	 */
+	function getOrderByOrderId($id) {
+		$sql = "SELECT * FROM `shop_order` WHERE `id`=".$id;
+		$res = $this->db->query($sql) or die(mysql_error());
+		$arr = $res->result_array();
+		foreach ($arr as $key => $value) {
+			$arr[$key]["goodsList"] = json_decode($arr[$key]["goodsList"]);
+		}
+		return $arr;
+	}
+
+
+	/**
+	 * 返回某张订单信息和用户电话
+	 * @author daiwentao
     /**
      * 获取用户发布的商店以及所合作的商店列表,供查询订单使用
      * @author LJNanest
@@ -359,7 +400,7 @@ class shop_model extends CI_Model{
     {
         $tmp = $this->db->from('shop_list')->where('ID',$shopID)->get()->result_array();
         $orderMessageList = json_decode($tmp[0]['orderMessage'],true);
-        array_push($orderMessageList,$Message);
+        array_push($orderMessageList,cleanString($Message));
         $newItem = array('orderMessage'=>json_encode($orderMessageList));
         $this->db->where('ID',$shopID)->update('shop_list',$newItem);
         return json_encode($orderMessageList);
@@ -370,6 +411,7 @@ class shop_model extends CI_Model{
         $tmp = $this->db->from('shop_list')->where('ID',$shopID)->get()->result_array();
         $orderMessageList = json_decode($tmp[0]['orderMessage'],true);
         $tmp = array();
+        $Message = cleanString($Message);
         foreach ($orderMessageList as $x)
             if ($x != $Message)
                 {

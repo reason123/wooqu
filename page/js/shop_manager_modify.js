@@ -1,4 +1,5 @@
 var goodsID = 0;
+var shopID = new Object();
 
 function confirmModifyInfo() {
 	$("#confirmModifyInfoModal").modal("show");
@@ -80,3 +81,55 @@ function deleteGoods()
 	});
 
 }
+
+function makeOrderMessageBody()
+{   
+    $('#orderMessageBody').html("");
+    $.post("/shop/getOrderMessageList",
+        {
+            shopID:shopID
+        },function(jsdata) {
+            var data = $.parseJSON(jsdata);
+            for (x in data) {
+                $('#orderMessageBody').append("<button type='button' class='btn btn-default' onclick='delOrderMessage(\""+data[x]+"\")'>"+data[x]+"</button>");
+            }
+        }
+    );
+}
+
+function delOrderMessage(orderMessage)
+{
+    $.post("/shop/delOrderMessage",
+    {
+        shopID:shopID,
+        orderMessage:orderMessage
+    },function(data) {
+        makeOrderMessageBody();
+    });
+}
+
+function addOrderMessage()
+{
+    var orderMessage = document.getElementById('orderMessageText').value;
+    document.getElementById('orderMessageText').value = "";
+    if (orderMessage == "") {
+        alert("请输入类型名称");
+        return;
+    }
+
+    $.post("/shop/addOrderMessage",
+    {
+        shopID:shopID,
+        orderMessage:orderMessage
+    },function(data) {
+        makeOrderMessageBody();
+    });
+}
+
+function showOrderMessageModal(id)
+{
+    shopID = id;
+    makeOrderMessageBody();
+	$("#orderMessageModal").modal("show");
+}
+

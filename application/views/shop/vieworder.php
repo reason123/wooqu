@@ -30,11 +30,36 @@
             echo "<th>".$IT."</th>";
         }
       ?>
+      <?php
+        if (!((count($orderMessageList)==0)||(count($orderMessageList)==1 && ($orderMessageList[0]=="")))) {
+          echo "<th>
+          <li class='dropdown'>
+          <a href='#' class='dropdown-toggle' data-toggle='dropdown'>订购信息<b class='caret'></b></a>
+            <ul class='dropdown-menu'>";
+               
+               echo "<li><a href='/groupbuy/vieworder?groupbuyID=".$gbID."'>全部订单</a></li>";
+               echo "<li class='divider'></li>";
+               foreach ($orderMessageList as $x)
+               {
+                    echo "<li><a href='/groupbuy/vieworder?groupbuyID=".$gbID."&OM=".$x."'>".$x."</a></li>";
+               }
+               //<li><a href="#">Another action</a></li>
+               //<li><a href="#">Something else here</a></li>
+               //<li><a href="#">Separated link</a></li>
+               //<li><a href="#">One more separated link</a></li>
+               
+               
+           echo "</ul>
+            </li>
+         </th>";
+       }
+     ?>
       <th>订购时间</th>
     </tr>
   </thead>
   <tbody>
   <?php foreach($order_list as $key => $order): ?>
+     <?php if ($OM != "LJNisHandsome!" && $OM != $order['orderMessage']) continue; ?>
     <tr>
 	  <td><input type="checkbox" name="checkID" value="<?php echo $order['ID']?>"></td>
       <td><?php echo $order['realName'] ?></td>
@@ -56,6 +81,11 @@
                 echo "<td></td>";
             }
         }   
+      ?>
+      <?php 
+        if (!((count($orderMessageList)==0)||(count($orderMessageList)==1 && ($orderMessageList[0]=="")))) {
+            echo "<td>".$order['orderMessage']."</td>";
+        }
       ?>
       <td><?php echo $order['createTime'] ?></td>
   <?php endforeach ?>

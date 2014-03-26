@@ -136,11 +136,24 @@ function subOrder() {
         inputItem.push(inputList[x]);
         inputItem.push(document.getElementById(inputList[x]).value);
     }
+    var radios = document.getElementsByName("orderMessage");
+    var checked = false;
+    if (radios.length == 0) checked = true;
+    var str = "";
+    for (var i in radios) 
+    {
+        if (radios[i].checked == true)
+        {
+            checked = true;
+            str = radios[i].value;
+        }
+    }
 	$.post('/shop/newOrder',
 	{
 		'shopID':request.ID,
 		'order':JSON.stringify(ord),
-        'inputItem':JSON.stringify(inputItem)
+        'inputItem':JSON.stringify(inputItem),
+        'orderMessage':str
 	},function(data){
 		var tmp = $.parseJSON(data);
         if (tmp.error=="") {

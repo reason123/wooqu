@@ -28,11 +28,13 @@
       <th>详细信息</th>
       <th>备注</th>
       <!--<th>订购信息</th>-->
-      <th>
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">订购信息<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-               <?php
+      <?php
+        if (!((count($orderMessageList)==0)||(count($orderMessageList)==1 && ($orderMessageList[0]=="")))) {
+          echo "<th>
+          <li class='dropdown'>
+          <a href='#' class='dropdown-toggle' data-toggle='dropdown'>订购信息<b class='caret'></b></a>
+            <ul class='dropdown-menu'>";
+               
                echo "<li><a href='/groupbuy/vieworder?groupbuyID=".$gbID."'>全部订单</a></li>";
                echo "<li class='divider'></li>";
                foreach ($orderMessageList as $x)
@@ -44,10 +46,12 @@
                //<li><a href="#">Separated link</a></li>
                //<li><a href="#">One more separated link</a></li>
                
-               ?>
-           </ul>
-       </li>
-     </th>
+               
+           echo "</ul>
+            </li>
+         </th>";
+       }
+     ?>
     </tr>
   </thead>
   <tbody>
@@ -67,7 +71,11 @@
       }?>
       </td>
       <td><?php echo $order['comment'] ?></td>
-      <td><?php echo $order['orderMessage']?></td>
+      <?php 
+        if (!((count($orderMessageList)==0)||(count($orderMessageList)==1 && ($orderMessageList[0]=="")))) {
+            echo "<td>".$order['orderMessage']."</td>";
+        }
+      ?>
   <?php endforeach ?>
   </tbody>
 </table>
