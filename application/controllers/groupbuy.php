@@ -415,6 +415,11 @@ class Groupbuy extends CI_Controller {
                 }
             }
         }
+
+        function cmp_counter($a, $b){
+            return $b['total'] - $a['total'];
+        }
+        usort($total_counter, 'cmp_counter');
         $this->load->view('base/header',array('page'=>'gborder'));
 		$this->load->view("manager/header", array("mh" => "statistics"));
 		$this->load->view("manager/statistics_header", array("mgh" => "groupbuy"));
