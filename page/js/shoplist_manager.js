@@ -26,8 +26,10 @@ function confirmAdd() {
         inputItem: JSON.stringify(inputItem) 
 	},
 	function(jsdata){
+ //       alert(jsdata);
 		var data = $.parseJSON(jsdata);
 		if (data.error == "") {
+            alert('创建成功！');
 			window.location.href = "";
 		} else {
 			alert(data.error);
@@ -48,6 +50,7 @@ function delShop() {
 		function(data){
 			var ret = $.parseJSON(data);
 			if (ret.error == "") {
+                alert("删除成功！")
 				window.location.href="";
 			} else {
 				alert(ret.error);

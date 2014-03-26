@@ -66,7 +66,7 @@
 						</select>
 					</div>
 				</div>
-<!--	            <div class="form-group">
+<!--                <div class="form-group">
         		<label class="control-label col-lg-3">团购图片</label>
             		<div class="col-lg-5">
        		    	    <input type="file" class="form-control" id="pic" />
@@ -105,8 +105,8 @@
                 </div>
 			</div>
 			<div class="modal-footer">
-				<a href="#" class="btn btn-default" data-dismiss="modal">取消</a>
-				<a href="#" class="btn btn-primary" onclick="confirmAdd();">确认</a>
+				<button class="btn btn-default" data-dismiss="modal">取消</button>
+				<button class="btn btn-primary" onclick="confirmAdd();">确认</button>
 			</div>
 		</div>
 	</div>

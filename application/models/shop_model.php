@@ -207,6 +207,7 @@ class shop_model extends CI_Model{
                                  $shop['detail'],
                                  '/shop/showShop?ID='.$shopID,
                                  $shopID,
+                                 nowTime(),
                                  '{}');
         $groupList = explode(';',$shop['group_list']);
         foreach($groupList as $key => $groupID){
