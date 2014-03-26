@@ -1,4 +1,4 @@
-var fixcount = 9; // the count of letters of prefix and suffix
+var fixcount = 12; // the count of letters of prefix and suffix
 var each = 67; // how many letters in one sms
 
 function smsGroupbuy(groupbuyID){
@@ -39,4 +39,3 @@ function checkReverse() {
 		$(this).attr("checked", !this.checked);
 	});
 }
-

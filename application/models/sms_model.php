@@ -6,7 +6,7 @@ class sms_model extends CI_Model {
 	private $secretkey = "b1114fe4391a8e5021d1fb2eb01c4e64be5c6c54";
 	private $baseUrl = "sms.bechtech.cn/Api/send/data/json";
 	private $prefix = "";
-	private $suffix = "【Wooqu提醒】";
+	private $suffix = "【HelloTHU提醒】";
 
 	function __construct() {
 		parent::__construct();
@@ -38,12 +38,12 @@ class sms_model extends CI_Model {
 			return errorMessage(-1,'未登录');
 		}
 		$this->initSmsIfNot();
-
+        $numberList = array_unique($numberList);
 		$message = $this->prefix.$message.$this->suffix;
 		$recordList = $this->db->from('sms_list')->where('userID',$_SESSION['userID'])->get()->result_array();
 		$myAmount = (int)$recordList[0]['amount'];
 		$messageLength = strlen($message);
-		$cost = $messageLength / 67 + (($messageLength % 67 == 0) ? 0 : 1);
+		$cost = (int)($messageLength / 67) + (($messageLength % 67 == 0) ? 0 : 1);
 
 		if($myAmount < count($numberList) * $cost) {
 			return errorMessage(-3,'短信余额不足');
@@ -60,11 +60,14 @@ class sms_model extends CI_Model {
 				$error = $res->result;
 			}
 		}
-		$this->db->where('userID',$_SESSION['userID'])->update('sms_list',array('amount'=>($myAmount - $count * $cost)));
+        $num = $count * $cost;
+		$this->db->where('userID',$_SESSION['userID'])->update('sms_list',array('amount'=>($myAmount - $num)));
+       
+
 		if ($error == 1) {
-			return array_merge(errorMessage(1,'发送成功'),array('num'=>$count));
+			return array_merge(errorMessage(1,"发送成功。发送条数:".$num),array('num'=>$num));
 		} else {
-			return array_merge(errorMessage(-1,"发送失败:$error 。发送条数:$count"),array('num'=>$count));
+			return array_merge(errorMessage(-1,"发送失败:$error 。发送条数:".$num),array('num'=>$num));
 		}
 	}
 
