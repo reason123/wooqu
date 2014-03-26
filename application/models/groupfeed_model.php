@@ -295,6 +295,12 @@ class groupFeed_model extends CI_Model{
         }
         return $res;
     }
+
+    function clearGroupByFeedID($feedID)
+    {
+        $sql = "DELETE FROM group_feed WHERE newsID = ?";
+        $this->db->query($sql,array($feedID));
+    }
 }
 
 ?>

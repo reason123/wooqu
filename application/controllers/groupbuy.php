@@ -651,13 +651,14 @@ class Groupbuy extends CI_Controller {
         //header('Location: /groupbuy/selectGoods?id='.$_REQUEST['groupbuyID']);
 	}
     
-    function test()
+/*    function test()
 	{
         echo 21;
 		$this->load->model('groupbuy_model','groupbuy');
-        $this->groupbuy->delOrderMessage(1143,"123");
+        $this->groupbuy->deleteOrderById(1290);
         echo 23;
-	}
+	}*/
+
     function updateTotal()
     {
 		$this->load->model('groupbuy_model','groupbuy');

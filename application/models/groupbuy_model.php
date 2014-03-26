@@ -218,9 +218,13 @@ class groupbuy_model extends CI_Model{
 	 * @param shopID userName
 	 */
 	function deleteShopById($id, $userName) {
-		$sql = "UPDATE groupbuy_list SET available = 0  WHERE `id`=? and `username`=?";
+	    $sql = "UPDATE groupbuy_list SET available = 0  WHERE `id`=? and `username`=?";
 		$res = $this->db->query($sql, array($id, $userName)) or die(mysql_error());
 		$this->clearShopGroup($id);
+        $sql = "SELECT DISTINCT feed_list.ID FROM feed_list WHERE sourceID = ? AND type = 1";
+        $feedID = $this->db->query($sql,array($id))->result_array();
+        $this->load->model("groupfeed_model","feed");
+        $this->feed->clearGroupByFeedID($feedID[0]['ID']);
 	}
 
 	/**
@@ -451,11 +455,11 @@ class groupbuy_model extends CI_Model{
 	function submitOrder($shopid, $shopname, $username, $list, $amount, $comment,$orderMessage) {
 		if (count($this->getShopById($shopid)) == 0) return;
 		$sql = "INSERT INTO `groupbuy_order`(`shopid`, `shopname`, `username`, `list`, `amount`, `createtime`, `userID`, `comment`,`orderMessage`) VALUES(?,?,?,?,?,?,?,?,?)";
-		$res = $this->db->query($sql,array($shopid,$shopname,$username,json_encode($list),$amount,date("Y-m-d H:i:s", mktime()), $_SESSION['userID'], $comment,$orderMessage)) or die(mysql_error());
-        $sql = "SELECT total FROM feed_list WHERE type=1 AND sourceID = ?";
-        $num = $this->db->query($sql,array($shopid))->result_array();
-        $sql = "UPDATE feed_list SET total=? WHERE type=1 AND sourceID = ?";
-        $this->db->query($sql,array($num[0]['total']+1,$shopid));
+		$res = $this->db->query($sql,array($shopid,$shopname,$username,json_encode($list),$amount,date("Y-m-d H:i:s", mktime()), $_SESSION['userID'], cleanString($comment),cleanString($orderMessage))) or die(mysql_error());
+//        $sql = "SELECT total FROM feed_list WHERE type=1 AND sourceID = ?";
+//        $num = $this->db->query($sql,array($shopid))->result_array();
+//        $sql = "UPDATE feed_list SET total=? WHERE type=1 AND sourceID = ?";
+ //       $this->db->query($sql,array($num[0]['total']+1,$shopid));
 	}
 
 	/**
@@ -510,8 +514,14 @@ class groupbuy_model extends CI_Model{
 	 * @param orderid
 	 */
 	function deleteOrderById($id) {
+        $sql = "SELECT groupbuy_order.del FROM groupbuy_order WHERE ID=? ";
+        $temp = $this->db->query($sql,array($id))->result_array();
+        if ($temp[0]['del'] == 1) return;
 		$sql = "UPDATE `groupbuy_order` SET `del`=1 WHERE `id`=".$id;
 		$res = $this->db->query($sql) or die(mysql_error());
+        $sql = "SELECT groupbuy_order.shopID FROM groupbuy_order WHERE ID=?";
+        $temp = $this->db->query($sql,array($id))->result_array();
+        $shopid = $temp[0]['shopID'];
         $sql = "SELECT total FROM feed_list WHERE type=1 AND sourceID = ?";
         $num = $this->db->query($sql,array($shopid))->result_array();
         $sql = "UPDATE feed_list SET total=? WHERE type=1 AND sourceID = ?";

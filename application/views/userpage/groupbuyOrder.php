@@ -13,8 +13,8 @@
 				<h5 class="modal-title" style="font-family: 'microsoft yahei', '宋体b8b\4f53'; color: black;"><b>取消的订单不可恢复，且只能在截止日期之前取消</b></h5>
 			</div>
 			<div class="modal-footer">
-				<a href="#" class="btn btn-default" data-dismiss="modal">取消</a>
-				<a href="#" class="btn btn-primary" onclick="deleteOrder()">确认</a>
+				<button class="btn btn-default" data-dismiss="modal">取消</button>
+				<button class="btn btn-primary" onclick="deleteOrder()">确认</button>
 			</div>
 		</div>
 	</div>

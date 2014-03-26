@@ -120,12 +120,12 @@ class shop_model extends CI_Model{
 	 * @author xanda
 	 * @param shopID shopname userID goodsList totalMoney
 	 */
-	function submitOrder($shopID, $shopname, $userID, $list, $amount,$inputItem) {
+	function submitOrder($shopID, $shopname, $userID, $list, $amount,$inputItem,$orderMessage) {
 
 		$sql = "INSERT INTO `shop_order`
-				(`shopID`, `shopName`, `userID`, `goodsList`, `amount`,`inputItem`) 
-				VALUES (".$shopID.", '".$shopname."', ".$userID.", '".addslashes(json_encode($list))."', ".$amount.", ?)";
-		$res = $this->db->query($sql,array($inputItem)) or die(mysql_error());
+				(`shopID`, `shopName`, `userID`, `goodsList`, `amount`,`inputItem`,`orderMessage`) 
+				VALUES (".$shopID.", '".$shopname."', ".$userID.", '".addslashes(json_encode($list))."', ".$amount.", ?,?)";
+		$res = $this->db->query($sql,array(cleanString($inputItem),cleanString($orderMessage))) or die(mysql_error());
         
         $sql = "SELECT total FROM feed_list WHERE type=2 AND sourceID = ?";
         $num = $this->db->query($sql,array($shopID))->result_array();
@@ -353,4 +353,39 @@ class shop_model extends CI_Model{
         $temp = $this->db->query($sql,array($shopID))->result_array();
         return $orderMessageList = json_decode($temp[0]['inputItem'],true);
     }
+
+    
+    function addOrderMessage($shopID,$Message)
+    {
+        $tmp = $this->db->from('shop_list')->where('ID',$shopID)->get()->result_array();
+        $orderMessageList = json_decode($tmp[0]['orderMessage'],true);
+        array_push($orderMessageList,$Message);
+        $newItem = array('orderMessage'=>json_encode($orderMessageList));
+        $this->db->where('ID',$shopID)->update('shop_list',$newItem);
+        return json_encode($orderMessageList);
+    }
+
+    function delOrderMessage($shopID,$Message)
+    {
+        $tmp = $this->db->from('shop_list')->where('ID',$shopID)->get()->result_array();
+        $orderMessageList = json_decode($tmp[0]['orderMessage'],true);
+        $tmp = array();
+        foreach ($orderMessageList as $x)
+            if ($x != $Message)
+                {
+                    array_push($tmp,$x);
+                }
+        $newItem = array('orderMessage'=>json_encode($tmp));
+        $this->db->where('ID',$shopID)->update('shop_list',$newItem);
+        return json_encode($tmp);      
+    }
+
+    function getOrderMessageList($shopID)
+    { 
+        $tmp = $this->db->from('shop_list')->where('ID',$shopID)->get()->result_array();
+        return json_decode($tmp[0]['orderMessage'],true);
+    }
+
 }
+
+?>
