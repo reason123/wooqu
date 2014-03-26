@@ -22,11 +22,11 @@ function confirmAdd() {
 		detail: detail,
 		type: type,
 		grouplist: grouplist,
-//        pic:document.getElementById('pic').value,
+        pic:document.getElementById('pic').value,
         inputItem: JSON.stringify(inputItem) 
 	},
 	function(jsdata){
- //       alert(jsdata);
+        alert(jsdata);
 		var data = $.parseJSON(jsdata);
 		if (data.error == "") {
             alert('创建成功！');
