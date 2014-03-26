@@ -120,7 +120,7 @@ class groupFeed_model extends CI_Model{
             $sql = "select distinct feed_list.ID, 
                                 type, 
                                 title, 
-                                loginName as userName, 
+                                nickName as userName, 
                                 time, 
                                 imgurl, 
                                 shortdescription, 
