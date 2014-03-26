@@ -122,7 +122,8 @@ header .navtabs .navtab.right{
     margin-right: 10px;
 }
 .carousel-caption .info{
-    margin-bottom: -50px;
+    position: relative;
+    bottom: -50px;
     padding-left: 20px;
     background-color: rgba(0,0,0,0.3);
     height: 120px;
