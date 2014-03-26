@@ -319,7 +319,7 @@ class shop_model extends CI_Model{
         $sql = "select shop_order.*, user_list.realName,user_list.class, user_list.phoneNumber
             from user_list,shop_order 
             where userID=user_list.ID and shopid=? and shop_order.available=1 
-            order by createTime asc";
+            order by createTime desc";
         $order_list = $this->db->query($sql,array($shopID))->result_array();
         foreach($order_list as $key => $order){
             $order_list[$key]['goodsList'] = json_decode($order_list[$key]['goodsList']);
