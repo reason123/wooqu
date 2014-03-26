@@ -398,10 +398,27 @@ class Groupbuy extends CI_Controller {
         $orderMessageList = array_unique($orderMessageList);
         asort($orderMessageList);
         $groupbuyInfo = $this->gb->getGroupbuyInfoByID($_REQUEST['groupbuyID']);
+        $total_counter = array();
+        foreach($order_list as $key => $order){
+            if($OM != "LJNisHandsome!" && $OM != $order['orderMessage'])
+                continue;
+            foreach($order['list'] as $i => $good){
+                $goodID = $good[0];
+                $goodNum = $good[1];
+                $goodName = $good[2];
+                if(array_key_exists($goodID,$total_counter)){
+                    $total_counter[$goodID]['total'] += $goodNum;
+                }else{
+                    $total_counter[$goodID] = array();
+                    $total_counter[$goodID]['total'] = $goodNum;
+                    $total_counter[$goodID]['name'] = $goodName;
+                }
+            }
+        }
         $this->load->view('base/header',array('page'=>'gborder'));
 		$this->load->view("manager/header", array("mh" => "statistics"));
 		$this->load->view("manager/statistics_header", array("mgh" => "groupbuy"));
-        $this->load->view('groupbuy/vieworder',array('gbID'=>$_REQUEST['groupbuyID'],'order_list'=>$order_list, 'groupbuyInfo'=>$groupbuyInfo, 'orderMessageList'=>$orderMessageList,'OM'=>$OM));
+        $this->load->view('groupbuy/vieworder',array('gbID'=>$_REQUEST['groupbuyID'],'order_list'=>$order_list, 'groupbuyInfo'=>$groupbuyInfo, 'orderMessageList'=>$orderMessageList,'OM'=>$OM,'total_counter'=>$total_counter));
         $this->load->view('base/footer');
     }
 

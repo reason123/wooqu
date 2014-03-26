@@ -79,5 +79,23 @@
   <?php endforeach ?>
   </tbody>
 </table>
+<legend>总量统计</legend>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>商品名</th>
+      <th>数量</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php foreach($total_counter as $key => $counter): ?>
+    <tr>
+      <td><?php echo $counter['name'] ?></td>
+      <td><?php echo $counter['total'] ?></td>
+    </tr>
+    <?php endforeach ?>
+  </tbody>
+</table>
+  
 
 
