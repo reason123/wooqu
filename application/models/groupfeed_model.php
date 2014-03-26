@@ -41,6 +41,7 @@ class groupFeed_model extends CI_Model{
                          $shortdescription,
                          $url,
                          $sourceID,
+                         $deadline,
                          $param1){
         $newFeed = array('type'=>cleanString($type),
                          'title'=>cleanString($title),
@@ -50,6 +51,7 @@ class groupFeed_model extends CI_Model{
                          'shortdescription'=>cleanString($shortdescription),
                          'url'=>cleanString($url),
                          'sourceID'=>cleanString($sourceID),
+                         'endTime'=>cleanString($deadline),
                          'param1'=>cleanString($param1));
         $this->db->insert('feed_list',$newFeed);
     }

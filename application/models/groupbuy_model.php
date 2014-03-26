@@ -116,6 +116,7 @@ class groupbuy_model extends CI_Model{
                                  $shop['illustration'],
                                  '/groupbuy/groupInfo?id='.$shopID,
                                  $shopID,
+                                 $shop['deadline'],  
                                  '{}');
         $groupList = explode(';',$shop['group_list']);
         foreach($groupList as $key => $groupID){
@@ -578,16 +579,18 @@ class groupbuy_model extends CI_Model{
                     }
             }
         array_unique($groupbuyIDList);
-        $sql = "SELECT DISTINCT groupbuy_list.ID,groupbuy_list.title,groupbuy_list.username,groupbuy_list.goodslist,groupbuy_list.createTime,feed_list.total FROM feed_list, user_list, groupbuy_list WHERE (groupbuy_list.username = user_list.loginName AND user_list.ID = ? AND available = 1 AND feed_list.type = 1 AND feed_list.sourceID = groupbuy_list.ID )";
+        $sql = "SELECT DISTINCT groupbuy_list.ID,groupbuy_list.title,groupbuy_list.username,groupbuy_list.goodslist,groupbuy_list.createTime FROM  user_list, groupbuy_list WHERE (groupbuy_list.username = user_list.loginName AND user_list.ID = ? AND available = 1)";
         foreach ($groupbuyIDList as $key => $groupbuyID)
             {
-                $sql = $sql." OR (groupbuy_list.ID = ".$groupbuyID." AND available = 1 AND feed_list.type = 1 AND feed_list.sourceID = groupbuy_list.ID)";
+                $sql = $sql." OR (groupbuy_list.ID = ".$groupbuyID." AND available = 1)";
             }
         $sql = $sql." ORDER BY groupbuy_list.createTime DESC limit 30";
         $groupbuyList = $this->db->query($sql,array($userID))->result_array();
-        //foreach($groupbuyList as $k => $v){
-        //    $groupbuyList[$k]['total'] = $this->getGroupbuyTotalByID($v['ID']);
-        //}
+        foreach($groupbuyList as $k => $v){
+            $sql = "SELECT DISTINCT feed_list.total FROM feed_list WHERE sourceID = ? AND type = 1";
+            $temp = $this->db->query($sql,array($v['ID']))->result_array();
+            $groupbuyList[$k]['total'] = $temp[0]['total'];
+        }
         return $groupbuyList;
     }
 
