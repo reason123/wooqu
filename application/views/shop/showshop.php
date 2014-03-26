@@ -143,6 +143,7 @@
 			</table></div>
 			<h4 class = "text-info text-right">总计：<span class = "text-danger" id='confirmAmount'></span></h4>
 		    <div class="alert alert-success" id="confirmInfo">
+                <div id='dayDeadlineBody'></div>
                 <?php
                     if (count($orderMessageList) == 0){
                         echo "祝您购物愉快！";
