@@ -359,7 +359,6 @@ class Shop extends CI_Controller {
         }
         $orderMessageList = array_unique($orderMessageList);
         asort($orderMessageList);
-        $this->load->view('base/header',array('page'=>'gborder'));
         $this->load->view('base/header',array('page'=>'shoporder'));
 		$this->load->view("manager/header", array("mh" => "statistics"));
 		$this->load->view("manager/statistics_header", array("mgh" => "shop"));
