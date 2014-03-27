@@ -406,12 +406,12 @@ class Groupbuy extends CI_Controller {
                 $goodID = $good[0];
                 $goodNum = $good[1];
                 $goodName = $good[2];
-                if(array_key_exists($goodID,$total_counter)){
-                    $total_counter[$goodID]['total'] += $goodNum;
+                if(array_key_exists($goodName,$total_counter)){
+                    $total_counter[$goodName]['total'] += $goodNum;
                 }else{
-                    $total_counter[$goodID] = array();
-                    $total_counter[$goodID]['total'] = $goodNum;
-                    $total_counter[$goodID]['name'] = $goodName;
+                    $total_counter[$goodName] = array();
+                    $total_counter[$goodName]['total'] = $goodNum;
+                    $total_counter[$goodName]['name'] = $goodName;
                 }
             }
         }
