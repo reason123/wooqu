@@ -42,11 +42,11 @@ class sms_model extends CI_Model {
 		$message = $this->prefix.$message.$this->suffix;
 		$recordList = $this->db->from('sms_list')->where('userID',$_SESSION['userID'])->get()->result_array();
 		$myAmount = (int)$recordList[0]['amount'];
-		$messageLength = strlen($message);
+		$messageLength = mb_strlen($message);
 		$cost = (int)($messageLength / 67) + (($messageLength % 67 == 0) ? 0 : 1);
 
 		if($myAmount < count($numberList) * $cost) {
-			return errorMessage(-3,'短信余额不足');
+			return errorMessage(-3,'短信余额不足,您只能发送'.$myAmount."条！");
 		}
 
 		$count = 0;
@@ -61,11 +61,11 @@ class sms_model extends CI_Model {
 			}
 		}
         $num = $count * $cost;
-		$this->db->where('userID',$_SESSION['userID'])->update('sms_list',array('amount'=>($myAmount - $num)));
-       
+        $myAmount = $myAmount - $num;
+		$this->db->where('userID',$_SESSION['userID'])->update('sms_list',array('amount'=>($myAmount)));
 
 		if ($error == 1) {
-			return array_merge(errorMessage(1,"发送成功。发送条数:".$num),array('num'=>$num));
+			return array_merge(errorMessage(1,"发送成功。已发送".$num."条，还能发送".$myAmount."条！"),array('num'=>$num));
 		} else {
 			return array_merge(errorMessage(-1,"发送失败:$error 。发送条数:".$num),array('num'=>$num));
 		}
