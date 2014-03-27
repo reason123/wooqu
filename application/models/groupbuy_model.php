@@ -579,10 +579,10 @@ class groupbuy_model extends CI_Model{
                     }
             }
         array_unique($groupbuyIDList);
-        $sql = "SELECT DISTINCT groupbuy_list.ID,groupbuy_list.title,groupbuy_list.username,groupbuy_list.goodslist,groupbuy_list.createTime FROM  user_list, groupbuy_list WHERE (groupbuy_list.username = user_list.loginName AND user_list.ID = ? AND available = 1)";
+        $sql = "SELECT DISTINCT groupbuy_list.ID,groupbuy_list.title,user_list.realName as username,groupbuy_list.goodslist,groupbuy_list.createTime FROM  user_list, groupbuy_list WHERE (groupbuy_list.username = user_list.loginName AND user_list.ID = ? AND available = 1)";
         foreach ($groupbuyIDList as $key => $groupbuyID)
             {
-                $sql = $sql." OR (groupbuy_list.ID = ".$groupbuyID." AND available = 1)";
+                $sql = $sql." OR (groupbuy_list.ID = ".$groupbuyID." AND available = 1 AND user_list.loginName = groupbuy_list.username)";
             }
         $sql = $sql." ORDER BY groupbuy_list.createTime DESC limit 30";
         $groupbuyList = $this->db->query($sql,array($userID))->result_array();
