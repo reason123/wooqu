@@ -206,7 +206,7 @@ class user_model extends CI_Model{
 
     function improveInformation($realname, $cellphone, $address){
         $user = $this->db->from('user_list')->where('ID',$_SESSION['userID'])->get()->result_array();
-        if($user[0]['realName'] != '' && $user[0]['phoneNumber'] != ''){
+        if($user[0]['completed'] == 'YES'){
             return ;
         }
         $userInfo = array(

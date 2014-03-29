@@ -342,6 +342,21 @@ class User extends CI_Controller{
         $this->load->view('base/nopermission');
         $this->load->view('base/footer');
     }
+
+    public function improveInformation()
+    {
+        $this->load->model('user_model', 'user');
+        if(isset($_POST['realname']) && isset($_POST['cellphone']) && isset($_POST['address'])
+           && ($_POST['realname'] != '') && ($_POST['cellphone'] != '' && $_POST['address'] != '')){
+            $this->user->improveInformation($_POST['realname'],$_POST['cellphone'],$_POST['address']);
+            $ret = array('error'=>'');
+            echo json_encode($ret);
+            return;
+        }
+        $ret = array('error'=>'请补全您的信息');
+        echo json_encode($ret);
+        return ;
+    }
 }
 
 ?>

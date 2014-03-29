@@ -142,6 +142,29 @@
 				</tbody>
 			</table></div>
 			<h4 class = "text-info text-right">总计：<span class = "text-danger" id='confirmAmount'></span></h4>
+            <div id="improve-information">
+                <h4 style="font-family: 'microsoft yahei', '宋体b8b\4f53';">完善个人信息并提交</h4>
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">真实姓名</label>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" name="realname" id="realname" placeholder="设置后不能修改">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">手机号</label>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" name="cellphone" id="cellphone" placeholder="方便送货时联系">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">住址</label>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" name="address" id="address" placeholder="具体到宿舍号，方便伟大的班委送货">
+                        </div>
+                    </div>
+                </div>
+           </div>
 		    <div class="alert alert-success" id="confirmInfo">
                 <div id='dayDeadlineBody'></div>
                 <?php
@@ -161,7 +184,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
-          <button type="button" class="btn btn-primary" id="confirmButton" onclick="subOrder()">确认订单</button>
+          <button type="button" class="btn btn-primary" id="confirmButton" onclick="check()">确认订单</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
