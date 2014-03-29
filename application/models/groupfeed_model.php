@@ -292,7 +292,7 @@ class groupFeed_model extends CI_Model{
                 $act = $activity_list[0];
                 echo json_encode($act);
                 $update_sql = "update feed_list set startTime=?,endTime=?,total=? where feed_list.ID=?";
-                $this->db->query($update_sql, array($act['act_start_date'], $act['act_end_date'], $act['total'], $feed['ID']));
+                $this->db->query($update_sql, array($act['sign_start_date'], $act['sign_end_date'], $act['total'], $feed['ID']));
             }
         }
         return $res;
