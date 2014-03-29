@@ -319,14 +319,6 @@ $(function(){
 
 				$("#title").append(data.title);
 
-				if (data.status == 1) {
-					$(".stateInfo").html("订购中");
-					$(".stateInfo").css("background-color", "#85BD11");
-				} else {
-					$(".stateInfo").html("订购截止");
-                    alert("订购已截至！");
-					$(".stateInfo").css("background-color", "#FF9C00");
-				}
 
 				var infoHTML = makeInfo(data);
 				$("#groupInfo").append(infoHTML);
@@ -345,6 +337,14 @@ $(function(){
 						initGrayback();
 						toggleShopList();
 					});
+				if (data.status == 1) {
+					$(".stateInfo").html("订购中");
+					$(".stateInfo").css("background-color", "#85BD11");
+				} else {
+					$(".stateInfo").html("订购截止");
+                    alert("订购已截至！");
+					$(".stateInfo").css("background-color", "#FF9C00");
+				}
 			});
 	});
 })

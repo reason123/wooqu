@@ -4,7 +4,7 @@ var request = new Object();
 var actList = new Object();
 var inputList = new Object();
 var totalprice = 0;
-
+var	submitting = false;
 
 function setbr() {
 	var cnt = 3;
@@ -108,10 +108,6 @@ function makeCon(shopName){
 		);
 	}
 	$("#confirmAmount").html(' ￥'+totalprice);
-	$("#confirmButton").removeAttr("disabled");
-	if (JSON.stringify(ord) == "{}") {
-		$("#confirmButton").attr("disabled", "disabled");
-	}
     var date = new Date();
     var strTime = ""+(date.getHours()<10?"0":"")+date.getHours()+":"+(date.getMinutes()<10?"0":"")+date.getMinutes()+":"+(date.getSeconds()<10?"0":"")+date.getSeconds();
     if (strTime < "12:00:00")
@@ -136,14 +132,53 @@ function toggleShopList() {
 	setbr();
 }
 
-function subOrder() {
-	$("#confirmButton").attr("disabled", "disabled");
+function check(){
+    if(loginState == -1){
+        alert("登录后才可以订购水果哦亲~");
+        window.location.href="/user/login";
+        return ;
+    }
+    if(userStatus != 'Yes'){
+        $.post("/user/improveInformation", {
+                realname:$('#realname').val(),
+                cellphone:$('#cellphone').val(),
+                address:$('#address').val()
+        },function(data){
+            var data = $.parseJSON(data);
+            if (data.error == "")
+            {
+                alert('OK!');
+                subOrder();
+            } else{
+			    alert(data.aerror);
+			    $("#ordSub").modal("hide");
+            }
+        });
 
+    } else subOrder();
+}
+
+function subOrder() {
+	if (submitting == true) {
+		alert("正在提交上次订单，请稍候");
+		return;
+	}
+	if (JSON.stringify(ord) == "{}") {
+		alert("请选择商品！");
+		return;
+	}
+	submitting = true;
 	var shopList = new Object();
     var inputItem = new Array();
     for (x in inputList) {
+        var inputStr = document.getElementById(inputList[x]).value;
+        if (inputStr == "") {
+            alert("请输入"+inputList[x]+"!");
+    	    submitting = false;
+            return;
+        }
         inputItem.push(inputList[x]);
-        inputItem.push(document.getElementById(inputList[x]).value);
+        inputItem.push(inputStr);
     }
     var radios = document.getElementsByName("orderMessage");
     var checked = false;
@@ -157,6 +192,11 @@ function subOrder() {
             str = radios[i].value;
         }
     }
+    if (checked == false) {
+        alert("请选择订购信息！");
+	    submitting = false;
+        return;
+    }
 	$.post('/shop/newOrder',
 	{
 		'shopID':request.ID,
@@ -164,6 +204,7 @@ function subOrder() {
         'inputItem':JSON.stringify(inputItem),
         'orderMessage':str
 	},function(data){
+		submitting = false;
 		var tmp = $.parseJSON(data);
         if (tmp.error=="") {
 			alert(tmp.content);
@@ -173,7 +214,6 @@ function subOrder() {
 			$("#ordSub").modal("hide");
 		}
 	})
-	$("#confirmButton").removeAttr("disabled");
 }
 
 $(function(){ 
@@ -186,6 +226,19 @@ $(function(){
 }); 
 
 $(function(){
+    $.get('/user/getMyInfo',function(data){
+        var re = $.parseJSON(data);
+        userStatus = re.completed;
+        if(userStatus == 'Yes' || re.error.code == -1){
+            $("#improve-information").html('');
+        }
+
+        loginState = re.error.code;
+        if(re.error.code == -1){
+            alert("登录后才可以订购水果哦亲~");
+        }
+    });
+            
 	getRequest(request);
     $.post('/shop/getInputList',
     {   
