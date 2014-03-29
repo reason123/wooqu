@@ -9,7 +9,7 @@ function makeTypeBody()
 //            alert(jsdata);
             var data = $.parseJSON(jsdata);
             for (x in data) {
-                $('#typeBody').append("<button type='button' class='btn btn-default' onclick='deltype("+data[x]+")'>"+data[x]+"</button>");
+                $('#typeBody').append("<button type='button' class='btn btn-default' onclick='deltype(\""+data[x]+"\")'>"+data[x]+"</button>");
             }
         }
     );
