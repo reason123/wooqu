@@ -66,13 +66,13 @@
           <div class="title"><?php echo $newsInfo['title']?></div>
         </a>
         <div class="description"><?php echo $newsInfo['shortdescription']?></div>
-        <div class="time">
+        <div class="time <?php if ($newsInfo['type'] == 2) echo "hide"; ?>"  >
           <div class="start-date">开始时间：<span class="value"><?php echo $newsInfo['startTime'] ?></span></div>
           <div class="start-date">截止时间：<span class="value"><?php echo $newsInfo['endTime'] ?></span></div>
         </div>
       </div>
       <div class="act-join">
-        <div class="num">
+        <div class="num <?php if ($newsInfo['type'] == 0) echo "hide"; ?>">
           <span class="value"><?php echo $newsInfo['total']?></span>人已参加
         </div>
         <a href="<?php echo $newsInfo['url'] ?>" class="join">立即参加</a>
