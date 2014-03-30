@@ -458,10 +458,10 @@ class groupbuy_model extends CI_Model{
 		if (count($this->getShopById($shopid)) == 0) return;
 		$sql = "INSERT INTO `groupbuy_order`(`shopid`, `shopname`, `username`, `list`, `amount`, `createtime`, `userID`, `comment`,`orderMessage`) VALUES(?,?,?,?,?,?,?,?,?)";
 		$res = $this->db->query($sql,array($shopid,$shopname,$username,json_encode($list),$amount,date("Y-m-d H:i:s", mktime()), $_SESSION['userID'], cleanString($comment),cleanString($orderMessage))) or die(mysql_error());
-//        $sql = "SELECT total FROM feed_list WHERE type=1 AND sourceID = ?";
-//        $num = $this->db->query($sql,array($shopid))->result_array();
-//        $sql = "UPDATE feed_list SET total=? WHERE type=1 AND sourceID = ?";
- //       $this->db->query($sql,array($num[0]['total']+1,$shopid));
+        $sql = "SELECT total FROM feed_list WHERE type=1 AND sourceID = ?";
+        $num = $this->db->query($sql,array($shopid))->result_array();
+        $sql = "UPDATE feed_list SET total=? WHERE type=1 AND sourceID = ?";
+        $this->db->query($sql,array($num[0]['total']+1,$shopid));
 	}
 
 	/**
