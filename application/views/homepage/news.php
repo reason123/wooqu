@@ -47,7 +47,7 @@
     </a>
   </div>
   <div class="fix-right">
-    <a href="">
+    <a href="/staticpages/howtouse">
       <img src="/page/img/howtouse.png" class="pic1">
     </a>
     <a href="">
