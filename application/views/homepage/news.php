@@ -66,9 +66,9 @@
           <div class="title"><?php echo $newsInfo['title']?></div>
         </a>
         <div class="description"><?php echo $newsInfo['shortdescription']?></div>
-        <div class="time <?php if ($newsInfo['type'] == 2) echo "hide"; ?>"  >
+        <div class="time"  >
           <div class="start-date">开始时间：<span class="value"><?php echo $newsInfo['startTime'] ?></span></div>
-          <div class="start-date">截止时间：<span class="value"><?php echo $newsInfo['endTime'] ?></span></div>
+          <div class="start-date <?php if ($newsInfo['type'] == 2) echo "hide"; ?>">截止时间：<span class="value"><?php echo $newsInfo['endTime'] ?></span></div>
         </div>
       </div>
       <div class="act-join">
