@@ -47,8 +47,12 @@
     </a>
   </div>
   <div class="fix-right">
-    <img src="/page/img/right_1.png" class="pic1">
-    <img src="/page/img/right_2.png" class="pic2">
+    <a href="">
+      <img src="/page/img/howtouse.png" class="pic1">
+    </a>
+    <a href="">
+      <img src="/page/img/compensate.png" class="pic2">
+    </a>
   </div>
 </div>
 <div class="act-container">
