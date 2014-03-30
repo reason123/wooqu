@@ -50,7 +50,7 @@
     <a href="/staticpages/howtouse">
       <img src="/page/img/howtouse.png" class="pic1">
     </a>
-    <a href="">
+    <a href="/staticpages/compensate">
       <img src="/page/img/compensate.png" class="pic2">
     </a>
   </div>
