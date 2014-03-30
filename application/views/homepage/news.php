@@ -22,7 +22,7 @@
             <div class="left">
               <div class="title"><?php echo $newsInfo['title']?></div>
               <div class="start-date">开始时间：<?php echo $newsInfo['startTime']?></div>
-              <div class="start-date">结束时间：<?php echo $newsInfo['endTime']?></div>
+              <div class="start-date <?php if ($newsInfo['type'] == 2) echo "hide"; ?>">结束时间：<?php echo $newsInfo['endTime']?></div>
             </div>
             <div class="right">
               <div class="num">
