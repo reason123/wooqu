@@ -28,7 +28,7 @@
             <?php echo form_error('howtopay',"<span class='error'>","</span>");?>
         </div>
      </div>
-     <div class="form-group" >
+<!--     <div class="form-group" >
         <label class="control-label col-lg-2">货源</label>
         <div class="col-lg-3">
             <input type="text" class="form-control" name="source" value="<?php if (isset($_REQUEST['source'])) echo $_REQUEST['source']; ?>">
@@ -41,14 +41,14 @@
             <input type="text" class="form-control" name="comment" value="<?php if (isset($_REQUEST['comment'])) echo $_REQUEST['comment']; ?>">
             <?php echo form_error('comment',"<span class='error'>","</span>");?>
         </div>
-     </div>
+     </div>-->
      <div class="form-group">
         <label class="control-label col-lg-2">详细信息</label>
         <div class="col-lg-5">
             <textarea rows="5" name="illustration" class="form-control" ><?php if (isset($_REQUEST['illustration'])) echo $_REQUEST['illustration']; ?></textarea>
         </div>
      </div>
-     <div class="form-group">
+<!--     <div class="form-group">
         <label class="control-label col-lg-2">订单备注项</label>
         <div class="col-lg-3">
             <input type="text" class="form-control" name="orderMessage" id="orderMessage"></input>
@@ -66,7 +66,7 @@
                 }
             }
         ?>
-     </div>
+     </div>-->
      <div class="form-group">
         <label class="control-label col-lg-2">团购结束时间</label>
         <div class="col-lg-3">

@@ -103,9 +103,9 @@ class groupbuy_model extends CI_Model{
 	 */
 	function insertShop($shop, $userName) {
 		$sql = "INSERT INTO `groupbuy_list`
-				(`title`, `status`, `comment`, `howtopay`, `illustration`, `deadline`, `pickuptime`, `source`, `username`,`orderMessage` ) 
-				VALUES(?,?,?,?,?,?,?,?,?,?)";
-		$res = $this->db->query($sql, array(cleanString($shop['title']), $shop['status'], cleanString($shop['comment']), cleanString($shop['howtopay']), cleanString($shop['illustration']), cleanString($shop['deadline']), cleanString($shop['pickuptime']), cleanString($shop['source']), $userName,$shop['orderMessage'])) or die(mysql_error());
+				(`title`, `status`, `howtopay`, `illustration`, `deadline`, `pickuptime`, `username`, `orderMessage`) 
+				VALUES(?,?,?,?,?,?,?,?)";
+		$res = $this->db->query($sql, array(cleanString($shop['title']), $shop['status'], cleanString($shop['howtopay']), cleanString($shop['illustration']), cleanString($shop['deadline']), cleanString($shop['pickuptime']), $userName,"[]")) or die(mysql_error());
         $shopID = $this->db->insert_id();
         $this->load->model('groupfeed_model','feed');
         $this->feed->addFeedItem(1,
@@ -234,14 +234,15 @@ class groupbuy_model extends CI_Model{
 	 * @param shop array userName
 	 */
 	function modifyShop($shop, $userName) {
-		$sql = "UPDATE `groupbuy_list` SET `title`=?,`status`=?,`comment`=?,`howtopay`=?,`illustration`=?,`deadline`=?,`pickuptime`=?,`source`=?, `orderMessage`=? WHERE `id`=? and `username`=?";
-		$res = $this->db->query($sql,array(cleanString($shop["title"]),$shop["status"],cleanString($shop["comment"]),cleanString($shop["howtopay"]),cleanString($shop["illustration"]),cleanString($shop["deadline"]),cleanString($shop["pickuptime"]),cleanString($shop["source"]),$shop["orderMessage"],$shop["id"],$userName)) or die(mysql_error());
+		$sql = "UPDATE `groupbuy_list` SET `title`=?,`status`=?,`howtopay`=?,`illustration`=?,`deadline`=?,`pickuptime`=? WHERE `id`=? and `username`=?";
+		$res = $this->db->query($sql,array(cleanString($shop["title"]),$shop["status"],cleanString($shop["howtopay"]),cleanString($shop["illustration"]),cleanString($shop["deadline"]),cleanString($shop["pickuptime"]),$shop["id"],$userName)) or die(mysql_error());
         $this->load->model("groupfeed_model","feed");
         $this->feed->modifyFeedItem(1,
                                     $shop['title'],
                                     '/storage/groupbuyPic/pic_'.$shop['id'].'.jpg',
                                     $shop['illustration'],
                                     $shop['id'],
+                                    $shop['deadline'],
                                     '{}');
         $groupList = explode(';',$shop['group_list']);
 	}

@@ -1,4 +1,4 @@
-var orderMessageList = new Array();
+/*var orderMessageList = new Array();
 
 function delOrderMessage(btnid)
 {
@@ -31,10 +31,10 @@ function addOrderMessage()
     }
     $("#orderMessageBody").append("<button type='button' class='btn btn-info' id='btn"+document.getElementById("orderMessage").value+"' onclick='delOrderMessage(\""+document.getElementById("orderMessage").value+"\")'>"+document.getElementById("orderMessage").value+"</button>");
     document.getElementById("orderMessage").value="";
-}
+}*/
 
 $(function(){
-    orderMessageList = $.parseJSON(document.getElementById("orderMessageList").value);
+    //orderMessageList = $.parseJSON(document.getElementById("orderMessageList").value);
     $('.tp').timepicker({
 		showSeconds: true,
 		showMeridian: false,

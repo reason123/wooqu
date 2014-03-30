@@ -3,6 +3,8 @@
 <legend>修改团购</legend>
 <div id="groupbuy_info" class="container">
 </div>
+<legend>拓展功能</legend>
+<button class="btn btn-lg btn-info" onclick="showOrderMessageModal(<?php echo$id ?>)" >订购信息</button>&nbsp;
 <!--
 <legend>商品信息</legend>
 <table id="cargo_list_table" class="table table-striped table-hover">
@@ -75,3 +77,33 @@
 </div>
 
 <iframe src=""  width="0" height="0" style="display:none;" name="noneframe"></iframe>
+
+<div id="orderMessageModal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h2 class="modal-title" style="font-family: 'microsoft yahei', '宋体b8b\4f53'; color: rgb(15, 139, 218);"><b>类型</b></h2>
+			</div>
+			<div class="modal-body" id="deleteBody">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <input id="orderMessageText" type="text"  class="form-control" value=""></input>
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" onclick="addOrderMessage()">添加类型</button>
+                            </span>
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+                    <div class="btn-group" id='orderMessageBody'>
+                    </div>
+                </div><!-- /.row -->
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn btn-default" data-dismiss="modal">关闭</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
