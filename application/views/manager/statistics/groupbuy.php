@@ -16,7 +16,7 @@
     <td><?php echo $groupbuy['title'] ?></td>
     <td><?php echo $groupbuy['username'] ?></td>
     <td><?php echo $groupbuy['total'] ?></td>
-    <td><a href="/groupbuy/vieworder?groupbuyID=<?php echo $groupbuy['ID']?>">查看订单</a></td>
+    <td><a href="/groupbuy/vieworder?groupbuyID=<?php echo $groupbuy['ID']?>">查看订单</a> <a href="/groupbuy/get_csv?groupbuyID=<?php echo $groupbuy['ID']?>">导出csv</a></td>
   </tr>
   <?php endforeach ?>
   </tbody>
