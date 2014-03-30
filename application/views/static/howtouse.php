@@ -1,5 +1,5 @@
 <legend>哈啰清华⽔水果团购平台使⽤用步骤</legend>
-<h4>1. 登陆<a href="https://www.hellothu.com/">http://www.hellothu.com</a>网址,进⼊入团购⻚页⾯面（尽量使用chrome、搜狗高速、firefox、safari等浏览器进行访问哦亲~）:<br/><br/>
+<h4>1. 登陆<a href="/">http://www.hellothu.com</a>网址,进⼊入团购⻚页⾯面（尽量使用chrome、搜狗高速、firefox、safari等浏览器进行访问哦亲~）:<br/><br/>
 <img src="/page/img/howtouse/step1.png" width="800" style="margin-left: 30px;"><br/><br/>
 点击注册填写个人信息，之后只需按照设置的信息登录即可。</h4><br/>
 <h4>2. 进入注册信息界面，填写相应信息完成注册：

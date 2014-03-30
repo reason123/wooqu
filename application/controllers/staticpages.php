@@ -18,6 +18,12 @@ class Staticpages extends CI_Controller{
         $this->load->view('static/compensate');
         $this->load->view('base/footer');
     }
+
+    function about_us(){
+        $this->load->view('base/header',array('page'=>'howtouse'));
+        $this->load->view('static/about_us');
+        $this->load->view('base/footer');
+    }
 }
 
 ?>
