@@ -81,11 +81,25 @@ function changeMangeGroup(groupID) {
 		   });
 }
 
-function close_pub() {
+function close_pub(auto) {
+    var times = 0;
+    if(auto == 'no'){
+        times = 0;
+    }else{
+        times = parseInt(getCookie('hide_pub'));
+    }
+    setCookie('hide_pub', times + 1, 1);
     $("#pub-fixed").hide();
 }
 
 $(function(){
+    var hide_pub = getCookie('hide_pub');
+    if(!hide_pub){
+        hide_pub = '10';
+    }
+    if(hide_pub != '10'){
+        close_pub('yes');
+    }
 	$(".fancybox").fancybox();
 	if(parseInt($("#alertOn").val()) != 0){
 		$("#alertModal").modal("show");
