@@ -49,6 +49,12 @@ header .top{
 .userinfo a.font:hover{
     color: #afafaf;
 }
+.footer-info > a, .footer-info > a:hover{
+    color: #afafaf;
+    text-decoration: underline;
+    margin-right: 3px;
+    margin-left: 3px;
+}
 .userinfo a.font{
     color: #afafaf;
     text-decoration: none;

@@ -3,5 +3,6 @@
 *.tmp
 .#*
 *#
+.DS_Store
 storage
 application/config/database.php

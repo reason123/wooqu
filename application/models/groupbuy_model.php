@@ -585,7 +585,7 @@ class groupbuy_model extends CI_Model{
             {
                 $sql = $sql." OR (groupbuy_list.ID = ".$groupbuyID." AND available = 1 AND user_list.loginName = groupbuy_list.username)";
             }
-        $sql = $sql." ORDER BY groupbuy_list.createTime DESC limit 30";
+        $sql = $sql." ORDER BY groupbuy_list.createTime DESC limit 80";
         $groupbuyList = $this->db->query($sql,array($userID))->result_array();
         foreach($groupbuyList as $k => $v){
             $sql = "SELECT DISTINCT feed_list.total FROM feed_list WHERE sourceID = ? AND type = 1";
