@@ -93,12 +93,12 @@ class Groupbuy extends CI_Controller {
 			"deadline"=>$_REQUEST["deadlinedate"]." ".$_REQUEST["deadlinetime"],
 			"pickuptime"=>$_REQUEST["pickuptimedate"]." ".$_REQUEST["pickuptimetime"],
 			"howtopay"=>$_REQUEST["howtopay"],
-			"source"=>$_REQUEST["source"],
-			"comment"=>$_REQUEST["comment"],
+//			"source"=>$_REQUEST["source"],
+//			"comment"=>$_REQUEST["comment"],
 			"illustration"=>$_REQUEST["illustration"],
 			"status"=>$_REQUEST["status"],
 			"groups"=>$_REQUEST["groups"],
-            "orderMessage"=>$_REQUEST["orderMessageList"]
+//            "orderMessage"=>$_REQUEST["orderMessageList"]
 		);
 		$this->load->model("groupbuy_model", "groupbuy");
 		$shopID = intval($shop["id"]);
@@ -481,8 +481,8 @@ class Groupbuy extends CI_Controller {
 		$this->load->library('form_validation');
         $this->form_validation->set_rules('title','title','required'); 
         $this->form_validation->set_rules('howtopay','howtopay','required'); 
-        $this->form_validation->set_rules('source','source','required'); 
-        $this->form_validation->set_rules('comment','comment','required'); 
+//        $this->form_validation->set_rules('source','source','required'); 
+//        $this->form_validation->set_rules('comment','comment','required'); 
         $this->form_validation->set_rules('illustration','illustration','required'); 
         $this->load->model('groupbuy_model','groupbuy');
         if (isset($_GET['id']))
@@ -498,9 +498,9 @@ class Groupbuy extends CI_Controller {
                 $str = $str.$value.';';
             }
         	$_REQUEST['title'] = $groupbuyInfo['title'];
-        	$_REQUEST['comment'] = $groupbuyInfo['comment'];
+//        	$_REQUEST['comment'] = $groupbuyInfo['comment'];
         	$_REQUEST['howtopay'] = $groupbuyInfo['howtopay'];
-        	$_REQUEST['source'] = $groupbuyInfo['source'];
+//        	$_REQUEST['source'] = $groupbuyInfo['source'];
         	$_REQUEST['illustration'] = $groupbuyInfo['illustration'];
             $_REQUEST['group_list'] = $str;
             $_REQUEST['orderMessageList'] = $groupbuyInfo['orderMessage'];
@@ -513,14 +513,14 @@ class Groupbuy extends CI_Controller {
         }else{        	
         	$shop = array("title"=>cleanString($_REQUEST['title']),
                          "status"=>"1",
-                          "comment"=>cleanString($_REQUEST['comment']),
+//                          "comment"=>cleanString($_REQUEST['comment']),
                           "howtopay"=>cleanString($_REQUEST['howtopay']),
                           "illustration"=>cleanString($_REQUEST['illustration']),
                           "deadline"=>cleanString($_REQUEST['act_end_date']),
                           "pickuptime"=>cleanString($_REQUEST['sign_end_date']), 
-                          "source"=>cleanString($_REQUEST['source']),
+//                          "source"=>cleanString($_REQUEST['source']),
 						  "group_list"=>cleanString($_REQUEST['group_list']),
-                          "orderMessage"=>$_REQUEST['orderMessageList']
+//                          "orderMessage"=>$_REQUEST['orderMessageList']
                           );
         	//echo $_REQUEST['act_end_date'];
         	$groupbuyID = $this->groupbuy->insertShop($shop,$_SESSION['loginName']);
@@ -540,9 +540,6 @@ class Groupbuy extends CI_Controller {
         		$this->groupbuy->updataGoodsList($groupbuyID,$groupbuyInfo['goodslist']);
         	}
             header('Location: /groupbuy/selectGoods?id='.$groupbuyID);
-            /**
-             * TODO: Add group_shop
-             */
         }
 	}
     

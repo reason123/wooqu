@@ -251,6 +251,14 @@ class shop_model extends CI_Model{
                          'phone'=> cleanString($shop["phone"]),
                          'detail'=> cleanString($shop["detail"])
                          ));
+        $this->load->model("groupfeed_model","feed");
+        $this->feed->modifyFeedItem(2,
+                                    $shop['name'],
+                                    '/storage/shopPic/pic_'.$shop['ID'].'.jpg',
+                                    $shop['detail'],
+                                    $shop['ID'],
+                                    nowTime(),
+                                    '{}');
 	}
 
 	/**

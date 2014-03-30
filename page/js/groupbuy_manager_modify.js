@@ -1,7 +1,7 @@
 var cargoList; 
 var delCargoIdx = -1; 
-
-var orderMessageList = new Array();
+var gbID = new Object();
+/*var orderMessageList = new Array();
 
 function delOrderMessage(btnid)
 {
@@ -29,7 +29,7 @@ function addOrderMessage()
     }
     $("#orderMessageBody").append("<button type='button' class='btn btn-info' id='btn"+document.getElementById("orderMessage").value+"' onclick='delOrderMessage(\""+document.getElementById("orderMessage").value+"\")'>"+document.getElementById("orderMessage").value+"</button>");
     document.getElementById("orderMessage").value="";
-}
+}*/
 
 
 function makeInfo(data) {
@@ -51,17 +51,29 @@ function makeInfo(data) {
 				    "</div>"+
 			    "</div>"+
 			    "<div class=\"form-group\">"+
+				    "<label class=\"col-lg-3 control-label\">团购标题</label>"+
+				    "<div class=\"col-lg-5\">"+
+					    "<input type=\"text\" class=\"form-control\" name=\"title\" value=\""+data.title+"\">"+
+				    "</div>"+
+			    "</div>"+
+			    "<div class=\"form-group\">"+
 				    "<label class=\"control-label col-lg-3\">团购图片</label>"+
 				    "<div class=\"col-lg-5\">"+
 					    "<input type=\"file\" class=\"form-control\" name=\"pic\" />"+
 				    "</div>"+
 			    "</div>"+
 			    "<div class=\"form-group\">"+
-				    "<label class=\"col-lg-3 control-label\">团购标题</label>"+
+				    "<label class=\"col-lg-3 control-label\">支付方式</label>"+
 				    "<div class=\"col-lg-5\">"+
-					    "<input type=\"text\" class=\"form-control\" name=\"title\" value=\""+data.title+"\">"+
+					    "<textarea rows=3 class=\"form-control\" name=\"howtopay\">"+data.howtopay+"</textarea>"+
 				    "</div>"+
 			    "</div>"+
+		    	"<div class=\"form-group\">"+
+				    "<label class=\"col-lg-3 control-label\">详细信息</label>"+
+			    	"<div class=\"col-lg-5\">"+
+					    "<textarea rows=3 class=\"form-control\" name=\"illustration\">"+data.illustration+"</textarea>"+
+    				"</div>"+
+	    		"</div>"+
 			    "<div class=\"form-group\">"+
 				    "<label class=\"col-lg-3 control-label\">加入群组</label>"+
 				    "<div class=\"col-lg-5\">"+
@@ -82,13 +94,7 @@ function makeInfo(data) {
 					    "<input type=\"text\" class=\"form-control tp\" name=\"pickuptimetime\" value=\""+pickuptime_time+"\">"+
 	    			"</div>"+
 		    	"</div>"+
-			    "<div class=\"form-group\">"+
-				    "<label class=\"col-lg-3 control-label\">支付方式</label>"+
-				    "<div class=\"col-lg-5\">"+
-					    "<textarea rows=3 class=\"form-control\" name=\"howtopay\">"+data.howtopay+"</textarea>"+
-				    "</div>"+
-			    "</div>"+
-			    "<div class=\"form-group\">"+
+/*			    "<div class=\"form-group\">"+
 			    	"<label class=\"col-lg-3 control-label\">货源</label>"+
 			    	"<div class=\"col-lg-5\">"+
 				    	"<input type=\"text\" class=\"form-control\" name=\"source\" value=\""+data.source+"\" placeholder=\"凡客\">"+
@@ -98,12 +104,6 @@ function makeInfo(data) {
 			    	"<label class=\"col-lg-3 control-label\">备注</label>"+
 				    "<div class=\"col-lg-5\">"+
 					    "<input type=\"text\" class=\"form-control\" name=\"comment\" value=\""+data.comment+"\">"+
-    				"</div>"+
-	    		"</div>"+
-		    	"<div class=\"form-group\">"+
-				    "<label class=\"col-lg-3 control-label\">详细信息</label>"+
-			    	"<div class=\"col-lg-5\">"+
-					    "<textarea rows=3 class=\"form-control\" name=\"illustration\">"+data.illustration+"</textarea>"+
     				"</div>"+
 	    		"</div>"+
                 "<div class=\"form-group\">"+
@@ -116,7 +116,7 @@ function makeInfo(data) {
                 "<div id=\"orderMessageBody\" class=\"form-group\">"+
                     "<input type=\"hidden\" name=\"orderMessageList\" id=\"orderMessageList\" value=\"[]\"></input>"+
                     "<label class=\"control-label col-lg-3\"></label>"+
-                "</div>"+
+                "</div>"+*/
 			    "<div class=\"form-group\">"+
 				    "<label class=\"col-lg-3 control-label\">状态</label>"+
     				"<div class=\"col-lg-5\">"+
@@ -335,6 +335,57 @@ function finishUploadingPhoto() {
 	document.getElementById("cargoPhoto").src="/storage/goodsPic/pic_"+id+".jpg?";
 }
 
+function makeOrderMessageBody()
+{   
+    $('#orderMessageBody').html("");
+    $.post("/groupbuy/getOrderMessageList",
+        {
+            gbID:gbID
+        },function(jsdata) {
+            var data = $.parseJSON(jsdata);
+            for (x in data) {
+                $('#orderMessageBody').append("<button type='button' class='btn btn-default' onclick='delOrderMessage(\""+data[x]+"\")'>"+data[x]+"</button>");
+            }
+        }
+    );
+}
+
+function delOrderMessage(orderMessage)
+{
+    $.post("/groupbuy/delOrderMessage",
+    {
+        gbID:gbID,
+        message:orderMessage
+    },function(data) {
+        makeOrderMessageBody();
+    });
+}
+
+function addOrderMessage()
+{
+    var orderMessage = document.getElementById('orderMessageText').value;
+    document.getElementById('orderMessageText').value = "";
+    if (orderMessage == "") {
+        alert("请输入类型名称");
+        return;
+    }
+
+    $.post("/groupbuy/addOrderMessage",
+    {
+        gbID:gbID,
+        message:orderMessage
+    },function(data) {
+        makeOrderMessageBody();
+    });
+}
+
+function showOrderMessageModal(id)
+{
+    gbID = id;
+    makeOrderMessageBody();
+	$("#orderMessageModal").modal("show");
+}
+
 $(function(){
 	$(document).ready(function(){
 		$.post("/groupbuy/getShopById",
@@ -343,7 +394,7 @@ $(function(){
 				var data = $.parseJSON(jsdata);
 				var infoHTML = makeInfo(data);
 				$("#groupbuy_info").append(infoHTML);
-                $.post("/groupbuy/getOrderMessageList",
+/*                $.post("/groupbuy/getOrderMessageList",
             	    { gbID: document.getElementById("groupID").value }, 
             		function(jsdata){
 			            var data = $.parseJSON(jsdata);
@@ -355,7 +406,7 @@ $(function(){
                         }
                         $("#orderMessageBody").append(tmp);
                         document.getElementById("orderMessageList").value = JSON.stringify(orderMessageList);
-                   });
+                   });*/
 				$('.tp').timepicker({
 					showSeconds: true,
 					showMeridian: false,

@@ -251,8 +251,8 @@ class groupFeed_model extends CI_Model{
     }
     
     /**
-     * 新增feed条目
-     * @author ca007
+     * 修改feed条目
+     * @author LJNanest
      * @param int $type 类型
      * @param string $title 标题
      * @param int $userID 发布者ID
@@ -267,9 +267,10 @@ class groupFeed_model extends CI_Model{
                          $imgurl,
                          $shortdescription,
                          $sourceID,
+                         $deadline,
                          $param1){
-        $sql = "UPDATE feed_list SET title = ?, imgurl = ?,shortdescription = ?, param1 = ? WHERE type = ? AND sourceID = ?";
-		$res = $this->db->query($sql, array(cleanString($title),cleanString($imgurl),cleanString($shortdescription),cleanString($param1),cleanString($type),cleanString($sourceID))) or die(mysql_error());
+        $sql = "UPDATE feed_list SET title = ?, imgurl = ?,shortdescription = ?,endTime =? , param1 = ? WHERE type = ? AND sourceID = ?";
+		$res = $this->db->query($sql, array(cleanString($title),cleanString($imgurl),cleanString($shortdescription),cleanString($deadline),cleanString($param1),cleanString($type),cleanString($sourceID))) or die(mysql_error());
     }
 
     function initNewFeed(){

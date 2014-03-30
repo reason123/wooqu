@@ -10,8 +10,8 @@ function makeShop(data) {
 			"<td>"+data.deadline+"</td>"+
 			"<td>"+data.pickuptime+"</td>"+
 			"<td>"+data.howtopay+"</td>"+
-			"<td>"+data.source+"</td>"+
-			"<td>"+data.comment+"</td>"+
+//			"<td>"+data.source+"</td>"+
+//			"<td>"+data.comment+"</td>"+
 			"<td>"+onSaleHTML+"</td>"+
 			"<td>"+
 				"<a class=\"btn btn-small btn-primary\" onclick=\"window.location.href='/groupbuy/vieworder?groupbuyID="+data.id+"'\">查看订单</a>&nbsp;"+
