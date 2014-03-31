@@ -358,11 +358,17 @@ class Shop extends CI_Controller {
             array_push($orderMessageList,$order['orderMessage']);
         }
         $orderMessageList = array_unique($orderMessageList);
+        $deal = -1;
+        if (isset($_GET['deal'])){
+            if ($_GET['deal'] == 0) $deal=0;
+            if ($_GET['deal'] == 1) $deal=1;
+
+        }
         asort($orderMessageList);
-        $this->load->view('base/header',array('page'=>'shoporder'));
+        $this->load->view('base/header',array('page'=>'shopvieworder'));
 		$this->load->view("manager/header", array("mh" => "statistics"));
 		$this->load->view("manager/statistics_header", array("mgh" => "shop"));
-        $this->load->view('shop/vieworder',array('gbID'=>$_REQUEST['shopID'],'order_list'=>$order_list, 'shopInfo'=>$shopInfo,'inputList'=>$inputList,'orderMessageList'=>$orderMessageList,'OM'=>$OM));
+        $this->load->view('shop/vieworder',array('gbID'=>$_REQUEST['shopID'],'order_list'=>$order_list, 'shopInfo'=>$shopInfo,'inputList'=>$inputList,'orderMessageList'=>$orderMessageList,'OM'=>$OM,'deal'=>$deal));
         $this->load->view('base/footer');
     }
     
@@ -386,13 +392,20 @@ class Shop extends CI_Controller {
     
     /**
       * 获取商店填写信息项目
-      * #author LJNanest
+      * @author LJNanest
       */
     function getInputList()
     {
         $this->load->model('shop_model','shop');
         echo json_encode($this->shop->getInputList($_POST['shopID']));
     }
+    
+    function shopDeal()
+    {
+        $this->load->model('shop_model','shop');
+        $this->shop->shopDeal($_POST['orderID']);
+    }
+
 }
 
 ?>

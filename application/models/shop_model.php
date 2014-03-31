@@ -437,6 +437,11 @@ class shop_model extends CI_Model{
         return json_decode($tmp[0]['orderMessage'],true);
     }
 
+    function shopDeal($orderID)
+    {
+        $sql = "UPDATE shop_order SET deal = 1 WHERE ID=?";
+        $this->db->query($sql,array($orderID));
+    }
 }
 
 ?>

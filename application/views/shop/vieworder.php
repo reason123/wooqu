@@ -37,11 +37,11 @@
           <a href='#' class='dropdown-toggle' data-toggle='dropdown'>订购信息<b class='caret'></b></a>
             <ul class='dropdown-menu'>";
                
-               echo "<li><a href='/groupbuy/vieworder?groupbuyID=".$gbID."'>全部订单</a></li>";
+               echo "<li><a href='/shop/vieworder?shopID=".$gbID."'>全部订单</a></li>";
                echo "<li class='divider'></li>";
                foreach ($orderMessageList as $x)
                {
-                    echo "<li><a href='/groupbuy/vieworder?groupbuyID=".$gbID."&OM=".$x."'>".$x."</a></li>";
+                    echo "<li><a href='/shop/vieworder?shopID=".$gbID."&OM=".$x."'>".$x."</a></li>";
                }
                //<li><a href="#">Another action</a></li>
                //<li><a href="#">Something else here</a></li>
@@ -55,11 +55,24 @@
        }
      ?>
       <th>订购时间</th>
+      <th>
+          <li class='dropdown'>
+          <a href='#' class='dropdown-toggle' data-toggle='dropdown'>标记<b class='caret'></b></a>
+            <ul class='dropdown-menu'>
+               <li><a href='/shop/vieworder?shopID=<?php echo $gbID; if ($OM != "LJNisHandsome!") echo"&OM=".$OM;?>'>全部订单</a></li>
+               <li class='divider'></li>
+               <li><a href='/shop/vieworder?shopID=<?php echo $gbID; if ($OM != "LJNisHandsome!") echo"&OM=".$OM;?>&deal=0'>未完成</a></li>
+               <li><a href='/shop/vieworder?shopID=<?php echo $gbID; if ($OM != "LJNisHandsome!") echo"&OM=".$OM;?>&deal=1'>已完成</a></li>
+            </ul>
+          </li>
+      </th>
     </tr>
   </thead>
   <tbody>
   <?php foreach($order_list as $key => $order): ?>
-     <?php if ($OM != "LJNisHandsome!" && $OM != $order['orderMessage']) continue; ?>
+     <?php if ($OM != "LJNisHandsome!" && $OM != $order['orderMessage']) continue;
+           if ($deal != -1 && $deal != $order['deal']) continue;
+     ?>
     <tr>
 	  <td><input type="checkbox" name="checkID" value="<?php echo $order['ID']?>"></td>
       <td><?php echo $order['realName'] ?></td>
@@ -88,6 +101,7 @@
         }
       ?>
       <td><?php echo $order['createTime'] ?></td>
+      <td><?php if ($order['deal']==0) echo "<a id='deal".$order["ID"]."' onclick='orderDeal(".$order['ID'].")'>未完成</a>"; else echo "已完成"; ?></td>
   <?php endforeach ?>
   </tbody>
 </table>
