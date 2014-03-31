@@ -148,4 +148,5 @@ b.amount input{
 	position: fixed;
 	bottom: 0;
 	width: 1200px;
+	background-color: rgba(240, 240, 240, 0.8);
 }
