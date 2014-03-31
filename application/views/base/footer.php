@@ -84,18 +84,19 @@
 </div>
 -->
 </div>
-<div class="footer-info">
-  <a href="/staticpages/about_us">关于我们</a> |
-  <a href="/messageboard">意见反馈</a><br/>
-  <span>Copyright © 2014 哈啰清华（Hello THU）</span>
-</div>
-
 </div-->                           
 <!--iframe class="cometFrame" src="/page/comet/chatframe.html"></iframe-->
 
 <?php endif ?>
 
 <!-- End Chat -->
+
+<div class="footer-info">
+  <a href="/staticpages/about_us">关于我们</a> |
+  <a href="/messageboard">意见反馈</a><br/>
+  <span>Copyright © 2014 哈啰清华（Hello THU）</span>
+</div>
+
 <?php include_once("google_analytics.php") ?>
 </body>
 </html>
