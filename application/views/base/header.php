@@ -10,6 +10,7 @@
     <title>HelloTHU</title>
     <link rel="icon" type="image/x-icon" href="/page/img/favicon.ico">
     <script src = "/page/js/jquery.js"></script>
+    <script src = "/page/js/jquery.cookie.js"></script>
     <script src = "/page/js/base.js"></script>
     <link href = "/page/css/base.css" rel = "stylesheet">
     <script src = "/page/bootstrap3/js/bootstrap.js"></script>
