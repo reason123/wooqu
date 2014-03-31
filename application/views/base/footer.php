@@ -1,6 +1,6 @@
 <div id="pub-fixed">
   <div id="close">
-    <a onclick="close_pub('no')" href="#">关闭</a>
+     <span onclick="close_pub('no')" class="close-btn">关闭</span>
      <a href="http://www.renren.com/585823784/profile" style="float:right;" target="_blank">人人首页</a>
   </div>
   <img src="/page/img/qrcode.png" style="width:180px;">
