@@ -150,3 +150,6 @@ b.amount input{
 	width: 1200px;
 	background-color: rgba(240, 240, 240, 0.8);
 }
+.bottombar .sub-btn{
+    margin-left: 40px;
+}

@@ -30,7 +30,7 @@
 		&nbsp;&nbsp;
 		[ <span class="text-success" id="amount">0</span>&nbsp;元 ]
 	</p>
-	<div class="pull-right">
+	<div class="sub-btn pull-left">
 		<form class="navbar-form">
 			<span class="btn btn-warning" onclick="clearCart()">清空</span>
 			<span class="btn btn-primary" onclick="confirmOrder()" id="submitOrder">确认订单</span>
