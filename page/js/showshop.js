@@ -180,17 +180,14 @@ function subOrder() {
         inputItem.push(inputList[x]);
         inputItem.push(inputStr);
     }
-    var radios = document.getElementsByName("orderMessage");
+    var radios = $("input[name='orderMessage']");
+    //var radios = document.getElementsByName("orderMessage");
     var checked = false;
     if (radios.length == 0) checked = true;
     var str = "";
-    for (var i in radios) 
-    {
-        if (radios[i].checked == true)
-        {
-            checked = true;
-            str = radios[i].value;
-        }
+    if($("input:checked")){
+        checked = true;
+        str = $("input:checked").val();
     }
     if (checked == false) {
         alert("请选择订购信息！");
