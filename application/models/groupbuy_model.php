@@ -590,7 +590,7 @@ class groupbuy_model extends CI_Model{
         foreach($groupbuyList as $k => $v){
             $sql = "SELECT DISTINCT feed_list.total FROM feed_list WHERE sourceID = ? AND type = 1";
             $temp = $this->db->query($sql,array($v['ID']))->result_array();
-            $groupbuyList[$k]['total'] = $temp[0]['total'];
+            if(count($temp) == 0) $groupbuyList[$k]['total'] = 0; else $groupbuyList[$k]['total'] = $temp[0]['total'];
         }
         return $groupbuyList;
     }
