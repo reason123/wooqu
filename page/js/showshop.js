@@ -183,11 +183,12 @@ function subOrder() {
     var radios = $("input[name='orderMessage']");
     //var radios = document.getElementsByName("orderMessage");
     var checked = false;
-    if (radios.length == 0) checked = true;
     var str = "";
-    if($("input:checked")){
-        checked = true;
-        str = $("input:checked").val();
+    if (radios.length == 0) checked = true; else {
+        if (typeof $("input:checked").val() != "undefined") {
+            checked = true;
+            str = $("input:checked").val();
+        }
     }
     if (checked == false) {
         alert("请选择订购信息！");

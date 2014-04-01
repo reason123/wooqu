@@ -255,7 +255,16 @@ function subOrd() {
 		    if (num > 0) order[cnt++] = new Array(i, num ,type);
         }
 	}
-    var radios = document.getElementsByName("orderMessage");
+    var radios = $("input[name='orderMessage']");
+    var checked = false;
+    var str = "";
+    if (radios.length == 0) checked = true; else {
+        if (typeof $("input:checked").val() != "undefined"){
+            checked = true;
+            str = $("input:checked").val();
+        }
+    }
+/*    var radios = document.getElementsByName("orderMessage");
     var checked = false;
     if (radios.length == 0) checked = true;
     var str = "";
@@ -266,7 +275,7 @@ function subOrd() {
             checked = true;
             str = radios[i].value;
         }
-    }
+    }*/
     if (checked == false) {
         alert("请选择订购信息！");
 	    submitting = false;
