@@ -16,7 +16,7 @@
 <div style="margin-top: 9px;"></div>
 
 <span style="margin-left: 32px;"></span>1、希望同学们在拿到水果的时候当场进行检查，如果水果质量有问题，我们会立即更换水果；<br/>
-<span style="margin-left: 32px;"></span>2、如果水果本身无质量问题，在配送过程中因颠簸、挤压等发生变形等问题，通过各种方式与我们缺的联系后，我们将为您<b style="font-size:19px;">免费更换水果</b>；<br/>
+<span style="margin-left: 32px;"></span>2、如果水果本身无质量问题，在配送过程中因颠簸、挤压等发生变形等问题，通过各种方式与我们确定联系后，我们将为您<b style="font-size:19px;">免费更换水果</b>；<br/>
 <span style="margin-left: 32px;"></span>3、如果水果本身有质量问题，与我们取得联系后，我们将退还有质量问题的水果费用，<b style="font-size:19px;">并赔偿等价于有问题水果三倍价钱的水果</b>；<br/>
 <div style="margin-top: 9px;"></div>
 
@@ -24,6 +24,6 @@
 <div style="margin-top: 49px;"></div>
 
 <span style="margin-left: 32px;"></span>水果质量投诉电话：18010151107<br/>
-<span style="margin-left: 32px;"></span>网 站 客 服 邮 箱：hellothu@foxmail.com</br>
+<span style="margin-left: 32px;"></span>网站客服邮箱：hellothu@foxmail.com</br>
 <span style="margin-left: 32px;"></span>网站客服&洽谈电话：15311557983</br>
 </div>
