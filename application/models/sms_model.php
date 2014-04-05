@@ -52,6 +52,7 @@ class sms_model extends CI_Model {
 		$count = 0;
 		$error = 1;
 		foreach ($numberList as $number) {
+            if (strlen($number) != 11) continue;
 			$url = "$this->baseUrl?accesskey=$this->accesskey&secretkey=$this->secretkey&mobile=$number&content=".urlencode($message);
 			$res = $this->getRequest($url);
 			if ($res->result == "01") {
