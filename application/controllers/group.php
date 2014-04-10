@@ -174,7 +174,7 @@ class group extends CI_Controller{
     }
 
 	
-	public function test(){
+/*	public function test(){
 		$this->load->model('group_model','group');
           
 		$dpmList = $this->group->getDepartmentList('1000100000000');
@@ -183,7 +183,7 @@ class group extends CI_Controller{
             echo json_encode($this->group->newClass($group['groupID'],"硕士生"));
             echo json_encode($this->group->newClass($group['groupID'],"博士生"));
         }     
-    }
+    }*/
 
 } 
 ?>
