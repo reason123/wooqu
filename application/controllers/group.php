@@ -174,18 +174,16 @@ class group extends CI_Controller{
     }
 
 	
-/*	public function test(){
+	public function test(){
 		$this->load->model('group_model','group');
-        $groupID = $_GET['groupID'];
-        $name =  $_GET['name'];
           
-     //   echo json_encode($this->group->newClass(1000100200000,'测试'));
-      
-        for ($j = 1;$j <= $_GET['G1']; $j++) {
-            echo json_encode($this->group->newClass($groupID,$name.$_GET['G0'].$j));
-        }
-//        echo json_encode($this->group->getClassList($groupID));
-    }*/
+		$dpmList = $this->group->getDepartmentList('1000100000000');
+        foreach ($dpmList as $Key => $group) {
+           // echo $group['groupID'].";"; 
+            echo json_encode($this->group->newClass($group['groupID'],"硕士生"));
+            echo json_encode($this->group->newClass($group['groupID'],"博士生"));
+        }     
+    }
 
 } 
 ?>

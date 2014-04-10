@@ -177,10 +177,10 @@ class group_model extends CI_Model{
 	{
         $className = cleanString($className);
 		if (strlen($className)<1) return errorMessage(-1,'请输入班级名称');
-		$classCount = $this->db->from('group_list')->where('class',$className)->get()->result_array();
-		if(count($classCount) != 0){
-			return errorMessage(-1,'班级名已存在');
-		}
+//		$classCount = $this->db->from('group_list')->where('class',$className)->get()->result_array();
+//		if(count($classCount) != 0){
+//			return errorMessage(-1,'班级名已存在');
+//		}
 		if ($departmentID == 0) return errorMessage(-1,'请选择院系');
 		$tmp = $this->getClassList($departmentID);
 		$num = count($tmp);

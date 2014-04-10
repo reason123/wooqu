@@ -38,5 +38,11 @@ class Test extends CI_Controller{
       }
     }
   }
+
+    function test_alipay() {
+        $this->load->model("alipay_model","alipay");
+        echo json_encode($this->alipay->do_return());
+    }
+
 }
 ?>
