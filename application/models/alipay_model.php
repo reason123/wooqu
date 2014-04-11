@@ -19,13 +19,13 @@ class alipay_model extends CI_Model{
     //初始化参数
     private  function _init_config(){
         //合作身份者id，以2088开头的16位纯数字
-        $this->alipay_config['partner']  = '2088701xxxxxxxxx';
+        $this->alipay_config['partner']  = '2088202356480752';
                         
         //安全检验码，以数字和字母组成的32位字符
-        $this->alipay_config['key'] = 'xxxxxxxxxxxxxxxxxxxxxxxxx';
+        $this->alipay_config['key'] = '7qymksjstme3lpr5aqedcvu9d4q89a3e';
                                        
         //签约支付宝账号或卖家支付宝帐户
-        $this->alipay_config['seller_email'] = 'ggmanage@pp.cc';
+        $this->alipay_config['seller_email'] = 'zsy900705@qq.com';
                                                
         //页面跳转路径
         $this->alipay_config['notify_url'] = '';

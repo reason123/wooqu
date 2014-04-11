@@ -74,7 +74,7 @@ function makeInfo(data) {
 					    "<textarea rows=3 class=\"form-control\" name=\"illustration\">"+data.illustration+"</textarea>"+
     				"</div>"+
 	    		"</div>"+
-			    "<div class=\"form-group\">"+
+			    "<div class=\"form-group hide\">"+
 				    "<label class=\"col-lg-3 control-label\">加入群组</label>"+
 				    "<div class=\"col-lg-5\">"+
 					    "<input type=\"text\" class=\"form-control\" name=\"groups\" value=\""+data.groups+"\">"+
