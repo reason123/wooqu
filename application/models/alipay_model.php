@@ -20,12 +20,12 @@ class alipay_model extends CI_Model{
     private  function _init_config(){
         //合作身份者id，以2088开头的16位纯数字
         $this->alipay_config['partner']  = '2088202356480752';
-                        
+
         //安全检验码，以数字和字母组成的32位字符
         $this->alipay_config['key'] = '7qymksjstme3lpr5aqedcvu9d4q89a3e';
                                        
         //签约支付宝账号或卖家支付宝帐户
-        $this->alipay_config['seller_email'] = 'zsy900705@qq.com';
+        $this->alipay_config['seller_email'] = 'zsy19900517@qq.com';
                                                
         //页面跳转路径
         $this->alipay_config['notify_url'] = '';
@@ -40,29 +40,44 @@ class alipay_model extends CI_Model{
         $this->alipay_config['input_charset'] = strtolower('utf-8');
                                                                          
         //ca证书路径地址，用于curl中ssl校验,请保证cacert.pem文件在当前文件夹目录中
-        $this->alipay_config['cacert'] = $APPPATH.'third_party/alipay/cacert.pem';
+        $this->alipay_config['cacert'] = APPPATH.'third_party/alipay/cacert.pem';
                                                                                  
         //访问模式,根据自己的服务器是否支持ssl访问，若支持请选择https；若不支持请选择http
-        $this->alipay_config['transport'] = 'https';
+        $this->alipay_config['transport'] = 'http';
                                                      
     }
 
 
-    public function do_alipay(){
+    public function do_alipay($subject,$body,$price,$out_trade_no){
         
         include_once APPPATH.'third_party/alipay/alipay_submit.class.php';
         
-        $data = $this->input->post();
- 
-        
-        $out_trade_no = createRandomStr(16);
-        $subject = $data['subject'];
-        $body = $data['body'];
-        $total_fee = $data['pay_money'];
         
         //构造要请求的参数数组，无需改动
-        $parameter = array(
-            "service" => "create_direct_pay_by_user",
+    	$parameter = array(
+	    	"service" => "create_partner_trade_by_buyer",
+		    "partner" => trim($this->alipay_config['partner']),
+		    "payment_type"	=> "1",
+            "notify_url"    =>  trim($this->alipay_config['notify_url']),
+            "return_url"    => trim($this->alipay_config['return_url']),
+            "seller_email"  => trim($this->alipay_config['seller_email']),//支付宝帐户,
+		    "subject"	=> $subject,
+		    "price"	=> $price,
+		    "quantity"	=> "1",
+		    "logistics_fee"	=> "0.00",
+		    "logistics_type"	=> "EXPRESS",
+		    "logistics_payment"	=> "SELLER_PAY",
+		    "body"	=> $body,
+            "show_url"    => "",//商品展示地址
+		    "receive_name"	=> "张三",
+		    "receive_address"	=> "清华大学",
+		    "receive_zip"	=> "528400",
+		    "receive_phone"	=> "0571-88158090",
+		    "receive_mobile"	=> "13312341234",
+            "_input_charset"    => trim(strtolower($this->alipay_config['input_charset']))
+        );
+       /* $parameter = array(
+            "service" => "create_partner_trade_by_buyer",
             "partner" => trim($this->alipay_config['partner']),
             "payment_type"    => '1',
             "notify_url"    =>  trim($this->alipay_config['notify_url']),
@@ -71,25 +86,16 @@ class alipay_model extends CI_Model{
             "out_trade_no"    => $out_trade_no,//商户订单号
             "subject"    => $subject,//订单名称
             "body"    => $body,//必填,订单描述
-            "total_fee"    => 0.01,//必填,付款金额
+            "total_fee"    => $total_fee,//必填,付款金额
             "show_url"    => SITE_URL . '/member/pay/order',//商品展示地址
             "anti_phishing_key"    => '',//防钓鱼时间戳
             "exter_invoke_ip"    => get_client_ip(),//客户端的IP地址
             "_input_charset"    => trim(strtolower($this->alipay_config['input_charset']))
-        );
-        
-        
-        //这里应该生成订单了
-    
-        
-        //保存发票
-      
-        
-        
+        );*/
         //建立请求
         $alipaySubmit = new AlipaySubmit($this->alipay_config);
         $html_text = $alipaySubmit->buildRequestForm($parameter,"get", "确认");
-        echo $html_text;
+        return $html_text;
     }
     
  
