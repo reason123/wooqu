@@ -312,7 +312,7 @@ class Groupbuy extends CI_Controller {
 		
 		$orderID = $this->groupbuy->submitOrder($shopid, $shopname, $loginName, $order, $amount, $comment,$_POST["orderMessage"]);
 		$ret = array( "content"=>"成功提交！", "error"=>"" );
-        if ($shop['alipay']=='ON')
+        if ($shop['alipay'] == 'ON')
         {
             header('Location: /alipay/do_alipay_groupbuy?id='.$orderID);
             die();
