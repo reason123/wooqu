@@ -71,7 +71,7 @@ class alipay extends CI_Controller {
         echo $html_text;
     }    
 
-    public fucntion do_alipay_groupbuy()
+    public function do_alipay_groupbuy()
     {
         if (!isset($_GET['id'])) {
             echo "No order ID!";
