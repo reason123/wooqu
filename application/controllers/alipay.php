@@ -115,7 +115,7 @@ class alipay extends CI_Controller {
         } else {
             //验证失败
             //如要调试，请看alipay_notify.php页面的verifyReturn函数
-            echo "验证失败";
+            echo "verify failed!";
         }
     }
     
