@@ -43,11 +43,7 @@ class alipay extends CI_Controller {
 	}
 
     private function do_alipay($subject,$price,$out_trade_no){
-        
         include_once APPPATH.'third_party/alipay/alipay_submit.class.php';
-        
-        
-        //构造要请求的参数数组，无需改动
     	$parameter = array(
 	    	"service" => "create_partner_trade_by_buyer",
 		    "partner" => trim($this->alipay_config['partner']),
@@ -79,12 +75,13 @@ class alipay extends CI_Controller {
         };               
         
 		$this->load->model('groupbuy_model', 'gb');
-        $order = $this->gb->getOrderByID($_GET['id']);
+        $tmp = $this->gb->getOrderByID($_GET['id']);
+        $order = $tmp[0];
         if ($order['alipay'] == "FINISHED") {
             echo "the order is finished.";
             return;
         }
-        do_alipay("hellothu网团购支付",$order['amount'],"gb".$order['ID']);
+        $this->do_alipay("hellothu网团购支付",$order['amount'],"gb".$order['id']);
     }
     
     public function do_return(){
