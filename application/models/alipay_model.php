@@ -17,10 +17,10 @@ class alipay_model extends CI_Model{
         $this->alipay_config['seller_email'] = 'zsy19900517@qq.com';
                                                
         //页面跳转路径
-        $this->alipay_config['notify_url'] = 'https://www.hellothu.com/';
+        $this->alipay_config['notify_url'] = 'https://www.hellothu.com/alipay/do_notify';
                                                         
         //服务器异步通知路径
-        $this->alipay_config['return_url'] = 'https://www.hellothu.com/';
+        $this->alipay_config['return_url'] = 'https://www.hellothu.com/alipay/do_return';
                                                                         
         //签名方式 不需修改
         $this->alipay_config['sign_type'] = strtoupper('MD5');

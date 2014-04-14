@@ -310,8 +310,13 @@ class Groupbuy extends CI_Controller {
 			//$this->groupbuy->plusCargo($order[$i][0], $order[$i][1]);
 			$this->goods->increaseGoodsTotal($order[$i][0], $order[$i][1]);
 		
-		$this->groupbuy->submitOrder($shopid, $shopname, $loginName, $order, $amount, $comment,$_POST["orderMessage"]);
+		$orderID = $this->groupbuy->submitOrder($shopid, $shopname, $loginName, $order, $amount, $comment,$_POST["orderMessage"]);
 		$ret = array( "content"=>"成功提交！", "error"=>"" );
+        if ($shop['alipay']=='ON')
+        {
+            header('Location: /alipay/do_alipay_groupbuy?id='.$orderID);
+            die();
+        }
 		echo json_encode($ret);
 	}
 
