@@ -17,10 +17,10 @@ class alipay_model extends CI_Model{
         $this->alipay_config['seller_email'] = 'zsy19900517@qq.com';
                                                
         //页面跳转路径
-        $this->alipay_config['notify_url'] = 'http://www.xxx.com/create_partner_trade_by_buyer-PHP-UTF-8/notify_url.php';
+        $this->alipay_config['notify_url'] = 'https://www.hellothu.com/';
                                                         
         //服务器异步通知路径
-        $this->alipay_config['return_url'] = 'http://www.xxx.com/create_partner_trade_by_buyer-PHP-UTF-8/return_url.php';
+        $this->alipay_config['return_url'] = 'https://www.hellothu.com/';
                                                                         
         //签名方式 不需修改
         $this->alipay_config['sign_type'] = strtoupper('MD5');
@@ -46,7 +46,7 @@ class alipay_model extends CI_Model{
     }
 
 
-    public function do_alipay($subject,$body,$price,$out_trade_no){
+    public function do_alipay($subject,$price,$out_trade_no){
         
         include_once APPPATH.'third_party/alipay/alipay_submit.class.php';
         
@@ -66,13 +66,13 @@ class alipay_model extends CI_Model{
 		    "logistics_fee"	=> "0.00",
 		    "logistics_type"	=> "EXPRESS",
 		    "logistics_payment"	=> "SELLER_PAY",
-		    "body"	=> $body,
-            "show_url"    => "http://wooqu.org",//商品展示地址
-		    "receive_name"	=> "张三",
-		    "receive_address"	=> "清华大学",
-		    "receive_zip"	=> "528400",
-		    "receive_phone"	=> "0571-88158090",
-		    "receive_mobile"	=> "13312341234",
+		    //"body"	=> $body,
+            //"show_url"    => "http://wooqu.org",//商品展示地址
+		    //"receive_name"	=> "张三",
+		    //"receive_address"	=> "清华大学",
+		    //"receive_zip"	=> "528400",
+		    //"receive_phone"	=> "0571-88158090",
+		    //"receive_mobile"	=> "13312341234",
             "_input_charset"    => trim(strtolower($this->alipay_config['input_charset']))
         );
        /* $parameter = array(
@@ -100,7 +100,7 @@ class alipay_model extends CI_Model{
     
  
     
-    public function do_return(){
+/*    public function do_return(){
         
         include_once APPPATH.'third_party/alipay/alipay_notify.class.php';
         $alipayNotify = new AlipayNotify($this->alipay_config);
@@ -138,7 +138,7 @@ class alipay_model extends CI_Model{
 
         
         
-    }
+    }*/
 		
 }
 
