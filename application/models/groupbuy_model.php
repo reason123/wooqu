@@ -190,7 +190,7 @@ class groupbuy_model extends CI_Model{
      * @param string $username
      */
     function getGroupbuyByUserName($username){
-		$sql = "SELECT DISTINCT `id`,`title`,`status`,`comment`,`howtopay`,`illustration`,`deadline`,`pickuptime`,`source` FROM `groupbuy_list` WHERE `username`=? and available=1 order by groupbuy_list.createTime DESC";
+		$sql = "SELECT DISTINCT `id`,`title`,`status`,`comment`,`howtopay`,`illustration`,`deadline`,`pickuptime`,`source`,alipay FROM `groupbuy_list` WHERE `username`=? and available=1 order by groupbuy_list.createTime DESC";
         $groupbuy_list = $this->db->query($sql,array($username))->result_array();
         return $groupbuy_list;
     }
@@ -371,9 +371,9 @@ class groupbuy_model extends CI_Model{
 	 */
 	function getShopById($id) {
 		$id = intval($id);
-		if ($this->isOwnShop($id)) {
-	    	return $this->getGroupbuyByUserNameAndID($_SESSION["loginName"], $id);
-		}
+	//	if ($this->isOwnShop($id)) {
+	  //  	return $this->getGroupbuyByUserNameAndID($_SESSION["loginName"], $id);
+//		}
         /**
            $sql = "SELECT DISTINCT groupbuy_list.`id`,`title`,`status`,`comment`,`howtopay`,`illustration`,`deadline`,`pickuptime`,`source`,goodslist,createTime FROM `groupbuy_list`,`groupbuy_act` WHERE groupbuy_list.`id`=".$id." and groupbuy_list.`id`=groupbuy_act.`groupbuyID` and (";
            $count = 0;
@@ -385,7 +385,6 @@ class groupbuy_model extends CI_Model{
            $sql .= ") ORDER BY groupbuy_list.`id`";
         **/
 		$sql = "SELECT DISTINCT groupbuy_list.`id`,`title`,`status`,`comment`,`howtopay`,`illustration`,`deadline`,`pickuptime`,`source`, alipay, goodslist,createTime FROM `groupbuy_list`,`groupbuy_act` WHERE groupbuy_list.`id`=".$id." and groupbuy_list.`id`=groupbuy_act.`groupbuyID` ORDER BY groupbuy_list.`id`";
-        
 		$res = $this->db->query($sql) or die(mysql_error());
 		$arr = $res->result_array();
 		foreach ($arr as $key => $value) {
@@ -463,7 +462,7 @@ class groupbuy_model extends CI_Model{
         $num = $this->db->query($sql,array($shopid))->result_array();
         $sql = "UPDATE feed_list SET total=? WHERE type=1 AND sourceID = ?";
         $this->db->query($sql,array($num[0]['total']+1,$shopid));
-        return orderid;
+        return $orderid;
 	}
 
 	/**
@@ -644,6 +643,12 @@ class groupbuy_model extends CI_Model{
             $this->db->query($sql,array($this->getGroupbuyTotalByID($gbID['ID']),$gbID['ID']));
         }
     }
+
+	function setOrderAlipayByID($orderID,$str)
+	{
+		$sql = "UPDATE `groupbuy_order` SET alipay =? WHERE `ID`=?";
+		$res = $this->db->query($sql,array($str,$orderID));
+	}	
 }
 
 ?>

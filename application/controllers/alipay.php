@@ -60,11 +60,11 @@ class alipay extends CI_Controller {
 		    "logistics_payment"	=> "SELLER_PAY",
             "_input_charset"    => trim(strtolower($this->alipay_config['input_charset']))
         );
-        //return json_encode($parameter);
+       // echo json_encode($parameter);
         //建立请求
         $alipaySubmit = new AlipaySubmit($this->alipay_config);
         $html_text = $alipaySubmit->buildRequestForm($parameter,"get", "确认");
-        echo $html_text;
+        echo "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head>".$html_text."</body></html>";
     }    
 
     public function do_alipay_groupbuy()
@@ -81,33 +81,41 @@ class alipay extends CI_Controller {
             echo "the order is finished.";
             return;
         }
-        $this->do_alipay("hellothu网团购支付",$order['amount'],"gb".$order['id']);
+        $this->do_alipay("Hellothu团购",$order['amount'],"gb".$order['id']);
     }
     
     public function do_return(){
         
         include_once APPPATH.'third_party/alipay/alipay_notify.class.php';
-        $alipayNotify = new AlipayNotify($this->alipay_config);
+
+        $alipayNotify = new AlipayNotify($alipay_config);
         $verify_result = $alipayNotify->verifyReturn();
-        
-        //商户订单号
-        $out_trade_no = $this->input->get('out_trade_no');
-        //支付宝交易号
-        $trade_no = $this->input->get('trade_no');
-        //交易状态
-        $trade_status = $this->input->get('trade_status'); 
-        //交易时间
-        $notify_time = strtotime($this->input->get('notify_time'));
-        //防止重复提交
-        
-      
-        if($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS') {
- 
-            //根据订单号（out_trade_no）更新订单状态
-            
-        }else {
-            //订单失败   
-            
+        if($verify_result) {
+            //商户订单号
+            $out_trade_no = $_GET['out_trade_no'];
+            //支付宝交易号
+            $trade_no = $_GET['trade_no'];
+            //交易状态
+            $trade_status = $_GET['trade_status'];
+            if($_GET['trade_status'] == 'WAIT_SELLER_SEND_GOODS') {
+                //判断该笔订单是否在商户网站中已经做过处理
+                //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
+                //如果有做过处理，不执行商户的业务程序
+                $no_sign = substr($out_trade_no,0,2);
+                $orderID = substr($out_trade_no,2);
+                if ($no_sign == "gb") {
+                    $this->load->model('groupbuy_model','gb');
+                    $order = $this->gb->getOrderById($orderID);
+                    if ($order[0]['alipay'] != "FINISHED") $this->gb->setOrderAlipayByID($orderID,"FINISHED");
+                    header('Location: /userpage/groupbuyOrder');
+                }
+            } else {
+                echo "trade_status=".$_GET['trade_status'];
+            }     
+        } else {
+            //验证失败
+            //如要调试，请看alipay_notify.php页面的verifyReturn函数
+            echo "验证失败";
         }
     }
     

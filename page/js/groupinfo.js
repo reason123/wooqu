@@ -298,7 +298,7 @@ function subOrd() {
 			var data = $.parseJSON(jsdata);
 			if (data.error=="") {
 				alert(data.content);
-				window.location.href="/userpage/groupbuyOrder";
+				window.location.href = data.href;
 			} else {
 				alert(data.error);
 				$("#confirmModal").modal("hide");

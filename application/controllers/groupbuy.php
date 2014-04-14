@@ -272,6 +272,7 @@ class Groupbuy extends CI_Controller {
 		$this->load->model('groupbuy_model', 'groupbuy');
 		$shop = $this->groupbuy->getShopById($shopid);
 		$shopname = $shop[0]["title"];
+        $shopAlipay = $shop[0]["alipay"];
 		if ($shop[0]["status"] == 0) {
 			$ret = array("error"=>"商店已过期");
 			echo json_encode($ret);
@@ -311,7 +312,12 @@ class Groupbuy extends CI_Controller {
 			$this->goods->increaseGoodsTotal($order[$i][0], $order[$i][1]);
 		
 		$orderID = $this->groupbuy->submitOrder($shopid, $shopname, $loginName, $order, $amount, $comment,$_POST["orderMessage"]);
-		$ret = array( "content"=>"成功提交！", "error"=>"", "orderID"=>$orderID );
+        if ($shopAlipay == "ON")
+        {
+		    $ret = array( "content"=>"成功提交！", "error"=>"", "href"=>"/alipay/do_alipay_groupbuy?id=".$orderID );
+        } else {
+		    $ret = array( "content"=>"成功提交！", "error"=>"", "href"=>"/userpage/groupbuyOrder" );
+        }
 		echo json_encode($ret);
 	}
 
