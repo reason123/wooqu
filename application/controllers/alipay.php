@@ -17,10 +17,8 @@ class alipay extends CI_Controller {
         //签约支付宝账号或卖家支付宝帐户
         $this->alipay_config['seller_email'] = 'zsy19900517@qq.com';
                                                
-        //页面跳转路径
         $this->alipay_config['notify_url'] = 'https://www.hellothu.com/alipay/do_notify';
                                                         
-        //服务器异步通知路径
         $this->alipay_config['return_url'] = 'https://www.hellothu.com/alipay/do_return';
                                                                         
         //签名方式 不需修改
@@ -87,7 +85,6 @@ class alipay extends CI_Controller {
     public function do_return(){
         
         include_once APPPATH.'third_party/alipay/alipay_notify.class.php';
-
         $alipayNotify = new AlipayNotify($this->alipay_config);
         $verify_result = $alipayNotify->verifyReturn();
         if($verify_result) {
