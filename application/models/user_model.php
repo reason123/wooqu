@@ -159,6 +159,7 @@ class user_model extends CI_Model{
     function getMyInfo(){
         $sql = "select loginName, realName, nickName, phoneNumber, class, studentID, address, completed from user_list where ID=?";
         $tmp = $this->db->query($sql, array($_SESSION['userID']))->result_array();
+        return $tmp[0];
         return array_merge($tmp[0],array('session'=>$_SESSION));
         return array_merge($tmp[0],array('basepermission'=>$_SESSION['basepermission']));
     }

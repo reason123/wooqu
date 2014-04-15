@@ -19,9 +19,9 @@ class alipay extends CI_Controller {
         //签约支付宝账号或卖家支付宝帐户
         $this->alipay_config['seller_email'] = 'zsy19900517@qq.com';
                                                
-        $this->alipay_config['notify_url'] = 'http://dev.wooqu.org/alipay/do_notify';
+        $this->alipay_config['notify_url'] = 'https://www.hellothu.com/alipay/do_notify';
                                                         
-        $this->alipay_config['return_url'] = 'http://dev.wooqu.org/alipay/do_return';
+        $this->alipay_config['return_url'] = 'https://www.hellothu.com/alipay/do_return';
                                                                         
         //签名方式 不需修改
         $this->alipay_config['sign_type'] = strtoupper('MD5');
@@ -44,6 +44,8 @@ class alipay extends CI_Controller {
 
     private function do_alipay($subject,$price,$out_trade_no){
         include_once APPPATH.'third_party/alipay/alipay_submit.class.php';
+        $this->load->model('user_model','user');
+        $user = $this->user->getMyInfo();
     	$parameter = array(
 	    	"service" => "create_partner_trade_by_buyer",
 		    "partner" => trim($this->alipay_config['partner']),
@@ -58,6 +60,11 @@ class alipay extends CI_Controller {
 		    "logistics_fee"	=> "0.00",
 		    "logistics_type"	=> "EXPRESS",
 		    "logistics_payment"	=> "SELLER_PAY",
+		    "receive_name"	=> $user['realName'],
+		    "receive_address"	=> $user['address'],
+		    "receive_zip"	=> "528400",
+		    "receive_phone"	=> "0571-88158090",
+		    "receive_mobile"	=> $user['phoneNumber'],
             "_input_charset"    => trim(strtolower($this->alipay_config['input_charset']))
         );
        // echo json_encode($parameter);
@@ -81,6 +88,7 @@ class alipay extends CI_Controller {
             echo "the order is finished.";
             return;
         }
+
         $this->do_alipay("Hellothu团购",$order['amount'],"gb".$order['id']);
     }
     
