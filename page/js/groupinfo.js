@@ -281,11 +281,29 @@ function subOrd() {
 	    submitting = false;
         return;
     }
+
+    radios = $("input[name='payType']");
+    var str_payType = "";
+    if (radios[0]) {
+        checked = false;
+        if (radios.length == 0) checked = true; else {
+            if (typeof $("input:checked").val() != "undefined") {
+                checked = true;
+                str_payType = $("input:checked").val();
+            }
+        }
+        if (checked == false) {
+            alert("请选择支付方式！");
+	        submitting = false;
+            return;
+        }
+    }
     var param = {
 		id: document.getElementById("groupID").value, 
 		list: JSON.stringify(order), 
 		comment: document.getElementById("comment").value,
-        orderMessage: str
+        orderMessage: str,
+        payType: str_payType
     };
     if(userStatus != 'Yes'){
         param['realname'] = $('#realname').val();
@@ -351,7 +369,7 @@ $(function(){
 					$(".stateInfo").css("background-color", "#85BD11");
 				} else {
 					$(".stateInfo").html("订购截止");
-                    alert("订购已截至！");
+                    alert("订购已截止！");
 					$(".stateInfo").css("background-color", "#FF9C00");
 				}
 			});

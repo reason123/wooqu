@@ -312,8 +312,7 @@ class Groupbuy extends CI_Controller {
 			$this->goods->increaseGoodsTotal($order[$i][0], $order[$i][1]);
 		
 		$orderID = $this->groupbuy->submitOrder($shopid, $shopname, $loginName, $order, $amount, $comment,$_POST["orderMessage"]);
-        if ($shopAlipay == "ON")
-        {
+        if ($shopAlipay == "ON_ONLY" || ($shopAlipay =="ON" && $_POST['payType'] == 'ON')) {
 		    $ret = array( "content"=>"成功提交！", "error"=>"", "href"=>"/alipay/do_alipay_groupbuy?id=".$orderID );
         } else {
 		    $ret = array( "content"=>"成功提交！", "error"=>"", "href"=>"/userpage/groupbuyOrder" );
@@ -537,8 +536,9 @@ class Groupbuy extends CI_Controller {
 		$groupID = $_GET['id'];
         $this->load->model('groupbuy_model','groupbuy');
         $orderMessageList = $this->groupbuy->getOrderMessageList($groupID);
+        $groupbuyInfo = $this->groupbuy->getGroupbuyInfoByID($groupID);
         $this->load->view('base/header',array('page'=>'groupinfo','type'=>'groupbuy'));
-        $this->load->view('groupbuy/groupInfo', array('groupID' => $groupID,'orderMessageList'=>$orderMessageList));
+        $this->load->view('groupbuy/groupInfo', array('groupID' => $groupID,'orderMessageList'=>$orderMessageList,'groupbuyInfo'=>$groupbuyInfo));
         $this->load->view('base/footer');
 	}
     

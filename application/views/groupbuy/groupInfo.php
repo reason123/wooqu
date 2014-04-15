@@ -75,7 +75,7 @@
                        if (count($orderMessageList) == 0){
                             echo "祝您购物愉快！";
                        } else {                   
-                            echo "请选择你的订购信息！<form>";
+                            echo "<strong>请选择你的订购信息！</strong><form>";
                             foreach ($orderMessageList as $om)
                             {
                                 echo "<input type='radio' name='orderMessage' value='".$om."'>".$om."</input><br/>";
@@ -83,6 +83,13 @@
                             echo "</form>";
                        }
                     ?> 
+                </div>
+				<div class="alert alert-warning">
+                    <strong>支付方式:</strong><br>
+                    <?php if ($groupbuyInfo['alipay'] == 'ON_ONLY') echo "支付宝支付"; else
+                        if ($groupbuyInfo['alipay'] == 'ON') echo "<form><input type='radio' name='payType' value='ON'>支付宝支付</input>&nbsp;&nbsp;&nbsp;&nbsp;<input type='radio' name='payType' value='OFF'>线下支付</input><form>"; else
+                        if ($groupbuyInfo['alipay'] == 'OFF') echo "线下支付";
+                    ?>
                 </div>
 			</div>
 			<div class="modal-footer">
