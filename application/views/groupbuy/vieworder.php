@@ -27,6 +27,7 @@
       <th>总金额</th>
       <th>详细信息</th>
       <th>备注</th>
+      <th>支付状态</th>
       <!--<th>订购信息</th>-->
       <?php
         if (!((count($orderMessageList)==0)||(count($orderMessageList)==1 && ($orderMessageList[0]=="")))) {
@@ -71,6 +72,7 @@
       }?>
       </td>
       <td><?php echo $order['comment'] ?></td>
+      <td><?php echo $order['alipay'] ?></td>
       <?php 
         if (!((count($orderMessageList)==0)||(count($orderMessageList)==1 && ($orderMessageList[0]=="")))) {
             echo "<td>".$order['orderMessage']."</td>";
