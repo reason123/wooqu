@@ -40,8 +40,10 @@ class Test extends CI_Controller{
   }
 
     function test_alipay() {
-        $this->load->model("alipay_model","alipay");
-        echo $this->alipay->do_alipay("测试1","0.10",123456710);
+            echo $_SERVER['SERVER_NAME'];
+
+//        $this->load->model("alipay_model","alipay");
+//        echo $this->alipay->do_alipay("测试1","0.10",123456710);
     }
 
 }
