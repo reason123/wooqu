@@ -162,7 +162,7 @@ class groupbuy_model extends CI_Model{
             $this->permission_model->noPermission(1);
         }
 
-        $sql = "select groupbuy_order.ID, realName,`list`,amount,class, user_list.phoneNumber,user_list.address,defaultGroupID,comment,orderMessage 
+        $sql = "select groupbuy_order.ID, realName,`list`,amount,class, user_list.phoneNumber,user_list.address,defaultGroupID,comment,orderMessage,alipay 
             from user_list,groupbuy_order 
             where userID=user_list.ID and shopid=? and del=0 
             order by class asc";
