@@ -5,6 +5,8 @@ class alipay extends CI_Controller {
        
     //支付宝接口配置信息
     private $alipay_config;
+
+    private $verify_url = 'https://mapi.alipay.com/gateway.do';
     
     //初始化参数
     private  function _init_config(){
@@ -17,9 +19,9 @@ class alipay extends CI_Controller {
         //签约支付宝账号或卖家支付宝帐户
         $this->alipay_config['seller_email'] = 'zsy19900517@qq.com';
                                                
-        $this->alipay_config['notify_url'] = 'https://www.hellothu.com/alipay/do_notify';
+        $this->alipay_config['notify_url'] = 'http://dev.wooqu.org/alipay/do_notify';
                                                         
-        $this->alipay_config['return_url'] = 'https://www.hellothu.com/alipay/do_return';
+        $this->alipay_config['return_url'] = 'http://dev.wooqu.org/alipay/do_return';
                                                                         
         //签名方式 不需修改
         $this->alipay_config['sign_type'] = strtoupper('MD5');
@@ -86,7 +88,8 @@ class alipay extends CI_Controller {
         
         include_once APPPATH.'third_party/alipay/alipay_notify.class.php';
         $alipayNotify = new AlipayNotify($this->alipay_config);
-        $verify_result = $alipayNotify->verifyReturn();
+        //$verify_result = $alipayNotify->verifyReturn();
+        $verify_result = $this->check_alipay_request($_GET['notify_id']);
         if($verify_result) {
             //商户订单号
             $out_trade_no = $_GET['out_trade_no'];
@@ -125,7 +128,15 @@ class alipay extends CI_Controller {
 //        include_once APPPATH.'third_party/alipay/alipay_notify.class.php';  
 //        return APPPATH.'third_party/alipay/alipay_notify.class.php';  
     }
-		
+
+    private function check_alipay_request($notify_id_tmp){
+        return myGet($this->verify_url, array(
+                                              'service'=>'notify_verify',
+                                              'partner'=>trim($this->alipay_config['partner']),
+                                              'notify_id'=>$notify_id_tmp
+                                              )) == 'true'?true: false;
+    }
+    
 }
 
 ?>

@@ -101,8 +101,20 @@ function myGet($url,$param){
 		$paramString[strlen($paramString) - 1] = '';
 
 	if(!checkSae()){
-		$res = http_get($url.$paramString);
-		return http_parse_message($res)->body;
+		//$res = http_get($url.$paramString);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url.$paramString);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);    // 要求结果为字符串且输出到屏幕上
+        curl_setopt($ch, CURLOPT_HEADER, 0); // 不要http header 加快效率
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; MSIE 5.01; Windows NT 5.0)');
+        curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); // https请求 不验证证书和hosts
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+        // Get the response and close the channel.
+        $response = curl_exec($ch);
+        curl_close($ch);
+        return $response;
+		//return http_parse_message($res)->body;
 		//return $paramString;
 	}else{
 		$saePost = new SaeFetchurl();
