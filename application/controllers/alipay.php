@@ -207,7 +207,7 @@ class alipay extends CI_Controller {
                                               )) == 'true'?true: false;
     }
     
-/*    private function setOrderAlipay($out_trade_no,$str) {
+    private function setOrderAlipay($out_trade_no,$str) {
         $no_sign = substr($out_trade_no,0,2);
         $orderID = substr($out_trade_no,2);
         if ($no_sign == "gb") {
@@ -215,7 +215,7 @@ class alipay extends CI_Controller {
             $order = $this->gb->getOrderById($orderID);
             if ($order[0]['alipay'] != "FINISHED") $this->gb->setOrderAlipayByID($orderID,$str);
         }
-   }*/
+    }
                                             
     
 }
