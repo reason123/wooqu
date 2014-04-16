@@ -93,7 +93,6 @@ class alipay extends CI_Controller {
     }
     
     public function do_return(){
-        
         include_once APPPATH.'third_party/alipay/alipay_notify.class.php';
         $alipayNotify = new AlipayNotify($this->alipay_config);
         //$verify_result = $alipayNotify->verifyReturn();
@@ -130,7 +129,7 @@ class alipay extends CI_Controller {
     
     //确保公网能访问
     public function do_notify() {
-        include_once APPPATH.'third_party/alipay/alipay_notify.class.php';
+/*        include_once APPPATH.'third_party/alipay/alipay_notify.class.php';
         $alipayNotify = new AlipayNotify($this->alipay_config);
         //$verify_result = $alipayNotify->verifyReturn();
         $verify_result = $this->check_alipay_request($_GET['notify_id']);
@@ -196,7 +195,7 @@ class alipay extends CI_Controller {
             //调试用，写文本函数记录程序运行情况是否正常
             //logResult("这里写入想要调试的代码变量值，或其他运行的结果记录");
 
-        }
+        }*/
     }
 
     private function check_alipay_request($notify_id_tmp){
@@ -207,7 +206,7 @@ class alipay extends CI_Controller {
                                               )) == 'true'?true: false;
     }
     
-    private function setOrderAlipay($out_trade_no,$str) {
+/*    private function setOrderAlipay($out_trade_no,$str) {
         $no_sign = substr($out_trade_no,0,2);
         $orderID = substr($out_trade_no,2);
         if ($no_sign == "gb") {
@@ -215,7 +214,7 @@ class alipay extends CI_Controller {
             $order = $this->gb->getOrderById($orderID);
             if ($order[0]['alipay'] != "FINISHED") $this->gb->setOrderAlipayByID($orderID,$str);
         }
-   }
+   }*/
                                             
     
 }
