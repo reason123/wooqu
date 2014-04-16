@@ -96,7 +96,7 @@ class alipay extends CI_Controller {
         include_once APPPATH.'third_party/alipay/alipay_notify.class.php';
         $alipayNotify = new AlipayNotify($this->alipay_config);
         //$verify_result = $alipayNotify->verifyReturn();
-        $verify_result = $this->check_alipay_request($_GET['notify_id']);
+        //$verify_result = $this->check_alipay_request($_GET['notify_id']);
         if($verify_result) {
             //商户订单号
             $out_trade_no = $_GET['out_trade_no'];
@@ -123,16 +123,17 @@ class alipay extends CI_Controller {
             //验证失败
             //如要调试，请看alipay_notify.php页面的verifyReturn函数
             echo "verify failed!";
+            header('Location: /userpage/groupbuyOrder');
         }
     }
     
     
     //确保公网能访问
     public function do_notify() {
-/*        include_once APPPATH.'third_party/alipay/alipay_notify.class.php';
+        include_once APPPATH.'third_party/alipay/alipay_notify.class.php';
         $alipayNotify = new AlipayNotify($this->alipay_config);
-        //$verify_result = $alipayNotify->verifyReturn();
-        $verify_result = $this->check_alipay_request($_GET['notify_id']);
+        $verify_result = $alipayNotify->verifyReturn();
+        //$verify_result = $this->check_alipay_request($_GET['notify_id']);
 
         if($verify_result) {
             //商户订单号
