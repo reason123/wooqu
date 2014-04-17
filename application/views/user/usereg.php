@@ -5,9 +5,9 @@
 		<div class="form-group">
 			<label class="control-label col-lg-3" for="inputLoginame"><span class="redColor">* </span>登录名</label>
 			<div class="col-lg-4">
-				<input type="text" name="regusername" class="form-control" id="inputLoginame" placeholder="loginame" value="<?php if(isset($username)) echo $username; ?>">
+				<input type="text" name="regusername" class="form-control" id="inputLoginame" placeholder="loginame" value="<?php if(isset($regusername)) echo $regusername; ?>">
 				<span class="remind">长度在4~16之间，a-z 0-9 _。</span><br/>
-				<?php echo form_error('username',"<span class='error'>","</span>");?>
+				<?php echo form_error('regusername',"<span class='error'>","</span>");?>
 			</div>
 		</div>
 		<div class="form-group">
@@ -23,7 +23,7 @@
 			<div class="col-lg-4">
 				<input class="form-control" type="password" name="repassword" id="inputrePassword" placeholder="repassword">
 				<span class="remind">请确认密码</span><br/>
-				<?php echo form_error('repassword',"<span class='error'>","</span>");?>
+				<?php echo form_error('regpassword',"<span class='error'>","</span>");?>
 			</div>
 		</div>
 		<div class="form-group">

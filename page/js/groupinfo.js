@@ -121,9 +121,7 @@ function toggleCargo(id){
         if (document.getElementById('typeof'+id+'_'+i)) {
             typeID = document.getElementById('typeof'+id+'_'+i).value;
             if (typeID != "") {
-                if (i == 1) typeList = $.parseJSON(cargo.typeList1); else
-                if (i == 2) typeList = $.parseJSON(cargo.typeList2); else
-                if (i == 3) typeList = $.parseJSON(cargo.typeList3);
+                typeList = $.parseJSON(cargo['typeList'+i]); 
                 strType += " "+typeList[typeID]+" ";
                 sign = makeSign(sign,typeID);
             }
@@ -280,9 +278,7 @@ function subOrd() {
         for (var i = 1; i <= 3; i++) {
             var typeID = sign2type(sign,i);
             if (typeID != -1) {
-                if (i == 1) typeList = $.parseJSON(cargoList[id].typeList1); else
-                if (i == 2) typeList = $.parseJSON(cargoList[id].typeList2); else
-                if (i == 3) typeList = $.parseJSON(cargoList[id].typeList3); 
+                typeList = $.parseJSON(cargoList[id]['typeList'+i]); 
                 type += " "+typeList[typeID]+" ";
             }
         }
