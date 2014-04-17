@@ -42,13 +42,39 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="input-group">
-                            <input id="typeText" type="text"  class="form-control" value=""></input>
+                            <input id="typeText1" type="text"  class="form-control" value=""></input>
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" onclick="addtype()">添加类型</button>
+                                <button class="btn btn-default" type="button" onclick="addtype(1)">添加一级类型</button>
                             </span>
                         </div><!-- /input-group -->
                     </div><!-- /.col-lg-6 -->
-                    <div class="btn-group" id='typeBody'>
+                    <div class="btn-group" id='typeBody1'>
+                    </div>
+                </div><!-- /.row -->
+                <br>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <input id="typeText2" type="text"  class="form-control" value=""></input>
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" onclick="addtype(2)">添加二级类型</button>
+                            </span>
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+                    <div class="btn-group" id='typeBody2'>
+                    </div>
+                </div><!-- /.row -->
+                <br>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <input id="typeText3" type="text"  class="form-control" value=""></input>
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" onclick="addtype(3)">添加三级类型</button>
+                            </span>
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+                    <div class="btn-group" id='typeBody3'>
                     </div>
                 </div><!-- /.row -->
 			</div>

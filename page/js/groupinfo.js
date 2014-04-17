@@ -1,4 +1,4 @@
-var ordList = new Object();
+var signList = new Object();
 var cargoList;
 var onSale = 1;
 var submitting = false;
@@ -43,6 +43,37 @@ function makeInfo(data) {
 	return res;
 }
 
+function makeTypeList(cnt,typelist,level)
+{
+    if (typelist.length == 0) return "";
+    var strTypeList = "";
+    strTypeList = "<select name='typeof"+cnt+"_"+level+"' id='typeof"+cnt+"_"+level+"'>";
+    for (typeID in typelist){
+        strTypeList = strTypeList+"<option value='"+typeID+"'>"+typelist[typeID]+"</option>";    
+    }
+    strTypeList = strTypeList+"</select><br><br>";
+    return strTypeList;
+}
+
+function makeSign(sign,type)
+{
+    if (type == "") type = -1;
+    return ""+sign+"_"+type;
+}
+
+function sign2id(sign)
+{
+   var strList = sign.split('_');
+   return strList[0];
+}
+
+function sign2type(sign,cnt)
+{
+   var strList = sign.split('_');
+   if (strList.length < cnt+1) return -1;
+   return strList[cnt];
+}
+
 function makeGood(data, cnt) {
 	var purchase = "", toggle="toggleCargo("+cnt+")";
 	if (onSale == 0) {
@@ -50,17 +81,9 @@ function makeGood(data, cnt) {
 		toggle="";
 	}
 
-    var typelist = $.parseJSON(data.typeList);
-
-    var strTypeList = "";
-    strTypeList = "<select name='typeof"+cnt+"' id='typeof"+cnt+"'>";
-    if (typelist.length>0)
-    {
-        for (x in typelist){
-            strTypeList = strTypeList+"<option value='"+typelist[x]+"'>"+typelist[x]+"</option>";    
-        }
-    }
-    strTypeList = strTypeList+"</select>";
+    var strTypeList = "<div>"+makeTypeList(cnt,$.parseJSON(data.typeList1),1)+
+                       makeTypeList(cnt,$.parseJSON(data.typeList2),2)+
+                       makeTypeList(cnt,$.parseJSON(data.typeList3),3)+"</div>"; 
 	var res = $(
 		"<div class=\"goodsInfo grayBack\">"+
 			"<div class=\"picContainer\">"+
@@ -80,43 +103,55 @@ function makeGood(data, cnt) {
 	return res;
 }
 
-function cargoInCart(id,type) {
-	return !(!ordList.hasOwnProperty(""+id+type) || ordList[""+id+type] == -1);
+function cargoInCart(sign) {
+	return !(!signList.hasOwnProperty(""+sign) || signList[""+sign] == -1);
 }
 
-function delCargo(id,type) {
-        
-    ordList[""+id+type] = -1;
-    $("#cartcargo"+id+type).remove();
+function delCargo(sign) {
+    signList[""+sign] = -1;
+    $("#cartcargo"+sign).remove();
 }
 
 function toggleCargo(id){
 	var cargo = cargoList[id];
-    var cargoType = document.getElementById('typeof'+id).value;
-    var strType = cargoType;
+    var strType = "";
+    var sign = id;
+    for (var i = 1; i <= 3; i++) {
+        var typeID = ""; 
+        if (document.getElementById('typeof'+id+'_'+i)) {
+            typeID = document.getElementById('typeof'+id+'_'+i).value;
+            if (typeID != "") {
+                if (i == 1) typeList = $.parseJSON(cargo.typeList1); else
+                if (i == 2) typeList = $.parseJSON(cargo.typeList2); else
+                if (i == 3) typeList = $.parseJSON(cargo.typeList3);
+                strType += " "+typeList[typeID]+" ";
+                sign = makeSign(sign,typeID);
+            }
+       }
+    }
     if (strType != "") strType = " ("+strType+")";
-	if (!cargoInCart(id,cargoType)) {
-		ordList[""+id+cargoType] = 1;
+	if (!cargoInCart(sign)) {
+		signList[""+sign] = 1;
 		$("#shopTable").append(
-			"<tr id='cartcargo"+id+cargoType+"'>"+
+			"<tr id='cartcargo"+sign+"'>"+
 				"<td width=10%>"+cargo.ID+"</td>"+
 				"<td width=30%>"+cargo.name+strType+"</td>"+
 				"<td width=15%> "+cargo.price+" "+cargo.priceType+"</td>"+
 				"<td width=15%>"+
-					"<input id='cartnum"+id+cargoType+"' onchange=\"updatePrice("+id+",'"+cargoType+"');\" maxlength='5' style='width:50px; font-size:14px;' value='1' type='text' />"+
+					"<input id='cartnum"+sign+"' onchange=\"updatePrice('"+sign+"');\" maxlength='5' style='width:50px; font-size:14px;' value='1' type='text' />"+
 					"&nbsp;&nbsp;"+
-					"<i class='countBtn icon-chevron-down' onclick='changeCartNum("+id+",-1,\""+cargoType+"\")'></i>"+
-					"<i class='countBtn icon-chevron-up' onclick='changeCartNum("+id+",1,\""+cargoType+"\")'></i>"+
+					"<i class='countBtn icon-chevron-down' onclick='changeCartNum(\""+sign+"\",-1)'></i>"+
+					"<i class='countBtn icon-chevron-up' onclick='changeCartNum(\""+sign+"\",1)'></i>"+
 				"</td>"+
-				"<td width=15%>¥ <span id='cartprice"+id+cargoType+"'>"+cargo.price+" "+cargo.priceType+"</span></td>"+
-				"<td width=5% ><a href='#' onclick='delCargo("+id+",\""+cargoType+"\")'>删除</a></td>"+
+				"<td width=15%>¥ <span id='cartprice"+sign+"'>"+cargo.price+"</span></td>"+
+				"<td width=5% ><a href='#' onclick='delCargo(\""+sign+"\")'>删除</a></td>"+
 			"</tr>"
 		);
 		//$("#cartBtn"+id).html("移出购物车");
 		//$("#cartBtn"+id).removeClass().addClass("btn btn-warning");
 		//$("#mesBox"+id).html("<div class='label label-success'>成功放入购物车</div>");
 	} else {
-        changeCartNum(id,1,cargoType);
+        changeCartNum(sign,1);
 		//ordList[""+id] = -1;
 		//$("#cartcargo"+id).remove();
 		//$("#cartBtn"+id).html("放入购物车");
@@ -143,27 +178,34 @@ function toggleShopList() {
 	setbr();
 }
 
-function changeCartNum(id, cnt, type) {
-	var cartNum = document.getElementById("cartnum"+id+type);
+function changeCartNum(sign, cnt) {
+	var cartNum = document.getElementById("cartnum"+sign);
 	var value = parseInt(cartNum.value) + cnt;
 	cartNum.value = value;
-	updatePrice(id,type);
+	updatePrice(sign);
 }
 
-function updatePrice(id,type) {
-	var value = document.getElementById("cartnum"+id+type).value;
+function updatePrice(sign) {
+	var value = document.getElementById("cartnum"+sign).value;
 	value = value.replace(/\D/g,'');
 	if (value == "") value = "0";
-	document.getElementById("cartnum"+id+type).value = value;
+	document.getElementById("cartnum"+sign).value = value;
 
+	var id = sign2id(sign);
 	var unit = cargoList[id].price;
 	var num = parseInt(value);
-	document.getElementById("cartprice"+id+type).innerHTML = "" + (unit * 10) * (num * 10) / 100;
-	updateAmount();
+	document.getElementById("cartprice"+sign).innerHTML = "" + (unit * 10) * (num * 10) / 100;
+	updateAmount(sign);
 }
 
 function updateAmount() {
-	var sum = 0;
+    var sum = 0;
+    for (sign in signList)
+    if (signList[sign] == 1){
+	    var price = parseFloat(document.getElementById("cartprice"+sign).innerHTML);
+		sum = parseInt(price * 10 + sum * 10)/10 ;
+    }
+/*	var sum = 0;
 	for (var i = 0; i < cargoList.length; ++i) {
         var typelist = $.parseJSON(cargoList[i].typeList);
         for (x in typelist) {
@@ -178,15 +220,20 @@ function updateAmount() {
     	    var price = parseFloat(document.getElementById("cartprice"+i+type).innerHTML);
 		    sum = parseInt(price * 10 + sum * 10)/10 ;
         }
-    }
+    }*/
 	$("#amount").html(""+sum);
 }
 
 function clearCart() {
-	for (var i = 0; i < cargoList.length; ++i) {
+    for (sign in signList)
+    if (signList[sign] == 1)
+    {
+        delCargo(sign);
+    }
+/*	for (var i = 0; i < cargoList.length; ++i) {
         var typelist = $.parseJSON(cargoList[i].typeList);
         for (x in typelist) {
-             var type = typelist[x];
+            var type = typelist[x];
 		    if (cargoInCart(i,type)) {
 			    delCargo(i,type);
             }
@@ -195,7 +242,7 @@ function clearCart() {
 		if (cargoInCart(i,type)) {
 		    delCargo(i,type);
         }
-	}
+	}*/
 }
 
 function confirmOrder() {
@@ -222,7 +269,28 @@ function subOrd() {
 	}
 	submitting = true;
 	var cnt = 0;
-	for (var i = 0; i < cargoList.length; ++i) {
+    for (sign in signList)
+    if (signList[sign] == 1) cnt++;
+	var order = new Array(cnt);
+    cnt = 0;
+    for (sign in signList)
+    if (signList[sign] == 1) {
+        var id = sign2id(sign);
+        var type = "";
+        for (var i = 1; i <= 3; i++) {
+            var typeID = sign2type(sign,i);
+            if (typeID != -1) {
+                if (i == 1) typeList = $.parseJSON(cargoList[id].typeList1); else
+                if (i == 2) typeList = $.parseJSON(cargoList[id].typeList2); else
+                if (i == 3) typeList = $.parseJSON(cargoList[id].typeList3); 
+                type += " "+typeList[typeID]+" ";
+            }
+        }
+		var num = parseInt(document.getElementById("cartnum" + sign).value);
+		if (num > 0) order[cnt++] = new Array(id, num ,type);
+    }
+
+/*	for (var i = 0; i < cargoList.length; ++i) {
         var typelist = $.parseJSON(cargoList[i].typeList);
         for (x in typelist){
             var type = typelist[x];
@@ -254,7 +322,7 @@ function subOrd() {
 		    var num = parseInt(document.getElementById("cartnum" + i + type).value);
 		    if (num > 0) order[cnt++] = new Array(i, num ,type);
         }
-	}
+	}*/
     var radios = $("input[name='orderMessage']");
     var checked = false;
     var str = "";
@@ -356,9 +424,9 @@ $(function(){
 						var data = $.parseJSON(jsdata);
 						cargoList = new Array(data.length);
                         var cargoCnt = 0;
-						for (x in data){
-							cargoList[cargoCnt++] = data[x];
-							var goodHTML = makeGood(data[x], cargoCnt - 1);
+						for (xu in data){
+							cargoList[cargoCnt] = data[xu];
+							var goodHTML = makeGood(data[xu], cargoCnt++);
 							$("#goodsList").append(goodHTML);
 						}
 						initGrayback();

@@ -98,19 +98,19 @@ class Goods extends CI_Controller{
     function getTypeList()
     {
         $this->load->model('goods_model','goods');
-        echo json_encode($this->goods->getTypeListByGoodsID($_POST['goodsID']));
+        echo json_encode($this->goods->getTypeListByGoodsID($_POST['goodsID'],$_POST['level']));
     }
     
     function addtype() {
         $this->load->model('goods_model','goods');
-        $this->goods->newTypeByGoodsID($_POST['goodsID'],$_POST['type']);
+        $this->goods->newTypeByGoodsID($_POST['goodsID'],$_POST['type'],$_POST['level']);
 //        $this->goods->newTypeByGoodsID(350,"123");
         echo json_encode(array("error"=>""));
     }
             
     function deltype() {
         $this->load->model('goods_model','goods');
-        $this->goods->delTypeByGoodsID($_POST['goodsID'],$_POST['type']);
+        $this->goods->delTypeByGoodsID($_POST['goodsID'],$_POST['type'],$_POST['level']);
         echo json_encode(array("error"=>""));
     }
 }

@@ -95,7 +95,7 @@ class alipay extends CI_Controller {
     public function do_return(){
         include_once APPPATH.'third_party/alipay/alipay_notify.class.php';
         $alipayNotify = new AlipayNotify($this->alipay_config);
-        //$verify_result = $alipayNotify->verifyReturn();
+        $verify_result = $alipayNotify->verifyReturn();
         //$verify_result = $this->check_alipay_request($_GET['notify_id']);
         if($verify_result) {
             //商户订单号

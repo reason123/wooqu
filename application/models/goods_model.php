@@ -184,41 +184,41 @@ class goods_model extends CI_Model{
 		$this->db->query($sql, array($delta, $goodsID));
 	}
 
-    function newTypeByGoodsID($goodsID,$type)
+    function newTypeByGoodsID($goodsID,$type,$level)
     {
+        if ($level != 1 && $level != 2 && $level != 3) return;
 		$tmp = $this->db->from('goods_list')->where('ID', $goodsID)->get()->result_array();
 		$user = $tmp[0]['userID'];
 		if (!isset($_SESSION["userID"]) || $user != $_SESSION["userID"]) return;
-        $tmp = $this->db->from('goods_list')->where('ID',$goodsID)->get()->result_array();
-        $typeList = json_decode($tmp[0]['typeList'],true);
+        $typeList = json_decode($tmp[0]['typeList'.$level],true);
         array_push($typeList,$type);
-        $newItem = array('typeList'=>json_encode($typeList));
+        $newItem = array('typeList'.$level=>json_encode($typeList));
         $this->db->where('ID',$goodsID)->update('goods_list',$newItem);
         return json_encode($typeList);
     }
 
-    function delTypeByGoodsID($goodsID,$type)
+    function delTypeByGoodsID($goodsID,$type,$level)
     {
+        if ($level != 1 && $level != 2 && $level != 3) return;
 		$tmp = $this->db->from('goods_list')->where('ID', $goodsID)->get()->result_array();
 		$user = $tmp[0]['userID'];
 		if (!isset($_SESSION["userID"]) || $user != $_SESSION["userID"]) return;
-        $tmp = $this->db->from('goods_list')->where('ID',$goodsID)->get()->result_array();
-        $typeList = json_decode($tmp[0]['typeList'],true);
+        $typeList = json_decode($tmp[0]['typeList'.$level],true);
         $tmp = array();
         foreach ($typeList as $x)
             if ($x != $type)
                 {
                     array_push($tmp,$x);
                 }
-        $newItem = array('typeList'=>json_encode($tmp));
+        $newItem = array('typeList'.$level=>json_encode($tmp));
         $this->db->where('ID',$goodsID)->update('goods_list',$newItem);
         return json_encode($tmp);      
     }
     
-    function getTypeListByGoodsID($goodsID)
+    function getTypeListByGoodsID($goodsID,$level)
     {
         $tmp = $this->db->from('goods_list')->where('ID',$goodsID)->get()->result_array();
-        return json_decode($tmp[0]['typeList'],true);
+        return json_decode($tmp[0]['typeList'.$level],true);
     }
 }
 
