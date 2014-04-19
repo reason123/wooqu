@@ -10,14 +10,23 @@ class alipay extends CI_Controller {
     
     //初始化参数
     private  function _init_config(){
-        //合作身份者id，以2088开头的16位纯数字
+        /*//合作身份者id，以2088开头的16位纯数字
         $this->alipay_config['partner']  = '2088202356480752';
 
         //安全检验码，以数字和字母组成的32位字符
         $this->alipay_config['key'] = '7qymksjstme3lpr5aqedcvu9d4q89a3e';
                                        
         //签约支付宝账号或卖家支付宝帐户
-        $this->alipay_config['seller_email'] = 'zsy19900517@qq.com';
+        $this->alipay_config['seller_email'] = 'zsy19900517@qq.com';*/
+
+        //合作身份者id，以2088开头的16位纯数字
+        $this->alipay_config['partner']  = '2088111450606181';
+
+        //安全检验码，以数字和字母组成的32位字符
+        $this->alipay_config['key'] = 'zk6oplats4jfpxwluw28u6ac3i9kne3v';
+                                       
+        //签约支付宝账号或卖家支付宝帐户
+        $this->alipay_config['seller_email'] = 'chuangep@163.com';
                                                
         $this->alipay_config['notify_url'] = 'https://'.$_SERVER['SERVER_NAME'].'/alipay/do_notify';
                                                         
