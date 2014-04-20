@@ -10,15 +10,15 @@ class alipay extends CI_Controller {
     
     //初始化参数
     private  function _init_config(){
-        /*//合作身份者id，以2088开头的16位纯数字
+/*        //合作身份者id，以2088开头的16位纯数字
         $this->alipay_config['partner']  = '2088202356480752';
 
         //安全检验码，以数字和字母组成的32位字符
         $this->alipay_config['key'] = '7qymksjstme3lpr5aqedcvu9d4q89a3e';
                                        
         //签约支付宝账号或卖家支付宝帐户
-        $this->alipay_config['seller_email'] = 'zsy19900517@qq.com';*/
-
+        $this->alipay_config['seller_email'] = 'zsy19900517@qq.com';
+*/
         //合作身份者id，以2088开头的16位纯数字
         $this->alipay_config['partner']  = '2088111450606181';
 
@@ -97,7 +97,7 @@ class alipay extends CI_Controller {
             echo "the order is finished.";
             return;
         }
-
+        
         $this->do_alipay("Hellothu团购",$order['amount'],"gb".$order['id']);
     }
     
@@ -205,7 +205,7 @@ class alipay extends CI_Controller {
             //调试用，写文本函数记录程序运行情况是否正常
             //logResult("这里写入想要调试的代码变量值，或其他运行的结果记录");
 
-        }*/
+        }
     }
 
     private function check_alipay_request($notify_id_tmp){
