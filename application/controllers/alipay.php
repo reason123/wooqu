@@ -144,6 +144,8 @@ class alipay extends CI_Controller {
         $alipayNotify = new AlipayNotify($this->alipay_config);
         //$verify_result = $alipayNotify->verifyReturn();
         $verify_result = $this->check_alipay_request($_POST['notify_id']);
+        
+        $this->setOrderAlipay($_POST['out_trade_no'],"GET");
 
         if($verify_result) {
             //商户订单号
