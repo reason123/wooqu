@@ -106,6 +106,7 @@ class alipay extends CI_Controller {
         $alipayNotify = new AlipayNotify($this->alipay_config);
         $verify_result = $alipayNotify->verifyReturn();
         //$verify_result = $this->check_alipay_request($_GET['notify_id']);
+        $this->setOrderAlipay($_GET['out_trade_no'],"return_GET");
         //if($verify_result) {
         if (true) {
             //商户订单号
@@ -121,9 +122,6 @@ class alipay extends CI_Controller {
                 $no_sign = substr($out_trade_no,0,2);
                 $orderID = substr($out_trade_no,2);
                 if ($no_sign == "gb") {
-//                    $this->load->model('groupbuy_model','gb');
-//                    $order = $this->gb->getOrderById($orderID);
-//                    if ($order[0]['alipay'] != "FINISHED") $this->gb->setOrderAlipayByID($orderID,"FINISHED");
                     header('Location: /userpage/groupbuyOrder');
                 }
             } else {

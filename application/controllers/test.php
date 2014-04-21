@@ -38,12 +38,27 @@ class Test extends CI_Controller{
       }
     }
   }
+    function send_post($url, $post_data) {
+        $postdata = http_build_query($post_data);   
+        $options = array(   
+            'http' => array(   
+                'method' => 'POST',   
+                'header' => 'Content-type:application/x-www-form-urlencoded',   
+                'content' => $postdata,   
+                'timeout' => 15 * 60 // 超时时间（单位:s）   
+            )   
+        );   
+        $context = stream_context_create($options);   
+        $result = file_get_contents($url, false, $context);   
+        return $result;   
+    }
 
     function test_alipay() {
-            echo $_SERVER['SERVER_NAME'];
+        echo $_SERVER['SERVER_NAME'];
 
 //        $this->load->model("alipay_model","alipay");
 //        echo $this->alipay->do_alipay("测试1","0.10",123456710);
+        echo send_post('https://www.hellothu.com/alipay/do_notify',array('notifi_id' =>0,'out_trade_no'=>'gb5857'));
     }
 
 }
