@@ -465,7 +465,7 @@ class Groupbuy extends CI_Controller {
             return $b['total'] - $a['total'];
         }
         usort($total_counter, 'cmp_counter');
-        $str = "班级,姓名,地址,联系方式,总金额,详细信息,选项,备注\r\n";
+        $str = "班级,姓名,地址,联系方式,总金额,付款状态,详细信息,选项,备注\r\n";
         //$str = iconv('utf-8', 'gb2312', $str);
         foreach($order_list as $key => $order){
             $oclass = $order['class'];
@@ -477,6 +477,7 @@ class Groupbuy extends CI_Controller {
             $ophone = $order['phoneNumber'];
             //$ophone = iconv('utf-8', 'gb2312', $ophone);
             $oamount = $order['amount'];
+            $oamount = $order['alipay'];
             //$oamount = iconv('utf-8', 'gb2312', $oamount);
             $odetail = '';
             foreach($order['list'] as $key => $unit){
