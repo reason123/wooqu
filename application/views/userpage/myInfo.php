@@ -33,6 +33,12 @@
     </div>
   </div>
   <div class="form-group">
+    <label class="control-label col-lg-1">邮箱</label>
+    <div class="col-lg-3">
+      <input type="text" name="email" id="email" class="form-control" value=<?php echo $userInfo['email']?>>
+    </div>
+  </div>
+  <div class="form-group">
     <label class="control-label col-lg-1">地址</label>
     <div class="col-lg-3">
       <input type="text" name="address" id="address" class="form-control" value="<?php echo $userInfo['address']?>">

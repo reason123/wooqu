@@ -68,7 +68,7 @@ class UserPage extends CI_Controller {
         $userInfo = $this->user->getMyInfo();
         $this->load->view('base/header',array('page'=>'userpage_myinfo'));
         $this->load->view('userpage/header',array('header'=>'userinfo'));
-        $this->load->view('userpage/myInfo',array('userInfo'=>$userInfo));
+        $this->load->view('userpage/myInfo',array('userInfo'=>$userInfo, 'mail'=>$mail));
         $this->load->view('base/footer');
 	}
 

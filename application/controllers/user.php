@@ -261,6 +261,7 @@ class User extends CI_Controller{
         echo json_encode($this->user->modMyInfo($_REQUEST['nickName'],
                                                 $_REQUEST['phoneNumber'],
 												$_REQUEST['studentID'],
+												$_REQUEST['email'],
 												$_REQUEST['address']));
     }
 
@@ -286,6 +287,24 @@ class User extends CI_Controller{
         $this->load->model('sms_model','sms');
         echo json_encode($this->sms->sendSms(array('15201523220'),'testSms'));
     }
+
+	/**
+	 * 验证邮箱
+	 * @author Hewr
+	 */
+	public function verifyEmail() {
+		if (!isset($_REQUEST["token"])) {
+			$message = "指令错误";
+		} else {
+			$this->load->model('email_model','email');
+			$message = $this->email->verify($_REQUEST["token"]);
+			$message = $message["error"]["message"];
+		}
+		
+		$this->load->view('base/header',array('page'=>'verifyemail'));
+		$this->load->view('user/verify_email', array("message" => $message));
+		$this->load->view('base/footer');
+	}
     
     /**
      * 注销登录

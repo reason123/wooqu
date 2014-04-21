@@ -33,6 +33,7 @@ $(function(){
 				   'nickName':$("#nickName").val(),
 				   'phoneNumber':$("#phoneNumber").val(),
 				   'studentID':$("#studentID").val(),
+				   'email':$("#email").val(),
 				   'address':$("#address").val()
 			   },function(data){
 				   var re = $.parseJSON(data);

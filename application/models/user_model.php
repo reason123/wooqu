@@ -157,7 +157,7 @@ class user_model extends CI_Model{
      * @author ca007
      */
     function getMyInfo(){
-        $sql = "select loginName, realName, nickName, phoneNumber, class, studentID, address, completed from user_list where ID=?";
+        $sql = "select loginName, realName, nickName, phoneNumber, class, studentID, address, completed, email, veri_email from user_list where ID=?";
         $tmp = $this->db->query($sql, array($_SESSION['userID']))->result_array();
         return $tmp[0];
         return array_merge($tmp[0],array('session'=>$_SESSION));
@@ -166,12 +166,14 @@ class user_model extends CI_Model{
 
     /**
      * 修改当前登录用户个人信息
-     * @author ca007
+     * @author ca007 Hewr
      * @param string $nickName
      * @param string $phoneNumber
      * @param string $studentID
+     * @param string $email
+     * @param string $address
      */
-    function modMyInfo($nickName, $phoneNumber, $studentID, $address){
+    function modMyInfo($nickName, $phoneNumber, $studentID, $email, $address){
         $tmp = $this->db->from('user_list')->where('nickName',$nickName)->where('ID !=',$_SESSION['userID'])->get()->result_array();
         if($tmp){
             return errorMessage(-1,'昵称已存在');
@@ -180,6 +182,7 @@ class user_model extends CI_Model{
                           'nickName'=> cleanString($nickName),
                           'phoneNumber'=> cleanString($phoneNumber),
                           'studentID'=> cleanString($studentID),
+						  'email'=> cleanString($email),
                           'address'=> cleanString($address));
         $this->db->where('ID',$_SESSION['userID'])->update('user_list',$userInfo);
         return errorMessage(1, '修改成功'); 
