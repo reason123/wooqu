@@ -30,7 +30,7 @@ class email_model extends CI_Model{
 
 		$mail = new PHPMailer(); //建立邮件发送类
 		$mail->IsSMTP(); // 使用SMTP方式发送
-		$mail->Host = "smtp.foxmail.com"; // 您的企业邮局域名
+		$mail->Host = "smtp.exmail.qq.com"; // 您的企业邮局域名
 		$mail->Port = 465;
 		$mail->SMTPAuth = true; // 启用SMTP验证功能
 		$mail->SMTPSecure = 'ssl';
