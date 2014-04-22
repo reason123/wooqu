@@ -72,6 +72,18 @@ class UserPage extends CI_Controller {
         $this->load->view('base/footer');
 	}
 
+	/**
+	 * 绑定邮箱
+	 * @author LJNanest
+	 */
+	function myBundling() {
+        $this->load->model('user_model','user');
+        $userInfo = $this->user->getMyInfo();
+        $this->load->view('base/header',array('page'=>'userpage_myBundling'));
+        $this->load->view('userpage/header',array('header'=>'bundling'));
+        $this->load->view('userpage/myBundling',array('userInfo'=>$userInfo));
+        $this->load->view('base/footer');
+	}
 }
 
 ?>

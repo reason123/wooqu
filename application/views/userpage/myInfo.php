@@ -5,13 +5,13 @@
   <div class="form-group">
     <label class="control-label col-lg-1">登录名</label>
     <div class="col-lg-2">
-      <input type="text" name="loginName" class="form-control" value=<?php echo $userInfo['loginName']?> disabled>
+      <input type="text" name="loginName" class="form-control" value=<?php echo $userInfo['loginName']?> disabled='disabled'>
     </div>
   </div>
   <div class="form-group">
     <label class="control-label col-lg-1">真实姓名</label>
     <div class="col-lg-2">
-      <input type="text" name="realName" class="form-control" value=<?php echo $userInfo['realName']?> disabled>
+      <input type="text" name="realName" class="form-control" value='<?php echo $userInfo['realName']?>' disabled='disabled'>
     </div>
   </div>
   <div class="form-group">
@@ -35,13 +35,13 @@
   <div class="form-group">
     <label class="control-label col-lg-1">邮箱</label>
     <div class="col-lg-3">
-      <input type="text" name="email" id="email" class="form-control" value=<?php echo $userInfo['email']?>>
+      <input type="text" name="email" id="email" class="form-control" value='<?php echo $userInfo['email']?>' disabled='disabled'>
     </div>
   </div>
   <div class="form-group">
     <label class="control-label col-lg-1">地址</label>
     <div class="col-lg-3">
-      <input type="text" name="address" id="address" class="form-control" value="<?php echo $userInfo['address']?>">
+      <input type="text" name="address" id="address" class="form-control" value="<?php echo $userInfo['address']?>" >
     </div>
   </div>
   <div class="form-group">

@@ -98,15 +98,27 @@ class User extends CI_Controller{
 		}
 	}
 
+    public function username_check($str)
+    {
+        if (preg_match("/^[a-z]([a-z0-9]*[-_\.]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$/i",$str)) {
+            return TRUE;
+        }
+        if (preg_match("/^[a-z]([a-z0-9]*[-_\.]?[a-z0-9]+)*$/i",$str)) {
+            return TRUE;
+        }
+
+        $this->form_validation->set_message('username_check', 'The %s field,plase chuck you username');
+        return FALSE;
+    }
+
     public function usereg(){
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('regusername', 'username', 'required|min_length[4]|max_length[16]|alpha_dash');
+        $this->form_validation->set_rules('regusername', 'username', 'required|min_length[4]|max_length[45]|callback_username_check');
 		$this->form_validation->set_rules('regpassword',"password","required|min_length[6]|max_length[20]|matches[repassword]");
         $this->form_validation->set_rules('verificationcode','Verification Code','callback_verificationcode_check');
 		$this->form_validation->set_rules('school','school','callback_school_check');
 		$this->form_validation->set_rules('department','department','callback_department_check');
 		$this->form_validation->set_rules('class','class','callback_class_check');
-        
         $this->load->model('group_model','group');
 		$schoolList = $this->group->getSchoolList();
         $departmentList = $this->group->getDepartmentList($schoolList[0]['groupID']);
@@ -116,6 +128,10 @@ class User extends CI_Controller{
             $this->load->view('base/footer');
         }else{
 			$this->load->model('user_model');
+            $email = NULL;
+            if (preg_match("/^[a-z]([a-z0-9]*[-_\.]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$/i",$_REQUEST['regusername'])) {
+                $email = $_REQUEST['regusername'];
+            }
 			$res = $this->user_model->addUser_new(
                                               $_REQUEST['regusername'],
                                               '',
@@ -127,8 +143,15 @@ class User extends CI_Controller{
                                               $_REQUEST['class'],
                                               '',
                                               '',
-                                              'None');
+                                              'None',
+                                              $email);
 			if($res['error']['code'] == 1){
+                if ($email != NULL)
+                {
+                    $this->load->model('email_model','email');
+                    $url = $this->email->gotomail($mail);
+				    if ($url != '') header($url);
+                }
 				gotoHomepage();
 			}else{
 				//header

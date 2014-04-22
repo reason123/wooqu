@@ -5,8 +5,8 @@
 		<div class="form-group">
 			<label class="control-label col-lg-3" for="inputLoginame"><span class="redColor">* </span>登录名</label>
 			<div class="col-lg-4">
-				<input type="text" name="regusername" class="form-control" id="inputLoginame" placeholder="loginame" value="<?php if(isset($regusername)) echo $regusername; ?>">
-				<span class="remind">长度在4~16之间，a-z 0-9 _。</span><br/>
+				<input type="text" name="regusername" class="form-control" id="inputLoginame" placeholder="用户名/电子邮箱" value="<?php if(isset($regusername)) echo $regusername; ?>">
+				<span class="remind">可用邮箱注册，长度在4~45之间，a-z 0-9 _ @。</span><br/>
 				<?php echo form_error('regusername',"<span class='error'>","</span>");?>
 			</div>
 		</div>

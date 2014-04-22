@@ -66,9 +66,16 @@ class user_model extends CI_Model{
 	}
 
     function addUser_new($loginName, $nickName, $password,
-                         $realName, $phoneNumber, $schoolID, $departmentID, $classID, $studentID, $address, $completed){
+                         $realName, $phoneNumber, $schoolID, $departmentID, $classID, $studentID, $address, $completed,$email){
 		$this->cleanUserInfo();
-		$this->db->from('user_list')->where('loginName',$loginName);
+        $this->db->from('user_list');
+        if ($email != NULL) {
+		    $this->db->where('veri_email',$email);
+		    if(count($this->db->get()->result_array())){
+			    return errorMessage(0,'该邮箱已注册.');
+            }
+        }
+		$this->db->where('loginName',$loginName);
 		if(count($this->db->get()->result_array())){
 			return errorMessage(0,'用户名已存在.');
 		}
@@ -91,7 +98,8 @@ class user_model extends CI_Model{
                          'defaultGroupID'=>$departmentID,
                          'baseRole'=>0,
                          'address'=>$address,
-                         'completed'=>$completed);
+                         'completed'=>$completed,
+                         'email'=>$email);
 		$this->db->insert('user_list',$newUser);
 
 		//get the userID
@@ -104,7 +112,8 @@ class user_model extends CI_Model{
 
 		//set session and cookie
 		$this->_setUserInfo($loginName,$tmp,crypt($password,$passsalt),$departmentID,0,array(), $loginName, 0, $departmentID, $completed);
-        
+        $this->load->model("email_model","email");
+        $this->email->sendVerification();
 		return errorMessage(1,'Ok');
 	}
     
