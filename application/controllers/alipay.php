@@ -216,7 +216,7 @@ class alipay extends CI_Controller {
         $no_sign = substr($out_trade_no,0,2);
         $orderID = substr($out_trade_no,2);
         if ($no_sign == "gb") {
-		    this->load->model('groupbuy_model', 'gb');
+		    $this->load->model('groupbuy_model', 'gb');
             $this->gb->setOrderAlipayByID($orderID,$str);
         }
     }
