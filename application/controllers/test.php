@@ -53,12 +53,16 @@ class Test extends CI_Controller{
         return $result;   
     }
 
+    function test_email(){
+        $this->load->model("email_model","email");
+        echo $this->email->sendVerification();
+    }
+
     function test_alipay() {
         echo $_SERVER['SERVER_NAME'];
 
 //        $this->load->model("alipay_model","alipay");
 //        echo $this->alipay->do_alipay("测试1","0.10",123456710);
-        echo send_post('https://www.hellothu.com/alipay/do_notify',array('notifi_id' =>0,'out_trade_no'=>'gb5857'));
     }
 
 }

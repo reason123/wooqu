@@ -21,26 +21,24 @@ class email_model extends CI_Model{
 	/**
 	 * 发送邮箱
 	 * @author Hewr
-	 * @param string 发送者邮箱
-	 * @param string 发送者姓名
 	 * @param array(array(mail, name)) 接收者列表
 	 * @param string 标题
 	 * @param string 正文
 	 */
-	function sendMail($sendMail, $sendName, $recvList, $title, $content) {
+	function sendMail($recvList, $title, $content) {
 		require("page/phpmailer/class.phpmailer.php");
 
 		$mail = new PHPMailer(); //建立邮件发送类
 		$mail->IsSMTP(); // 使用SMTP方式发送
-		$mail->Host = "smtp.gmail.com"; // 您的企业邮局域名
+		$mail->Host = "smtp.foxmail.com"; // 您的企业邮局域名
 		$mail->Port = 465;
 		$mail->SMTPAuth = true; // 启用SMTP验证功能
 		$mail->SMTPSecure = 'ssl';
-		$mail->Username = "hewr2010@gmail.com"; // 邮局用户名(请填写完整的email地址)
-		$mail->Password = "13420297896hewr"; // 邮局密码
+		$mail->Username = "hellothu@foxmail.com"; // 邮局用户名(请填写完整的email地址)
+		$mail->Password = "haluotuangou"; // 邮局密码
 
-		$mail->From = "hewr2010@gmail.com"; //邮件发送者email地址
-		$mail->FromName = "管理员";
+		$mail->From = "hellothu@foxmail.com"; //邮件发送者email地址
+		$mail->FromName = "hellothu网管理员";
 		//收件人地址，可以替换成任何想要接收邮件的email信箱,格式是AddAddress("收件人email","收件人姓名")
 		foreach ($recvList as $index => $item) {
 			$mail->AddAddress($item["mail"], $item["name"]);
@@ -82,9 +80,8 @@ class email_model extends CI_Model{
 		$http_type = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) 
 			&& $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://'; 
 
-		return $this->sendMail("hewr2010@gmail.com", "admin", 
-			array(array("mail"=>"hewr2010@gmail.com", "name"=>$user["loginName"])), 
-			"邮箱验证", 
+		return $this->sendMail(array(array("mail"=>"ljnanest@gmail.com", "name"=>"LJN")), 
+			"hellothu网邮箱验证", 
 			$http_type.$_SERVER['HTTP_HOST']."/user/verifyEmail?token=".$token
 		);
 	}
