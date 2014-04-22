@@ -100,10 +100,10 @@ class User extends CI_Controller{
 
     public function username_check($str)
     {
-        if (preg_match("/^[a-z]([a-z0-9]*[-_\.]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$/i",$str)) {
+        if (preg_match("/^[a-z0-9]([a-z0-9]*[-_\.]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$/i",$str)) {
             return TRUE;
         }
-        if (preg_match("/^[a-z]([a-z0-9]*[-_\.]?[a-z0-9]+)*$/i",$str)) {
+        if (preg_match("/^[a-z0-9]([a-z0-9]*[-_\.]?[a-z0-9]+)*$/i",$str)) {
             return TRUE;
         }
 
@@ -129,7 +129,7 @@ class User extends CI_Controller{
         }else{
 			$this->load->model('user_model');
             $email = NULL;
-            if (preg_match("/^[a-z]([a-z0-9]*[-_\.]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$/i",$_REQUEST['regusername'])) {
+            if (preg_match("/^[a-z0-9]([a-z0-9]*[-_\.]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$/i",$_REQUEST['regusername'])) {
                 $email = $_REQUEST['regusername'];
             }
 			$res = $this->user_model->addUser_new(
@@ -149,8 +149,9 @@ class User extends CI_Controller{
                 if ($email != NULL)
                 {
                     $this->load->model('email_model','email');
-                    $url = $this->email->gotomail($mail);
+                    $url = $this->email->gotomail($email);
 				    if ($url != '') header("Location: https://".$url);
+                    return;
                 }
 				gotoHomepage();
 			}else{

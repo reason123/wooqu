@@ -54,8 +54,9 @@ class Test extends CI_Controller{
     }
 
     function test_email(){
-        $this->load->model("email_model","email");
-        echo $this->email->sendVerification();
+//        $this->load->model("email_model","email");
+//        echo $this->email->sendVerification();
+            header("Location: https://mail.qq.com");
     }
 
     function test_alipay() {
