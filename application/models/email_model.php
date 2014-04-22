@@ -64,8 +64,8 @@ class email_model extends CI_Model{
 		if ($this->isVerified()) return;
 
 		// 生成验证码
-        $sql = "select loginName, email from user_list where ID=?";
-        $tmp = $this->db->query($sql, array($_SESSION['userID']))->result_array();
+        	$sql = "select loginName, email from user_list where ID=?";
+        	$tmp = $this->db->query($sql, array($_SESSION['userID']))->result_array();
 		$user = $tmp[0];
 		$user["regTime"] = time();
 		$token = md5($user["loginName"].$user["regTime"]);
@@ -80,8 +80,7 @@ class email_model extends CI_Model{
 		$http_type = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) 
 			&& $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://'; 
 
-        return $http_type.$_SERVER['HTTP_HOST']."/user/verifyEmail?token=".$token;
-		return $this->sendMail(array(array("mail"=>"ljnanest@gmail.com", "name"=>"LJN")), 
+		return $this->sendMail(array(array("mail"=>$user["email"], "name"=>$user['loginName'])), 
 			"hellothu网邮箱验证", 
 			$http_type.$_SERVER['HTTP_HOST']."/user/verifyEmail?token=".$token
 		);
