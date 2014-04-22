@@ -68,14 +68,13 @@ class user_model extends CI_Model{
     function addUser_new($loginName, $nickName, $password,
                          $realName, $phoneNumber, $schoolID, $departmentID, $classID, $studentID, $address, $completed,$email){
 		$this->cleanUserInfo();
-        $this->db->from('user_list');
         if ($email != NULL) {
-		    $this->db->where('veri_email',$email);
+		    $this->db->from('user_list')->where('veri_email',$email);
 		    if(count($this->db->get()->result_array())){
 			    return errorMessage(0,'该邮箱已注册.');
             }
         }
-		$this->db->where('loginName',$loginName);
+		$this->db->from('user_list')->where('loginName',$loginName);
 		if(count($this->db->get()->result_array())){
 			return errorMessage(0,'用户名已存在.');
 		}
