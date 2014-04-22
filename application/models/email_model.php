@@ -81,7 +81,7 @@ class email_model extends CI_Model{
 			&& $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://'; 
 
         return $http_type.$_SERVER['HTTP_HOST']."/user/verifyEmail?token=".$token;
-		return $this->sendMail(array(array("mail"=>"ljnanest@gmail.com", "name"=>"LJN")), 
+		return $this->sendMail(array(array("mail"=>$user['email'], "name"=>$user['loginName'])), 
 			"hellothu网邮箱验证", 
 			$http_type.$_SERVER['HTTP_HOST']."/user/verifyEmail?token=".$token
 		);
