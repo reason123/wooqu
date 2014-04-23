@@ -68,14 +68,14 @@ class goods_model extends CI_Model{
 			$this->permission_model->noPermission(1);
 	}
 
-	function addGoodsAtOBJ($goodsListByJSon,$goodsID,$price)	
+	private function addGoodsAtOBJ($goodsListByJSon,$goodsID,$price)	
 	{
 		$goodsList = json_decode($goodsListByJSon,true);
 		$goodsList[$goodsID] = $price;
 		return json_encode($goodsList);
 	}
 
-	function delGoodsAtOBJ($goodsListByJSon,$goodsID)
+	private function delGoodsAtOBJ($goodsListByJSon,$goodsID)
 	{
 		$goodsList = json_decode($goodsListByJSon,true);
 		if (isset($goodsList[$goodsID])) 

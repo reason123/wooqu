@@ -28,7 +28,7 @@ class alipay extends CI_Controller {
         //签约支付宝账号或卖家支付宝帐户
         $this->alipay_config['seller_email'] = 'chuangep@163.com';
                                                
-        $this->alipay_config['notify_url'] = 'https://'.$_SERVER['SERVER_NAME'].'/alipay/do_notify';
+        $this->alipay_config['notify_url'] = 'http://dev.wooqu.org/alipay/do_notify';
                                                         
         $this->alipay_config['return_url'] = 'https://'.$_SERVER['SERVER_NAME'].'/alipay/do_return';
                                                                         
