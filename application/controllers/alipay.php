@@ -137,10 +137,10 @@ class alipay extends CI_Controller {
     
     //确保公网能访问
     public function do_notify() {
-/*        include_once APPPATH.'third_party/alipay/alipay_notify.class.php';
+        include_once APPPATH.'third_party/alipay/alipay_notify.class.php';
         $alipayNotify = new AlipayNotify($this->alipay_config);
-        $verify_result = $alipayNotify->verifyNotify();
-        //$verify_result = $this->check_alipay_request($_POST['notify_id']);
+        //$verify_result = $alipayNotify->verifyNotify();
+        $verify_result = $this->check_alipay_request($_POST['notify_id']);
         
 //        $this->setOrderAlipay($_POST['out_trade_no'],"GET");
 
@@ -164,7 +164,7 @@ class alipay extends CI_Controller {
                 //判断该笔订单是否在商户网站中已经做过处理
                 //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
                 //如果有做过处理，不执行商户的业务程序
- //               $this->setOrderAlipay($out_trade_no,"FINISHED");
+                $this->setOrderAlipay($out_trade_no,"FINISHED");
                 echo "success";     //请不要修改或删除
                 //调试用，写文本函数记录程序运行情况是否正常
                 //logResult("这里写入想要调试的代码变量值，或其他运行的结果记录");
@@ -181,7 +181,7 @@ class alipay extends CI_Controller {
                 //判断该笔订单是否在商户网站中已经做过处理
                 //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
                 //如果有做过处理，不执行商户的业务程序
-  //              $this->setOrderAlipay($out_trade_no,"FINISHED");
+                $this->setOrderAlipay($out_trade_no,"FINISHED");
                 echo "success";     //请不要修改或删除
                 //调试用，写文本函数记录程序运行情况是否正常
                 //logResult("这里写入想要调试的代码变量值，或其他运行的结果记录");
@@ -201,7 +201,7 @@ class alipay extends CI_Controller {
             //调试用，写文本函数记录程序运行情况是否正常
             //logResult("这里写入想要调试的代码变量值，或其他运行的结果记录");
 
-        }*/
+        }
     }
 
     private function check_alipay_request($notify_id_tmp){
