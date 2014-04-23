@@ -30,7 +30,7 @@ class alipay extends CI_Controller {
                                                
         $this->alipay_config['notify_url'] = 'http://dev.wooqu.org/alipay/do_notify';
                                                         
-        $this->alipay_config['return_url'] = 'https://'.$_SERVER['SERVER_NAME'].'/alipay/do_return';
+        $this->alipay_config['return_url'] = 'https://www.hellothu.com/alipay/do_return';
                                                                         
         //签名方式 不需修改
         $this->alipay_config['sign_type'] = strtoupper('MD5');
@@ -42,7 +42,7 @@ class alipay extends CI_Controller {
         $this->alipay_config['cacert'] = getcwd().'\\cacert.pem';
                                                                                  
         //访问模式,根据自己的服务器是否支持ssl访问，若支持请选择https；若不支持请选择http
-        $this->alipay_config['transport'] = 'https';
+        $this->alipay_config['transport'] = 'http';
                                                      
     }
 
@@ -137,7 +137,7 @@ class alipay extends CI_Controller {
     
     //确保公网能访问
     public function do_notify() {
-        include_once APPPATH.'third_party/alipay/alipay_notify.class.php';
+/*        include_once APPPATH.'third_party/alipay/alipay_notify.class.php';
         $alipayNotify = new AlipayNotify($this->alipay_config);
         $verify_result = $alipayNotify->verifyNotify();
         //$verify_result = $this->check_alipay_request($_POST['notify_id']);
@@ -201,7 +201,7 @@ class alipay extends CI_Controller {
             //调试用，写文本函数记录程序运行情况是否正常
             //logResult("这里写入想要调试的代码变量值，或其他运行的结果记录");
 
-        }
+        }*/
     }
 
     private function check_alipay_request($notify_id_tmp){
