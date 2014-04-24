@@ -9,11 +9,11 @@
 <div>
 <div class="tabbable"> <!-- Only required for left/right tabs -->
 	<ul class="nav nav-tabs">
-		<li><a href="#picview" data-toggle="tab"><i class="icon-picture"></i>缩略图显示</a></li>
-		<li class="active"><a href="#listview" data-toggle="tab"><i class="icon-list"></i>列表显示</a></li>
+		<li class="active"><a href="#picview" data-toggle="tab"><i class="icon-picture"></i>缩略图显示</a></li>
+		<li><a href="#listview" data-toggle="tab"><i class="icon-list"></i>列表显示</a></li>
 	</ul>
 	<div class="tab-content">
-		<div class="tab-pane" id="picview">
+		<div class="tab-pane active" id="picview">
 			<div class='goodList'>
 				<?php
 				foreach ($goodsList as $i => $good) {
@@ -41,7 +41,7 @@
 			</div>
 		</div>
 
-		<div class="tab-pane active" id="listview">
+		<div class="tab-pane" id="listview">
 			<table class="table table-hover">
 				<thaed>
 					<tr>
