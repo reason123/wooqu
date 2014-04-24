@@ -26,7 +26,6 @@ function confirmAdd() {
         inputItem: JSON.stringify(inputItem) 
 	},
 	function(jsdata){
-        alert(jsdata);
 		var data = $.parseJSON(jsdata);
 		if (data.error == "") {
             alert('创建成功！');

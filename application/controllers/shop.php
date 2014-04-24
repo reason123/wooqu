@@ -229,7 +229,7 @@ class Shop extends CI_Controller {
 
 		$shopID = $this->shop->addShop($detail, $userID);
 		$picPath = "/storage/shopPic/pic_".$shopID.".jpg";
-        if ($_FILES['pic']['size'] > 0) {
+        if (isset($_FILES['pic']) && $_FILES['pic']['size'] > 0) {
 	        $photo = $_FILES['pic'];
 		    move_uploaded_file($photo['tmp_name'], substr($picPath, 1, strlen($picPath)));
         } else {
