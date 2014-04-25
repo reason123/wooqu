@@ -66,5 +66,10 @@ class Test extends CI_Controller{
 //        echo $this->alipay->do_alipay("测试1","0.10",123456710);
     }
 
+    function test_photo()
+    {
+	    exec("cp storage/goodsPic/pic_594.jpg storage/shopPic/pic_58.jpg");
+    }
+
 }
 ?>
