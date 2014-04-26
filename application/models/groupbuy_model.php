@@ -371,7 +371,7 @@ class groupbuy_model extends CI_Model{
 	 * @return 订单
 	 */
 	function getAllOrders($username) {
-		$sql = "SELECT `id`,`shopid`,`list`,`amount`,`shopname`,`createtime`,`comment`,`orderMessage` FROM `groupbuy_order` WHERE `username`=? and `del`=0 ORDER BY -`id`";
+		$sql = "SELECT `id`,`shopid`,`list`,`amount`,`shopname`,`createtime`,`comment`,`orderMessage`,alipay FROM `groupbuy_order` WHERE `username`=? and `del`=0 ORDER BY -`id`";
 		$res = $this->db->query($sql,array($username)) or die(mysql_error());
 		$arr = $res->result_array();
 		foreach ($arr as $key => $value) {
@@ -447,7 +447,7 @@ class groupbuy_model extends CI_Model{
 
 	function updataGoodsList($groupbuyID,$JsonGoodsList)
 	{
-        if (!isOwnShop($groupbuyID)) return;
+        if (!$this->isOwnShop($groupbuyID)) return;
 		$sql = "UPDATE `groupbuy_list` SET goodslist =? WHERE `ID`=".$groupbuyID;
 		$res = $this->db->query($sql,array($JsonGoodsList));
 	}	
@@ -504,7 +504,7 @@ class groupbuy_model extends CI_Model{
    
     function addOrderMessage($gbID,$Message)
     {
-        if (!isOwnShop($groupbuyID)) return;
+        if (!$this->isOwnShop($gbID)) return;
         $tmp = $this->db->from('groupbuy_list')->where('ID',$gbID)->get()->result_array();
         $orderMessageList = json_decode($tmp[0]['orderMessage'],true);
         array_push($orderMessageList,$Message);
@@ -515,7 +515,7 @@ class groupbuy_model extends CI_Model{
 
     function delOrderMessage($gbID,$Message)
     {
-        if (!isOwnShop($groupbuyID)) return;
+        if (!$this->isOwnShop($gbID)) return;
         $tmp = $this->db->from('groupbuy_list')->where('ID',$gbID)->get()->result_array();
         $orderMessageList = json_decode($tmp[0]['orderMessage'],true);
         $tmp = array();

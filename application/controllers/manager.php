@@ -180,15 +180,36 @@ class Manager extends CI_Controller{
      * @author xanda
      */
     function shop_modify() {
-        if (!isset($_GET["id"])) exit(0);
-        $this->load->view("base/header", array("page" => "shop_manager_modify"));
-        $this->load->view("manager/header", array("mh" => "shop"));
-        $this->load->view("manager/shop_header",array("mgh"=>"infoManager","shopID"=>$_GET["id"]));
-        //$this->load->view("manager/shop_header", array("mgh" => "fruit"));
+		$this->load->library('form_validation');
+        $this->form_validation->set_rules('name','name','required'); 
+        $this->form_validation->set_rules('name','name','required'); 
+
         $this->load->model('shop_model','shop');
-        $shopInfo = $this->shop->getShopInfoByID($_GET["id"]);
-        $this->load->view("manager/shop/shop_modify", array("shopInfo" => $shopInfo));
-        $this->load->view("base/footer");
+        if (!isset($_GET["id"])) exit(0);
+        if (!isset($_REQUEST['name'])) {
+            $shopInfo = $this->shop->getShopInfoByID($_GET["id"]);
+        	$_REQUEST['name'] = $shopInfo['name'];
+        	$_REQUEST['address'] = $shopInfo['address'];
+        	$_REQUEST['phone'] = $shopInfo['phone'];
+        	$_REQUEST['detail'] = $shopInfo['detail'];
+        }
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view("base/header", array("page" => "shop_manager_modify"));
+            $this->load->view("manager/header", array("mh" => "shop"));
+            $this->load->view("manager/shop_header",array("mgh"=>"infoManager","shopID"=>$_GET["id"]));
+            //$this->load->view("manager/shop_header", array("mgh" => "fruit"));
+            $this->load->view("manager/shop/shop_modify");
+            $this->load->view("base/footer");
+        } else {
+            $shop = array (
+                'ID' => $_GET['id'],
+                'name' => $_REQUEST['name'],
+                'address' =>$_REQUEST['address'],
+                'phone' => $_REQUEST['phone'],
+                'detail' => $_REQUEST['detail']);
+            $this->shop->modifyShop($shop);    
+            header('Location: /ger/groupbuy_modify?id='.$_GET['ID']);
+        }
     }
 
 	/**

@@ -1,41 +1,42 @@
-<legend><?php echo $shopInfo['name']; ?></legend>
+<legend><?php echo $_REQUEST['name']; ?></legend>
 <div class="tabbable"> <!-- Only required for left/right tabs -->
 	<div class="tab-content">
 		<div class="tab-pane active" id="overAll">
-			<div class="form-horizontal">
+			<form class="form-horizontal" action="/manager/shop_modify?id=<?php echo $_GET['id'] ?>" method = "post" enctype="multipart/form-data">
 				<div class="form-group">
 					<label class="col-lg-3 control-label">名称</label>
 					<div class="col-lg-5">
-						<input type="text" class="form-control" id="modify_name" value = "<?php echo $shopInfo['name']; ?>">
+						<input type="text" class="form-control" name="name" value = "<?php echo $_REQUEST['name']; ?>">
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-lg-3 control-label">地址</label>
 					<div class="col-lg-5">
-						<input type="text" class="form-control" id="modify_address" value = "<?php echo $shopInfo['address']; ?>">
+						<input type="text" class="form-control" name="address" value = "<?php echo $_REQUEST['address']; ?>">
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-lg-3 control-label">联系电话</label>
 					<div class="col-lg-5">
-						<input type="text" class="form-control" id="modify_phone" value = "<?php echo $shopInfo['phone']; ?>">
+						<input type="text" class="form-control" name="phone" value = "<?php echo $_REQUEST['phone']; ?>">
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-lg-3 control-label">详细信息</label>
 					<div class="col-lg-5">
-						<textarea class="form-control" rows="3" id="modify_detail" ><?php echo $shopInfo['detail']; ?></textarea>
+						<textarea class="form-control" rows="3" name="detail" ><?php echo $_REQUEST['detail']; ?></textarea>
 					</div>
 				</div>
-			</div>
-			<div align="center">
+                <input type="submit" class='btn btn-primary pull-right' value="确认修改"/>
+			</form>
+			<!--<div align="center">
 				<button class="btn btn-primary" onclick="confirmModifyInfo();">确认修改</button>
-			</div>
+			</div>-->
 		</div>
 	</div>
 </div>
 <legend>拓展功能</legend>
-<button class="btn btn-lg btn-info" onclick="showOrderMessageModal(<?php echo$shopInfo['ID'] ?>)" >订购信息</button>&nbsp;
+<button class="btn btn-lg btn-info" onclick="showOrderMessageModal(<?php echo$_GET['id'] ?>)" >订购信息</button>&nbsp;
 
 <div id="confirmModifyInfoModal" class="modal fade">
 	<div class="modal-dialog">

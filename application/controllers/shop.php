@@ -11,7 +11,7 @@ class Shop extends CI_Controller {
 	 * @author xanda
 	 * 
 	 */
-	function shoplist() {
+/*	function shoplist() {
 		$this->load->model('shop_model','shop');
 
 		$this->load->view('base/header',array('page'=>'shoplist'));
@@ -22,7 +22,7 @@ class Shop extends CI_Controller {
 		$this->load->view('shop/shoplist', array('title'=>'商店列表','link'=>'shop','list'=>$list));
         $this->load->view('base/footer');
 	}
-
+*/
 	/**
 	 * 生成商店详情页面
 	 * @author xanda
@@ -31,11 +31,11 @@ class Shop extends CI_Controller {
 		$this->load->model('shop_model','shop');
 	    $this->load->model('goods_model','goods');	
 		$goodsList = $this->goods->getGoodsListByShop($_GET['ID']);
-		$actList = $this->shop->getActListByShop($_GET['ID']);
+//		$actList = $this->shop->getActListByShop($_GET['ID']);
 		$shopInfo = $this->shop->getShopInfoByID($_GET['ID']);
         $orderMessageList = $this->shop->getOrderMessageList($_GET['ID']);
 		$this->load->view('base/header',array('page'=>'showshop','type'=>'shop'));
-		$this->load->view('shop/showshop',array('shopInfo'=>$shopInfo,'goodsList'=>$goodsList,'actList'=>$actList,'orderMessageList'=>$orderMessageList));
+		$this->load->view('shop/showshop',array('shopInfo'=>$shopInfo,'goodsList'=>$goodsList,'orderMessageList'=>$orderMessageList));
 		$this->load->view('base/footer');
 	}
 

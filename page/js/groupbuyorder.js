@@ -14,6 +14,10 @@ function getOrderHTML(data, idx) {
 			"</tr>";
 	}
     if (data.orderMessage == "") data.orderMessage = "无";
+    var payStr = "";
+    if (data.alipay == "OFF") payStr = "线下支付"; else
+    if (data.alipay == "UNPAID") payStr = "未付款 <a href = '/alipay/do_alipay_groupbuy?id="+data.id+"'>[点击付款]</a>"; else
+    if (data.alipay == "FINISHED") payStr = "完成支付"; 
 	var html = $(
 		"<div class=\"panel panel-default\">"+
 			"<div class=\"panel-heading order-heading\">"+
@@ -37,14 +41,14 @@ function getOrderHTML(data, idx) {
 						"<tbody>"+
 							listHTML+
 						"</tbody>"+
-					"</table></div>"+
+					"</table>"+
+    				"<div class=\"create-time text-success\">下单时间："+data.createtime+"</div><br>"+
+				    "<span class=\"label label-danger del-btn\" onclick=\"confirmDelete("+data.id+")\">删除订单</span>"+
+	    			"<div class=\"create-time text-success\">订单信息："+data.orderMessage+"</div><br>"+
+		    		"<a class=\"label label-primary del-btn\" href=\"/groupbuy/groupInfo?id="+data.shopid+"\">查看团购</a>"+
+			    	"<div class=\"create-time text-success\">支付状态："+payStr+"</div>"+
+                    "</div>"+
 				"</div>"+
-				"<span class=\"label label-danger del-btn\" onclick=\"confirmDelete("+data.id+")\">删除订单</span>"+
-				"<div class=\"create-time text-success\">下单时间："+data.createtime+"</div><br>"+
-				"<div class=\"create-time text-success\">订单信息："+data.orderMessage+"</div>"+
-				"<a class=\"label label-primary del-btn\" href=\"/groupbuy/groupInfo?id="+data.shopid+"\">查看团购</a>"+
-
-				"<br>"+
 			"</div>"+
 		"</div>"
 	);

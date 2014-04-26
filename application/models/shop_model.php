@@ -12,11 +12,7 @@ class shop_model extends CI_Model{
 	 * @author xanda
 	 * @return list 水果店列表
 	 */
-	function getShopListByGroup($groupList) {
-		/*$sql = "SELECT DISTINCT shop.ID, name, phone, address, detail, createTime, available
-				FROM shop, shop_area
-				WHERE shop.ID = shop_area.shopID AND shop_area.areaID =?
-				ORDER BY available DESC";*/
+/*	function getShopListByGroup($groupList) {
 		$sql = "SELECT DISTINCT shop_list.ID, name, phone, address, detail, createTime, available
 				FROM shop_list, shop_group
 				WHERE shop_list.ID = shop_group.shopID AND (";
@@ -31,42 +27,37 @@ class shop_model extends CI_Model{
 		$shopList = $this->db->query($sql,$arrayID)->result_array();
 		return $shopList;
 	}
+*/
+	/**
+	 * 返回用户是否为团购商店创建者
+	 * @author Hewr
+	 * @param shopID
+	 */
+	function isOwnShop($shopID) {
+		if (!isset($_SESSION["userID"])) return false;
+		$userID= $_SESSION["userID"];
+		$shopID = intval($shopID);
+		$sql = "SELECT `userID` FROM `shop_list` WHERE `id`=".$shopID;
+		$res = $this->db->query($sql)->result_array();
+		$owner = $res[0]["userID"];
+		return strcmp($owner, $userID) == 0;
+	}
 
 	/**
-	 * 获取当前群组的水果店列表
-	 * @param array $groupList 群组ID列表
+	 * 获取当前用户的水果店列表
+	 * @param $userID
 	 * @author xanda
 	 * @return list 水果店列表
 	 */
 	function getShopListByUser($userID) {
-		/*$sql = "SELECT DISTINCT shop.ID, name, phone, address, detail, createTime, available
-				FROM shop, shop_area
-				WHERE shop.ID = shop_area.shopID AND shop_area.areaID =?
-				ORDER BY available DESC";*/
 		$sql = "SELECT DISTINCT shop_list.ID, name, phone, address, detail, createTime, available
 				FROM shop_list, shop_group
 				WHERE shop_list.userID = ?
 				AND shop_list.available = 1";
-		//$shopList = $this->db->query($sql,array($areaID))->result_array();
 		$shopList = $this->db->query($sql,$userID)->result_array();
 		return $shopList;
 	}
 
-	/**
-	 * 获取商店的商品列表
-	 * @author xanda
-	 * @param string $shopID 商店ID
-	 * @return list 水果列表
-	 */	
-	function getGoodListByShop($shopID) 
-	{
-		$sql = "SELECT DISTINCT shop_goods.ID, shopID, name, detail, price, priceType, priority, total, pic, available, createTime
-				FROM shop_goods
-				WHERE shop_goods.shopID = ?
-				ORDER BY available DESC, priority DESC, total DESC";
-		$goodsList = $this->db->query($sql,array($shopID))->result_array();
-		return $goodsList;
-	}
 
 	/**
 	 * 获取商店的可见活动列表
@@ -74,7 +65,7 @@ class shop_model extends CI_Model{
 	 * @param string $shopID 商店ID
 	 * @return list 活动列表
 	 */	
-	function getActListByShop($shopID){
+/*	function getActListByShop($shopID){
 		$sql = "SELECT DISTINCT shop_act.ID, shopID, title, detail, createTime, deadline, note, address
 				FROM shop_act 
 				WHERE shopID=? AND available=1
@@ -82,7 +73,7 @@ class shop_model extends CI_Model{
 		$actList = $this->db->query($sql,array($shopID))->result_array();
 		return $actList;
 	}
-
+*/
 
 	/**
 	 * 获取对应ID的商店的基本信息
@@ -99,20 +90,6 @@ class shop_model extends CI_Model{
 		return $shopList[0];
 	}
 
-	/**
-	 * 标记某商品被购买/退购一次
-	 * @author Hewr
-	 * @author xanda
-	 * @param cargoID
-	 */
-	function plusTotal($goodID, $delta, $fruit) {
-		$sql = "SELECT `total` FROM `shop_goods` WHERE `id`=".$goodID;
-		$res = $this->db->query($sql) or die(mysql_error());
-		$arr = $res->result_array();
-		$cnt = intval($arr[0]["total"]) + intval($delta);
-		$sql = "UPDATE `shop_goods` SET `total`=".$cnt." WHERE `id`=".$goodID;
-		$res = $this->db->query($sql) or die(mysql_error());
-	}
 
 	/**
 	 * 提交用户订单
@@ -124,7 +101,7 @@ class shop_model extends CI_Model{
 
 		$sql = "INSERT INTO `shop_order`
 				(`shopID`, `shopName`, `userID`, `goodsList`, `amount`,`inputItem`,`orderMessage`) 
-				VALUES (".$shopID.", '".$shopname."', ".$userID.", '".addslashes(json_encode($list))."', ".$amount.", ? ,?)";
+				VALUES (".$shopID.", '".cleanString($shopname)."', ".$userID.", '".addslashes(json_encode($list))."', ".$amount.", ? ,?)";
 		$res = $this->db->query($sql,array(cleanString($inputItem),cleanString($orderMessage))) or die(mysql_error());
         
         $sql = "SELECT total FROM feed_list WHERE type=2 AND sourceID = ?";
@@ -133,14 +110,6 @@ class shop_model extends CI_Model{
         $sql = "UPDATE feed_list SET total=? WHERE type=2 AND sourceID = ?";
         $this->db->query($sql,array($num[0]['total']+1,$shopID));
 
-/*		$newItem = array(
-				'shopID'=>$shopID,
-				'shopName'=>$shopname,
-				'userID'=>$userID,
-                'goodsList'=>addslashes(json_encode($list)),
-                'amount'=>$amount
-			);
-        $this->db->insert('shop_order',$newItem);*/
 	}
 	
     /**
@@ -219,8 +188,6 @@ class shop_model extends CI_Model{
                 $this->feed->sendFeed(2,$shopID,$groupID,0);
             }
         }
-
-
 	}
 
 	/**
@@ -228,11 +195,15 @@ class shop_model extends CI_Model{
 	* @author xanda
 	* @param $id
 	*/
-	public function deleteShopById($id) {
+    function deleteShopById($id) {
 		$tmp = $this->db->from('shop_list')->where('ID', $id)->get()->result_array();
 		$user = $tmp[0]['userID'];
 		if (isset($_SESSION["userID"]) && $user == $_SESSION["userID"]) {
 			$this->db->where('ID',$id)->update('shop_list', array('available'=>0));
+            $sql = "SELECT DISTINCT feed_list.ID FROM feed_list WHERE sourceID = ? AND type = 2";
+            $feedID = $this->db->query($sql,array($id))->result_array();
+            $this->load->model("groupfeed_model","feed");
+            $this->feed->clearGroupByFeedID($feedID[0]['ID']);
 		} else
 			$this->permission_model->noPermission(1);
 	}
@@ -243,7 +214,8 @@ class shop_model extends CI_Model{
 	 * @author xanda
 	 * @param shop array userID
 	 */
-	function modifyShop($shop, $userID) {
+	function modifyShop($shop) {
+        if (!$this->isOwnShop($shop["ID"])) return;
 		$this->db->where('ID',$shop["ID"])
             ->update('shop_list',array(
                          'name'=> cleanString($shop["name"]),
@@ -276,9 +248,7 @@ class shop_model extends CI_Model{
 
 	function addGoods($shopID,$name,$price,$detail)
 	{
-		$sql = 'SELECT DISTINCT userID FROM shop_list WHERE ID = ?';
-		$tmp = $this->db->query($sql,array($shopID))->result_array();
-		if ($tmp[0]['userID'] != $_SESSION['userID']) return;
+        if (!$this->isOwnShop($shopID)) return;
 		$item = array('shopID'=> cleanString($shopID), 'name' =>  cleanString($name), 'price' => $price, 'detail' =>  cleanString($detail));
 		$this->db->insert('shop_goods',$item);	
 		return $this->db->insert_id();
@@ -352,9 +322,6 @@ class shop_model extends CI_Model{
 	}
 
 
-	/**
-	 * 返回某张订单信息和用户电话
-	 * @author daiwentao
     /**
      * 获取用户发布的商店以及所合作的商店列表,供查询订单使用
      * @author LJNanest
@@ -389,6 +356,7 @@ class shop_model extends CI_Model{
      */
     function addInputItem($shopID,$item)
     {
+        if (!$this->isOwnShop($shopID)) return;
         $sql = "SELECT DISTINCT inputItem FROM shop_list WHERE ID=?";
         $temp = $this->db->query($sql,array($shopID))->result_array();
         $inputItem = json_decode($temp[0]['inputItem']);
@@ -407,6 +375,7 @@ class shop_model extends CI_Model{
     
     function addOrderMessage($shopID,$Message)
     {
+        if (!$this->isOwnShop($shopID)) return;
         $tmp = $this->db->from('shop_list')->where('ID',$shopID)->get()->result_array();
         $orderMessageList = json_decode($tmp[0]['orderMessage'],true);
         array_push($orderMessageList,cleanString($Message));
@@ -417,6 +386,7 @@ class shop_model extends CI_Model{
 
     function delOrderMessage($shopID,$Message)
     {
+        if (!$this->isOwnShop($shopID)) return;
         $tmp = $this->db->from('shop_list')->where('ID',$shopID)->get()->result_array();
         $orderMessageList = json_decode($tmp[0]['orderMessage'],true);
         $tmp = array();
