@@ -48,6 +48,7 @@ class alipay extends CI_Controller {
 
 	function __construct() {
 		parent::__construct();
+		$this->load->database();
         $this->_init_config();
 	}
 
@@ -216,12 +217,10 @@ class alipay extends CI_Controller {
         $no_sign = substr($out_trade_no,0,2);
         $orderID = substr($out_trade_no,2);
         if ($no_sign == "gb") {
-		    $this->load->model('groupbuy_model', 'gb');
-            $this->gb->setOrderAlipayByID($orderID,$str);
+		    $sql = "UPDATE `groupbuy_order` SET alipay =? WHERE `ID`=?";
+    		$res = $this->db->query($sql,array($str,$orderID));
         }
     }
-                                            
-    
 }
 
 ?>

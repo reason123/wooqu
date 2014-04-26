@@ -192,6 +192,66 @@ class Manager extends CI_Controller{
     }
 
 	/**
+	 * 新建团购
+	 * @author LJNanest Hewr
+	 */
+	function newGroupbuy()
+	{
+		$this->load->library('form_validation');
+        $this->form_validation->set_rules('title','title','required'); 
+        $this->form_validation->set_rules('illustration','illustration','required'); 
+        $this->load->model('groupbuy_model','groupbuy');
+        if (isset($_GET['id']))
+        if (!isset($_REQUEST['title']))
+        {
+        	$groupbuyInfo = $this->groupbuy->getGroupbuyInfoByID($_GET['id']);
+            $groupList = $this->groupbuy->getGroupListByID($_GET['id']);
+            
+            $str = '';
+
+            foreach ($groupList as $key=>$value)
+            {
+                $str = $str.$value.';';
+            }
+        	$_REQUEST['title'] = $groupbuyInfo['title'];
+        	$_REQUEST['illustration'] = $groupbuyInfo['illustration'];
+            $_REQUEST['group_list'] = $str;
+            $_REQUEST['orderMessageList'] = $groupbuyInfo['orderMessage'];
+        }
+        if($this->form_validation->run() == FALSE){
+        	
+        	$this->load->view('base/header',array('page'=>'newgroupbuy'));
+		    $this->load->view("manager/header", array("mh" => "groupbuy"));
+            $this->load->view('manager/groupbuy/newgroupbuy');
+            $this->load->view('base/footer');
+        }else{        	
+        	$shop = array("title"=>cleanString($_REQUEST['title']),
+                         "status"=>"1",
+                          "illustration"=>cleanString($_REQUEST['illustration']),
+                          "deadline"=>cleanString($_REQUEST['act_end_date']),
+                          "pickuptime"=>cleanString($_REQUEST['sign_end_date']), 
+						  "group_list"=>cleanString($_REQUEST['group_list']),
+                          );
+        	$groupbuyID = $this->groupbuy->insertShop($shop);
+			$picPath = "/storage/groupbuyPic/pic_".$groupbuyID.".jpg";
+            if ($_FILES['pic']['size'] > 0) {
+				$photo = $_FILES['pic'];
+				move_uploaded_file($photo['tmp_name'], substr($picPath, 1, strlen($picPath)));
+			} if (isset($_GET['id'])){
+				exec("cp storage/groupbuyPic/pic_".$_GET[id].".jpg storage/groupbuyPic/pic_".$groupbuyID.".jpg");
+            } else {
+				exec("cp storage/groupbuyPic/default_groupbuy.jpg storage/groupbuyPic/pic_".$groupbuyID.".jpg");
+			}
+        	if (isset($_GET['id']))
+        	{
+        		$groupbuyInfo = $this->groupbuy->getGroupbuyInfoByID($_GET['id']);
+        		$this->groupbuy->updataGoodsList($groupbuyID,$groupbuyInfo['goodslist']);
+        	}
+            header('Location: /groupbuy/selectGoods?id='.$groupbuyID);
+        }
+	}
+
+	/**
 	 * 团购修改页面
 	 * @author Hewr
 	 */

@@ -1,12 +1,16 @@
 <?php
 
 class groupbuy_model extends CI_Model{
+
+    private $howtopay = array("OFF"=>"线下支付","ON"=>"线下支付&支付宝","ON_ONLY"=>"仅限支付宝");
+
+
 	function __construct(){
 		parent::__construct();
 		$this->load->database();
 	}
 
-	function wtf() {
+/**	function wtf() {
 		$sql = "SELECT `ID`,`class` FROM `user_list`";
 		$res = $this->db->query($sql)->result_array();
 		foreach ($res as $key => $value) {
@@ -25,7 +29,8 @@ class groupbuy_model extends CI_Model{
 			$this->db->query($sql, array($id, $gradeID));
 		}
 	}
-
+*/
+    
 	/**
 	 * 返回团购的所有群组ID
 	 * @author Hewr
@@ -38,17 +43,6 @@ class groupbuy_model extends CI_Model{
 		return $res;
 	}
 
-	/**
-	 * 获取商品所属团购ID
-	 * @author Hewr
-	 * @param $cargoID
-	 */
-	function getCargoShopID($cargoID) {
-		$cargoID = intval($cargoID);
-		$sql = "SELECT `shopid` FROM `cargo_list` WHERE `id`=".$cargoID;
-		$res = $this->db->query($sql)->result_array();
-		return intval($res[0]["shopid"]);
-	}
 
 	/**
 	 * 分割群组列表并检查权限
@@ -101,11 +95,11 @@ class groupbuy_model extends CI_Model{
 	 * @author Hewr
 	 * @param array $shop $userName
 	 */
-	function insertShop($shop, $userName) {
+	function insertShop($shop) {
 		$sql = "INSERT INTO `groupbuy_list`
-				(`title`, `status`, `howtopay`, `illustration`, `deadline`, `pickuptime`, `username`, `orderMessage`) 
-				VALUES(?,?,?,?,?,?,?,?)";
-		$res = $this->db->query($sql, array(cleanString($shop['title']), $shop['status'], cleanString($shop['howtopay']), cleanString($shop['illustration']), cleanString($shop['deadline']), cleanString($shop['pickuptime']), $userName,"[]")) or die(mysql_error());
+				(`title`, `status`, `illustration`, `deadline`, `pickuptime`, `username`, `orderMessage`) 
+				VALUES(?,?,?,?,?,?,?)";
+		$res = $this->db->query($sql, array(cleanString($shop['title']), $shop['status'], cleanString($shop['illustration']), cleanString($shop['deadline']), cleanString($shop['pickuptime']), $_SESSION['loginName'],"[]")) or die(mysql_error());
         $shopID = $this->db->insert_id();
         $this->load->model('groupfeed_model','feed');
         $this->feed->addFeedItem(1,
@@ -128,7 +122,6 @@ class groupbuy_model extends CI_Model{
                 $this->feed->sendFeed(1,$shopID,$groupID,0);
             }
         }
-
 		return $shopID;
 	}
 
@@ -190,7 +183,7 @@ class groupbuy_model extends CI_Model{
      * @param string $username
      */
     function getGroupbuyByUserName($username){
-		$sql = "SELECT DISTINCT `id`,`title`,`status`,`comment`,`howtopay`,`illustration`,`deadline`,`pickuptime`,`source`,alipay FROM `groupbuy_list` WHERE `username`=? and available=1 order by groupbuy_list.createTime DESC";
+		$sql = "SELECT DISTINCT `id`,`title`,`status`,`comment`,`illustration`,`deadline`,`pickuptime`,`source`,alipay FROM `groupbuy_list` WHERE `username`=? and available=1 order by groupbuy_list.createTime DESC";
         $groupbuy_list = $this->db->query($sql,array($username))->result_array();
         return $groupbuy_list;
     }
@@ -202,7 +195,7 @@ class groupbuy_model extends CI_Model{
      */
     function getGroupbuyByUserNameAndID($username, $id){
 		$id = intval($id);
-		$sql = "SELECT DISTINCT `id`,`title`,`status`,`comment`,`howtopay`,`illustration`,`deadline`,`pickuptime`,`source` FROM `groupbuy_list` WHERE `username`=? and `id`=?";
+		$sql = "SELECT DISTINCT `id`,`title`,`status`,`comment`,`illustration`,`deadline`,`pickuptime`,`source` FROM `groupbuy_list` WHERE `username`=? and `id`=?";
         $groupbuy_list = $this->db->query($sql,array($username, $id))->result_array();
 		$sql = "SELECT `groupID` FROM `groupbuy_act` WHERE `groupbuyID`=?";
         $group_list = $this->db->query($sql,array($id))->result_array();
@@ -231,11 +224,12 @@ class groupbuy_model extends CI_Model{
 	/**
 	 * 修改一个团购
 	 * @author Hewr
-	 * @param shop array userName
+	 * @param shop array
 	 */
-	function modifyShop($shop, $userName) {
-		$sql = "UPDATE `groupbuy_list` SET `title`=?,`status`=?,`howtopay`=?,`illustration`=?,`deadline`=?,`pickuptime`=? WHERE `id`=? and `username`=?";
-		$res = $this->db->query($sql,array(cleanString($shop["title"]),$shop["status"],cleanString($shop["howtopay"]),cleanString($shop["illustration"]),cleanString($shop["deadline"]),cleanString($shop["pickuptime"]),$shop["id"],$userName)) or die(mysql_error());
+	function modifyShop($shop) {
+        if (!$this->isOwnShop($shop['id'])) return;
+		$sql = "UPDATE `groupbuy_list` SET `title`=?,`status`=?,`illustration`=?,`deadline`=?,`pickuptime`=? WHERE `id`=?";
+		$res = $this->db->query($sql,array(cleanString($shop["title"]),$shop["status"],cleanString($shop["illustration"]),cleanString($shop["deadline"]),cleanString($shop["pickuptime"]),$shop["id"])) or die(mysql_error());
         $this->load->model("groupfeed_model","feed");
         $this->feed->modifyFeedItem(1,
                                     $shop['title'],
@@ -244,7 +238,18 @@ class groupbuy_model extends CI_Model{
                                     $shop['id'],
                                     $shop['deadline'],
                                     '{}');
+        /* $shopID = $shop['id'];
+        clearShopGroup($shopID);
         $groupList = explode(';',$shop['group_list']);
+        foreach($groupList as $key => $groupID){
+            if(!isGID($groupID)) continue;
+            $this->db->insert('groupbuy_act', array('groupbuyID'=>$shopID,'groupID'=>$groupID,'state'=>1));
+            if($this->permission_model->manageGroup($groupID)){
+                $this->feed->sendFeed(1,$shopID,$groupID,1);
+            }else{
+                $this->feed->sendFeed(1,$shopID,$groupID,0);
+            }
+        }*/
 	}
 
 	/**
@@ -252,7 +257,7 @@ class groupbuy_model extends CI_Model{
 	 * @author Hewr
 	 * @param shopid
 	 */
-	function clearShopGroup($shopID) {
+	private function clearShopGroup($shopID) {
 		$sql = "DELETE FROM `groupbuy_act` WHERE `groupbuyID`=".$shopID;
 		$res = $this->db->query($sql) or die(mysql_error());
 	}
@@ -262,58 +267,12 @@ class groupbuy_model extends CI_Model{
 	 * @author Hewr
 	 * @param shopid groupID
 	 */
-	function shopJoinGroup($shopID, $groupID) {
+	private function shopJoinGroup($shopID, $groupID) {
 		if (!$this->isOwnGroup($groupID)) return;
 		$sql = "INSERT INTO `groupbuy_act`(`groupID`,`groupbuyID`) VALUES(?,?)";
 		$res = $this->db->query($sql,array($groupID, $shopID)) or die(mysql_error());
 	}
 
-	/**
-	 * 新增一个商品
-	 * @author Hewr
-	 * @param array $cargo $userName
-	 */
-	function insertCargo($cargo, $userName) {
-		if (!$this->isOwnShop($cargo["shopid"])) return;
-		$sql = "INSERT INTO `cargo_list`(`shopid`, `title`, `price`, `illustration`, `username`)  VALUES (?, ?, ?, ?, ?)";
-		$res = $this->db->query($sql,array($cargo["shopid"], cleanString($cargo["title"]), $cargo["price"], cleanString($cargo["illustration"]), $userName)) or die(mysql_error());
-	}
-
-	/**
-	 * 修改一个商品
-	 * @author Hewr
-	 * @param array $cargo $userName
-	 */
-	function modifyCargo($cargo, $userName) {
-		if (!$this->isOwnShop($this->getCargoShopId($cargo["id"]))) return;
-		$sql = "UPDATE `cargo_list` SET `title`=?,`price`=?,`illustration`=? WHERE `id`=? and `username`=?";
-		$res = $this->db->query($sql,array(cleanString($cargo["title"]),floatval($cargo["price"]),cleanString($cargo["illustration"]),$cargo["id"],$userName)) or die(mysql_error());
-	}
-
-	/**
-	 * 删除一个商品
-	 * @author Hewr
-	 * @param $cargoID $userName
-	 */
-	function deleteCargoById($cargoId, $userName) {
-		if (!$this->isOwnShop($this->getCargoShopId($cargoId))) return;
-		$sql = "DELETE FROM `cargo_list` WHERE `id`=? and `username`=?";
-		$res = $this->db->query($sql, array($cargoId,$userName)) or die(mysql_error());
-	}
-
-	/**
-	 * 标记某商品被购买/退购一次
-	 * @author Hewr
-	 * @param cargoID
-	 */
-	function plusCargo($cargoid, $delta) {
-		$sql = "SELECT `howmanybuy` FROM `cargo_list` WHERE `id`=".$cargoid;
-		$res = $this->db->query($sql) or die(mysql_error());
-		$arr = $res->result_array();
-		$cnt = intval($arr[0]["howmanybuy"]) + intval($delta);
-		$sql = "UPDATE `cargo_list` SET `howmanybuy`=".$cnt." WHERE `id`=".$cargoid;
-		$res = $this->db->query($sql) or die(mysql_error());
-	}
 
 	/**
 	 * 检查团购商店是否过期
@@ -342,8 +301,8 @@ class groupbuy_model extends CI_Model{
 	 * @author Hewr
 	 * @return list 商店
 	 */
-	function getAllShops() {
-		$sql = "SELECT DISTINCT groupbuy_list.`id`,`title`,`status`,`comment`,`howtopay`,`illustration`,`deadline`,`pickuptime`,`source` FROM `groupbuy_list`,`groupbuy_act` WHERE groups_list.available = 1 and groupbuy_list.`id`=groupbuy_act.`groupbuyID` and (";
+/*	function getAllShops() {
+		$sql = "SELECT DISTINCT groupbuy_list.`id`,`title`,`status`,`comment`,`illustration`,`deadline`,`pickuptime`,`source` FROM `groupbuy_list`,`groupbuy_act` WHERE groups_list.available = 1 and groupbuy_list.`id`=groupbuy_act.`groupbuyID` and (";
 		$count = 0;
 		foreach ($_SESSION["myGroup"] as $groupID => $groupInfo) {
 			if ($count > 0) $sql .= " or ";
@@ -362,6 +321,7 @@ class groupbuy_model extends CI_Model{
 		}
 		return $arr;
 	}
+*/
 
 	/**
 	 * 返回指定团购商店
@@ -371,82 +331,21 @@ class groupbuy_model extends CI_Model{
 	 */
 	function getShopById($id) {
 		$id = intval($id);
-	//	if ($this->isOwnShop($id)) {
-	  //  	return $this->getGroupbuyByUserNameAndID($_SESSION["loginName"], $id);
-//		}
-        /**
-           $sql = "SELECT DISTINCT groupbuy_list.`id`,`title`,`status`,`comment`,`howtopay`,`illustration`,`deadline`,`pickuptime`,`source`,goodslist,createTime FROM `groupbuy_list`,`groupbuy_act` WHERE groupbuy_list.`id`=".$id." and groupbuy_list.`id`=groupbuy_act.`groupbuyID` and (";
-           $count = 0;
-           foreach ($_SESSION["myGroup"] as $groupID => $groupInfo) {
-           if ($count > 0) $sql .= " or ";
-           $sql .= "groupbuy_act.`groupID`=".$groupID;
-           ++$count;
-           }
-           $sql .= ") ORDER BY groupbuy_list.`id`";
-        **/
-		$sql = "SELECT DISTINCT groupbuy_list.`id`,`title`,`status`,`comment`,`howtopay`,`illustration`,`deadline`,`pickuptime`,`source`, alipay, goodslist,createTime FROM `groupbuy_list`,`groupbuy_act` WHERE groupbuy_list.`id`=".$id." and groupbuy_list.`id`=groupbuy_act.`groupbuyID` ORDER BY groupbuy_list.`id`";
+		$sql = "SELECT DISTINCT groupbuy_list.`id`,`title`,`status`,`comment`,`illustration`,`deadline`,`pickuptime`,`source`, alipay, goodslist,createTime FROM `groupbuy_list`,`groupbuy_act` WHERE groupbuy_list.`id`=".$id." and groupbuy_list.`id`=groupbuy_act.`groupbuyID` ORDER BY groupbuy_list.`id`";
 		$res = $this->db->query($sql) or die(mysql_error());
 		$arr = $res->result_array();
+        $this->load->model('alipay_model','alipay');
 		foreach ($arr as $key => $value) {
 			if ($arr[$key]["status"] == 1 && !$this->shopAlive($arr[$key])) {
 				$arr[$key]["status"] = 0;
 				$this->expireShop($arr[$key]["id"]);
 			}
+            $arr[$key]["howtopay"] = $this->howtopay[$arr[$key]['alipay']];
 			$arr[$key]["pic"] = "/storage/groupbuyPic/pic_".$arr[$key]["id"].".jpg";
 		}
 		return $arr;
 	}
 
-	/**
-	 * 返回指定商店的所有商品
-	 * @author Hewr
-	 * @param shopID
-	 * @return list 商品
-	 */
-	function getCargoByShopId($shopid) {
-		$shopid = intval($shopid);
-		if ($this->isOwnShop($shopid)) {
-			$sql = "SELECT `id`,`title`,`price`,`illustration`,`howmanybuy` FROM `cargo_list` WHERE `shopid`=".$shopid." ORDER BY `id`";
-		} else {
-			$sql = "SELECT cargo_list.`id`,`title`,`price`,`illustration`,`howmanybuy` FROM `cargo_list`,`groupbuy_act` WHERE `shopid`=".$shopid." and groupbuy_act.`groupbuyID`=".$shopid." and (";
-			$count = 0;
-			foreach ($_SESSION["myGroup"] as $groupID => $groupInfo) {
-				if ($count > 0) $sql .= " or ";
-				$sql .= "groupbuy_act.`groupID`=".$groupID;
-				++$count;
-			}
-			$sql .= ") ORDER BY `id`";
-		}
-		$res = $this->db->query($sql) or die(mysql_error());
-		$arr = $res->result_array();
-		return $arr;
-	}
-
-	/**
-	 * 返回指定商品
-	 * @author Hewr
-	 * @param cargoID
-	 * @return 商品
-	 */
-	function getCargoById($id) {
-		$id = intval($id);
-		$shopid = $this->getCargoShopID($id);
-		if ($this->isOwnShop($shopid)) {
-			$sql = "SELECT `id`,`title`,`price`,`illustration`,`howmanybuy` FROM `cargo_list` WHERE `id`=".$id;
-		} else {
-			$sql = "SELECT cargo_list.`id`,`title`,`price`,`illustration`,`howmanybuy` FROM `cargo_list`,`groupbuy_act` WHERE `id`=".$id." and `shopid`=".$shopid." and groupbuy_act.`groupbuyID`=".$shopid." and (";
-			$count = 0;
-			foreach ($_SESSION["myGroup"] as $groupID => $groupInfo) {
-				if ($count > 0) $sql .= " or ";
-				$sql .= "groupbuy_act.`groupID`=".$groupID;
-				++$count;
-			}
-			$sql .= ")";
-		}
-		$res = $this->db->query($sql) or die(mysql_error());
-		$arr = $res->result_array();
-		return $arr;
-	}
 
 	/**
 	 * 提交用户订单
@@ -517,9 +416,9 @@ class groupbuy_model extends CI_Model{
 	 * @param orderid
 	 */
 	function deleteOrderById($id) {
-        $sql = "SELECT groupbuy_order.del FROM groupbuy_order WHERE ID=? ";
+        $sql = "SELECT groupbuy_order.del, userID FROM groupbuy_order WHERE ID=? ";
         $temp = $this->db->query($sql,array($id))->result_array();
-        if ($temp[0]['del'] == 1) return;
+        if ($temp[0]['del'] == 1 || $temp[0]['userID']!=$_SESSION['userID']) return;
 		$sql = "UPDATE `groupbuy_order` SET `del`=1 WHERE `id`=".$id;
 		$res = $this->db->query($sql) or die(mysql_error());
         $sql = "SELECT groupbuy_order.shopID FROM groupbuy_order WHERE ID=?";
@@ -548,6 +447,7 @@ class groupbuy_model extends CI_Model{
 
 	function updataGoodsList($groupbuyID,$JsonGoodsList)
 	{
+        if (!isOwnShop($groupbuyID)) return;
 		$sql = "UPDATE `groupbuy_list` SET goodslist =? WHERE `ID`=".$groupbuyID;
 		$res = $this->db->query($sql,array($JsonGoodsList));
 	}	
@@ -604,6 +504,7 @@ class groupbuy_model extends CI_Model{
    
     function addOrderMessage($gbID,$Message)
     {
+        if (!isOwnShop($groupbuyID)) return;
         $tmp = $this->db->from('groupbuy_list')->where('ID',$gbID)->get()->result_array();
         $orderMessageList = json_decode($tmp[0]['orderMessage'],true);
         array_push($orderMessageList,$Message);
@@ -614,6 +515,7 @@ class groupbuy_model extends CI_Model{
 
     function delOrderMessage($gbID,$Message)
     {
+        if (!isOwnShop($groupbuyID)) return;
         $tmp = $this->db->from('groupbuy_list')->where('ID',$gbID)->get()->result_array();
         $orderMessageList = json_decode($tmp[0]['orderMessage'],true);
         $tmp = array();
@@ -643,12 +545,6 @@ class groupbuy_model extends CI_Model{
             $this->db->query($sql,array($this->getGroupbuyTotalByID($gbID['ID']),$gbID['ID']));
         }
     }
-
-	function setOrderAlipayByID($orderID,$str)
-	{
-		$sql = "UPDATE `groupbuy_order` SET alipay =? WHERE `ID`=?";
-		$res = $this->db->query($sql,array($str,$orderID));
-	}	
 }
 
 ?>

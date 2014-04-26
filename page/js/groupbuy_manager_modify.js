@@ -41,7 +41,6 @@ function makeInfo(data) {
 	if (data.status == 0) unavailSelected = " selected=\"selected\""; else availSelected = " selected=\"selected\"";
 	var res = $(
     		"<form class=\"form-horizontal\" action=\"/groupbuy/modifyShopById\" method = \"post\" enctype=\"multipart/form-data\">"+
-		        //"<div class=\"form-horizontal\">"+
 			        "<img src='"+data.pic+"' height=180 style=\"margin-left:190px;\" /><br><br>"+
 			        "<div class=\"form-group\">"+
 				        "<label class=\"col-lg-3 control-label\">团购ID</label>"+
@@ -60,12 +59,6 @@ function makeInfo(data) {
 				    "<label class=\"control-label col-lg-3\">团购图片</label>"+
 				    "<div class=\"col-lg-5\">"+
 					    "<input type=\"file\" class=\"form-control\" name=\"pic\" />"+
-				    "</div>"+
-			    "</div>"+
-			    "<div class=\"form-group\">"+
-				    "<label class=\"col-lg-3 control-label\">支付方式</label>"+
-				    "<div class=\"col-lg-5\">"+
-					    "<textarea rows=3 class=\"form-control\" name=\"howtopay\">"+data.howtopay+"</textarea>"+
 				    "</div>"+
 			    "</div>"+
 		    	"<div class=\"form-group\">"+
@@ -94,29 +87,6 @@ function makeInfo(data) {
 					    "<input type=\"text\" class=\"form-control tp\" name=\"pickuptimetime\" value=\""+pickuptime_time+"\">"+
 	    			"</div>"+
 		    	"</div>"+
-/*			    "<div class=\"form-group\">"+
-			    	"<label class=\"col-lg-3 control-label\">货源</label>"+
-			    	"<div class=\"col-lg-5\">"+
-				    	"<input type=\"text\" class=\"form-control\" name=\"source\" value=\""+data.source+"\" placeholder=\"凡客\">"+
-				    "</div>"+
-	    		"</div>"+
-		    	"<div class=\"form-group\">"+
-			    	"<label class=\"col-lg-3 control-label\">备注</label>"+
-				    "<div class=\"col-lg-5\">"+
-					    "<input type=\"text\" class=\"form-control\" name=\"comment\" value=\""+data.comment+"\">"+
-    				"</div>"+
-	    		"</div>"+
-                "<div class=\"form-group\">"+
-                    "<label class=\"control-label col-lg-3\">订单备注项</label>"+
-                    "<div class=\"col-lg-3\">"+
-                        "<input type=\"text\" class=\"form-control\" name=\"orderMessage\" id=\"orderMessage\"></input>"+
-                    "</div>"+
-                    "<button type=\"button\" class=\"btn btn-defalut\" onclick=\"addOrderMessage()\">添加</button>"+
-                "</div>"+
-                "<div id=\"orderMessageBody\" class=\"form-group\">"+
-                    "<input type=\"hidden\" name=\"orderMessageList\" id=\"orderMessageList\" value=\"[]\"></input>"+
-                    "<label class=\"control-label col-lg-3\"></label>"+
-                "</div>"+*/
 			    "<div class=\"form-group\">"+
 				    "<label class=\"col-lg-3 control-label\">状态</label>"+
     				"<div class=\"col-lg-5\">"+
@@ -126,9 +96,7 @@ function makeInfo(data) {
 				    	"</select>"+
     				"</div>"+
 	    		"</div>"+
-		    	//"<span class=\"btn btn-primary pull-right\" onclick=\"confirmModifyInfo()\">确认修改</span>"+
 			    "<input type='submit' class='btn btn-primary pull-right' value='确认修改' />"+
-    		//"</div>"+
 	    	"</form>"
 	    );
 	    return res;

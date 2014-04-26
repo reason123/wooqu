@@ -1,5 +1,5 @@
 <legend>新增团购</legend>
-<a href="/groupbuy/newGroupbuy"  style="margin: 0 0 20px 20px" class="btn btn-default">创建团购活动</a><br/>
+<a href="/manager/newGroupbuy"  style="margin: 0 0 20px 20px" class="btn btn-default">创建团购活动</a><br/>
 <legend>团购列表</legend>
 <table id="groupbuy_list_table" class="table table-striped table-bordered table-hover">
 	<thead>
@@ -8,9 +8,7 @@
 			<th>团购标题</th>
 			<th>截止时间</th>
 			<th>取货时间</th>
-			<th>支付方式</th>
-<!--			<th>货源</th>
-			<th>备注</th>-->
+			<th>支付宝</th>
 			<th>状态</th>
 			<th>操作</th>
 		</tr>

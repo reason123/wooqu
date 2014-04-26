@@ -1,7 +1,7 @@
-<a class="btn btn-default" style="margin-bottom: 10px;" href="/manager/groupbuy">返回团购列表</a>
+<!--<a class="btn btn-default" style="margin-bottom: 10px;" href="/manager/groupbuy">返回团购列表</a>-->
 <legend>创建团购活动</legend>
 <div style="padding:20px;">
-<form class="pubForm form-horizontal" action="/groupbuy/newGroupbuy<?php if (isset($_GET['id'])) echo '?id='.$_GET['id']; ?>" method = "post" enctype="multipart/form-data">
+<form class="pubForm form-horizontal" action="/manager/newGroupbuy<?php if (isset($_GET['id'])) echo '?id='.$_GET['id']; ?>" method = "post" enctype="multipart/form-data">
      <div class="form-group" >
         <label class="control-label col-lg-2">团购标题</label>
         <div class="col-lg-3">
@@ -21,13 +21,14 @@
            <input type="text" class="form-control" name="group_list" value="<?php if (isset($_REQUEST['group_list'])) echo $_REQUEST['group_list']; else echo $_SESSION['defaultGroupID'].';'; ?>">
         </div>
     </div>
-    <div class="form-group" >
+<!--    <div class="form-group" >
         <label class="control-label col-lg-2">支付方式</label>
         <div class="col-lg-3">
             <input type="text" class="form-control" name="howtopay" value="<?php if (isset($_REQUEST['howtopay'])) echo $_REQUEST['howtopay']; ?>">
             <?php echo form_error('howtopay',"<span class='error'>","</span>");?>
         </div>
-     </div>
+     </div> 
+-->
 <!--     <div class="form-group" >
         <label class="control-label col-lg-2">货源</label>
         <div class="col-lg-3">
@@ -41,7 +42,8 @@
             <input type="text" class="form-control" name="comment" value="<?php if (isset($_REQUEST['comment'])) echo $_REQUEST['comment']; ?>">
             <?php echo form_error('comment',"<span class='error'>","</span>");?>
         </div>
-     </div>-->
+     </div>
+-->
      <div class="form-group">
         <label class="control-label col-lg-2">详细信息</label>
         <div class="col-lg-5">
@@ -66,7 +68,8 @@
                 }
             }
         ?>
-     </div>-->
+     </div>
+-->
      <div class="form-group">
         <label class="control-label col-lg-2">团购结束时间</label>
         <div class="col-lg-3">

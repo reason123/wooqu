@@ -81,24 +81,17 @@ class Groupbuy extends CI_Controller {
 	 */
 	function modifyShopById() {
 		if (!isset($_SESSION["loginName"])) {
-			//echo json_encode(array("error"=>"没有登录"));
 			echo "没有登录";
 			return;
 		}
-		$userName = $_SESSION["loginName"];
-		//$shop = (array) json_decode($_POST["content"]);
 		$shop = array(
 			"id"=>$_REQUEST["id"],
 			"title"=>$_REQUEST["title"],
 			"deadline"=>$_REQUEST["deadlinedate"]." ".$_REQUEST["deadlinetime"],
 			"pickuptime"=>$_REQUEST["pickuptimedate"]." ".$_REQUEST["pickuptimetime"],
-			"howtopay"=>$_REQUEST["howtopay"],
-//			"source"=>$_REQUEST["source"],
-//			"comment"=>$_REQUEST["comment"],
 			"illustration"=>$_REQUEST["illustration"],
 			"status"=>$_REQUEST["status"],
 			"groups"=>$_REQUEST["groups"],
-//            "orderMessage"=>$_REQUEST["orderMessageList"]
 		);
 		$this->load->model("groupbuy_model", "groupbuy");
 		$shopID = intval($shop["id"]);
@@ -106,20 +99,12 @@ class Groupbuy extends CI_Controller {
 			echo json_encode(array("error"=>"illegal account"));
 			return;
 		}
-		/*$group_list = $this->groupbuy->splitGroupStr($shop["groups"]);
-		if (count($group_list) == 0) {
-			echo json_encode(array("error"=>"illegal groups"));
-			return;
-		}
-		$this->groupbuy->clearShopGroup($shopID);
-		for ($i = 1; $i < count($group_list); ++$i) $this->groupbuy->shopJoinGroup($shopID, $group_list[$i]);*/
-		$this->groupbuy->modifyShop($shop, $userName);
+		$this->groupbuy->modifyShop($shop);
 		$picPath = "/storage/groupbuyPic/pic_".$shopID.".jpg";
 		if ($_FILES['pic']['size'] > 0) {
 			$photo = $_FILES['pic'];
 			move_uploaded_file($photo['tmp_name'], substr($picPath, 1, strlen($picPath)));
 		}
-		//echo json_encode(array("error"=>""));
         header('Location: /groupbuy/selectGoods?id='.$shopID);
 	}
 
@@ -545,76 +530,6 @@ class Groupbuy extends CI_Controller {
         $this->load->view('base/footer');
 	}
     
-	/**
-	 * 新建团购
-	 * @author LJNanest Hewr
-	 */
-	function newGroupbuy()
-	{
-		$this->load->library('form_validation');
-        $this->form_validation->set_rules('title','title','required'); 
-        $this->form_validation->set_rules('howtopay','howtopay','required'); 
-//        $this->form_validation->set_rules('source','source','required'); 
-//        $this->form_validation->set_rules('comment','comment','required'); 
-        $this->form_validation->set_rules('illustration','illustration','required'); 
-        $this->load->model('groupbuy_model','groupbuy');
-        if (isset($_GET['id']))
-        if (!isset($_REQUEST['title']))
-        {
-        	$groupbuyInfo = $this->groupbuy->getGroupbuyInfoByID($_GET['id']);
-            $groupList = $this->groupbuy->getGroupListByID($_GET['id']);
-            
-            $str = '';
-
-            foreach ($groupList as $key=>$value)
-            {
-                $str = $str.$value.';';
-            }
-        	$_REQUEST['title'] = $groupbuyInfo['title'];
-//        	$_REQUEST['comment'] = $groupbuyInfo['comment'];
-        	$_REQUEST['howtopay'] = $groupbuyInfo['howtopay'];
-//        	$_REQUEST['source'] = $groupbuyInfo['source'];
-        	$_REQUEST['illustration'] = $groupbuyInfo['illustration'];
-            $_REQUEST['group_list'] = $str;
-            $_REQUEST['orderMessageList'] = $groupbuyInfo['orderMessage'];
-        }
-        if($this->form_validation->run() == FALSE){
-        	
-        	$this->load->view('base/header',array('page'=>'newgroupbuy'));
-            $this->load->view('manager/groupbuy/newgroupbuy');
-            $this->load->view('base/footer');
-        }else{        	
-        	$shop = array("title"=>cleanString($_REQUEST['title']),
-                         "status"=>"1",
-//                          "comment"=>cleanString($_REQUEST['comment']),
-                          "howtopay"=>cleanString($_REQUEST['howtopay']),
-                          "illustration"=>cleanString($_REQUEST['illustration']),
-                          "deadline"=>cleanString($_REQUEST['act_end_date']),
-                          "pickuptime"=>cleanString($_REQUEST['sign_end_date']), 
-//                          "source"=>cleanString($_REQUEST['source']),
-						  "group_list"=>cleanString($_REQUEST['group_list']),
-//                          "orderMessage"=>$_REQUEST['orderMessageList']
-                          );
-        	//echo $_REQUEST['act_end_date'];
-        	$groupbuyID = $this->groupbuy->insertShop($shop,$_SESSION['loginName']);
-			$picPath = "/storage/groupbuyPic/pic_".$groupbuyID.".jpg";
-            if ($_FILES['pic']['size'] > 0) {
-				$photo = $_FILES['pic'];
-				move_uploaded_file($photo['tmp_name'], substr($picPath, 1, strlen($picPath)));
-			} if (isset($_GET['id'])){
-				exec("cp storage/groupbuyPic/pic_".$_GET[id].".jpg storage/groupbuyPic/pic_".$groupbuyID.".jpg");
-            } else {
-				exec("cp storage/groupbuyPic/default_groupbuy.jpg storage/groupbuyPic/pic_".$groupbuyID.".jpg");
-			}
-        	if (isset($_GET['id']))
-        	{
-        		$groupbuyInfo = $this->groupbuy->getGroupbuyInfoByID($_GET['id']);
-        		//echo $groupbuyInfo['goodslist'];
-        		$this->groupbuy->updataGoodsList($groupbuyID,$groupbuyInfo['goodslist']);
-        	}
-            header('Location: /groupbuy/selectGoods?id='.$groupbuyID);
-        }
-	}
     
 	function modGoods()
 	{
