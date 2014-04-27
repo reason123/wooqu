@@ -298,7 +298,7 @@ class Groupbuy extends CI_Controller {
 		
 		$orderID = $this->groupbuy->submitOrder($shopid, $shopname, $loginName, $order, $amount, $comment,$_POST["orderMessage"]);
         if ($shopAlipay == "ON_ONLY" || ($shopAlipay =="ON" && $_POST['payType'] == 'ON')) {
-//            $this->groupbuy->setOrderAlipayByID($orderID,'UNPAID');
+            $this->groupbuy->setOrderAlipayByID($orderID,'UNPAID');
 		    $ret = array( "content"=>"成功提交！", "error"=>"", "href"=>"/alipay/do_alipay_groupbuy?id=".$orderID );
         } else {
             $this->groupbuy->setOrderAlipayByID($orderID,'OFF');
@@ -676,6 +676,15 @@ class Groupbuy extends CI_Controller {
 		$this->load->model('groupbuy_model','groupbuy');
         $this->groupbuy->updateFeedTotal();
         echo "OK!";
+    }
+
+    function setOrderAlipayByID($orderID,$type)
+    {
+        $str = "";
+        if ($type == 0) $str = "UNPAID";
+        if ($type == 0) $str = "OFF";
+		$sql = "UPDATE `groupbuy_order` SET alipay =? WHERE `ID`=?";
+    	$res = $this->db->query($sql,array($str,$orderID));
     }
 }
 
