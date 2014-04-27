@@ -340,6 +340,11 @@ class Groupbuy extends CI_Controller {
 			echo json_encode($ret);
 			return;
 		}
+		if ($order["alipay"] != "FINISHED") {
+			$ret = array("error"=>"订单已付款，退订请联系客服人员！");
+			echo json_encode($ret);
+			return;
+		}
 		$shop = $this->groupbuy->getShopById($order["shopid"]);
 		if ($shop[0]["status"] == 0) {
 			$ret = array("error"=>"订单已过期");
