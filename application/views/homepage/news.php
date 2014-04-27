@@ -39,7 +39,7 @@
       <?php foreach($news_list as $key => $newsInfo): ?>
       <?php if($counter>=3) break; ?>
       <div class="item<?php if($counter == 0) echo ' active';$counter += 1;?>">
-        <a href="<?php echo $newsInfo['url']?>">
+        <a href="/page/img/sample.jpg">
         <img src="<?php echo $newsInfo['imgurl']?>">
         </a>
         <div class="carousel-caption">
