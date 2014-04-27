@@ -263,24 +263,23 @@ class Groupbuy extends CI_Controller {
 			echo json_encode($ret);
 			return;
 		}
-
+        
+        $goodsList = array();
+        for ($i = 0; $i < $cargoSize; ++$i) {
+            $goodsList[$cargo[$i]['ID']] = $cargo[$i];
+        }
 		$amount = 0;
 		for ($i = 0; $i < $orderSize; ++$i) {
 			$idx = intval($order[$i][0]);
             if ($order[$i][2] == "") $type = ""; else  $type = "(".$order[$i][2].")";
-			if ($idx < 0 || $idx >= $cargoSize) {
+			if (!isset($goodsList[$idx])) {
 				$ret = array("error"=>"商品序号非法");
 				echo json_encode($ret);
 				return;
 			}
-			$order[$i][2] = $cargo[$idx]["name"].$type;
-			$order[$i][0] = intval($cargo[$idx]["ID"]);
-			if ($order[$i][0] == -1) {
-				$ret = array("error"=>"商品重复");
-				echo json_encode($ret);
-				return;
-			}
-			$price = $cargo[$idx]["price"];
+			$order[$i][2] = $goodsList[$idx]["name"].$type;
+			$order[$i][0] = intval($goodsList[$idx]["ID"]);
+			$price = $goodsList[$idx]["price"];
 			$num = intval($order[$i][1]);
 			if ($num <= 0 || $num > 99999) {
 				$ret = array("error"=>"购买数量非法");
@@ -288,8 +287,6 @@ class Groupbuy extends CI_Controller {
 				return;
 			}
 			$amount += doubleval($price) * $num;
-			//标记该商品已被处理
-			$cargo[$idx]["id"] = -1;
 		}
 
 		for ($i = 0; $i < $orderSize; ++$i)	

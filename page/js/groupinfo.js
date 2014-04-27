@@ -283,7 +283,7 @@ function subOrd() {
             }
         }
 		var num = parseInt(document.getElementById("cartnum" + sign).value);
-		if (num > 0) order[cnt++] = new Array(id, num ,type);
+		if (num > 0) order[cnt++] = new Array(cargoList[id].ID, num ,type);
     }
 
 /*	for (var i = 0; i < cargoList.length; ++i) {
