@@ -545,6 +545,15 @@ class groupbuy_model extends CI_Model{
             $this->db->query($sql,array($this->getGroupbuyTotalByID($gbID['ID']),$gbID['ID']));
         }
     }
+
+    function setOrderAlipayByID($orderID,$type)
+    {
+        $str = "";
+        if ($type == 0) $str = "UNPAID";
+        if ($type == 1) $str = "OFF";
+		$sql = "UPDATE `groupbuy_order` SET alipay =? WHERE `ID`=?";
+    	$res = $this->db->query($sql,array($str,$orderID));
+    }
 }
 
 ?>
