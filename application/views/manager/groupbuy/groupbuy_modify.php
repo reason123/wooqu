@@ -83,7 +83,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h2 class="modal-title" style="font-family: 'microsoft yahei', '宋体b8b\4f53'; color: rgb(15, 139, 218);"><b>类型</b></h2>
+				<h2 class="modal-title" style="font-family: 'microsoft yahei', '宋体b8b\4f53'; color: rgb(15, 139, 218);"><b>订购信息</b></h2>
 			</div>
 			<div class="modal-body" id="deleteBody">
                 <div class="row">
@@ -91,7 +91,7 @@
                         <div class="input-group">
                             <input id="orderMessageText" type="text"  class="form-control" value=""></input>
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" onclick="addOrderMessage()">添加类型</button>
+                                <button class="btn btn-default" type="button" onclick="addOrderMessage()">添加</button>
                             </span>
                         </div><!-- /input-group -->
                     </div><!-- /.col-lg-6 -->
