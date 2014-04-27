@@ -400,7 +400,7 @@ $(function(){
 
             loginState = re.error.code;
             if(re.error.code == -1){
-                alert("登录后才可以订购水果哦亲~");
+                alert("登录后才能订购！");
             }
         });
 		$.post("/groupbuy/getShopById",
