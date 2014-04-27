@@ -257,7 +257,7 @@ function confirmOrder() {
 
 function subOrd() {
     if(loginState == -1){
-        alert("登录后才可以订购水果哦亲~");
+        alert("登录后才可以订购哦亲~");
         window.location.href="/user/login";
         return ;
     }
