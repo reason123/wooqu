@@ -93,6 +93,27 @@ class groupFeed_model extends CI_Model{
 		return $newsList;
 	}
 
+    function getNews($type,$sourceID)
+    {
+        $sql = "select distinct feed_list.ID, 
+                                type, 
+                                title, 
+                                nickName as userName, 
+                                time, 
+                                imgurl, 
+                                shortdescription, 
+                                url, 
+                                sourceID,
+                                startTime,
+                                endTime,
+                                total,
+                                param1 
+               from feed_list, user_list
+               where feed_list.type = ? AND feed_list.sourceID = ? AND userID = user_list.ID";
+        $news = $this->db->query($sql,array($type,$sourceID))->result_array();
+        return $news[0];
+    }
+
     /**
      * 获取所有类型新鲜事
      * @author ca007

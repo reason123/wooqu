@@ -10,12 +10,37 @@
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
-      <?php $counter = 0 ?>
+
+<!-- --> 
+     <div class="item active">
+        <a href="<?php echo $ZDnewsInfo['url']?>">
+            <img src="<?php echo $ZDnewsInfo['imgurl']?>">
+        </a>
+        <div class="carousel-caption">
+          <div class="info">
+            <div class="left">
+              <div class="title"><?php echo $ZDnewsInfo['title']?></div>
+              <div class="start-date">开始时间：<?php echo $ZDnewsInfo['startTime']?></div>
+              <div class="start-date <?php if ($ZDnewsInfo['type'] == 2) echo "hide"; ?>">结束时间：<?php echo $ZDnewsInfo['endTime']?></div>
+            </div>
+            <div class="right">
+              <div class="num">
+                已有<span class="big"><?php echo $ZDnewsInfo['total']?></span>人参加
+              </div>
+              <div class="user">
+                发起者：<?php echo $ZDnewsInfo['userName'] ?>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- -->    
+      <?php $counter = 1?>
       <?php foreach($news_list as $key => $newsInfo): ?>
       <?php if($counter>=3) break; ?>
       <div class="item<?php if($counter == 0) echo ' active';$counter += 1;?>">
         <a href="<?php echo $newsInfo['url']?>">
-          <img src="/page/img/sample.jpg">
+        <img src="/page/img/sample.jpg">
         </a>
         <div class="carousel-caption">
           <div class="info">
