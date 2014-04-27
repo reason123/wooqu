@@ -154,6 +154,7 @@ class alipay extends CI_Controller {
             $trade_status = $_POST['trade_status'];
 
             if($_POST['trade_status'] == 'WAIT_BUYER_PAY') {//该判断表示买家已在支付宝交易管理中产生了交易记录，但没有付款
+                $this->setOrderAlipay($out_trade_no,"UNPAID");
                 //判断该笔订单是否在商户网站中已经做过处理
                 //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
                 //如果有做过处理，不执行商户的业务程序
