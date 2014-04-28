@@ -42,12 +42,6 @@
                {
                     echo "<li><a href='/groupbuy/vieworder?groupbuyID=".$gbID."&OM=".$x."'>".$x."</a></li>";
                }
-               //<li><a href="#">Another action</a></li>
-               //<li><a href="#">Something else here</a></li>
-               //<li><a href="#">Separated link</a></li>
-               //<li><a href="#">One more separated link</a></li>
-               
-               
            echo "</ul>
             </li>
          </th>";
@@ -58,6 +52,7 @@
   <tbody>
   <?php foreach($order_list as $key => $order): ?>
      <?php if ($OM != "LJNisHandsome!" && $OM != $order['orderMessage']) continue; ?>
+     <?php if ($payType != "ALL" && $payType != $order['alipay']) continue; ?>
     <tr>
 	  <td><input type="checkbox" name="checkID" value="<?php echo $order['ID']?>"></td>
       <!--<td><?php echo $order['defaultGroupID'] ?></td>-->

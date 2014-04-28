@@ -382,6 +382,7 @@ class Groupbuy extends CI_Controller {
      */
     function vieworder(){
         if (isset($_GET['OM'])) $OM = $_GET['OM']; else $OM = "LJNisHandsome!";
+        if (isset($_GET['payType'])) $payType = $_GET['payType']; else $payType = "ALL";
         $this->load->model('groupbuy_model','gb');
         $order_list = $this->gb->getOrderByGbID($_REQUEST['groupbuyID']);
         $orderMessageList = array();
@@ -394,7 +395,9 @@ class Groupbuy extends CI_Controller {
         $groupbuyInfo = $this->gb->getGroupbuyInfoByID($_REQUEST['groupbuyID']);
         $total_counter = array();
         foreach($order_list as $key => $order){
-            if($OM != "LJNisHandsome!" && $OM != $order['orderMessage'])
+            if($OM != "LJNisHandsome!" && $OM != $order['orderMessage'])                
+                continue;
+            if($payType != "ALL" && $payType != $order['alipay'])                
                 continue;
             foreach($order['list'] as $i => $good){
                 $goodID = $good[0];
@@ -417,7 +420,7 @@ class Groupbuy extends CI_Controller {
         $this->load->view('base/header',array('page'=>'gborder'));
 		$this->load->view("manager/header", array("mh" => "statistics"));
 		$this->load->view("manager/statistics_header", array("mgh" => "groupbuy"));
-        $this->load->view('groupbuy/vieworder',array('gbID'=>$_REQUEST['groupbuyID'],'order_list'=>$order_list, 'groupbuyInfo'=>$groupbuyInfo, 'orderMessageList'=>$orderMessageList,'OM'=>$OM,'total_counter'=>$total_counter));
+        $this->load->view('groupbuy/vieworder',array('gbID'=>$_REQUEST['groupbuyID'],'order_list'=>$order_list, 'groupbuyInfo'=>$groupbuyInfo, 'orderMessageList'=>$orderMessageList,'OM'=>$OM,'total_counter'=>$total_counter,'payType'=>$payType));
         $this->load->view('base/footer');
     }
 
