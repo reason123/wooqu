@@ -416,7 +416,7 @@ class Groupbuy extends CI_Controller {
         }
 
         function cmp_counter($a, $b){
-            return $b['total'] - $a['total'];
+            return ($b['name'] > $a['name']?1 :0);
         }
         usort($total_counter, 'cmp_counter');
         $this->load->view('base/header',array('page'=>'gborder'));
