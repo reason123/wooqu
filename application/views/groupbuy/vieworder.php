@@ -1,9 +1,4 @@
 <legend><?php 
-    $totAmount = 0;
-    foreach ($order_list as $key => $order)
-    {
-        $totAmount += $order['amount'];
-    }   
     echo $groupbuyInfo['title']."</br>";
     echo"团购订单总额 : ".$totAmount;
 ?></legend>
