@@ -191,7 +191,10 @@ class alipay extends CI_Controller {
                 //调试用，写文本函数记录程序运行情况是否正常
                 //logResult("这里写入想要调试的代码变量值，或其他运行的结果记录");
             } else if($_POST['trade_status'] == 'REFUND_SUCCESS') {
-                $this->setOrderAlipay($out_trade_no,"UNPAID");
+                $this->setOrderAlipay($out_trade_no,"REFUNDED");
+                echo "success";     //请不要修改或删除
+            } else if($_POST['trade_status'] == 'WAIT_SELLER_AGREE') {
+                $this->setOrderAlipay($out_trade_no,"REFUND");
                 echo "success";     //请不要修改或删除
             } else {
                 //其他状态判断
