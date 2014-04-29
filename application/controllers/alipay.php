@@ -152,9 +152,11 @@ class alipay extends CI_Controller {
             $trade_no = $_POST['trade_no'];
             //交易状态
             $trade_status = $_POST['trade_status'];
-            if (!isset($_POST['price']) || !$this->checkPrice($out_trade_no,$_POST['price'])) {
+            if (isset($_POST['price']) && !$this->checkPrice($out_trade_no,$_POST['price'])) {
                 echo "fail";
-            } else if($_POST['trade_status'] == 'WAIT_BUYER_PAY') {//该判断表示买家已在支付宝交易管理中产生了交易记录，但没有付款
+                return;
+            }
+            if($_POST['trade_status'] == 'WAIT_BUYER_PAY') {//该判断表示买家已在支付宝交易管理中产生了交易记录，但没有付款
                 $this->setOrderAlipay($out_trade_no,"UNPAID");
                 //判断该笔订单是否在商户网站中已经做过处理
                 //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
@@ -220,9 +222,9 @@ class alipay extends CI_Controller {
         $no_sign = substr($out_trade_no,0,2);
         $orderID = substr($out_trade_no,2);
         if ($no_sign == "gb") {
-//		    $sql = "SELECT * FROM groupbuy_order WHERE ID=?";
-//    		$res = $this->db->query($sql,array($orderID))->result_array();
-//            if ($res[0]['price'] != $price) return FALSE;
+		    $sql = "SELECT * FROM groupbuy_order WHERE ID=?";
+    		$res = $this->db->query($sql,array($orderID))->result_array();
+            if ($res[0]['amount'] != $price) return FALSE;
         }
         return TRUE;
     }
