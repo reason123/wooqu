@@ -220,9 +220,9 @@ class alipay extends CI_Controller {
         $no_sign = substr($out_trade_no,0,2);
         $orderID = substr($out_trade_no,2);
         if ($no_sign == "gb") {
-		    $sql = "SELECT * FROM groupbuy_order WHERE ID=?";
-    		$res = $this->db->query($sql,array($orderID))->result_array();
-            if ($res[0]['price'] != $price) return FALSE;
+//		    $sql = "SELECT * FROM groupbuy_order WHERE ID=?";
+//    		$res = $this->db->query($sql,array($orderID))->result_array();
+//            if ($res[0]['price'] != $price) return FALSE;
         }
         return TRUE;
     }
