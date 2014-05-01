@@ -469,7 +469,7 @@ class groupbuy_model extends CI_Model{
      */
     function getGroupbuyListByUserID($userID)
     {
-        $groupbuyIDList = array();
+/**        $groupbuyIDList = array();
         $manager_list = $this->db->from('member_list')->where('userID',$userID)->where('roles',4)->get()->result_array();
         foreach ($manager_list as $key=>$value)
             {
@@ -487,12 +487,23 @@ class groupbuy_model extends CI_Model{
                 $sql = $sql." OR (groupbuy_list.ID = ".$groupbuyID." AND available = 1 AND user_list.loginName = groupbuy_list.username)";
             }
         $sql = $sql." ORDER BY groupbuy_list.createTime DESC limit 80";
+*/
+        $manager_list = $this->db->from('member_list')->where('userID',$userID)->where('roles',4)->get()->result_array();
+        $sql = "SELECT DISTINCT groupbuy_list.ID,groupbuy_list.title,user_list.realName as username,
+                    groupbuy_list.goodslist,groupbuy_list.createTime, feed_list.total
+                FROM  user_list, groupbuy_list, groupbuy_act, feed_list 
+                WHERE (groupbuy_list.username = user_list.loginName AND groupbuy_act.groupbuyID = groupbuy_list.ID AND available = 1 AND feed_list.type = 1 AND feed_list.sourceID = groupbuy_list.ID)
+                    AND ((user_list.ID = ?)";
+        foreach ($manager_list as $key=>$value) {
+            $sql = $sql."OR (groupbuy_act.groupID = ".$value['groupID'].")";
+        }
+        $sql = $sql.") ORDER BY groupbuy_list.createTime DESC limit 80";
         $groupbuyList = $this->db->query($sql,array($userID))->result_array();
-        foreach($groupbuyList as $k => $v){
+/**        foreach($groupbuyList as $k => $v){
             $sql = "SELECT DISTINCT feed_list.total FROM feed_list WHERE sourceID = ? AND type = 1";
             $temp = $this->db->query($sql,array($v['ID']))->result_array();
             if(count($temp) == 0) $groupbuyList[$k]['total'] = 0; else $groupbuyList[$k]['total'] = $temp[0]['total'];
-        }
+        }*/
         return $groupbuyList;
     }
 
