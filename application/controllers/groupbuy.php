@@ -112,7 +112,7 @@ class Groupbuy extends CI_Controller {
 	 * API:新增一个团购商店
 	 * @author Hewr
 	 */
-	function addShop() {
+/**	function addShop() {
 		if (!isset($_SESSION["loginName"])) {
 			echo json_encode(array("error"=>"没有登录"));
 			return;
@@ -123,7 +123,7 @@ class Groupbuy extends CI_Controller {
 		$this->groupbuy->insertShop($shop, $userName);
 		echo json_encode(array("error"=>""));
 	}
-
+*/
 	/**
 	 * API:返回指定商店的所有商品
 	 * @param post方式 shopID
@@ -561,11 +561,11 @@ class Groupbuy extends CI_Controller {
             	$this->load->view('manager/groupbuy/modgoods');
             	$this->load->view('base/footer');
         	}else{
-            	 $this->goods->addGoodsAtGroupbuy($_GET['groupbuyID'], $_GET['goodsID'], $_REQUEST['price']);
-            	header('Location: /manager/groupbuy_goods?id='.$_GET['groupbuyID']);	
+           	    $this->goods->addGoodsAtGroupbuy($_GET['groupbuyID'], $_GET['goodsID'], $_REQUEST['price']);
+             	header('Location: /manager/groupbuy_goods?id='.$_GET['groupbuyID']);	
         	}
 		} else 
-			header('Location: /manager/groupbuy_goods?id='.$_GET['groupbuyID']);	
+    	    header('Location: /manager/groupbuy_goods?id='.$_GET['groupbuyID']);	
 	}
 
 	function delGoods()

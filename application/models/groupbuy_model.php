@@ -115,7 +115,7 @@ class groupbuy_model extends CI_Model{
         $groupList = explode(';',$shop['group_list']);
         foreach($groupList as $key => $groupID){
             if(!isGID($groupID)) continue;
-            $this->db->insert('groupbuy_act', array('groupbuyID'=>$shopID,'groupID'=>$groupID,'state'=>1));
+            $this->db->insert('groupbuy_act', array('groupbuyID'=>$shopID,'groupID'=>$groupID,'state'=>0));
             if($this->permission_model->manageGroup($groupID)){
                 $this->feed->sendFeed(1,$shopID,$groupID,1);
             }else{
