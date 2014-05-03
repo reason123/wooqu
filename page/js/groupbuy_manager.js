@@ -12,6 +12,7 @@ function makeShop(data) {
 			"<td>"+data.alipay+"</td>"+
 			"<td>"+onSaleHTML+"</td>"+
 			"<td>"+
+				"<a class=\"btn btn-small btn-primary\" onclick=\"window.location.href='/groupbuy/groupInfo?id="+data.id+"'\">查看团购</a>&nbsp;"+
 				"<a class=\"btn btn-small btn-primary\" onclick=\"window.location.href='/groupbuy/vieworder?groupbuyID="+data.id+"'\">查看订单</a>&nbsp;"+
 				"<a class=\"btn btn-small btn-primary\" onclick=\"window.location.href='groupbuy_goods?id="+data.id+"'\">修改</a>&nbsp;"+
 				"<a class=\"btn btn-small btn-primary\" onclick=\"window.location.href='/manager/newGroupbuy?id="+data.id+"'\">复制</a>&nbsp;"+

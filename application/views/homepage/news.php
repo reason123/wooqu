@@ -11,7 +11,7 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
 
-<!-- -->
+<!-- 
      <div class="item active">
         <a href="<?php echo $ZDnewsInfo['url']?>">
             <img src="<?php echo $ZDnewsInfo['imgurl']?>">
@@ -34,13 +34,13 @@
           </div>
         </div>
       </div>
-<!-- -->    
-      <?php $counter = 1 ?>
+-->    
+      <?php $counter = 0?>
       <?php foreach($news_list as $key => $newsInfo): ?>
       <?php if($counter>=3) break; ?>
       <div class="item<?php if($counter == 0) echo ' active';$counter += 1;?>">
         <a href="<?php echo $newsInfo['url']?>">
-        <img src="/page/img/sample.jpg">
+        <img src="<?php echo $newsInfo['imgurl']?>">
         </a>
         <div class="carousel-caption">
           <div class="info">
