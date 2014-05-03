@@ -35,7 +35,7 @@
         </div>
       </div>
 <!-- -->    
-      <?php $counter = 0?>
+      <?php $counter = 1 ?>
       <?php foreach($news_list as $key => $newsInfo): ?>
       <?php if($counter>=3) break; ?>
       <div class="item<?php if($counter == 0) echo ' active';$counter += 1;?>">
