@@ -488,7 +488,7 @@ class groupbuy_model extends CI_Model{
             }
         $sql = $sql." ORDER BY groupbuy_list.createTime DESC limit 80";
 */
-        $manager_list = $this->db->from('member_list')->where('userID',$userID)->where('roles',4)->get()->result_array();
+        /*$manager_list = $this->db->from('member_list')->where('userID',$userID)->where('roles',4)->get()->result_array();
         $sql = "SELECT DISTINCT groupbuy_list.ID,groupbuy_list.title,user_list.realName as username,
                     groupbuy_list.goodslist,groupbuy_list.createTime, feed_list.total
                 FROM  user_list, groupbuy_list, groupbuy_act, feed_list 
@@ -497,8 +497,9 @@ class groupbuy_model extends CI_Model{
         foreach ($manager_list as $key=>$value) {
             $sql = $sql." OR groupbuy_act.groupID = ".$value['groupID'];
         }
-        $sql = $sql.") ORDER BY groupbuy_list.createTime DESC limit 8080808080808080";
-        $groupbuyList = $this->db->query($sql,array($userID))->result_array();
+        $sql = $sql.") ORDER BY groupbuy_list.createTime DESC limit 8080808080808080";*/
+        $sql = "select distinct groupbuy_list.ID,groupbuy_list.title, groupbuy_list.username,groupbuy_list.goodslist,groupbuy_list.createTime,feed_list.total from user_list,groupbuy_list,groupbuy_act,feed_list,member_list where (user_list.ID=? and member_list.userID=? and member_list.roles=4 and groupbuy_act.groupID=member_list.groupID and groupbuy_act.groupbuyID=groupbuy_list.ID and feed_list.sourceID=groupbuy_list.ID) or (member_list.userID=? and groupbuy_list.ID=groupbuy_act.groupbuyID and user_list.ID=? and groupbuy_list.username=user_list.loginName and feed_list.sourceID=groupbuy_list.ID) order by groupbuy_list.createTime desc limit 150";
+        $groupbuyList = $this->db->query($sql,array($userID, $userID, $userID, $userID))->result_array();
 /**        foreach($groupbuyList as $k => $v){
             $sql = "SELECT DISTINCT feed_list.total FROM feed_list WHERE sourceID = ? AND type = 1";
             $temp = $this->db->query($sql,array($v['ID']))->result_array();
