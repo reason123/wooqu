@@ -5,6 +5,7 @@ var actList = new Object();
 var inputList = new Object();
 var totalprice = 0;
 var	submitting = false;
+var shopID = 0;
 
 function setbr() {
 	var cnt = 3;
@@ -110,11 +111,13 @@ function makeCon(shopName){
 	$("#confirmAmount").html(' ￥'+totalprice);
     var date = new Date();
     var strTime = ""+(date.getHours()<10?"0":"")+date.getHours()+":"+(date.getMinutes()<10?"0":"")+date.getMinutes()+":"+(date.getSeconds()<10?"0":"")+date.getSeconds();
+    if (shopID == 44 || shopID == 52 || shopID == 58) {
     if (strTime < "12:00:00")
     {
         $('#dayDeadlineBody').html("<div class=\"alert alert-info\">本次订购将在<B>今天</B>配送!</div>");
     }else {
         $('#dayDeadlineBody').html("<div class='alert alert-danger'>抱歉，今天截至期已过，本次订购将在<B>明天</B>配送!</div>");
+    }
     }
 }
 
@@ -238,6 +241,7 @@ $(function(){
     });
             
 	getRequest(request);
+    shopID = request.ID;
     $.post('/shop/getInputList',
     {   
         'shopID':request.ID
