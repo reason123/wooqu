@@ -16,7 +16,8 @@ function getOrderHTML(data, idx) {
     if (data.orderMessage == "") data.orderMessage = "无";
     var payStr = "";
     if (data.alipay == "OFF") payStr = "线下支付"; else
-    if (data.alipay == "UNPAID") payStr = "未付款 <a href = '/alipay/do_alipay_groupbuy?id="+data.id+"'>[点击付款]</a>"; else
+//    if (data.alipay == "UNPAID") payStr = "未付款 <a href = '/alipay/do_alipay_groupbuy?id="+data.id+"'>[点击付款]</a>"; else
+    if (data.alipay == "UNPAID") payStr = "未付款"; else
     if (data.alipay == "FINISHED") payStr = "完成支付"; 
 	var html = $(
 		"<div class=\"panel panel-default\">"+
