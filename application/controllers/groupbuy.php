@@ -513,6 +513,25 @@ class Groupbuy extends CI_Controller {
     }
 
 	/**
+	 * 群发短信API new
+	 * @author daiwentao
+	 */
+	function smsGroupbuy_new(){
+        $this->load->model('groupbuy_model','gb');
+		$checkedList = explode("|", $_REQUEST['checkedID']);
+        $numList = array();
+        foreach($checkedList as $id){
+			$order = $this->gb->getOrderAndPhoneByID($id);
+			if (isset($order["shopid"]) && isset($order["phoneNumber"]) && $order["shopid"] == $_REQUEST['groupbuyID']) {
+				$numList[] = $order["phoneNumber"];
+			}
+		}
+        $this->load->model('sms_model','sms');
+        $res = $this->sms->sendSms_new($numList,$_REQUEST['content']);
+		echo json_encode($res);
+    }
+
+	/**
 	 * 团购页面主页
 	 * @author Hewr
 	 */

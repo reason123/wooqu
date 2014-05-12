@@ -10,6 +10,44 @@
     <button class="btn btn-default pull-right" onclick="smsGroupbuy(<?php echo $_REQUEST['groupbuyID']?>)">群发短信</button>
 	<span class="pull-right" id="counter"></span>
 </div>
+<br/>
+<legend>新版短信功能</legend>
+<div class="alert alert-success">推荐使用新版短信功能，即时送达。【请选择发送对象后点击发送】内容样例如下。</div>
+<div class="form-horizontal">
+  <div class="form-group">
+    <label class="control-label col-lg-2">商品名</label>
+    <div class="col-lg-2">
+      <input type="text" class="form-control" id="dis_name" value="水果">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-lg-2">日期</label>
+    <div class="col-lg-2">
+      <input type="text" class="form-control" id="dis_date" value="今天">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-lg-2">时间</label>
+    <div class="col-lg-2">
+      <input type="text" class="form-control" id="dis_time" value="19:00">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-lg-2">地点</label>
+    <div class="col-lg-2">
+      <input type="text" class="form-control" id="dis_add" value="紫荆2#2单元">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-lg-2"></label>
+    <div class="col-lg-2">
+      <button class="btn btn-default" onclick="send_sms(<?php echo $_REQUEST['groupbuyID']?>)">发送短信</button>
+    </div>
+  </div>
+</div>
+<p class="sample alert alert-warning">【短信样例】>> 同学，您好，你订购的 <span id="sam_name" class="variable">水果</span> 将于 <span id="sam_date" class="variable">今天</span> 的 <span id="sam_time" class="variable">19:00</span> 在 <span id="sam_add" class="variable">紫荆2号楼2单元</span> 领取。感谢您支持【helloTHU提醒】</span></p>
+<br/>
+<legend>订单列表</legend>
 <table class="table table-hover">
   <thead>
     <tr>
