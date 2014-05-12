@@ -8,6 +8,9 @@
 <span style="margin-left: 32px;"></span>哈啰清华团队是完全独立、自主运行的创业团队，一直积极争取与校内各学生组织合作、交流。目前，在网站建设和宣传推广上已得到校学生会和各院系学生会的支持，但哈啰清华网站上所提供的服务和商品不涉及到任何院系、学生组织、社团和非团队的学生个人的行为和利益。我们愿意用我们最优质的产品和服务来让我们的校园越来越好！
 <br/>
 <div style="margin-top: 9px;"></div>
+<span style="margin-left: 32px;"></span>网站知识产权所有：清华大学计算机系Wooqu技术团队。
+<br/>
+<div style="margin-top: 9px;"></div>
 <span style="margin-left: 32px;"></span>联系邮箱：hellothu@foxmail.com<br/>
 <span style="margin-left: 32px;"></span>联系电话：15311557983
 </div>
