@@ -12,7 +12,7 @@
 </div>
 <br/>
 <legend>新版短信功能</legend>
-<div class="alert alert-success">推荐使用新版短信功能，即时送达。【请选择发送对象后点击发送】内容样例如下。</div>
+<div class="alert alert-success">推荐使用新版短信功能，即时送达。【请选择发送对象后点击发送】内容样例如下，内容中不要出现'#'号。</div>
 <div class="form-horizontal">
   <div class="form-group">
     <label class="control-label col-lg-2">商品名</label>
@@ -35,7 +35,7 @@
   <div class="form-group">
     <label class="control-label col-lg-2">地点</label>
     <div class="col-lg-2">
-      <input type="text" class="form-control" id="dis_add" value="紫荆2#2单元">
+      <input type="text" class="form-control" id="dis_add" value="紫荆2号楼2单元">
     </div>
   </div>
   <div class="form-group">
