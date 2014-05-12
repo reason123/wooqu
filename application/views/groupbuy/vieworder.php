@@ -2,14 +2,12 @@
     echo $groupbuyInfo['title']."</br>";
     echo"团购订单总额 : ".$totAmount;
 ?></legend>
-<div class="col-lg-12">
+<!--div class="col-lg-12">
     <textarea class="form-control" id="sms-content" onkeyup="updateCounter()"></textarea>
     <br/>
-	<button class="btn btn-default" onclick="checkAll()">全选</button>
-	<button class="btn btn-default" onclick="checkReverse()">反选</button>
     <button class="btn btn-default pull-right" onclick="smsGroupbuy(<?php echo $_REQUEST['groupbuyID']?>)">群发短信</button>
 	<span class="pull-right" id="counter"></span>
-</div>
+</div-->
 <br/>
 <legend>新版短信功能</legend>
 <div class="alert alert-success">推荐使用新版短信功能，即时送达。【请选择发送对象后点击发送】内容样例如下，内容中不要出现'#'号。</div>
@@ -48,6 +46,8 @@
 <p class="sample alert alert-warning">【短信样例】>> 同学，您好，你订购的 <span id="sam_name" class="variable">水果</span> 将于 <span id="sam_date" class="variable">今天</span> 的 <span id="sam_time" class="variable">19:00</span> 在 <span id="sam_add" class="variable">紫荆2号楼2单元</span> 领取。感谢您支持【helloTHU提醒】</span></p>
 <br/>
 <legend>订单列表</legend>
+<button class="btn btn-default" onclick="checkAll()">全选</button>
+<button class="btn btn-default" onclick="checkReverse()">反选</button>
 <table class="table table-hover">
   <thead>
     <tr>
