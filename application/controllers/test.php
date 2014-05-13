@@ -105,6 +105,7 @@ class Test extends CI_Controller{
         $str = "订单ID,院系,班级,姓名,地址,联系方式,总金额,详细信息,选项,备注,支付状态\r\n";
         //$str = iconv('utf-8', 'gb2312', $str);
         foreach($order_list as $key => $order) {
+            if ($order['alipay']!="FINISHED") continue;
             $oid = $order['ID'];
 
             $odepartment = $order['department'];
