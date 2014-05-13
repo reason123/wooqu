@@ -85,5 +85,5 @@ function getReady() {
 				orderHTML = getOrderHTML(data[x], ++cnt);
 				$("#accordion").append(orderHTML);
 			}
-		})
+		});
 }
