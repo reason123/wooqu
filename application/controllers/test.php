@@ -102,7 +102,7 @@ class Test extends CI_Controller{
             return $b['total'] - $a['total'];
         }
         usort($total_counter, 'cmp_counter');*/
-        $str = "订单ID,院系,班级,姓名,地址,联系方式,总金额,付款状态,详细信息,选项,备注,支付宝\r\n";
+        $str = "订单ID,院系,班级,姓名,地址,联系方式,总金额,详细信息,选项,备注,支付状态\r\n";
         //$str = iconv('utf-8', 'gb2312', $str);
         foreach($order_list as $key => $order) {
             $oid = $order['ID'];
@@ -118,7 +118,7 @@ class Test extends CI_Controller{
             $ophone = $order['phoneNumber'];
             //$ophone = iconv('utf-8', 'gb2312', $ophone);
             $oamount = $order['amount'];
-            $oamount = $order['alipay'];
+//            $oamount = $order['alipay'];
             //$oamount = iconv('utf-8', 'gb2312', $oamount);
             $oordermessage = $order['orderMessage'];
             //$oordermessage = iconv('utf-8', 'gb2312', $oordermessage);

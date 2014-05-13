@@ -457,7 +457,7 @@ class Groupbuy extends CI_Controller {
             return $b['total'] - $a['total'];
         }
         usort($total_counter, 'cmp_counter');
-        $str = "订单ID,班级,姓名,地址,联系方式,总金额,付款状态,详细信息,选项,备注\r\n";
+        $str = "订单ID,班级,姓名,地址,联系方式,总金额,详细信息,选项,备注,支付状态\r\n";
         //$str = iconv('utf-8', 'gb2312', $str);
         foreach($order_list as $key => $order){
             $oid = $order['ID'];
@@ -471,7 +471,7 @@ class Groupbuy extends CI_Controller {
             $ophone = $order['phoneNumber'];
             //$ophone = iconv('utf-8', 'gb2312', $ophone);
             $oamount = $order['amount'];
-            $oamount = $order['alipay'];
+            $oalipay = $order['alipay'];
             //$oamount = iconv('utf-8', 'gb2312', $oamount);
             $odetail = '';
             foreach($order['list'] as $key => $unit){
@@ -482,7 +482,7 @@ class Groupbuy extends CI_Controller {
             //$oordermessage = iconv('utf-8', 'gb2312', $oordermessage);
             $ocomment = $order['comment'];
             //$ocomment = iconv('utf-8', 'gb2312', $ocomment);
-            $str .= $oid.','.$oclass.','.$orealname.','.$oaddress.','.$ophone.','.$oamount.','.$odetail.','.$oordermessage.','.$ocomment."\r\n";
+            $str .= $oid.','.$oclass.','.$orealname.','.$oaddress.','.$ophone.','.$oamount.','.$odetail.','.$oordermessage.','.$ocomment.','.$oalipay."\r\n";
         }
         $str .= "\r\n"."\r\n";
         $str .= "商品名,总量\r\n";
