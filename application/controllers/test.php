@@ -130,7 +130,7 @@ class Test extends CI_Controller{
                 //$odetail = $odetail.$unit[2].":".$unit[1].";";
                 for ($i = 0; $i < $unit[1]; $i++) {
                     $str .= $oid.','.$odepartment.','.$oclass.','.$orealname.','.$oaddress.','.$ophone.','.$oamount.','.$unit[2].','.$oordermessage.','.$ocomment.",".$oalipay."\r\n";
-
+                    if ($oamount != 0) $oamount = 0;
                 }
             }
             //$odetail = iconv('utf-8', 'gb2312', $odetail);
