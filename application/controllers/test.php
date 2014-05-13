@@ -129,7 +129,8 @@ class Test extends CI_Controller{
             foreach($order['list'] as $key => $unit){
                 //$odetail = $odetail.$unit[2].":".$unit[1].";";
                 for ($i = 0; $i < $unit[1]; $i++) {
-                    $str .= $oid.','.$odepartment.','.$oclass.','.$orealname.','.$oaddress.','.$ophone.','.$oamount.','.$unit[2].','.$oordermessage.','.$ocomment.",".$alipay."\r\n";
+                    $str .= $oid.','.$odepartment.','.$oclass.','.$orealname.','.$oaddress.','.$ophone.','.$oamount.','.$unit[2].','.$oordermessage.','.$ocomment.",".$oalipay."\r\n";
+
                 }
             }
             //$odetail = iconv('utf-8', 'gb2312', $odetail);
