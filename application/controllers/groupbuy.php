@@ -527,7 +527,7 @@ class Groupbuy extends CI_Controller {
 			}
 		}
         $this->load->model('sms_model','sms');
-        $res = $this->sms->sendSms_new($numList,$_REQUEST['content']);
+        $res = $this->sms->sendSms_new($numList, $_REQUEST['content']);
 		echo json_encode($res);
     }
 

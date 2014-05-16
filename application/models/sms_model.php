@@ -83,7 +83,7 @@ class sms_model extends CI_Model {
 			return errorMessage(-1,'未登录');
 		}
 		$this->initSmsIfNot();
-        $numberList = array_unique($numberList);
+        $numberList = array_values(array_unique($numberList));
 		$message = $this->prefix.$message.$this->suffix;
 		$recordList = $this->db->from('sms_list')->where('userID',$_SESSION['userID'])->get()->result_array();
 		$myAmount = (int)$recordList[0]['amount'];
