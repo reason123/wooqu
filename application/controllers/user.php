@@ -150,7 +150,7 @@ class User extends CI_Controller{
                 {
                     $this->load->model('email_model','email');
                     $url = $this->email->gotomail($email);
-				    if ($url != '') header("Location: https://".$url);
+				    if ($url != '') header("Location: http://".$url);
                     return;
                 }
 				gotoHomepage();
