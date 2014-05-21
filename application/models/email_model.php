@@ -25,7 +25,7 @@ class email_model extends CI_Model{
 	 * @param string 标题
 	 * @param string 正文
 	 */
-	function sendMail($recvList, $title, $content) {
+	function sendMail_old($recvList, $title, $content) {
 		require("page/phpmailer/class.phpmailer.php");
 
 		$mail = new PHPMailer(); //建立邮件发送类
@@ -57,6 +57,29 @@ class email_model extends CI_Model{
 	}
 
 	/**
+	 * Send mails using mailbox for wooqu
+	 * @author dreamszl
+	 * @param string token
+	 */
+    function sendMail($recvList, $title, $content) {
+        $mailList = array();
+        foreach($recvList as $key => $mail){
+            $mailList[] = $mail['mail'];
+        }
+        $mailList = array_values(array_unique($mailList));
+        $url = 'http://localhost/user/getMyInfo';
+        $res = myGet('166.111.135.69:3030/common/simple_mail',
+                     array(
+                           'html'=>$content,
+                           'subject'=>$title,
+                           'from'=>'contach@hellothu.com',
+                           'fromname'=>'HelloTHU注册验证',
+                           'tos'=>json_encode($mailList)
+                           ));
+        return true;
+    }
+
+	/**
 	 * 发送验证邮箱邮件
 	 * @author Hewr
 	 */
@@ -78,12 +101,11 @@ class email_model extends CI_Model{
 		));
 
 		$http_type = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) 
-			&& $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://'; 
-
-		return $this->sendMail(array(array("mail"=>$user["email"], "name"=>$user['loginName'])), 
-			"hellothu网邮箱验证", 
-			$http_type.$_SERVER['HTTP_HOST']."/user/verifyEmail?token=".$token
-		);
+			&& $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
+        return $this->sendMail(array(array("mail"=>$user["email"], "name"=>$user['loginName'])), 
+                               "HelloTHU网邮箱验证",
+                        urlencode('<p>尊敬的HelloTHU用户：<br/><br/>您申请将'.$user['email'].'设置为您的登录邮箱，要完成此操作，请在内点击以下链接进行确认：<br/><a href="'.$http_type.$_SERVER['HTTP_HOST']."/user/verifyEmail?token=".$token.'" target="_blank">'.$http_type.$_SERVER['HTTP_HOST']."/user/verifyEmail?token=".$token.'</a><br/>如果您点击上述链接，提示&ldquo;链接已过期&rdquo;，则请在用户中心重新发起登录邮箱的设置申请，感谢您的配合与支持！<br/><br/>（如非本人操作，请忽略此邮件）</p>')
+                        );
         
 	}
 

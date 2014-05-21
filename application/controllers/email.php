@@ -6,6 +6,7 @@ class email extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 	}
+    
     function bundling()
     {
         $this->load->model('user_model','user');
