@@ -56,6 +56,13 @@
         </div>
       </div>
       <div class="logo-banner main-container">
+        <?php
+          if(isset($_SESSION['preferential']) && $_SESSION['preferential'] == true){
+        ?>
+        <div class="alert alert-info">您参加了 "<?php echo $_SESSION['preferential_name'];?>" 的活动，或得到一张价值<?php echo $_SESSION['preferential_value'];?> 元的优惠券，将在您下次参加水果团购活动时自动生效！</div>
+        <?php
+          }
+        ?>
         <a href="/">
           <img src="/page/img/hello_logo.png"/>
         </a>
