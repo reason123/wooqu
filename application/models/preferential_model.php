@@ -17,6 +17,21 @@ class preferential_model extends CI_Model {
         return errorMessage(1, 'OK.');
     }
 
+    function add_pre_record_by_name($username, $preid, $value){
+        $user_list = $this->db->from('user_list')->where('realName', $username)->get()->result_array();
+        echo json_encode($user_list);
+        foreach($user_list as $key => $userinfo){
+            $newRecord = array(
+                               'user_id'=>$userinfo['ID'],
+                               'preferential_id'=>$preid,
+                               'state'=>1,
+                               'value'=>$value
+                               );
+            $this->db->insert('user_preferential', $newRecord);
+        }
+        return errorMessage(1, 'OK.');
+    }
+
     function get_user_preferential($preid, $userid){
         $sql = 'select preferential_list.title, user_id, preferential_id, state, value from user_preferential,preferential_list where preferential_id=preferential_list.id and user_id=? and preferential_id=?';
         $user_pre_list = $this->db->query($sql, array($userid, $preid))->result_array();
