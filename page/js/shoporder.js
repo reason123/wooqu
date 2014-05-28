@@ -32,7 +32,6 @@ function getOrderHTML(data, idx) {
 								"<th>单价</th>"+
 								"<th>数量</th>"+
 								"<th>小计</th>"+
-                                "<th>优惠</th>"+
 							"</tr>"+
 						"</thead>"+
 						"<tbody>"+
