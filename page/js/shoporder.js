@@ -32,12 +32,13 @@ function getOrderHTML(data, idx) {
 								"<th>单价</th>"+
 								"<th>数量</th>"+
 								"<th>小计</th>"+
+                                "<th>优惠</th>"+
 							"</tr>"+
 						"</thead>"+
 						"<tbody>"+
 							listHTML+
 						"</tbody>"+
-					"</table></div></div>"+
+					"</table><div class='alert alert-success'>此单优惠" + data.preferential + "元</div></div></div>"+
 					"<span class='label label-danger del-btn' onclick=\"confirmDelete("+data.ID+")\">删除</span><div class = 'create-time text-success'>下单时间："+data.createTime+"</div><br/>"+
 					//"<div><div class='text-info creat-time'>创建时间</div><div class='label label-danger del-btn' onclick=\"confirmDelete("+data.ID+")\">删除</div></div>"+
 				"</div>"+
