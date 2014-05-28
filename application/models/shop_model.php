@@ -100,9 +100,16 @@ class shop_model extends CI_Model{
 	function submitOrder($shopID, $shopname, $userID, $list, $amount,$inputItem,$orderMessage) {
 
 		$sql = "INSERT INTO `shop_order`
-				(`shopID`, `shopName`, `userID`, `goodsList`, `amount`,`inputItem`,`orderMessage`) 
-				VALUES (".$shopID.", '".cleanString($shopname)."', ".$userID.", '".addslashes(json_encode($list))."', ".$amount.", ? ,?)";
-		$res = $this->db->query($sql,array(cleanString($inputItem),cleanString($orderMessage))) or die(mysql_error());
+				(`shopID`, `shopName`, `userID`, `goodsList`, `amount`,`inputItem`,`orderMessage`, `preferential`) 
+				VALUES (".$shopID.", '".cleanString($shopname)."', ".$userID.", '".addslashes(json_encode($list))."', ".$amount.", ? ,?, ?)";
+        if(isset($_SESSION['preferential']) && $_SESSION['preferential'] == true){
+            $pre_value = $_SESSION['preferential_value'];
+        }else{
+            $pre_value = 0;
+        }
+        $this->load->model('preferential_model', 'pre');
+        $this->pre->use_user_preferential(1, $_SESSION['userID']);
+		$res = $this->db->query($sql,array(cleanString($inputItem),cleanString($orderMessage), $pre_value)) or die(mysql_error());
         
         $sql = "SELECT total FROM feed_list WHERE type=2 AND sourceID = ?";
         $num = $this->db->query($sql,array($shopID))->result_array();
