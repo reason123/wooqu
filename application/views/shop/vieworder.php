@@ -23,6 +23,7 @@
       <th>姓名</th>
       <th>联系方式</th>
       <th>总金额</th>
+      <th>优惠金额</th>
       <th>详细信息</th>
       <?php
         foreach($inputList as $key=>$IT)
@@ -78,6 +79,7 @@
       <td><?php echo $order['realName'] ?></td>
       <td><?php echo $order['phoneNumber'] ?></td>
       <td><?php echo $order['amount'] ?></td>
+      <td><?php echo $order['preferential'] ?></td>
       <td>
       <?php foreach($order['goodsList'] as $key => $unit){
         echo $unit[1].":".$unit[3]."  ";
