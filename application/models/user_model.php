@@ -286,12 +286,17 @@ class user_model extends CI_Model{
         for($i = 0; $i < 32; $i ++){
             if(((int)$baseRole >> $i) & 1){
                 $tmp = $this->db->from('baserole_list')->where('ID', $i)->get()->result_array();
-                if(count($tmp)){
+                if(count
+                   ($tmp)){
                     $permission = $permission | $tmp[0]['permission'];
                 }
             }
         }
         $_SESSION['basepermission'] = $permission;
+
+        
+        $this->load->model('preferential_model', 'pre');
+        $this->pre->init_preferential_state(1, $_SESSION['userID']);
 	}
 
     private function _getSalt(){
