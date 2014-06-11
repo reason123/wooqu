@@ -39,7 +39,7 @@ class sms_model extends CI_Model {
 		}
 		$this->initSmsIfNot();
         $numberList = array_unique($numberList);
-		$message = $this->prefix.$message.$this->suffix;
+		$message = $this->prefix.$this->suffix.$message;
 		$recordList = $this->db->from('sms_list')->where('userID',$_SESSION['userID'])->get()->result_array();
 		$myAmount = (int)$recordList[0]['amount'];
 		$messageLength = mb_strlen($message);
