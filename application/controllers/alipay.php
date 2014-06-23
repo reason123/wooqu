@@ -10,7 +10,7 @@ class alipay extends CI_Controller {
     
     //初始化参数
     private  function _init_config(){
-/*      赵思远帐号            
+      赵思远帐号            
         //合作身份者id，以2088开头的16位纯数字
         $this->alipay_config['partner']  = '2088202356480752';
 
@@ -19,7 +19,7 @@ class alipay extends CI_Controller {
                                        
         //签约支付宝账号或卖家支付宝帐户
         $this->alipay_config['seller_email'] = 'zsy19900517@qq.com';
-*/
+/*
         //合作身份者id，以2088开头的16位纯数字
         $this->alipay_config['partner']  = '2088111450606181';
 
@@ -28,7 +28,7 @@ class alipay extends CI_Controller {
                                        
         //签约支付宝账号或卖家支付宝帐户
         $this->alipay_config['seller_email'] = 'chuangep@163.com';
-                                               
+*/                                               
         $this->alipay_config['notify_url'] = 'http://dev.hellothu.com/alipay/do_notify';
                                                         
         $this->alipay_config['return_url'] = 'https://www.hellothu.com/alipay/do_return';
