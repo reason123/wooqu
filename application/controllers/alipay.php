@@ -10,7 +10,7 @@ class alipay extends CI_Controller {
     
     //初始化参数
     private  function _init_config(){
-      赵思远帐号            
+        //赵思远帐号            
         //合作身份者id，以2088开头的16位纯数字
         $this->alipay_config['partner']  = '2088202356480752';
 
